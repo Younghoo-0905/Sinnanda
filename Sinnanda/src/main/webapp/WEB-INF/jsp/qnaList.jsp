@@ -12,9 +12,20 @@
 	<div>
 		<a href="addQna">문의사항 작성</a>
 	</div>
+	<div>
+		<select id="qnaCategory" name="qnaCategory">
+			<option value="기타문의">기타문의</option>
+			<option value="결제문의">결제문의</option>
+			<option value="이용문의">이용문의</option>
+			<option value="예약문의">예약문의</option>
+			<option value="숙소문의">숙소문의</option>
+		</select>
+		<a href="/qnaList?qnaCategory=${qnaCategory}">선택</a>
+	</div>
 	<table border="1">
 		<tr>
 			<td>문의 번호</td>
+			<td>카테고리</td>
 			<td>문의한 회원</td>
 			<td>제목</td>
 			<td>비밀글 여부</td>
@@ -23,6 +34,7 @@
 		<c:forEach items="${qnaList}" var="qna">
 			<tr>
 				<td>${qna.qnaNo}</td>
+				<td>${qna.qnaCategory}</td>
 				<td>${qna.memberNo}</td>
 				<td>
 					<a href="/qnaOne?qnaNo=${qna.qnaNo}"></a>${qna.qnaTitle}</td>

@@ -20,22 +20,33 @@ public class QnaService {
 	@Autowired
 	private QnaMapper qnaMapper;
 	
-	/* 보드 목록 조회 by Category */
-	public Map<String, Object> getQnaList(int currentPage, int rowPerPage){
+	/*  */
+	public Qna getQnaOne(int qnaNo) {
+		log.debug("[Debug] \"START\" QnaService.getQnaOne()");
+		
+		log.debug(" ├[param] qnaNo : "+qnaNo);
+		
+		return qnaMapper.selectQnaOne(qnaNo);
+	}
+	
+	/* [이승준] QnA 목록 조회 by Category */
+	public Map<String, Object> getQnaListByQnaCategory(String qnaCategory, int currentPage, int rowPerPage){
 		log.debug("[Debug] \"START\" QnaService.getQnaList()");
 		
+		log.debug(" ├[param] qnaCategory : "+qnaCategory);
 		log.debug(" ├[param] currentPage : "+currentPage);
 		log.debug(" ├[param] rowPerPage : "+rowPerPage);
 		
-		// 1. 매개변수 가공 (paraMap <-- boardCategory, currentPage, rowPerPage)
+		// 1. 매개변수 가공 (paraMap <-- qnaCategory, currentPage, rowPerPage)
 		Map<String, Object> paraMap = new HashMap<>();
 		int beginRow = (currentPage-1) * rowPerPage;
 		
+		paraMap.put("qnaCategory", qnaCategory);
 		paraMap.put("beginRow", beginRow);
 		paraMap.put("rowPerPage", rowPerPage);
 		
 		// 2. qna 리스트 조회
-		List<Qna> qnaList = qnaMapper.selectQnaList(paraMap);
+		List<Qna> qnaList = qnaMapper.selectQnaListQnaCategory(paraMap);
 		
 		// 3. 리턴 값 가공 (return : qna & lastPage)
 		Map<String, Object> returnMap = new HashMap<>();
