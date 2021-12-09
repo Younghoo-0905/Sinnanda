@@ -1,7 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.QnaMapper">
-
+	
+	<!-- [이승준] QnA 삽입 -->
+	<insert id="insertQna" parameterType="com.b2.Sinnanda.vo.Qna">
+		INSERT INTO qna(
+			qna_no, 
+			member_no, 
+			qna_category, 
+			qna_title, 
+			qna_content, 
+			qna_secret, 
+			create_date, 
+			update_date
+		) VALUES (
+			#{qna.qnaNo}, 
+			#{memberNo}, 
+			#{qna.qnaCategory}, 
+			#{qna.qnaTitle}, 
+			#{qna.qnaContent}, 
+			#{qna.qnaSecret}, 
+			NOW(), 
+			NOW()
+		)
+	</insert>
+	
+	<!-- [이승준] QnA One Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Qna" id="QnaOneMap">
+		<id column="qna_no" property="qnaNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="qna_category" property="qnaCategory"/>
+		<result column="qna_title" property="qnaTitle"/>
+		<result column="qna_content" property="qnaContent"/>
+		<result column="qna_secret" property="qnaSecret"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<collection property="qnaComments" ofType="com.b2.Sinnanda.vo.QnaComment">
+			<result column="admin_no" property="adminNo"/>
+			<result column="qna_comment" property="qnaComment"/>
+			<result column="comment_date" property="commentDate"/>
+		</collection>
+	</resultMap>
+	
+	<!-- [이승준] QnA 상세 조회 -->
+	<select id="selectQnaOne"  parameterType="Map" resultMap="QnaOneMap">
+		SELECT 
+			q.qna_no, 
+			q.member_no, 
+			q.qna_category, 
+			q.qna_title, 
+			q.qna_content, 
+			q.qna_secret, 
+			q.create_date, 
+			q.update_date, 
+			c.admin_no, 
+			c.qna_comment, 
+			c.comment_date
+		FROM qna q LEFT JOIN qna_comment c
+		ON q.qna_no = c.qna_no
+		WEHRE q.qna_no = #{qnaNo}
+	</select>
+	
 	<!-- [이승준] QnA List Map -->
 	<resultMap type="com.b2.Sinnanda.vo.Qna" id="QnaListMap">
 		<id column="qna_no" property="qnaNo"/>

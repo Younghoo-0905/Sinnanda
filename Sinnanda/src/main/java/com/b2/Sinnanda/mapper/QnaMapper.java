@@ -10,6 +10,9 @@ import com.b2.Sinnanda.vo.Qna;
 @Mapper
 public interface QnaMapper {
 	
+	// [이승준] QnA 삽입
+	void insertQna(Qna qna);
+	
 	// [이승준] QnA 상세 조회
 	Qna selectQnaOne(int qnaNo);
 	

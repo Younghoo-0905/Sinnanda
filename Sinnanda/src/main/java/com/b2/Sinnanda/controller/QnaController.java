@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.b2.Sinnanda.service.QnaService;
@@ -21,10 +22,26 @@ public class QnaController {
 	
 	private final int ROW_PER_PAGE = 10;
 	
+	// [이승준] QnA 삽입
+	@GetMapping("/addQna")
+	public String addQna() {
+		log.debug("[Debug] \"START\" QnaController.addQna() | Get");
+		return "addQna";
+	}
+	@PostMapping("/addQna")
+	public String addQna(Qna qna) {
+		log.debug("[Debug] \"START\" QnaController.addQna() | Get");
+		log.debug(" ├[param] qna : "+qna.toString());
+		
+		qnaService.addQna(qna);
+		
+		return "redirect:/qnaOne?qnaNo="+qna.getQnaNo();
+	}
+	
 	// [이승준] QnA 상세 조회
 	@GetMapping("/qnaOne")
 	public String qnaOne(Model model, int qnaNo) {
-		log.debug("[Debug] \"START\" QnaController.qnaOne()");
+		log.debug("[Debug] \"START\" QnaController.qnaOne() | Get");
 		log.debug(" ├[param] qnaNo : "+qnaNo);
 		
 		Qna qna = qnaService.getQnaOne(qnaNo);
@@ -38,7 +55,7 @@ public class QnaController {
 	public String qnaList(Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
 			@RequestParam(required = false) String qnaCategory) {
-		log.debug("[Debug] \"START\" QnaController.qnaList()");
+		log.debug("[Debug] \"START\" QnaController.qnaList() | Get");
 		log.debug(" ├[param] currentPage : "+currentPage);
 		
 		Map<String, Object> map = qnaService.getQnaListByQnaCategory(qnaCategory, currentPage, ROW_PER_PAGE);

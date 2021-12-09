@@ -20,10 +20,17 @@ public class QnaService {
 	@Autowired
 	private QnaMapper qnaMapper;
 	
-	/*  */
+	/* [이승준] QnA 삽입 */
+	public void addQna(Qna qna) {
+		log.debug("[Debug] \"START\" QnaService.addQna()");
+		log.debug(" ├[param] qna : "+qna.toString());
+		
+		qnaMapper.insertQna(qna);
+	}
+	
+	/* [이승준] QnA 상세 조회 */
 	public Qna getQnaOne(int qnaNo) {
 		log.debug("[Debug] \"START\" QnaService.getQnaOne()");
-		
 		log.debug(" ├[param] qnaNo : "+qnaNo);
 		
 		return qnaMapper.selectQnaOne(qnaNo);
@@ -32,7 +39,6 @@ public class QnaService {
 	/* [이승준] QnA 목록 조회 by Category */
 	public Map<String, Object> getQnaListByQnaCategory(String qnaCategory, int currentPage, int rowPerPage){
 		log.debug("[Debug] \"START\" QnaService.getQnaList()");
-		
 		log.debug(" ├[param] qnaCategory : "+qnaCategory);
 		log.debug(" ├[param] currentPage : "+currentPage);
 		log.debug(" ├[param] rowPerPage : "+rowPerPage);
