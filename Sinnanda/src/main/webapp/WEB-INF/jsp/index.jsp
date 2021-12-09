@@ -56,7 +56,7 @@
           <!--memberId가 있을떄  -->
          <c:if test = "${loginMember != null}">
           <li class="nav-item"><a href="" class="nav-link">마이페이지</a></li>
-          <li class="nav-item"><a href="" class="nav-link">로그아웃</a></li>
+          <li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>
           </c:if>
      
         </ul>
