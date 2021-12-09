@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
 <!DOCTYPE html>
 <html>
 
-<title>�ų���</title>
-<meta charset="utf-8">
+<title>신난다</title>
+ <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
@@ -35,7 +35,7 @@
    
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a class="navbar-brand" href="index">�ų���</a>
+      <a class="navbar-brand" href="index">신난다</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span>
       </button>
@@ -44,12 +44,21 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="/index" class="nav-link">Home</a></li>
           <li class="nav-item"><a href="/qnaList" class="nav-link">Qna</a></li>
-          <li class="nav-item"><a href="" class="nav-link">��������</a></li>
-          <li class="nav-item"><a href="" class="nav-link">����������</a></li>
-          <li class="nav-item"><a href="login" class="nav-link">�α���</a></li>
-          <li class="nav-item"><a href="" class="nav-link">ȸ������</a></li>
-          <li class="nav-item"><a href="" class="nav-link"> ������</a></li>
-          <li class="nav-item cta"><a href="contact.html" class="nav-link"><span>Add listing</span></a></li>
+          <li class="nav-item"><a href="" class="nav-link">공지사항</a></li>
+          <li class="nav-item"><a href="" class="nav-link"> 쿠폰함</a></li>
+          
+			<!--memberId가 없을때--> 
+         <c:if test ="${loginMember == null}">
+          <li class="nav-item"><a href="login" class="nav-link">로그인</a></li>
+          <li class="nav-item"><a href="" class="nav-link">회원가입</a></li>
+         </c:if>
+         
+          <!--memberId가 있을떄  -->
+         <c:if test = "${loginMember != null}">
+          <li class="nav-item"><a href="" class="nav-link">마이페이지</a></li>
+          <li class="nav-item"><a href="" class="nav-link">로그아웃</a></li>
+          </c:if>
+     
         </ul>
       </div>
     </div>
@@ -60,35 +69,77 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>������ �ų���.<br></strong> �ų��� ���ø� ����</h1>
-            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">���ϴ� ���ÿ� ��¥�� ����</p>
+            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>여행이 신난다.<br></strong> 신나는 도시를 골라봐</h1>
+            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">원하는 도시와 날짜를 골라봐</p>
             <div class="block-17 my-4">
               <form action="" method="post" class="d-block d-flex">
                 <div class="fields d-block d-flex">
-                  <div class="textfield-search one-third">
-                  	<input type="text" class="form-control" placeholder="Ex: food, service, hotel">
+                
+                 <div class="select-wrap one-third">
+                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>    
+                    <select name="" id="" class="form-control">
+                 
+                
+                    <!-- 지역 선택 -->
+                      <option value="">서울</option>
+                      <option value="">경기도</option>
+                      <option value="">부산광역시</option>
+                      <option value="">대구광역시</option>
+                      <option value="">인천광역시</option>
+                       <option value="">대전광역시</option>
+                      <option value="">광주광역시</option>
+                      <option value="">울산광역시</option>
+                      <option value="">세종특별자치시</option>
+                      <option value="">강원도</option>
+                       <option value="">충청북도</option>
+                      <option value="">충청남도</option>
+                      <option value="">전라북도</option>
+                      <option value="">전라남도</option>
+                      <option value="">경상북도</option>
+                      <option value="">경상남도</option>
+                      <option value="">제주도</option>
+                    </select>
                   </div>
-                  <div class="select-wrap one-third">
+                  
+                   <div class="select-wrap one-third">
                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                     <select name="" id="" class="form-control" placeholder="Keyword search">
-                    <!-- ���� ���� -->
-                      <option value="">Where</option>
-                      <option value="">San Francisco USA</option>
-                      <option value="">Berlin Germany</option>
-                      <option value="">Lodon United Kingdom</option>
-                      <option value="">Paris Italy</option>
+                    <!-- 도시 선택 ??-->
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                    </select>
+                  </div>
+                   <!-- 캘린더 -->
+                   
+                   
+                   
+                   <!--인원수 -->
+                   <div class="select-wrap one-third">
+                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                    <select name="" id="" class="form-control">
+                      <option value="">한명이요</option>
+                      <option value="">두명이요</option>
+                      <option value="">세명이요</option>
+                      <option value="">네명이요</option>
+                      
                     </select>
                   </div>
                 </div>
+                
+               
                 <input type="submit" class="search-submit btn btn-primary" value="Search">  
               </form>
             </div>
-            <p>Or browse the highlights</p>
+             <!-- 모텔인지 호텔이인지 카테고리 -->
+            <p>어느 숙소로 하실 건가요?</p>
             <p class="browse d-md-flex">
-            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-fork"></i>Restaurant</a></span>
-            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-hotel"></i>Hotel</a></span> 
-            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-meeting-point"></i>Places</a></span> 
-            	<span class="d-flex justify-content-md-center align-items-md-	center"><a href="#"><i class="flaticon-shopping-bag"></i>Shopping</a></span>
+            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-hotel"></i>모델</a></span>
+            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-hotel"></i>호텔</a></span> 
+            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-meeting-point"></i>리조트</a></span> 
+            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-shopping-bag"></i></a></span>
             </p>
           </div>
         </div>
@@ -102,7 +153,7 @@
             <div class="media block-6 services d-block text-center">
               <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-guarantee"></span></div></div>
               <div class="media-body p-2 mt-2">
-                <h3 class="heading mb-3">Best Price Guarantee</h3>
+                <h3 class="heading mb-3">가장 합리적인 가격</h3>
                 <p>A small river named Duden flows by their place and supplies.</p>
               </div>
             </div>      
@@ -111,7 +162,7 @@
             <div class="media block-6 services d-block text-center">
               <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-like"></span></div></div>
               <div class="media-body p-2 mt-2">
-                <h3 class="heading mb-3">Travellers Love Us</h3>
+                <h3 class="heading mb-3">우리가 사랑하는 여행지</h3>
                 <p>A small river named Duden flows by their place and supplies.</p>
               </div>
             </div>    
@@ -120,7 +171,7 @@
             <div class="media block-6 services d-block text-center">
               <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-detective"></span></div></div>
               <div class="media-body p-2 mt-2">
-                <h3 class="heading mb-3">Best Travel Agent</h3>
+                <h3 class="heading mb-3">완벽한 여행을 위한 안내자</h3>
                 <p>A small river named Duden flows by their place and supplies.</p>
               </div>
             </div>      
@@ -129,7 +180,7 @@
             <div class="media block-6 services d-block text-center">
               <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-support"></span></div></div>
               <div class="media-body p-2 mt-2">
-                <h3 class="heading mb-3">Our Dedicated Support</h3>
+                <h3 class="heading mb-3">우리 모두에게 친철한 서비스</h3>
                 <p>A small river named Duden flows by their place and supplies.</p>
               </div>
             </div>      
@@ -138,12 +189,13 @@
       </div>
     </section>
     
+    <!--여행 하기 좋은 곳 =-->
     <section class="ftco-section ftco-destination">
     	<div class="container">
     		<div class="row justify-content-start mb-5 pb-3">
           <div class="col-md-7 heading-section ftco-animate">
-          	<span class="subheading">Featured</span>
-            <h2 class="mb-4"><strong>Featured</strong> Destination</h2>
+          	<span class="subheading">추천 하는 여행지</span>
+            <h2 class="mb-4"><strong>여행지</strong> </h2>
           </div>
         </div>
     		<div class="row">
@@ -157,7 +209,7 @@
 		    						</div>
 		    					</a>
 		    					<div class="text p-3">
-		    						<h3><a href="#">Paris, Italy</a></h3>
+		    						<h3><a href="#">제주도</a></h3>
 		    						<span class="listing">15 Listing</span>
 		    					</div>
 		    				</div>
@@ -170,7 +222,7 @@
 		    						</div>
 		    					</a>
 		    					<div class="text p-3">
-		    						<h3><a href="#">San Francisco, USA</a></h3>
+		    						<h3><a href="#">강원도</a></h3>
 		    						<span class="listing">20 Listing</span>
 		    					</div>
 		    				</div>
@@ -183,7 +235,7 @@
 		    						</div>
 		    					</a>
 		    					<div class="text p-3">
-		    						<h3><a href="#">Lodon, UK</a></h3>
+		    						<h3><a href="#">부산</a></h3>
 		    						<span class="listing">10 Listing</span>
 		    					</div>
 		    				</div>
@@ -196,7 +248,7 @@
 		    						</div>
 		    					</a>
 		    					<div class="text p-3">
-		    						<h3><a href="#">Lion, Singapore</a></h3>
+		    						<h3><a href="#">가평</a></h3>
 		    						<span class="listing">3 Listing</span>
 		    					</div>
 		    				</div>
@@ -209,7 +261,7 @@
 		    						</div>
 		    					</a>
 		    					<div class="text p-3">
-		    						<h3><a href="#">Australia</a></h3>
+		    						<h3><a href="#"><img  src="<%=request.getContextPath()%>/direngine-master/images/seoul.jpg">서울</a></h3>
 		    						<span class="listing">3 Listing</span>
 		    					</div>
 		    				</div>
@@ -222,7 +274,7 @@
 		    						</div>
 		    					</a>
 		    					<div class="text p-3">
-		    						<h3><a href="#">Paris, Italy</a></h3>
+		    						<h3><a href="#">울산</a></h3>
 		    						<span class="listing">3 Listing</span>
 		    					</div>
 		    				</div>
@@ -232,13 +284,13 @@
     		</div>
     	</div>
     </section>
-
+	<!-- 평점이 높은 숙소 ??  -->
     <section class="ftco-section bg-light">
     	<div class="container">
 				<div class="row justify-content-start mb-5 pb-3">
           <div class="col-md-7 heading-section ftco-animate">
-          	<span class="subheading">Special Offers</span>
-            <h2 class="mb-4"><strong>Top</strong> Tour Packages</h2>
+          	<span class="subheading">추천 하는 숙소</span>
+            <h2 class="mb-4"><strong>Top 5</strong>숙소</h2>
           </div>
         </div>    		
     	</div>
@@ -422,7 +474,7 @@
     	<div class="container">
     		<div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-            <h2 class="mb-4">Some fun facts</h2>
+            <h2 class="mb-4">즐거운 사실</h2>
             <span class="subheading">More than 100,000 websites hosted</span>
           </div>
         </div>
@@ -433,7 +485,7 @@
 		            <div class="block-18 text-center">
 		              <div class="text">
 		                <strong class="number" data-number="100000">0</strong>
-		                <span>Happy Customers</span>
+		                <span>방문한 손님들</span>
 		              </div>
 		            </div>
 		          </div>
@@ -441,23 +493,23 @@
 		            <div class="block-18 text-center">
 		              <div class="text">
 		                <strong class="number" data-number="40000">0</strong>
-		                <span>Destination Places</span>
+		                <span>장소들</span>
 		              </div>
 		            </div>
 		          </div>
 		          <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
 		            <div class="block-18 text-center">
 		              <div class="text">
-		                <strong class="number" data-number="87000">0</strong>
-		                <span>Hotels</span>
+		                <strong class="number" data-number="25000"></strong>
+		                <span>호스트들</span>
 		              </div>
 		            </div>
 		          </div>
 		          <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
 		            <div class="block-18 text-center">
 		              <div class="text">
-		                <strong class="number" data-number="56400">0</strong>
-		                <span>Restaurant</span>
+		                <strong class="number" data-number="87000"></strong>
+		                <span>호텔</span>
 		              </div>
 		            </div>
 		          </div>
@@ -473,7 +525,7 @@
 				<div class="row justify-content-start mb-5 pb-3">
           <div class="col-md-7 heading-section ftco-animate">
           	<span class="subheading">Special Offers</span>
-            <h2 class="mb-4"><strong>Popular</strong> Hotels &amp; Rooms</h2>
+            <h2 class="mb-4"><strong>유명한</strong> 관광지 &amp; 숙소</h2>
           </div>
         </div>    		
     	</div>
@@ -653,15 +705,15 @@
         <div class="row justify-content-start">
           <div class="col-md-5 heading-section ftco-animate">
           	<span class="subheading">Best Directory Website</span>
-            <h2 class="mb-4 pb-3"><strong>Why</strong> Choose Us?</h2>
+            <h2 class="mb-4 pb-3"><strong>왜</strong> 우리를 선택했을까?</h2>
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
             <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life.</p>
-            <p><a href="#" class="btn btn-primary btn-outline-primary mt-4 px-4 py-3">Read more</a></p>
+            <p><a href="#" class="btn btn-primary btn-outline-primary mt-4 px-4 py-3">더 보기</a></p>
           </div>
 					<div class="col-md-1"></div>
           <div class="col-md-6 heading-section ftco-animate">
           	<span class="subheading">Testimony</span>
-            <h2 class="mb-4 pb-3"><strong>Our</strong> Guests Says</h2>
+            <h2 class="mb-4 pb-3"><strong>손님의</strong> 목소리</h2>
           	<div class="row ftco-animate">
 		          <div class="col-md-12">
 		            <div class="carousel-testimony owl-carousel">
@@ -933,7 +985,7 @@
         <div class="row mb-5">
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">dirEngine</h2>
+              <h2 class="ftco-heading-2">신난다</h2>
               <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
               <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                 <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
