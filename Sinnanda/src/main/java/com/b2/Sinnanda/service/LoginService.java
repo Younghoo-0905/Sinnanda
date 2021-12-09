@@ -11,8 +11,7 @@ public class LoginService {
 	
 	@Autowired LoginMapper loginMapper;
 	
-	public String loginService(Member member) {
-		
-		return "로그인성공";
+	public Member loginService(Member member) {
+		return loginMapper.login(member);
 	}
 }
