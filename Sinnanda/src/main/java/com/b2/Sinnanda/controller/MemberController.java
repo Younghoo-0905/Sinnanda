@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.vo.Member;
+import com.b2.Sinnanda.vo.MemberOut;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,5 +30,20 @@ public class MemberController {
 		memberService.modifyMember(member);
 		log.debug("MemberController : 수정 성공!");
 		return "redirect:/memberList";
+	}
+	
+	//	회원 탈퇴
+	@GetMapping("insertMemberOut")
+	public String getInsertMemberOut() {
+		return "memberOutForm";
+	}
+	
+	@PostMapping("insertMemberOut")
+	public String postInsertMemberOut(Member member, MemberOut memberOut) {
+		
+		//	트랜잭션 처리 -> member 테이블 데이터 삭제 후 memberOut 테이블 데이터 삽입
+		memberService.removeMember(member, memberOut);
+		
+		return "index";
 	}
 }

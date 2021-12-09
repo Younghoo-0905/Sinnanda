@@ -9,6 +9,7 @@ import com.b2.Sinnanda.vo.MemberOut;
 public interface MemberMapper {
 	// 회원 정보 수정
 	int updateMember(Member member);
+	//	회원 탈퇴
 	int insertMemberOut(MemberOut memberOut);
 	int deleteMember(Member member);
 }
