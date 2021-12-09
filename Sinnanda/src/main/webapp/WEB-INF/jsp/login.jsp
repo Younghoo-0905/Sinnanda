@@ -57,7 +57,7 @@
                   </button>
                 </div>
                 <div class="text-center mt-4 font-weight-light">
-                  Don't have an account? <a href="insertUserForm" class="text-primary">Create</a>
+                  Don't have an account? <a href="insertMemberForm" class="text-primary">Create</a>
                 </div>
               </form>
             </div>

@@ -25,7 +25,7 @@ public class LoginController {
 		return "login";
 	}
 	
-	@GetMapping("insertUserForm") // 회원가입 페이지
+	@GetMapping("insertMemberForm") // 회원가입 페이지
 	public String showInsertForm() {
 		return "insertMemberForm";
 	}
