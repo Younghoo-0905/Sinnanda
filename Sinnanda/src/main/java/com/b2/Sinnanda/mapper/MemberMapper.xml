@@ -2,49 +2,103 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.MemberMapper">
   
-	<resultMap type="com.b2.Sinnanda.vo.Member" id="resultMember">
-		<result column="member_no" property="memberNo"/>
-		<result column="member_id" property="memberId"/>
-		<result column="member_pw" property="memberPw"/>
-		<result column="member_name" property="memberName"/>
-		<result column="member_age" property="memberAge"/>
-		<result column="member_tel" property="memberTel"/>
-		<result column="update_date" property="updateDate"/>		
-	</resultMap>
-  	
-  	<!-- 마이페이지 -->
-  	<select id="selectMyPage" parameterType="int" resultMap="resultMember">
-  		SELECT
-	  		member_id,
-	  		member_name,
-	  		member_age,
-	  		member_tel,
-	  		create_date,
-	  		update_date
-	  	FROM member
-	  	WHERE member_no = #{memberNo}
-  	</select>
-  	
-   	<!-- 회원 정보 수정 -->
-   	<update id="updateMember" parameterType="com.b2.Sinnanda.vo.Member">
-      UPDATE member 
-      SET
-         member_id = #{memberId},
-         member_pw = #{memberPw},
-         member_name = #{memberName},
-         member_age = #{memberAge},
-         member_tel = #{memberTel},
-         update_date = NOW()
-      WHERE member_no = #{memberNo}
-   	</update>
-   
+   <resultMap type="com.b2.Sinnanda.vo.Member" id="resultMember">
+      <result column="member_no" property="memberNo"/>
+      <result column="member_id" property="memberId"/>
+      <result column="member_pw" property="memberPw"/>
+      <result column="member_name" property="memberName"/>
+      <result column="member_age" property="memberAge"/>
+      <result column="member_tel" property="memberTel"/>
+      <result column="update_date" property="updateDate"/>      
+   </resultMap>
+     
+     <!-- 마이페이지 -->
+     <select id="selectMyPage" parameterType="int" resultMap="resultMember">
+        SELECT
+           member_id,
+           member_name,
+           member_age,
+           member_tel,
+           create_date,
+           update_date
+        FROM member
+        WHERE member_no = #{memberNo}
+     </select>
+  
+	<!-- 회원 정보 수정 -->
+	<update id="updateMember" parameterType="com.b2.Sinnanda.vo.Member">
+		UPDATE member 
+	    SET
+	        member_id = #{memberId},
+	        member_pw = #{memberPw},
+	        member_name = #{memberName},
+	        member_age = #{memberAge},
+	        member_tel = #{memberTel},
+	        update_date = NOW()
+	    WHERE member_no = #{memberNo}
+	</update>
+
+	<!-- 회원 가입 -->
+	<insert id="insertMember" parameterType="com.b2.Sinnanda.vo.Member">
+		INSERT INTO 
+			member(
+				member_id, 
+				member_pw, 
+				member_name, 
+				member_age, 
+				member_tel, 
+				member_email, 
+				member_certifycode, 
+				create_date, 
+				update_date
+			) VALUES (
+				#{memberId}, 
+				#{memberPw}, 
+				#{memberName}, 
+				#{memberAge}, 
+				#{memberTel}, 
+				#{memberEmail}, 
+				#{memberCertifycode}, 
+				NOW(), 
+				NOW()
+			)
+	</insert>
+	
+	<!-- 회원가입 이메일 인증 -->
+	<select id="certifyMember" parameterType="com.b2.Sinnanda.vo.Member" resultType="int">
+		SELECT COUNT(*) 
+		FROM member 
+		WHERE 
+			member_id = #{memberId}
+			AND 
+			member_certifycode = #{memberCertifycode}
+	</select>
+	<!-- 인증 된 회원 활성화 -->
+	<update id="certifyMemberUpdate" parameterType="com.b2.Sinnanda.vo.Member">
+		UPDATE member 
+		SET member_active = 1
+		WHERE 
+			member_id = #{memberId}
+	</update>
+	
+   	<!-- 회원 탈퇴 -->
 	<delete id="deleteMember" parameterType="com.b2.Sinnanda.vo.Member">
 		DELETE FROM member
-		WHERE member_no=#{memberNo}
+		WHERE 
+		member_id=#{memberId}
+		AND
+		member_pw=#{memberPw}
 	</delete>
-	
+	<!-- 탈퇴 멤버 데이터 추가 -->
 	<insert id="insertMemberOut" parameterType="com.b2.Sinnanda.vo.MemberOut">
-		INSERT INTO member_out(member_id, out_date, out_reason)
-		VALUES(#{memberId}, NOW(), #{out_reason})
+		INSERT INTO 
+		member_out(
+			member_id, 
+			out_date, 
+			out_reason
+		) VALUES(
+			#{memberId}, 
+			NOW(), 
+			#{outReason})
 	</insert>   
 </mapper>

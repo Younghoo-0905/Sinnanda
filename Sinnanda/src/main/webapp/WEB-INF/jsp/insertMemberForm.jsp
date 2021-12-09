@@ -32,25 +32,27 @@
               </div>
               <h4>New here?</h4>
               <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
-              <form class="pt-3">
+              <form class="pt-3" method="post" action="/insertMember" id="insertMemberForm">
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Username">
+                  <input type="text" class="form-control form-control-lg" name="memberId" id="memberId" placeholder="UserID">
+                </div>
+               <div class="form-group">
+                  <input type="password" class="form-control form-control-lg" name="memberPw" id="memberPw" placeholder="Password">
                 </div>
                 <div class="form-group">
-                  <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email">
+                  <input type="password" class="form-control form-control-lg" id="memberPw2" placeholder="Repeat Password">
                 </div>
                 <div class="form-group">
-                  <select class="form-control form-control-lg" id="exampleFormControlSelect2">
-                    <option>Country</option>
-                    <option>United States of America</option>
-                    <option>United Kingdom</option>
-                    <option>India</option>
-                    <option>Germany</option>
-                    <option>Argentina</option>
-                  </select>
+                  <input type="text" class="form-control form-control-lg" name="memberName" id="memberName" placeholder="Nickname">
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+                  <input type="text" class="form-control form-control-lg" name="memberAge" id="memberAge" placeholder="Age">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-lg" name="memberTel" id="memberTel" placeholder="Phone number  ex) 010-0000-0000">
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control form-control-lg" name="memberEmail" id="memberEmail" placeholder="Email">
                 </div>
                 <div class="mb-4">
                   <div class="form-check">
@@ -61,7 +63,7 @@
                   </div>
                 </div>
                 <div class="mt-3">
-                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">SIGN UP</a>
+                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onclick="return chk_form()">SIGN UP</a>
                 </div>
                 <div class="text-center mt-4 font-weight-light">
                   Already have an account? <a href="login.html" class="text-primary">Login</a>
@@ -88,5 +90,41 @@
   <script src="../../js/settings.js"></script>
   <script src="../../js/todolist.js"></script>
   <!-- endinject -->
+  
+  <!-- 유효성 검사 -->
+  	<script>
+		function chk_form() {
+		if(document.getElementById("memberId").value==''){
+			alert("ID를 입력하세요.");
+			return false;
+		}
+		if(document.getElementById("memberPw").value==''){
+			alert("Password를 입력하세요.");
+			return false;
+		}
+		if(document.getElementById("memberPw").value!=document.getElementById("memberPw2").value){
+			alert("비밀번호가 일치하지 않습니다.");
+			return false;
+		}		
+		if(document.getElementById("memberName").value==''){
+			alert("Nickname을 입력하세요.");
+			return false;
+		}
+		if(document.getElementById("memberAge").value==''){
+			alert("Age를 입력하세요.");
+			return false;
+		}
+		if(document.getElementById("memberTel").value==''){
+			alert("Phone number를 입력하세요.");
+			return false;
+		}
+		if(document.getElementById("memberEmail").value==''){
+			alert("Email을 입력하세요.");
+			return false;
+		}
+		
+		document.getElementById("insertMemberForm").submit();
+		}
+	</script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.b2.Sinnanda.service.CertifyEmailService;
 import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class MemberController {
 	@Autowired MemberService memberService;
+	@Autowired CertifyEmailService certifyEmailService;
 	
 	// 마이페이지
 	@GetMapping("/myPage")
@@ -40,18 +42,44 @@ public class MemberController {
 		return "redirect:/myPage";
 	}
 	
-	//	회원 탈퇴
-	@GetMapping("insertMemberOut")
-	public String getInsertMemberOut() {
-		return "memberOutForm";
+	//	[김영후] 회원 가입
+	@GetMapping("/insertMember")
+	public String getInsertMember() {
+		return "insertMemberForm";
+	}
+	@PostMapping("/insertMember")
+	public String postInsertMember(Member member) {
+		
+		memberService.addMember(member);
+		
+		certifyEmailService.sendMail(member);
+		
+		return "redirect:/login";
 	}
 	
-	@PostMapping("insertMemberOut")
+	//	[김영후]	회원 이메일 인증
+	@PostMapping("/certifyMember")
+	public String certifyMember(Member member) {
+		int result = memberService.certifyMember(member);
+		if(result == 1) {
+			memberService.certifyMemberUpdate(member);
+			return "index";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	//	[김영후] 회원 탈퇴
+	@GetMapping("/insertMemberOut")
+	public String getInsertMemberOut() {
+		return "memberOutForm";
+	}	
+	@PostMapping("/insertMemberOut")
 	public String postInsertMemberOut(Member member, MemberOut memberOut) {
 		
 		//	트랜잭션 처리 -> member 테이블 데이터 삭제 후 memberOut 테이블 데이터 삽입
 		memberService.removeMember(member, memberOut);
 		
-		return "index";
+		return "redirect:/index";
 	}
 }
