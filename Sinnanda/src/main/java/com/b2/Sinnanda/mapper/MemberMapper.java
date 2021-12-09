@@ -7,6 +7,9 @@ import com.b2.Sinnanda.vo.MemberOut;
 
 @Mapper
 public interface MemberMapper {
+	// 마이페이지
+	Member selectMyPage(int memberNo);
+	
 	// 회원 정보 수정
 	int updateMember(Member member);
 	//	회원 탈퇴

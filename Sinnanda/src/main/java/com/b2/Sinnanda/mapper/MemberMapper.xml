@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.MemberMapper">
-   <!-- 회원 정보 수정 -->
-   <update id="updateMember" parameterType="com.b2.Sinnanda.vo.Member">
+  
+	<resultMap type="com.b2.Sinnanda.vo.Member" id="resultMember">
+		<result column="member_no" property="memberNo"/>
+		<result column="member_id" property="memberId"/>
+		<result column="member_pw" property="memberPw"/>
+		<result column="member_name" property="memberName"/>
+		<result column="member_age" property="memberAge"/>
+		<result column="member_tel" property="memberTel"/>
+		<result column="update_date" property="updateDate"/>		
+	</resultMap>
+  	
+  	<!-- 마이페이지 -->
+  	<select id="selectMyPage" parameterType="int" resultMap="resultMember">
+  		SELECT
+	  		member_id,
+	  		member_name,
+	  		member_age,
+	  		member_tel,
+	  		create_date,
+	  		update_date
+	  	FROM member
+	  	WHERE member_no = #{memberNo}
+  	</select>
+  	
+   	<!-- 회원 정보 수정 -->
+   	<update id="updateMember" parameterType="com.b2.Sinnanda.vo.Member">
       UPDATE member 
       SET
          member_id = #{memberId},
@@ -12,7 +36,7 @@
          member_tel = #{memberTel},
          update_date = NOW()
       WHERE member_no = #{memberNo}
-   </update>
+   	</update>
    
 	<delete id="deleteMember" parameterType="com.b2.Sinnanda.vo.Member">
 		DELETE FROM member

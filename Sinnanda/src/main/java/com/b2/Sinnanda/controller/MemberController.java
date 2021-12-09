@@ -17,6 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	@Autowired MemberService memberService;
 	
+	// 마이페이지
+	@GetMapping("/myPage")
+	public String boardOne(Model model, int memberNo) {
+		Member member = memberService.getMyPage(memberNo);
+		model.addAttribute("member", member);
+		return "myPage";
+	}
+	
 	// 회원 정보 수정
 	@GetMapping("/modifyMember")
 	public String modifyMember(Model model, Member member) {
@@ -29,7 +37,7 @@ public class MemberController {
 		log.debug("MemberController : modifyMember -> " + member.toString());
 		memberService.modifyMember(member);
 		log.debug("MemberController : 수정 성공!");
-		return "redirect:/memberList";
+		return "redirect:/myPage";
 	}
 	
 	//	회원 탈퇴
