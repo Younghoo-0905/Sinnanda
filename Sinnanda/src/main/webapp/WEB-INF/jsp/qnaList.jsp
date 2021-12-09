@@ -35,9 +35,10 @@
 			<tr>
 				<td>${qna.qnaNo}</td>
 				<td>${qna.qnaCategory}</td>
-				<td>${qna.memberNo}</td>
+				<td>${qna.memberName}</td>
 				<td>
-					<a href="/qnaOne?qnaNo=${qna.qnaNo}"></a>${qna.qnaTitle}</td>
+					<a href="/qnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
+				</td>
 				<td>${qna.qnaSecret}</td>
 				<td>${qna.createDate}</td>
 			</tr>

@@ -10,6 +10,12 @@ import com.b2.Sinnanda.vo.Qna;
 @Mapper
 public interface QnaMapper {
 	
+	// [이승준] QnA 삭제
+	void deleteQna(int qnaNo, int memberNo);
+	
+	// [이승준] QnA 수정
+	void updateQna(Qna qna);
+	
 	// [이승준] QnA 삽입
 	void insertQna(Qna qna);
 	

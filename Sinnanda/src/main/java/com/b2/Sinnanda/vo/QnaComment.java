@@ -6,7 +6,6 @@ import lombok.Data;
 public class QnaComment {
 	private int qnaNo;
 	private int adminNo;
-	private String qnaComment;
-	private String createDate;
-	private String updateDate;
+	private String qnaCommentContent;
+	private String commentDate;
 }

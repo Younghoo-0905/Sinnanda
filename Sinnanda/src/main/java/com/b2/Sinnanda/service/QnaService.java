@@ -20,6 +20,23 @@ public class QnaService {
 	@Autowired
 	private QnaMapper qnaMapper;
 	
+	/* [이승준] QnA 삭제 */
+	public void removeQna(int qnaNo, int memberNo) {
+		log.debug("[Debug] \"START\" QnaService.removeQna()");
+		log.debug(" ├[param] qnaNo : "+qnaNo);
+		log.debug(" ├[param] memberNo : "+memberNo);
+		
+		qnaMapper.deleteQna(qnaNo, memberNo);
+	}
+	
+	/* [이승준] QnA 수정 */
+	public void modifyQna(Qna qna) {
+		log.debug("[Debug] \"START\" QnaService.modifyQna()");
+		log.debug(" ├[param] qna : "+qna.toString());
+		
+		qnaMapper.updateQna(qna);
+	}
+	
 	/* [이승준] QnA 삽입 */
 	public void addQna(Qna qna) {
 		log.debug("[Debug] \"START\" QnaService.addQna()");

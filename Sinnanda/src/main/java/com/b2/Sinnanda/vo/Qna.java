@@ -14,5 +14,7 @@ public class Qna {
 	private String qnaSecret;
 	private String createDate;
 	private String updateDate;
-	List<QnaComment> qnaComments;
+	QnaComment qnaComments;
+	private String memberName;
+	private String adminName;
 }
