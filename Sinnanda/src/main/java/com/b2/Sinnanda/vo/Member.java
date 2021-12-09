@@ -11,6 +11,7 @@ public class Member {
 	int memberAge;
 	String memberTel;
 	String memberEmail;
+	int memberLevel;
 	String createDate;
 	String updateDate;
 }

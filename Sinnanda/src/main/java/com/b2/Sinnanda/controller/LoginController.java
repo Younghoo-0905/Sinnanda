@@ -1,6 +1,7 @@
 package com.b2.Sinnanda.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,30 +18,34 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
 	
 	@Autowired LoginService loginService;
+	Member loginMember = new Member();
 	
-	@GetMapping("login")
+	@GetMapping("login") //로그인 페이지
 	public String showLogin() {
 		return "login";
 	}
 	
-	@GetMapping("insertUserForm")
+	@GetMapping("insertUserForm") // 회원가입 페이지
 	public String showInsertForm() {
 		return "insertUserForm";
 	}
 	
+	@GetMapping("logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "index";
+	}
+	
 	@PostMapping("login")
-	public String actionLogin(HttpServletRequest request) {
-		Member member = new Member();
-		member.setMemberId(request.getParameter("userId"));
-		member.setMemberPw(request.getParameter("userPw"));
-		
+	public String actionLogin(Member member, HttpServletRequest request) { // 로그인 액션 후 인덱스 페이지 이동
+		HttpSession session = request.getSession();
 		log.debug("입력된 값 : "+member.getMemberId()+", "+member.getMemberPw()+"<---------login");
-		
-		member = loginService.loginService(member);
-		
-		log.debug("검색한 정보 : "+member.toString());
-		
-		return "test";
+		log.debug("검색한 정보 : "+(loginService.loginService(member)).toString());
+		loginMember = loginService.loginService(member);
+		log.debug("00000000000000000000000000000000000000"+loginMember);
+		session.setAttribute("loginMember", loginMember);
+		return "index";	
 	}
 	
 	@GetMapping("test")

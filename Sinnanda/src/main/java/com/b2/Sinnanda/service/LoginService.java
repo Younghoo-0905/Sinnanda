@@ -10,8 +10,14 @@ import com.b2.Sinnanda.vo.Member;
 public class LoginService {
 	
 	@Autowired LoginMapper loginMapper;
+	Member loginMember = new Member();
 	
 	public Member loginService(Member member) {
-		return loginMapper.login(member);
+		
+		loginMember = loginMapper.login(member);
+		if(loginMember == null) {
+			return null;
+		}
+		return loginMember;
 	}
 }
