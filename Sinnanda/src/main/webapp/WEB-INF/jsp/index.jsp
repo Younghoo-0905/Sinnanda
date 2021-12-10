@@ -153,7 +153,7 @@
           <div class="col-md-3 d-flex align-self-stretch ftco-animate">
             <div class="media block-6 services d-block text-center">
               <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-guarantee"></span></div></div>
-              <div class="media-body p-2 mt-2">
+              <div class="osano-cm-window">
                 <h3 class="heading mb-3">가장 합리적인 가격</h3>
                 <p>A small river named Duden flows by their place and supplies.</p>
               </div>
@@ -162,7 +162,7 @@
           <div class="col-md-3 d-flex align-self-stretch ftco-animate">
             <div class="media block-6 services d-block text-center">
               <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-like"></span></div></div>
-              <div class="media-body p-2 mt-2">
+              <div class="osano-cm-window">
                 <h3 class="heading mb-3">우리가 사랑하는 여행지</h3>
                 <p>A small river named Duden flows by their place and supplies.</p>
               </div>
@@ -171,7 +171,7 @@
           <div class="col-md-3 d-flex align-self-stretch ftco-animate">
             <div class="media block-6 services d-block text-center">
               <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-detective"></span></div></div>
-              <div class="media-body p-2 mt-2">
+              <div class="osano-cm-window">
                 <h3 class="heading mb-3">완벽한 여행을 위한 안내자</h3>
                 <p>A small river named Duden flows by their place and supplies.</p>
               </div>
@@ -180,7 +180,7 @@
           <div class="col-md-3 d-flex align-self-stretch ftco-animate">
             <div class="media block-6 services d-block text-center">
               <div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-support"></span></div></div>
-              <div class="media-body p-2 mt-2">
+              <div class="osano-cm-window">
                 <h3 class="heading mb-3">우리 모두에게 친철한 서비스</h3>
                 <p>A small river named Duden flows by their place and supplies.</p>
               </div>
