@@ -78,4 +78,11 @@ public class MemberController {
 		
 		return "redirect:/index";
 	}
+	
+	//	[김영후] 회원 가입 시 실시간 ID 중복체크
+	@PostMapping("/chkId")
+	public int chkId(String memberId) {
+		int checkResult = memberService.checkId(memberId);
+		return checkResult;
+	}
 }

@@ -26,7 +26,7 @@ public class MemberService {
 		memberMapper.updateMember(member);
 	}
 	
-	//	회원 이메일 인증
+	//	[김영후] 회원 이메일 인증
 	public int certifyMember(Member member) {
 		int result = memberMapper.certifyMember(member);
 		return result;
@@ -35,7 +35,7 @@ public class MemberService {
 		memberMapper.certifyMemberUpdate(member);
 	}
 	
-	//	회원 가입
+	//	[김영후] 회원 가입
 	public void addMember(Member member) {
 
 		//	이메일 인증코드 생성
@@ -44,9 +44,15 @@ public class MemberService {
 		memberMapper.insertMember(member);
 	}
 	
-	//	회원 탈퇴
+	//	[김영후] 회원 탈퇴
 	public void removeMember(Member member, MemberOut memberOut) {
 		memberMapper.deleteMember(member);
 		memberMapper.insertMemberOut(memberOut);
 	}	
+	
+	//	[김영후] 회원 가입 시 ID 중복체크
+	public int checkId(String memberId) {
+		int checkResult = memberMapper.checkId(memberId);
+		return checkResult;
+	}
 }

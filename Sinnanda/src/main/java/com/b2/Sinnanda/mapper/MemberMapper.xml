@@ -38,7 +38,7 @@
 	    WHERE member_no = #{memberNo}
 	</update>
 
-	<!-- 회원 가입 -->
+	<!-- [김영후] 회원 가입 -->
 	<insert id="insertMember" parameterType="com.b2.Sinnanda.vo.Member">
 		INSERT INTO 
 			member(
@@ -64,7 +64,7 @@
 			)
 	</insert>
 	
-	<!-- 회원가입 이메일 인증 -->
+	<!-- [김영후] 회원가입 이메일 인증 -->
 	<select id="certifyMember" parameterType="com.b2.Sinnanda.vo.Member" resultType="int">
 		SELECT COUNT(*) 
 		FROM member 
@@ -73,7 +73,7 @@
 			AND 
 			member_certifycode = #{memberCertifycode}
 	</select>
-	<!-- 인증 된 회원 활성화 -->
+	<!-- [김영후] 인증 된 회원 활성화 -->
 	<update id="certifyMemberUpdate" parameterType="com.b2.Sinnanda.vo.Member">
 		UPDATE member 
 		SET member_active = 1
@@ -81,7 +81,7 @@
 			member_id = #{memberId}
 	</update>
 	
-   	<!-- 회원 탈퇴 -->
+   	<!-- [김영후] 회원 탈퇴 -->
 	<delete id="deleteMember" parameterType="com.b2.Sinnanda.vo.Member">
 		DELETE FROM member
 		WHERE 
@@ -89,7 +89,7 @@
 		AND
 		member_pw=#{memberPw}
 	</delete>
-	<!-- 탈퇴 멤버 데이터 추가 -->
+	<!-- [김영후] 탈퇴 멤버 데이터 추가 -->
 	<insert id="insertMemberOut" parameterType="com.b2.Sinnanda.vo.MemberOut">
 		INSERT INTO 
 		member_out(
@@ -101,4 +101,11 @@
 			NOW(), 
 			#{outReason})
 	</insert>   
+	
+	<!-- [김영후] 회원가입 시 ID 중복체크 -->
+	<select id="checkId" parameterType="String" resultType="int">
+		SELECT member_id FROM member WHERE member_id = #{memberId}
+		UNION
+		SELECT member_id FROM member_out WHERE member_id = #{memberId}
+	</select>
 </mapper>

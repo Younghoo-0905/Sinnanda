@@ -13,14 +13,17 @@ public interface MemberMapper {
 	// 회원 정보 수정
 	int updateMember(Member member);
 	
-	//	회원 가입
+	//	[김영후] 회원 가입
 	int insertMember(Member member);
 	
-	//	회원 이메일 인증
+	//	[김영후] 회원 이메일 인증
 	int certifyMember(Member member);
 	int certifyMemberUpdate(Member member);
 	
-	//	회원 탈퇴
+	//	[김영후] 회원 탈퇴
 	int insertMemberOut(MemberOut memberOut);
 	int deleteMember(Member member);
+	
+	//	[김영후] 회원 가입 시 ID 중복체크
+	int checkId(String memberId);
 }

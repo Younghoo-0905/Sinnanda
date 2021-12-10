@@ -3,21 +3,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Skydash Admin</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="../../vendors/feather/feather.css">
-  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="../../images/favicon.png" />
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Skydash Admin</title>
+	<!-- plugins:css -->
+	<link rel="stylesheet" href="../../vendors/feather/feather.css">
+	<link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+	<link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+	<!-- endinject -->
+	<!-- Plugin css for this page -->
+	<!-- End plugin css for this page -->
+	<!-- inject:css -->
+	<link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+	<!-- endinject -->
+	<link rel="shortcut icon" href="../../images/favicon.png" />
+	<style>
+		.idOk
+		{
+			color: #6A82FB; 
+			display: none;
+		}
+		.idUsed
+		{
+			color: red; 
+			display: none;
+		}
+	</style>
 </head>
 
 <body>
@@ -33,8 +45,10 @@
               <h4>New here?</h4>
               <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
               <form class="pt-3" method="post" action="/insertMember" id="insertMemberForm">
-                <div class="form-group">
+                <div class="form-group text-center">
                   <input type="text" class="form-control form-control-lg" name="memberId" id="memberId" placeholder="UserID">
+                  <span class="idOk">사용 가능한 ID입니다</span>
+                  <span class="idUsed">중복된 ID입니다</span>
                 </div>
                <div class="form-group">
                   <input type="password" class="form-control form-control-lg" name="memberPw" id="memberPw" placeholder="Password">
@@ -63,7 +77,7 @@
                   </div>
                 </div>
                 <div class="mt-3">
-                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onclick="return chk_form()">SIGN UP</a>
+                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onclick="return chkForm()">SIGN UP</a>
                 </div>
                 <div class="text-center mt-4 font-weight-light">
                   Already have an account? <a href="login.html" class="text-primary">Login</a>
@@ -93,7 +107,24 @@
   
   <!-- 유효성 검사 -->
   	<script>
-		function chk_form() {
+  		$('#memberId').focusout(function(memberId) {
+  			$.ajax({
+  				type: 'get', 
+  				url: '/chkId?memberId=' + memberId, 
+  				success: function(checkResult) {  					
+  					if(checkResult == 1) {	//	ID가 중복된 경우
+  						$('.idOk').css("display", "inline-block");
+  						$('.idUsed').css("display", "none");
+  					}		
+  					if(checkResult != 1) {	//	ID가 중복되지 않은 경우
+  						$('.idOk').css("display", "none");
+  						$('.idUsed').css("display", "inline-block");
+  					}
+  				}
+			})
+  		})
+  		
+		function chkForm() {
 		if(document.getElementById("memberId").value==''){
 			alert("ID를 입력하세요.");
 			return false;
