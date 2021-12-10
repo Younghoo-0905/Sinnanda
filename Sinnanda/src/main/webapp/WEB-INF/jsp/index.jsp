@@ -58,7 +58,13 @@
           <li class="nav-item"><a href="" class="nav-link">마이페이지</a></li>
           <li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>
           </c:if>
-     
+     	<c:if test ="${loginAdmin == null}">
+          <li class="nav-item"><a href="/adminLoginForm" class="nav-link">관리자 로그인</a></li>
+          </c:if>
+           <c:if test ="${loginAdmin != null}">
+          <li class="nav-item"><a href="/adminLogout" class="nav-link">관리자로그아웃</a></li>
+          </c:if>
+     	
         </ul>
       </div>
     </div>
@@ -202,7 +208,7 @@
     				<div class="destination-slider owl-carousel ftco-animate">
     					<div class="item">
 		    				<div class="destination">
-		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(images/destination-1.jpg);">
+		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(<%=request.getContextPath()%>/direngine-master/images/jeju.jpg);">
 		    						<div class="icon d-flex justify-content-center align-items-center">
 		    							<span class="icon-search2"></span>
 		    						</div>
@@ -215,24 +221,25 @@
 	    				</div>
 	    				<div class="item">
 		    				<div class="destination">
-		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(images/destination-2.jpg);">
+		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(<%=request.getContextPath()%>/direngine-master/images/gang.jpg);">
 		    						<div class="icon d-flex justify-content-center align-items-center">
 		    							<span class="icon-search2"></span>
 		    						</div>
 		    					</a>
 		    					<div class="text p-3">
-		    						<h3><a href="#">강원도</a></h3>
+		    						<h3><a href="#">강릉</a></h3>
 		    						<span class="listing">20 Listing</span>
 		    					</div>
 		    				</div>
 	    				</div>
 	    				<div class="item">
 		    				<div class="destination">
-		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(images/destination-3.jpg);">
+		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(<%=request.getContextPath()%>/direngine-master/images/busan.jpg);">
 		    						<div class="icon d-flex justify-content-center align-items-center">
 		    							<span class="icon-search2"></span>
 		    						</div>
 		    					</a>
+		 
 		    					<div class="text p-3">
 		    						<h3><a href="#">부산</a></h3>
 		    						<span class="listing">10 Listing</span>
@@ -241,7 +248,7 @@
 	    				</div>
 	    				<div class="item">
 		    				<div class="destination">
-		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(images/destination-4.jpg);">
+		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(<%=request.getContextPath()%>/direngine-master/images/gapyeong.jpg);">
 		    						<div class="icon d-flex justify-content-center align-items-center">
 		    							<span class="icon-search2"></span>
 		    						</div>
@@ -254,20 +261,20 @@
 	    				</div>
 	    				<div class="item">
 		    				<div class="destination">
-		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(images/destination-5.jpg);">
+		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(<%=request.getContextPath()%>/direngine-master/images/seoul.jpg);">
 		    						<div class="icon d-flex justify-content-center align-items-center">
 		    							<span class="icon-search2"></span>
 		    						</div>
 		    					</a>
 		    					<div class="text p-3">
-		    						<h3><a href="#"><img  src="<%=request.getContextPath()%>/direngine-master/images/seoul.jpg">서울</a></h3>
+		    						<h3><a href="#">서울</a></h3>
 		    						<span class="listing">3 Listing</span>
 		    					</div>
 		    				</div>
 	    				</div>
 	    				<div class="item">
 		    				<div class="destination">
-		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(images/destination-6.jpg);">
+		    					<a href="#" class="img d-flex justify-content-center align-items-center" style="background-image: url(<%=request.getContextPath()%>/direngine-master/images/unlsan.jpg);">
 		    						<div class="icon d-flex justify-content-center align-items-center">
 		    							<span class="icon-search2"></span>
 		    						</div>
