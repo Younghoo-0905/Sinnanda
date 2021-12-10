@@ -9,6 +9,7 @@ public class Admin {
 	private String adminPw;
 	private int adminPositionNo;
 	private String adminName;
+	private String memberLevel;
 	private String createdate;
 	private String updateDate;
 }
