@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.b2.Sinnanda.service.LoginService;
+import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class LoginController {
 	
+	@Autowired MemberService memberService;	//	[김영후]
 	@Autowired LoginService loginService;
 	Member loginMember = new Member();
 	
@@ -45,6 +47,14 @@ public class LoginController {
 		loginMember = loginService.getLogin(member);
 		log.debug("00000000000000000000000000000000000000"+loginMember);
 		session.setAttribute("loginMember", loginMember);
+		
+			//	[김영후] 이메일 인증여부 확인
+		int memberActive = memberService.getCertifyMember(member);
+		log.debug("로그인 멤버 활성화 여부 : " + memberActive);
+		if(memberActive == 0) {		//	active = 0 인 회원은 이메일 인증 화면으로
+			return "certifyEmailForm";
+		}
+		
 		return "index";	
 	}
 	

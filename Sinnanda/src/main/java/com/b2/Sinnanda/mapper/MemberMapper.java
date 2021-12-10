@@ -18,9 +18,10 @@ public interface MemberMapper {
 	//	[김영후] 회원 가입
 	int insertMember(Member member);
 	
-	//	[김영후] 회원 이메일 인증
+	//	[김영후] 회원 이메일 인증		21.12.10
 	int certifyMember(Member member);
 	int certifyMemberUpdate(Member member);
+	int selectCertifyMember(Member member);
 	
 	//	[김영후] 회원 탈퇴
 	int insertMemberOut(MemberOut memberOut);

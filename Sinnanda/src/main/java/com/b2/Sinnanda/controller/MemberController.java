@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.b2.Sinnanda.service.CertifyEmailService;
 import com.b2.Sinnanda.service.MemberService;
@@ -45,7 +46,7 @@ public class MemberController {
 		log.debug("MemberController : 수정 성공!");
 		return "redirect:/myPage";
 	}
-	
+
 	//	[김영후] 회원 가입
 	@GetMapping("/insertMember")
 	public String getInsertMember() {
@@ -53,9 +54,10 @@ public class MemberController {
 	}
 	@PostMapping("/insertMember")
 	public String postInsertMember(Member member) {
-		
+		log.debug("입력된 회원 정보 :" + member.toString());
+		//	회원정보 입력
 		memberService.addMember(member);
-		
+		//	입력된 이메일로 인증코드 발송
 		certifyEmailService.sendMail(member);
 		
 		return "redirect:/login";
@@ -65,11 +67,12 @@ public class MemberController {
 	@PostMapping("/certifyMember")
 	public String certifyMember(Member member) {
 		int result = memberService.certifyMember(member);
+		log.debug("@@@@@@@@@@@@@@@@@@@@@@" + result);
 		if(result == 1) {
 			memberService.certifyMemberUpdate(member);
 			return "index";
 		} else {
-			return "redirect:/login";
+			return "certifyEmailForm";
 		}
 	}
 	
@@ -80,7 +83,7 @@ public class MemberController {
 	}	
 	@PostMapping("/insertMemberOut")
 	public String postInsertMemberOut(Member member, MemberOut memberOut) {
-		
+		log.debug("탈퇴할 멤버 정보 :" + member);		
 		//	트랜잭션 처리 -> member 테이블 데이터 삭제 후 memberOut 테이블 데이터 삽입
 		memberService.removeMember(member, memberOut);
 		
@@ -88,9 +91,12 @@ public class MemberController {
 	}
 	
 	//	[김영후] 회원 가입 시 실시간 ID 중복체크
-	@PostMapping("/chkId")
-	public int chkId(String memberId) {
+	@GetMapping("/chkId")
+	@ResponseBody
+	public int checkId(String memberId) {
+		//	DB에 저장된 중복값 유무 결과를 반환
 		int checkResult = memberService.checkId(memberId);
+		log.debug("중복값 검사 결과 : " + checkResult);
 		return checkResult;
 	}
 }

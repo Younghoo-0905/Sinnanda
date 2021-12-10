@@ -8,6 +8,7 @@
 			   member_name memberName, 
 			   member_age memberAge, 
 			   member_tel memberTel, 
+			   member_email memberEmail, 
 			   create_date createDate, 
 			   update_date updateDate 
 		FROM member WHERE member_id= #{memberId} AND member_pw= #{memberPw}

@@ -73,6 +73,12 @@
 			AND 
 			member_certifycode = #{memberCertifycode}
 	</select>
+	<!-- [김영후] 로그인 시 회원 이메일 인증여부 확인 21.12.10 -->
+	<select id="selectCertifyMember" parameterType="com.b2.Sinnanda.vo.Member" resultType="int">
+		SELECT member_active 
+		FROM member
+		WHERE member_id = #{memberId}	
+	</select>
 	<!-- [김영후] 인증 된 회원 활성화 -->
 	<update id="certifyMemberUpdate" parameterType="com.b2.Sinnanda.vo.Member">
 		UPDATE member 
@@ -104,8 +110,10 @@
 	
 	<!-- [김영후] 회원가입 시 ID 중복체크 -->
 	<select id="checkId" parameterType="String" resultType="int">
-		SELECT member_id FROM member WHERE member_id = #{memberId}
-		UNION
-		SELECT member_id FROM member_out WHERE member_id = #{memberId}
+		SELECT COUNT(member_id) FROM(
+			SELECT member_id FROM member WHERE member_id = #{memberId}
+			UNION
+			SELECT member_id FROM member_out WHERE member_id = #{memberId}
+			) AS u
 	</select>
 </mapper>

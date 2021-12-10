@@ -44,7 +44,7 @@
               </div>
               <h4>New here?</h4>
               <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
-              <form class="pt-3" method="post" action="/insertMember" id="insertMemberForm">
+              <form class="pt-3" method="post" action="insertMember" id="insertMemberForm">
                 <div class="form-group text-center">
                   <input type="text" class="form-control form-control-lg" name="memberId" id="memberId" placeholder="UserID">
                   <span class="idOk">사용 가능한 ID입니다</span>
@@ -77,10 +77,10 @@
                   </div>
                 </div>
                 <div class="mt-3">
-                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onclick="return chkForm()">SIGN UP</a>
+                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onclick="return check_form()">SIGN IN</a>
                 </div>
                 <div class="text-center mt-4 font-weight-light">
-                  Already have an account? <a href="login.html" class="text-primary">Login</a>
+                  Already have an account? <a href="login" class="text-primary">Login</a>
                 </div>
               </form>
             </div>
@@ -105,56 +105,69 @@
   <script src="../../js/todolist.js"></script>
   <!-- endinject -->
   
-  <!-- 유효성 검사 -->
+  <!-- [김영후] 유효성 검사 -->
   	<script>
-  		$('#memberId').focusout(function(memberId) {
+  		//	ID칸 focusout 이벤트 -> DB에서 ID 중복검사 후 표시
+  		
+  		//	중복검사 여부 표시
+  		var checkedId = false;
+  		
+  		$('#memberId').focusout(function() {
+  			let memberId = $('#memberId').val();
   			$.ajax({
   				type: 'get', 
   				url: '/chkId?memberId=' + memberId, 
   				success: function(checkResult) {  					
-  					if(checkResult == 1) {	//	ID가 중복된 경우
-  						$('.idOk').css("display", "inline-block");
-  						$('.idUsed').css("display", "none");
-  					}		
-  					if(checkResult != 1) {	//	ID가 중복되지 않은 경우
+  					if(checkResult == "1") {	//	ID가 중복된 경우 (가입불가)
+  						//	중복된 ID 표시
   						$('.idOk').css("display", "none");
   						$('.idUsed').css("display", "inline-block");
+  						checkedId = false;
+  					}		
+  					if(checkResult != "1") {	//	ID가 중복되지 않은 경우 (가입가능)
+  						//	사용 가능한 ID 표시
+  						$('.idOk').css("display", "inline-block");
+  						$('.idUsed').css("display", "none");
+  						checkedId = true;
   					}
   				}
 			})
   		})
   		
-		function chkForm() {
-		if(document.getElementById("memberId").value==''){
-			alert("ID를 입력하세요.");
-			return false;
-		}
-		if(document.getElementById("memberPw").value==''){
-			alert("Password를 입력하세요.");
-			return false;
-		}
-		if(document.getElementById("memberPw").value!=document.getElementById("memberPw2").value){
-			alert("비밀번호가 일치하지 않습니다.");
-			return false;
-		}		
-		if(document.getElementById("memberName").value==''){
-			alert("Nickname을 입력하세요.");
-			return false;
-		}
-		if(document.getElementById("memberAge").value==''){
-			alert("Age를 입력하세요.");
-			return false;
-		}
-		if(document.getElementById("memberTel").value==''){
-			alert("Phone number를 입력하세요.");
-			return false;
-		}
-		if(document.getElementById("memberEmail").value==''){
-			alert("Email을 입력하세요.");
-			return false;
-		}
-		
-		document.getElementById("insertMemberForm").submit();
+		function check_form() {
+			if($('#memberId').val()==''){
+				alert("ID를 입력하세요.");
+				return false;
+			}
+			if(checkedId == false) {
+				alert("ID 중복을 확인하세요.")
+				return false;
+			}
+			if($('#memberPw').val()==''){
+				alert("Password를 입력하세요.");
+				return false;
+			}
+			if($('#memberPw').val() != $('#memberPw2').val()){
+				alert("비밀번호가 일치하지 않습니다.");
+				return false;
+			}		
+			if($('#memberName').val()==''){
+				alert("Nickname을 입력하세요.");
+				return false;
+			}
+			if($('#memberAge').val()==''){
+				alert("Age를 입력하세요.");
+				return false;
+			}
+			if($('#memberTel').val()==''){
+				alert("Phone number를 입력하세요.");
+				return false;
+			}
+			if($('#memberEmail').val()==''){
+				alert("Email을 입력하세요.");
+				return false;
+			}		
+			$('#insertMemberForm').submit();
 		}
 	</script>
 </body>

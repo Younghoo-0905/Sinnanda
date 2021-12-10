@@ -44,6 +44,13 @@ public class MemberService {
 		memberMapper.insertMember(member);
 	}
 	
+	//	[김영후] 로그인 시 이메일 인증 여부 확인
+	public int getCertifyMember(Member member) {
+		int memberActive = memberMapper.selectCertifyMember(member);
+		return memberActive;
+		
+	}
+	
 	//	[김영후] 회원 탈퇴
 	public void removeMember(Member member, MemberOut memberOut) {
 		memberMapper.deleteMember(member);
