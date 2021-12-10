@@ -12,9 +12,10 @@ public class LoginService {
 	@Autowired LoginMapper loginMapper;
 	Member loginMember = new Member();
 	
-	public Member loginService(Member member) {
+	public Member getLogin(Member member) {
 		
-		loginMember = loginMapper.login(member);
+		//[이원희]로그인 결과가 없으면 null 있으면 멤버 반환 21.12.10
+		loginMember = loginMapper.selectlogin(member);
 		if(loginMember == null) {
 			return null;
 		}

@@ -6,5 +6,6 @@ import com.b2.Sinnanda.vo.Member;
 
 @Mapper
 public interface LoginMapper {
-	public Member login(Member member);
+	//[이원희] 로그인 정보 조회 쿼리 21.12.10
+	public Member selectlogin(Member member); 
 }

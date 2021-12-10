@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.LoginMapper">
-	<select id="login" parameterType="com.b2.Sinnanda.vo.Member" resultType="com.b2.Sinnanda.vo.Member">
+	<select id="selectlogin" parameterType="com.b2.Sinnanda.vo.Member" resultType="com.b2.Sinnanda.vo.Member">
 		SELECT member_no memberNo, 
 			   member_id memberId, 
 			   member_pw memberPw, 

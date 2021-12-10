@@ -103,7 +103,7 @@
                   
                    <div class="select-wrap one-third">
                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                    <select name="" id="" class="form-control" placeholder="Keyword search">
+                    <select name="" id="" class="form-control" placeholder="Keyword search" hidden="hidden">
                     <!-- 도시 선택 ??-->
                       <option value=""></option>
                       <option value=""></option>
@@ -114,7 +114,8 @@
                   </div>
                    <!-- 캘린더 -->
                    
-                   
+                   <!--[이원희]index페이지 검색바 입력칸 21.12.10 -->
+                   <input type="text" class="form-control" placeholder="Destination, City">
                    
                    <!--인원수 -->
                    <div class="select-wrap one-third">

@@ -20,17 +20,17 @@ public class LoginController {
 	@Autowired LoginService loginService;
 	Member loginMember = new Member();
 	
-	@GetMapping("login") //로그인 페이지
+	@GetMapping("login") //[이원희]로그인 페이지 이동 21.12.10
 	public String showLogin() {
 		return "login";
 	}
 	
-	@GetMapping("insertMemberForm") // 회원가입 페이지
+	@GetMapping("insertMemberForm") //[이원희]회원가입 페이지 이동 21.12.10
 	public String showInsertForm() {
 		return "insertMemberForm";
 	}
 	
-	@GetMapping("logout")
+	@GetMapping("logout") //[이원희]로그아웃 21.12.10
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate();
@@ -38,11 +38,11 @@ public class LoginController {
 	}
 	
 	@PostMapping("login")
-	public String actionLogin(Member member, HttpServletRequest request) { // 로그인 액션 후 인덱스 페이지 이동
+	public String actionLogin(Member member, HttpServletRequest request) { // [이원희]로그인 액션 후 인덱스 페이지 이동 21.12.10
 		HttpSession session = request.getSession();
 		log.debug("입력된 값 : "+member.getMemberId()+", "+member.getMemberPw()+"<---------login");
-		log.debug("검색한 정보 : "+(loginService.loginService(member)).toString());
-		loginMember = loginService.loginService(member);
+		log.debug("검색한 정보 : "+(loginService.getLogin(member)).toString());
+		loginMember = loginService.getLogin(member);
 		log.debug("00000000000000000000000000000000000000"+loginMember);
 		session.setAttribute("loginMember", loginMember);
 		return "index";	
