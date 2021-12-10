@@ -19,15 +19,11 @@ public class MemberController {
 	@Autowired MemberService memberService;
 	@Autowired CertifyEmailService certifyEmailService;
 	
-	// 마이페이지
-	@GetMapping("/myPage")
-	public String boardOne(Model model, int memberNo) {
-		Member member = memberService.getMyPage(memberNo);
-		model.addAttribute("member", member);
-		return "myPage";
-	}
+	// [유동진] 마이페이지
 	
-	// 회원 정보 수정
+
+	
+	// [유동진] 회원 정보 수정
 	@GetMapping("/modifyMember")
 	public String modifyMember(Model model, Member member) {
 		log.debug("MemberController : memberNo -> " + member.getMemberNo());
