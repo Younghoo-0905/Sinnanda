@@ -1,5 +1,7 @@
 package com.b2.Sinnanda.mapper;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.b2.Sinnanda.vo.Member;
@@ -7,10 +9,10 @@ import com.b2.Sinnanda.vo.MemberOut;
 
 @Mapper
 public interface MemberMapper {
-	// 마이페이지
-	Member selectMyPage(int memberNo);
-	
-	// 회원 정보 수정
+	// [유동진] 마이페이지
+	int selectMyPage(int memberNo);
+		
+	// [유동진] 회원 정보 수정
 	int updateMember(Member member);
 	
 	//	[김영후] 회원 가입

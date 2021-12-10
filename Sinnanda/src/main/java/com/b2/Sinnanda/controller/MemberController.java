@@ -1,5 +1,9 @@
 package com.b2.Sinnanda.controller;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,14 +24,18 @@ public class MemberController {
 	@Autowired CertifyEmailService certifyEmailService;
 	
 	// [유동진] 마이페이지
+	@GetMapping("myPage")
+	public String myPage(Model model, HttpServletRequest request) {
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		log.debug("멤버 넘버 : "+ memberNo);
+		// Member member = memberService.myPage(memberNo);
+		return "myPage";
+	}
 	
-
 	
 	// [유동진] 회원 정보 수정
 	@GetMapping("/modifyMember")
-	public String modifyMember(Model model, Member member) {
-		log.debug("MemberController : memberNo -> " + member.getMemberNo());
-		model.addAttribute("memberNo", member.getMemberNo());
+	public String modifyMember(HttpSession session, Model model) {
 		return "modifyMember";
 	}
 	@PostMapping("/modifyMember")

@@ -7,7 +7,8 @@
 </head>
 <body>
 	<h1>마이 페이지</h1>
-	<form method="post">		
+	<form method="post">
+				
 		<div>
 			<a href = "/modifyMember">회원정보 수정</a>
 			<a href = "">예약내역 확인</a>
