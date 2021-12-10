@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
@@ -72,13 +72,12 @@
             <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>여행이 신난다.<br></strong> 신나는 도시를 골라봐</h1>
             <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">원하는 도시와 날짜를 골라봐</p>
             <div class="block-17 my-4">
-              <form action="" method="post" class="d-block d-flex">
+              <form action="searchList" method="post" class="d-block d-flex" id="searchForm">
                 <div class="fields d-block d-flex">
                 
                  <div class="select-wrap one-third">
                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>    
                     <select name="" id="" class="form-control">
-                 
                 
                     <!-- 지역 선택 -->
                       <option value="">서울</option>
@@ -115,7 +114,7 @@
                    <!-- 캘린더 -->
                    
                    <!--[이원희]index페이지 검색바 입력칸 21.12.10 -->
-                   <input type="text" class="form-control" placeholder="Destination, City">
+                   <input type="text" name="accomName" class="form-control" placeholder="Destination, City">
                    
                    <!--인원수 -->
                    <div class="select-wrap one-third">
@@ -130,8 +129,7 @@
                   </div>
                 </div>
                 
-               
-                <input type="submit" class="search-submit btn btn-primary" value="Search">  
+                <button type="submit" class="search-submit btn btn-primary">Search</button>
               </form>
             </div>
              <!-- 모텔인지 호텔이인지 카테고리 -->

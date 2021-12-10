@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.b2.Sinnanda.mapper.AccomMapper">
+	<!-- [이원희] 숙소 이름으로 검색 -->
+	<select id="selectAccomList" parameterType="com.b2.Sinnanda.vo.Accom" resultType="com.b2.Sinnanda.vo.Accom">
+		SELECT accom_no accomNo, 
+			   host_no hostNo, 
+			   admin_no adminNo, 
+			   commission_no commissionNo, 
+			   accom_name accomName, 
+			   accom_img accomImg, 
+			   accom_description accomDescription, 
+			   create_date createDate, 
+			   update_date updateDate 
+			   FROM accom WHERE accom_name = #{accomName}
+	</select>
+</mapper>
