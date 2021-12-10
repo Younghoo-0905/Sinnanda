@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,34 +14,39 @@
 		<a href="addQna">문의사항 작성</a>
 	</div>
 	<div>
-		<select id="qnaCategory" name="qnaCategory">
-			<option value="기타문의">기타문의</option>
-			<option value="결제문의">결제문의</option>
-			<option value="이용문의">이용문의</option>
-			<option value="예약문의">예약문의</option>
-			<option value="숙소문의">숙소문의</option>
+		<select id="qnaCategory" name="qnaCategory" onchange="location.href=this.value">
+			<option value="">선택</option>
+			<option value="/qnaList">전체문의</option>
+			<option value="/qnaList?qnaCategory=기타문의">기타문의</option>
+			<option value="/qnaList?qnaCategory=결제문의">결제문의</option>
+			<option value="/qnaList?qnaCategory=이용문의">이용문의</option>
+			<option value="/qnaList?qnaCategory=예약문의">예약문의</option>
+			<option value="/qnaList?qnaCategory=숙소문의">숙소문의</option>
 		</select>
-		<a href="/qnaList?qnaCategory=${qnaCategory}">선택</a>
 	</div>
 	<table border="1">
-		<tr>
-			<td>문의 번호</td>
-			<td>카테고리</td>
-			<td>문의한 회원</td>
-			<td>제목</td>
-			<td>비밀글 여부</td>
-			<td>작성일</td>
+		<tr style="text-align:center">
+			<td width="5%">번호</td>
+			<td width="40%">제목</td>
+			<td width="10%">문의유형</td>
+			<td width="10%">작성자</td>
+			<td width="10%">작성일</td>
 		</tr>
 		<c:forEach items="${qnaList}" var="qna">
 			<tr>
-				<td>${qna.qnaNo}</td>
-				<td>${qna.qnaCategory}</td>
-				<td>${qna.memberName}</td>
+				<td style="text-align:center">${qna.qnaNo}</td>
 				<td>
 					<a href="/qnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
+					<c:if test="${qna.qnaSecret == '비밀문의'}">
+						<img src="/images/qna/lockImg.png" width="20px" height="20px">
+					</c:if>
 				</td>
-				<td>${qna.qnaSecret}</td>
-				<td>${qna.createDate}</td>
+				<td style="text-align:center">${qna.qnaCategory}</td>
+				<td style="text-align:center">${qna.memberName}</td>
+				<td style="text-align:center">
+					<fmt:parseDate value="${qna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+					<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>
