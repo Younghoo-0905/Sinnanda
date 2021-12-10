@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Skydash Admin</title>
+  <title>관리자 로그인</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../../vendors/feather/feather.css">
   <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
@@ -31,51 +30,38 @@
               <div class="brand-logo">
                 <img src="../../images/logo.svg" alt="logo">
               </div>
-              <h4>관리자 회원가입</h4>
-              <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
-              <form class="pt-3" method="post" action="insertAdminForm" id="insertAdminForm">
+              <h4>Hello! let's get started</h4>
+              <h6 class="font-weight-light">Sign in to continue.</h6>
+              <form class="pt-3" id="adminLoginForm" action="adminLoginForm" method="post">
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="adminId" id="adminId" placeholder="UserID">
+                  <input type="email" class="form-control form-control-lg" name ="adminId" id="adminId" placeholder="adminname">
                 </div>
-               <div class="form-group">
+                <div class="form-group">
                   <input type="password" class="form-control form-control-lg" name="adminPw" id="adminPw" placeholder="Password">
                 </div>
-                <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" id="adminPw2" placeholder="Repeat Password">
+                <div class="mt-3">
+                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="#" onclick="return chk_form()">SIGN IN</a>
                 </div>
-                <div class="form-group">
-                  <select name="adminPositionNo" id="adminPositionNo" class="form-control form-control-lg">
-                  	<option value ="1">1</option>
-                  	<option value ="2">2</option>
-                  	<option value ="3">3</option>
-                  	<option value ="4">4</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" id="adminName" name ="adminName" placeholder="adminName">
-                </div>
-                <div class="form-group">
-                  <input type="hidden" class="form-control form-control-lg" name="memberLevel" id="memberLevel" placeholder="memberLevel" value="3" readonly>
-                </div>
-             
-                <div class="mb-4">
+                <div class="my-2 d-flex justify-content-between align-items-center">
                   <div class="form-check">
                     <label class="form-check-label text-muted">
                       <input type="checkbox" class="form-check-input">
-                      I agree to all Terms & Conditions
+                      Keep me signed in
                     </label>
                   </div>
+                  <a href="#" class="auth-link text-black">Forgot password?</a>
                 </div>
-                <div class="mt-3">
-                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onclick="return chk_form()">SIGN UP</a>
+                <div class="mb-2">
+                  <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                    <i class="ti-facebook mr-2"></i>Connect using facebook
+                  </button>
                 </div>
                 <div class="text-center mt-4 font-weight-light">
-                  Already have an account? <a href="login.html" class="text-primary">Login</a>
+                  Don't have an account? <a href="insertAdminForm" class="text-primary">Create</a>
                 </div>
               </form>
             </div>
           </div>
-          
         </div>
       </div>
       <!-- content-wrapper ends -->
@@ -95,32 +81,18 @@
   <script src="../../js/settings.js"></script>
   <script src="../../js/todolist.js"></script>
   <!-- endinject -->
-  
-  <!-- 유효성 검사 -->
-  	<script>
+	<script>
 		function chk_form() {
 		if(document.getElementById("adminId").value==''){
-			alert("ID를 입력하세요.");
+			alert("아이디를 입력해주십시오.");
 			return false;
 		}
 		if(document.getElementById("adminPw").value==''){
-			alert("Password를 입력하세요.");
-			return false;
-		}
-		if(document.getElementById("adminPw").value!=document.getElementById("adminPw2").value){
-			alert("비밀번호가 일치하지 않습니다.");
-			return false;
-		}		
-		if(document.getElementById("adminPositionNo").value==''){
-			alert("포지션을 입력해주세여");
-			return false;
-		}
-		if(document.getElementById("adminName").value==''){
-			alert("나이를 입력하세요.");
+			alert("비밀번호를 입력해주십시오.");
 			return false;
 		}
 		
-		document.getElementById("insertAdminForm").submit();
+		document.getElementById("adminLoginForm").submit();
 		}
 	</script>
 </body>

@@ -1,6 +1,7 @@
 package com.b2.Sinnanda.service;
 
-import java.util.UUID;
+import java.util.UUID;import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,10 @@ public class MemberService {
 	@Autowired MemberMapper memberMapper;
 	
 	// 마이페이지
-	public Member getMyPage(int memberNo) {
+	public Member getMyPage(int memberNo, HttpServletRequest request) {
+		int membeNo = Integer.parseInt(request.getParameter("memberNo"));
 		return memberMapper.selectMyPage(memberNo);
+		
 	}
 	
 	// 회원 정보 수정
