@@ -23,11 +23,18 @@ public class LoginController {
 	@Autowired MemberService memberService;	//	[김영후]
 	@Autowired LoginService loginService;
 	
-	Member loginMember = new Member();
-	Admin loginAdmin = new Admin();
 	User loginUser = new User();
 	
+	@GetMapping("insertMemberForm") //[이원희]회원가입 페이지 이동 21.12.10
+	public String showInsertForm() {
+		return "insertMemberForm";
+	}
+	
 	// [이승준] 로그인
+	@GetMapping("login") // [이원희]로그인 페이지 이동 21.12.10
+	public String showLogin() {
+		return "login";
+	}
 	@PostMapping("login")
 	public String actionLogin(User user, HttpServletRequest request) { // [이원희]로그인 액션 후 인덱스 페이지 이동 21.12.10
 		HttpSession session = request.getSession();
@@ -36,14 +43,7 @@ public class LoginController {
 		loginUser = loginService.getLoginCheckAll(user);
 		session.setAttribute("loginUser", loginUser);
 		
-	
-		
 		return "index";	
-	}
-	
-	@GetMapping("login") //[이원희]로그인 페이지 이동 21.12.10
-	public String showLogin() {
-		return "login";
 	}
 	
 	@GetMapping("logout") //[이원희]로그아웃 21.12.10
@@ -53,10 +53,7 @@ public class LoginController {
 		return "index";
 	}
 	
-	/*@GetMapping("insertMemberForm") //[이원희]회원가입 페이지 이동 21.12.10
-	public String showInsertForm() {
-		return "insertMemberForm";
-	}
+	/*
 	
 	
 	

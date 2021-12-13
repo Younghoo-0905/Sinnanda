@@ -43,7 +43,7 @@
 	<!-- [이승준] 관리자 로그인 정보 조회 -->
 	<select id="selectAdminLogin" parameterType="com.b2.Sinnanda.vo.Admin" resultType="com.b2.Sinnanda.vo.Admin">
 		SELECT 
-			admin_no amdinNo,
+			admin_no adminNo,
 			admin_id adminId,
 			admin_pw adminPw,
 			admin_position_no adminPositionNo,

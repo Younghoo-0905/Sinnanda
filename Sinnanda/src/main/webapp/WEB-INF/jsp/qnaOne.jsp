@@ -12,23 +12,39 @@
 	<div>
 		<a href="index">홈 화면</a>
 	</div>
-	<!-- 상단 버튼 -->
-		<!-- 로그인 정보가 없는 경우 -->
-	<c:if test="${loginMember == null}">
+	<!-- 상단 로그인 부분 -->
+	<!-- 로그인 정보가 없는 경우 -->
+	<c:if test="${loginUser == null}">
 		<div>
 			<a href="login">로그인하기</a>
 			<a href="insertMemberForm">회원가입</a>
 		</div>
 	</c:if>
-		<!-- 로그인 정보가 있는 경우 -->
-	<c:if test="${loginMember != null}">
+	<!-- 회원인 경우 -->
+	<c:if test="${loginUser.userLevel == 1}">
 		<div>
-			<a href="마이페이지?memberNo=${loginMember.memberNo}">${loginMember.memberName}</a>
+			<a href="마이페이지?memberNo=${loginUser.member.memberNo}">${loginUser.member.memberName}</a>
+			<a href="logout">로그아웃</a>
+		</div>
+	</c:if>
+	<!-- 사업자인 경우 -->
+	<c:if test="${loginUser.userLevel == 2}">
+		<div>
+			<img src="/images/jun_test/hostImg.png" width="20px" height="20px">
+			<a href="마이페이지?hostNo=${loginUser.host.hostNo}">${loginUser.host.hostName}</a>
+			<a href="logout">로그아웃</a>
+		</div>
+	</c:if>
+	<!-- 관리자인 경우 -->
+	<c:if test="${loginUser.userLevel == 3}">
+		<div>
+			<img src="/images/jun_test/adminImg.png" width="20px" height="20px">
+			<a href="마이페이지?adminNo=${loginUser.admin.adminNo}">${loginUser.admin.adminName}</a>
 			<a href="logout">로그아웃</a>
 		</div>
 	</c:if>
 	<!--  -->
-	<c:if test="${qna.memberNo == loginMember.memberNo}">
+	<c:if test="${qna.memberNo == loginUser.member.memberNo}">
 		<a href="modifyQna?qnaNo=${qna.qnaNo}">문의 수정</a>
 		<a href="removeQna?qnaNo=${qna.qnaNo}">문의 삭제</a>
 	</c:if>
@@ -51,13 +67,15 @@
 		</tr>
 	</table>
 	
-	<!-- 답변 : 멤버, 답변이 없을 때 -->
-	<c:if test="${(qna.qnaComments == null) && (loginMember.memberLevel == 1)}">
-		<div>답변 없음</div>
+	<!-- QnA 답변이 없을 때 -->
+	<c:if test="${qna.qnaComments == null}">
+		<div>답변 없음</div>		
 	</c:if>
-	<!-- 답변 : 어드민, 답변이 없을 때 -->
-	<c:if test="${(qna.qnaComments == null) && (loginMember.memberLevel == 3)}">
-		<form id="addQnaCommentForm" action="addQnaComment" method="post">
+	
+	<!-- 답변이 없는데, 어드민일 때 -->
+	<c:if test="${loginUser != null}">
+		<c:if test="${(qna.qnaComments == null) && (loginUser.userLevel == 3)}">
+			<form id="addQnaCommentForm" action="addQnaComment" method="post">
 			<input id="qnaNo" name="qnaNo" type="hidden" value="${qna.qnaNo}">
 			<input id="adminNo" name="adminNo" type="hidden" value="${loginMember.memberNo}">
 			<table border="1">
@@ -70,7 +88,9 @@
 			</table>
 			<button id="addQnaCommentBtn" type="submit">답변하기</button>
 		</form>
+		</c:if>
 	</c:if>
+	
 	<!-- 답변 : 공통, 답변이 있을 때 -->
 	<c:if test="${(qna.qnaComments != null)}">
 		<table border="1">

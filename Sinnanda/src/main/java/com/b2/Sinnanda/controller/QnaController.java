@@ -1,6 +1,5 @@
 package com.b2.Sinnanda.controller;
 
-import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.b2.Sinnanda.service.QnaService;
-import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.Qna;
 import com.b2.Sinnanda.vo.QnaComment;
 import com.b2.Sinnanda.vo.User;
@@ -44,8 +42,13 @@ public class QnaController {
 		
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		log.debug(" ├[param] loginMember : "+loginMember.toString());
+		User loginUser = (User) session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+		}
 		
 		return "redirect:/qnaOne?qnaNo="+qnaComment.getQnaNo();
 	}
@@ -58,11 +61,16 @@ public class QnaController {
 		
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
-		Member loginMember = (Member) session.getAttribute("loginMember");
-		log.debug(" ├[param] loginMember : "+loginMember.toString());
+		User loginUser = (User) session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+		}
 		
 		// 수정 전 기존 값 출력
-		qnaService.removeQna(qnaNo, loginMember.getMemberNo());
+		qnaService.removeQna(qnaNo, loginUser.getMember().getMemberNo());
 		
 		return "redirect:/qnaList";
 	}
@@ -96,10 +104,16 @@ public class QnaController {
 		
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
-		Member loginMember = (Member) session.getAttribute("loginMember");
+		User loginUser = (User) session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+		}
 		
 		/* 모델 추가 */
-		model.addAttribute("loginMember", loginMember);	// 로그인 세선 정보
+		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
 		
 		return "addQna";
 	}
@@ -124,17 +138,29 @@ public class QnaController {
 		
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
-		Member loginMember = (Member) session.getAttribute("loginMember");
+		User loginUser = (User) session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+		}
 		
-		// *비밀문의인 경우, 접근 방지
+		// *비밀문의인 경우, 작성자 또는 관리자 외에는 접근 방지
 		if(qna.getQnaSecret().equals("비밀문의")) {
-			if(qna.getMemberNo() != loginMember.getMemberNo()) {
-				return "redirect:/qnaList";
+			log.debug(" ├[param] 글 작성자 No : "+qna.getMemberNo());
+			log.debug(" ├[param] 접근자 Level : "+loginUser.getUserLevel());
+			
+			// QnA 작성자와 현재 접근하려는 사람이 맞는지 확인 5!=5->F || 1==3->F / 5!=0 || 3==3->T
+			if(loginUser.getUserLevel() != 3) {
+				if(qna.getMemberNo() != loginUser.getMember().getMemberNo()) {
+					return "redirect:/qnaList";
+				}
 			}
 		}
 		
 		/* 모델 추가 */
-		model.addAttribute("loginMember", loginMember);	// 로그인 세선 정보
+		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
 		model.addAttribute(qna);	// 선택된 QnA 상세 정보
 		
 		return "qnaOne";
@@ -154,7 +180,13 @@ public class QnaController {
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
 		User loginUser = (User) session.getAttribute("loginUser");
-		//Member loginMember = (Member) session.getAttribute("loginMember");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+		}
+		
 		
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
