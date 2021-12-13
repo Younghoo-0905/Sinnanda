@@ -34,6 +34,13 @@ public class QnaService {
 		log.debug("[Debug] \"START\" QnaService.modifyQna()");
 		log.debug(" ├[param] qna : "+qna.toString());
 		
+		// 비밀글 설정을 하지 않은 경우, 일반문의로 취급
+		if(qna.getQnaSecret() == null || qna.getQnaSecret().equals("off")) {
+			qna.setQnaSecret("일반문의");
+		} else {
+			qna.setQnaSecret("비밀문의");
+		}
+		
 		qnaMapper.updateQna(qna);
 	}
 	
@@ -41,6 +48,13 @@ public class QnaService {
 	public void addQna(Qna qna) {
 		log.debug("[Debug] \"START\" QnaService.addQna()");
 		log.debug(" ├[param] qna : "+qna.toString());
+		
+		// 비밀글 설정을 하지 않은 경우, 일반문의로 취급
+		if(qna.getQnaSecret().equals("off")) {
+			qna.setQnaSecret("일반문의");
+		} else {
+			qna.setQnaSecret("비밀문의");
+		}
 		
 		qnaMapper.insertQna(qna);
 	}

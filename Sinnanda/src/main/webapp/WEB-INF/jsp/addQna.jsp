@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +9,29 @@
 </head>
 <body>
 	<h1>add QnA</h1>
+	<div>
+		<a href="index">홈 화면</a>
+	</div>
+	<!-- 상단 로그인 부분 -->
+		<!-- 로그인 정보가 없는 경우 -->
+	<c:if test="${loginMember == null}">
+		<div>
+			<a href="login">로그인하기</a>
+			<a href="insertMemberForm">회원가입</a>
+		</div>
+	</c:if>
+		<!-- 로그인 정보가 있는 경우 -->
+	<c:if test="${loginMember != null}">
+		<div>
+			<a href="마이페이지?memberNo=${loginMember.memberNo}">${loginMember.memberName}</a>
+			<a href="logout">로그아웃</a>
+		</div>
+	</c:if>
 	<a href="/qnaList">문의사항 목록</a>
+	<!-- 입력 폼 -->
 	<form id="addQnaForm" action="addQna" method="post">
-		<input id="memberNo" name="memberNo" type="hidden" value="1">
+		<!-- QnA 작성자 -->
+		<input id="memberNo" name="memberNo" type="hidden" value="${loginMember.memberNo}">
 		<table border="1">
 			<tr>
 				<td style="text-align:right" width="30%">제목</td>
@@ -36,7 +57,7 @@
 			</tr>
 			<tr>
 				<td style="text-align:right">비밀글 여부</td>
-				<td><input id="qnaTitle" name="qnaTitle" type="checkbox"></td>
+				<td><input id="qnaSecret" name="qnaSecret" type="checkbox"></td>
 			</tr>
 		</table>
 		<button type="submit">문의 추가</button>

@@ -3,6 +3,9 @@ package com.b2.Sinnanda.controller;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.b2.Sinnanda.service.QnaService;
+import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.Qna;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,13 +30,17 @@ public class QnaController {
 	
 	// [이승준] QnA 삭제
 	@GetMapping("/removeQna")
-	public String removeQna(int qnaNo, int memberNo) {
+	public String removeQna(HttpServletRequest request, int qnaNo) {
 		log.debug("[Debug] \"START\" QnaController.removeQna() | Get");
 		log.debug(" ├[param] qnaNo : "+qnaNo);
-		log.debug(" ├[param] memberNo : "+memberNo);
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		log.debug(" ├[param] loginMember : "+loginMember.toString());
 		
 		// 수정 전 기존 값 출력
-		qnaService.removeQna(qnaNo, memberNo);
+		qnaService.removeQna(qnaNo, loginMember.getMemberNo());
 		
 		return "redirect:/qnaList";
 	}
@@ -61,8 +69,16 @@ public class QnaController {
 	
 	// [이승준] QnA 삽입
 	@GetMapping("/addQna")
-	public String addQna() {
+	public String addQna(HttpServletRequest request, Model model) {
 		log.debug("[Debug] \"START\" QnaController.addQna() | Get");
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		/* 모델 추가 */
+		model.addAttribute("loginMember", loginMember);	// 로그인 세선 정보
+		
 		return "addQna";
 	}
 	@PostMapping("/addQna")
@@ -77,30 +93,52 @@ public class QnaController {
 	
 	// [이승준] QnA 상세 조회
 	@GetMapping("/qnaOne")
-	public String qnaOne(Model model, int qnaNo) {
+	public String qnaOne(HttpServletRequest request, Model model, int qnaNo) {
 		log.debug("[Debug] \"START\" QnaController.qnaOne() | Get");
 		log.debug(" ├[param] qnaNo : "+qnaNo);
 		
+		// QnA 상세 조회
 		Qna qna = qnaService.getQnaOne(qnaNo);
-		model.addAttribute(qna);
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		// *비밀문의인 경우, 접근 방지
+		if(qna.getQnaSecret().equals("비밀문의")) {
+			if(qna.getMemberNo() != loginMember.getMemberNo()) {
+				return "redirect:/qnaList";
+			}
+		}
+		
+		/* 모델 추가 */
+		model.addAttribute("loginMember", loginMember);	// 로그인 세선 정보
+		model.addAttribute(qna);	// 선택된 QnA 상세 정보
 		
 		return "qnaOne";
 	}
 	
 	// [이승준] QnA 목록 조회
 	@GetMapping("/qnaList")
-	public String qnaList(Model model, 
+	public String qnaList(HttpServletRequest request, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
 			@RequestParam(required = false) String qnaCategory) {
 		log.debug("[Debug] \"START\" QnaController.qnaList() | Get");
 		log.debug(" ├[param] currentPage : "+currentPage);
 		
+		// QnA 목록 조회
 		Map<String, Object> map = qnaService.getQnaListByQnaCategory(qnaCategory, currentPage, ROW_PER_PAGE);
 		
-		model.addAttribute("qnaCategory", map.get("qnaCategory"));
-		model.addAttribute("qnaList", map.get("qnaList"));
-		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("currentPage", currentPage);
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		/* 모델 추가 */
+		model.addAttribute("loginMember", loginMember);	// 로그인 세선 정보
+		model.addAttribute("qnaCategory", map.get("qnaCategory"));	// 선택된 QnA 카테고리
+		model.addAttribute("qnaList", map.get("qnaList"));	// QnA 목록 정보
+		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
+		model.addAttribute("currentPage", currentPage);	// 현재 페이지
 		
 		return "qnaList";
 	}

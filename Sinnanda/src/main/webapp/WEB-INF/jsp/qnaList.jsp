@@ -11,6 +11,24 @@
 <body>
 	<h1>QnA List</h1>
 	<div>
+		<a href="index">홈 화면</a>
+	</div>
+	<!-- 상단 로그인 부분 -->
+		<!-- 로그인 정보가 없는 경우 -->
+	<c:if test="${loginMember == null}">
+		<div>
+			<a href="login">로그인하기</a>
+			<a href="insertMemberForm">회원가입</a>
+		</div>
+	</c:if>
+		<!-- 로그인 정보가 있는 경우 -->
+	<c:if test="${loginMember != null}">
+		<div>
+			<a href="마이페이지?memberNo=${loginMember.memberNo}">${loginMember.memberName}</a>
+			<a href="logout">로그아웃</a>
+		</div>
+	</c:if>
+	<div>
 		<a href="addQna">문의사항 작성</a>
 	</div>
 	<div>
