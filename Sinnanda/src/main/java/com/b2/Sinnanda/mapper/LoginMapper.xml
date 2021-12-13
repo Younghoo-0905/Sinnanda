@@ -13,4 +13,17 @@
 			   update_date updateDate 
 		FROM member WHERE member_id= #{memberId} AND member_pw= #{memberPw}
 	</select>
+	
+	<select id="selectAdminLogin" parameterType="com.b2.Sinnanda.vo.Admin" resultType="com.b2.Sinnanda.vo.Admin">
+	SELECT 
+		admin_no amdinNo,
+		admin_id adminId,
+		admin_pw adminPw,
+		admin_position_no adminPositionNo,
+		admin_name adminName,
+		member_level memberLevel,
+		create_date createDate,
+		update_date updateDate
+	FROM admin WHERE admin_id=#{adminId} AND admin_pw =#{adminPw}
+	</select>  
 </mapper>

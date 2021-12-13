@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.b2.Sinnanda.service.LoginService;
 import com.b2.Sinnanda.service.MemberService;
+import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,10 @@ public class LoginController {
 	
 	@Autowired MemberService memberService;	//	[김영후]
 	@Autowired LoginService loginService;
+	
 	Member loginMember = new Member();
+	Admin loginAdmin = new Admin();
+	
 	
 	@GetMapping("login") //[이원희]로그인 페이지 이동 21.12.10
 	public String showLogin() {
@@ -62,5 +66,33 @@ public class LoginController {
 	public String test() {
 		return "test";
 	}
+	
+	//[윤경환] 관리자 로그인 페이지 이동
+	@GetMapping("adminLoginForm")
+	public String adminLoginForm() {
+		return "adminLoginForm";
+	}
+	
+	
+	//[윤경환] 관리자 로그인 post
+		@PostMapping("adminLoginForm")
+		public String actionAdminLogin(Admin admin, HttpServletRequest request) {
+			HttpSession session = request.getSession();
+			log.debug("입력된 값 : "+admin.getAdminId()+", "+admin.getAdminPw()+"<---------adminilogin");
+			log.debug("검색한 정보 : "+(loginService.getAdminLogin(admin)).toString());
+			loginAdmin = loginService.getAdminLogin(admin);
+			
+			log.debug(loginAdmin +"+++++++++++++++"+loginAdmin);
+			session.setAttribute("loginAdmin", loginAdmin);
+			return "adminPage";
+		}
+		//[윤경환] amin 로그아웃 
+		@GetMapping("adminLogout")
+		public String AdminLogout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "index";
+		}
+	
 	
 }

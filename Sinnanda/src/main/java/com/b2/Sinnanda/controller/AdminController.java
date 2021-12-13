@@ -26,6 +26,13 @@ public class AdminController {
 		log.debug("admin<-----"+admin);
 		adminService.addAdmin(admin);
 		
-		return "index";
+		return "adminLoginForm";
+	}
+	
+	
+	//[윤경환] 관리자 페이지
+	@GetMapping("adminPage")
+	public String getAdminPage() {
+		return "adminPage";
 	}
 }

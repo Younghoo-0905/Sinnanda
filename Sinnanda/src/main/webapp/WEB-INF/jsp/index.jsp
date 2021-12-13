@@ -58,12 +58,6 @@
           <li class="nav-item"><a href="" class="nav-link">마이페이지</a></li>
           <li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>
           </c:if>
-     	<c:if test ="${loginAdmin == null}">
-          <li class="nav-item"><a href="/adminLoginForm" class="nav-link">관리자 로그인</a></li>
-          </c:if>
-           <c:if test ="${loginAdmin != null}">
-          <li class="nav-item"><a href="/adminLogout" class="nav-link">관리자로그아웃</a></li>
-          </c:if>
      	
         </ul>
       </div>
