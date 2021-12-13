@@ -156,7 +156,8 @@
 			    	검색결과가 없슴.
 			    </c:when>
 			    <c:otherwise>
-		    				<div class="col-md-4 ftco-animate">
+		    		<c:forEach items="${accomList}" var="accom">
+						<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
 		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-1.jpg);">
 		    						<div class="icon d-flex justify-content-center align-items-center">
@@ -166,7 +167,7 @@
 		    					<div class="text p-3">
 		    						<div class="d-flex">
 		    							<div class="one">
-				    						<h3><a href="hotel-single.html">${getAccom.accomName}</a></h3>
+				    						<h3><a href="hotel-single.html">${accom.accomName}</a></h3>
 				    						<p class="rate">
 				    							<i class="icon-star"></i>
 				    							<i class="icon-star"></i>
@@ -189,8 +190,9 @@
 		    					</div>
 		    				</div>
 		    			</div>
-		    			</c:otherwise>
-		    		</c:choose>
+					</c:forEach>		
+		    	</c:otherwise>
+		    </c:choose>
           	</div>
           	<div class="row mt-5">
 		          <div class="col text-center">

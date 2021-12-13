@@ -1,10 +1,13 @@
 package com.b2.Sinnanda.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.b2.Sinnanda.service.SearchAccomService;
 import com.b2.Sinnanda.vo.Accom;
@@ -16,6 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 public class AccomController {
 	@Autowired SearchAccomService searchAccomService;
 	
+	// [이원희] 숙소 목록 페이징
+	private final int ROW_PER_PAGE = 10;
+	
 	//[이원희]검색 후 리스트 이동 21.12.10
 	@GetMapping("searchList")
 	public String getSerchList() {
@@ -23,12 +29,16 @@ public class AccomController {
 	}
 	
 	@PostMapping("searchList")
-	public String postSerchList(Accom accom, Model model) {
-		Accom getAccom = new Accom();
-		log.debug(accom+"<-------------searchList - searchValue");
-		getAccom = searchAccomService.getAccomList(accom);
-		log.debug(getAccom+"<-------------searchList - getAccom");
-		model.addAttribute("getAccom", getAccom);
+	public String postSerchList(Accom accom, Model model, 
+			@RequestParam(defaultValue = "1") int currentPage) {
+			
+		Map<String, Object> map = searchAccomService.getAccomListByName(accom, currentPage, ROW_PER_PAGE);
+			
+		model.addAttribute("accomName", map.get("accomName"));
+		model.addAttribute("accomList", map.get("accomList"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+			
 		return"searchList";
 	}
 }

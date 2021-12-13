@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.AccomMapper">
-	<!-- [이원희] 숙소 이름으로 검색 -->
-	<select id="selectAccomList" parameterType="com.b2.Sinnanda.vo.Accom" resultType="com.b2.Sinnanda.vo.Accom">
+	
+	<!-- [이원희] 숙소 List Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Accom" id="AccomListMap">
+		<id column="accom_no" property="accomNo"/>
+		<result column="host_no" property="hostNo"/>
+		<result column="admin_no" property="adminNo"/>
+		<result column="commission_no" property="commissionNo"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="accom_img" property="accomImg"/>
+		<result column="accom_description" property="accomDescription"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+	</resultMap>
+
+	<!-- [이원희] 숙소 목록 조회 -->
+	<select id="selectAccomListByName" parameterType="Map" resultMap="AccomListMap">
 		SELECT accom_no accomNo, 
 			   host_no hostNo, 
 			   admin_no adminNo, 
@@ -12,6 +26,16 @@
 			   accom_description accomDescription, 
 			   create_date createDate, 
 			   update_date updateDate 
-			   FROM accom WHERE accom_name = #{accomName}
+			   FROM accom WHERE accom_name LIKE accom_name = CONCAT('%', #{accomName}, '%');
+		ORDER BY create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
+	
+	<!-- [이원희] 검색 대상 숙소 갯수 조회-->
+	<select id="selectAccomTotalCount" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM accom WHERE accom_name LIKE accom_name = CONCAT('%', #{accomName}, '%');
+	</select>
+	
 </mapper>
