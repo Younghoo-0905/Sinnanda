@@ -10,9 +10,11 @@
 </head>
 <body>
 	<h1>Notice List</h1>
-	<div>
-		<a href="addNotice">공지사항 작성</a>
-	</div>
+	<c:if test="${loginUser.getUserLevel() == 3}">
+		<div>
+			<a href="addNotice">공지사항 작성</a>
+		</div>
+	</c:if>
 	<table border="1">
 		<tr style="text-align:center">
 			<td width="5%">번호</td>

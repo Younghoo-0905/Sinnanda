@@ -10,7 +10,7 @@
 	<h1>add Notice</h1>
 	<a href="/noticeList">공지 목록</a>
 	<form id="addNoticeForm" action="addNotice" method="post">
-		<input id="adminNo" name="adminNo" type="hidden" value="1">
+		<input id="adminNo" name="adminNo" type="hidden" value="${loginUser.admin.getAdminNo()}">
 		<table border="1">
 			<tr>
 				<td style="text-align:right" width="30%">제목</td>

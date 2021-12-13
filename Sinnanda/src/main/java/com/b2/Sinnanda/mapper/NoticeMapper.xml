@@ -2,6 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.NoticeMapper">
 
+	<!-- [김영후] Notice 삭제 -->
+	<delete id="deleteNotice" >
+		DELETE 
+		FROM notice 
+		WHERE notice_no = #{noticeNo} AND admin_no = #{adminNo}
+	</delete>
+
+	<!-- [김영후] Notice 수정 -->
+	<update id="updateNotice" parameterType="com.b2.Sinnanda.vo.Notice">
+		UPDATE notice 
+		SET notice_title = #{noticeTitle}, 
+			notice_content = #{noticeContent}, 
+			update_date = NOW()
+		WHERE notice_no = #{noticeNo} AND admin_no = #{adminNo}
+	</update>
+
 	<!-- [김영후] Notice 추가 -->
 	<insert id="insertNotice" parameterType="com.b2.Sinnanda.vo.Notice">
 		INSERT INTO notice(
@@ -24,8 +40,7 @@
 		</selectKey>
 	</insert>
 
-
-	<!-- [김영후] noticeOne Map -->
+	<!-- [김영후] NoticeOne Map -->
 	<resultMap type="com.b2.Sinnanda.vo.Notice" id="NoticeOneMap">
 		<id column="notice_no" property="noticeNo"/>
 		<result column="admin_no" property="adminNo"/>
@@ -37,7 +52,7 @@
 		<result column="admin_name" property="adminName"/>
 	</resultMap>
 	
-	<!-- [김영후] notice 상세 조회 -->
+	<!-- [김영후] Notice 상세 조회 -->
 	<select id="selectNoticeOne"  parameterType="Map" resultMap="NoticeOneMap">
 		SELECT 
 			n.notice_no, 
@@ -63,7 +78,7 @@
 		<result column="admin_name" property="adminName"/>
 	</resultMap>
 
-	<!-- [김영후] notice 목록 조회 -->
+	<!-- [김영후] Notice 목록 조회 -->
 	<select id="selectNoticeListByCategory" parameterType="Map" resultMap="noticeListMap">
 		SELECT 
 			n.notice_no, 
@@ -83,7 +98,7 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
-	<!-- [김영후] notice 갯수 조회-->
+	<!-- [김영후] Notice 갯수 조회-->
 	<select id="selectNoticeTotalCount" resultType="int">
 		SELECT 
 			COUNT(*) 

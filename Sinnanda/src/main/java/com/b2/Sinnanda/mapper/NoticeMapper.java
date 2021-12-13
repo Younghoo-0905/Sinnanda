@@ -6,10 +6,15 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.b2.Sinnanda.vo.Notice;
-import com.b2.Sinnanda.vo.Qna;
 
 @Mapper
 public interface NoticeMapper {
+
+	//	[김영후]	notice 삭제
+	void deleteNotice(int noticeNo, int adminNo);
+
+	//	[김영후]	notice 수정
+	void updateNotice(Notice notice);
 	
 	//	[김영후]	notice 등록
 	void insertNotice(Notice notice);

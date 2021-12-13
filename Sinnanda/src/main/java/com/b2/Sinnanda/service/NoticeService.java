@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.b2.Sinnanda.mapper.NoticeMapper;
 import com.b2.Sinnanda.vo.Notice;
-import com.b2.Sinnanda.vo.Qna;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +19,24 @@ import lombok.extern.slf4j.Slf4j;
 public class NoticeService {
 	@Autowired 
 	NoticeMapper noticeMapper;
-	
+
+	//	[김영후]	공지사항 삭제
+	public void removeNotice(int noticeNo, int adminNo) {
+		log.debug("[Debug] \"START\" NoticeService.removeNotice()");
+		log.debug(" ├[param] noticeNo : " + noticeNo);
+		log.debug(" ├[param] memberNo : " + adminNo);
+		
+		noticeMapper.deleteNotice(noticeNo, adminNo);
+	}
+
+	//	[김영후]	공지사항 수정
+	public void modifyNotice(Notice notice) {
+		log.debug("[Debug] \"START\" noticeService.modifynotice()");
+		log.debug(" ├[param] notice : " + notice.toString());
+		
+		noticeMapper.updateNotice(notice);
+	}
+		
 	//	[김영후]	공지사항 추가
 	public void addNotice(Notice notice) {
 		log.debug("[Debug] \"START\" NoticeService.addNotice()");
@@ -32,7 +48,7 @@ public class NoticeService {
 	//	[김영후]	공지사항 상세 조회
 	public Notice getNoticeOne(int noticeNo) {
 		log.debug("[Debug] \"START\" NoticeService.getNoticeOne()");
-		log.debug(" ├[param] qnaNo : " + noticeNo);
+		log.debug(" ├[param] noticeNo : " + noticeNo);
 		
 		return noticeMapper.selectNoticeOne(noticeNo);
 	}
@@ -44,7 +60,7 @@ public class NoticeService {
 		log.debug(" ├[param] currentPage : " + currentPage);
 		log.debug(" ├[param] rowPerPage : " + rowPerPage);
 		
-		// 1. 매개변수 가공 (paraMap <-- qnaCategory, currentPage, rowPerPage)
+		// 1. 매개변수 가공 (paraMap <-- noticeCategory, currentPage, rowPerPage)
 		Map<String, Object> paramMap = new HashMap<>();
 		int beginRow = (currentPage-1) * rowPerPage;
 		
