@@ -60,6 +60,7 @@ public class SearchAccomService {
 		}
 		
 		log.debug(" ├[param] lastPage : "+lastPage);
+		log.debug(" ├[param] accomList : "+accomList);
 		returnMap.put("accomList", accomList);
 		returnMap.put("lastPage", lastPage);
 		

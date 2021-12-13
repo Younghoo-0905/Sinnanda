@@ -152,22 +152,23 @@
           <div class="col-lg-9">
           	<div class="row">
           	<c:choose>
-	          	<c:when test="${empty getAccom}">
+	          	<c:when test="${empty accomList}">
 			    	검색결과가 없슴.
 			    </c:when>
 			    <c:otherwise>
-		    		<c:forEach items="${accomList}" var="accom">
+		    		<c:forEach items="${accomList}" var="ac">
 						<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
 		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-1.jpg);">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     							<span class="icon-search2"></span>
+    						
     						</div>
 		    					</a>
 		    					<div class="text p-3">
 		    						<div class="d-flex">
 		    							<div class="one">
-				    						<h3><a href="hotel-single.html">${accom.accomName}</a></h3>
+				    						<a href="hotel-single.html">${ac.accomName}</a>
 				    						<p class="rate">
 				    							<i class="icon-star"></i>
 				    							<i class="icon-star"></i>
@@ -181,7 +182,7 @@
 			    							<span class="price per-price">$40<br><small>/night</small></span>
 		    							</div>
 		    						</div>
-		    						<p>Far far away, behind the word mountains, far from the countries</p>
+		    						<p>${ac.accomDescription}</p>
 		    						<hr>
 		    						<p class="bottom-area d-flex">
 		    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
@@ -190,7 +191,7 @@
 		    					</div>
 		    				</div>
 		    			</div>
-					</c:forEach>		
+					</c:forEach>	
 		    	</c:otherwise>
 		    </c:choose>
           	</div>

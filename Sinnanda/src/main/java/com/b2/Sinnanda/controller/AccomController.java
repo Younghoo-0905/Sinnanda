@@ -20,7 +20,7 @@ public class AccomController {
 	@Autowired SearchAccomService searchAccomService;
 	
 	// [이원희] 숙소 목록 페이징
-	private final int ROW_PER_PAGE = 10;
+	private final int ROW_PER_PAGE = 12;
 	
 	//[이원희]검색 후 리스트 이동 21.12.10
 	@GetMapping("searchList")
@@ -34,7 +34,7 @@ public class AccomController {
 			
 		Map<String, Object> map = searchAccomService.getAccomListByName(accom, currentPage, ROW_PER_PAGE);
 			
-		model.addAttribute("accomName", map.get("accomName"));
+		log.debug(map.get("accomList")+"<----------------------- 맵");
 		model.addAttribute("accomList", map.get("accomList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);

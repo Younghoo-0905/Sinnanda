@@ -17,17 +17,16 @@
 
 	<!-- [이원희] 숙소 목록 조회 -->
 	<select id="selectAccomListByName" parameterType="Map" resultMap="AccomListMap">
-		SELECT accom_no accomNo, 
-			   host_no hostNo, 
-			   admin_no adminNo, 
-			   commission_no commissionNo, 
-			   accom_name accomName, 
-			   accom_img accomImg, 
-			   accom_description accomDescription, 
-			   create_date createDate, 
-			   update_date updateDate 
-			   FROM accom WHERE accom_name LIKE accom_name = CONCAT('%', #{accomName}, '%');
-		ORDER BY create_date DESC
+		SELECT accom_no, 
+			   host_no, 
+			   admin_no, 
+			   commission_no, 
+			   accom_name, 
+			   accom_img, 
+			   accom_description, 
+			   create_date, 
+			   update_date 
+			   FROM accom WHERE accom_name LIKE CONCAT('%',#{accomName},'%') ORDER BY create_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
@@ -35,7 +34,7 @@
 	<select id="selectAccomTotalCount" parameterType="String" resultType="int">
 		SELECT 
 			COUNT(*) 
-		FROM accom WHERE accom_name LIKE accom_name = CONCAT('%', #{accomName}, '%');
+		FROM accom WHERE accom_name LIKE CONCAT('%',#{accomName},'%')
 	</select>
 	
 </mapper>
