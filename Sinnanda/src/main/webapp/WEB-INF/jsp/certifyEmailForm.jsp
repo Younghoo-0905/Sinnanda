@@ -46,7 +46,7 @@
                   <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit">SIGN IN</button>
                 </div>
                 <div class="text-center mt-4 font-weight-light">
-                  Do you want to go to the main? <a href="index" class="text-primary">Go Main</a>
+                  Do you want to go to the main? <a href="index" class="text-primary">Go to Main</a>
                 </div>
               </form>
             </div>

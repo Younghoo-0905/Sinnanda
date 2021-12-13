@@ -44,7 +44,7 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="/index" class="nav-link">Home</a></li>
           <li class="nav-item"><a href="/qnaList" class="nav-link">Qna</a></li>
-          <li class="nav-item"><a href="" class="nav-link">공지사항</a></li>
+          <li class="nav-item"><a href="/noticeList" class="nav-link">공지사항</a></li>
           <li class="nav-item"><a href="" class="nav-link"> 쿠폰함</a></li>
           
 			<!--memberId가 없을때--> 

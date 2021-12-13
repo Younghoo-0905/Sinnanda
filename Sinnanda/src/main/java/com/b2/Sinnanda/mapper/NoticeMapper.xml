@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.b2.Sinnanda.mapper.NoticeMapper">
+
+	<!-- [김영후] Notice 추가 -->
+	<insert id="insertNotice" parameterType="com.b2.Sinnanda.vo.Notice">
+		INSERT INTO notice(
+			admin_no, 
+			notice_category, 
+			notice_title, 
+			notice_content, 
+			create_date, 
+			update_date 
+		) VALUES (
+			#{adminNo}, 
+			#{noticeCategory}, 
+			#{noticeTitle}, 
+			#{noticeContent}, 
+			NOW(), 
+			NOW()
+		)
+		<selectKey keyProperty="noticeNo" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	<!-- [김영후] noticeOne Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Notice" id="NoticeOneMap">
+		<id column="notice_no" property="noticeNo"/>
+		<result column="admin_no" property="adminNo"/>
+		<result column="notice_category" property="noticeCategory"/>
+		<result column="notice_title" property="noticeTitle"/>
+		<result column="notice_content" property="noticeContent"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="admin_name" property="adminName"/>
+	</resultMap>
+	
+	<!-- [김영후] notice 상세 조회 -->
+	<select id="selectNoticeOne"  parameterType="Map" resultMap="NoticeOneMap">
+		SELECT 
+			n.notice_no, 
+			a.admin_no, 
+			n.notice_category, 
+			n.notice_title, 
+			n.notice_content, 
+			n.create_date, 
+			n.update_date, 
+			a.admin_name 
+		FROM notice n 
+		LEFT JOIN admin a 
+			ON n.admin_no = a.admin_no
+		WHERE n.notice_no = #{noticeNo}
+	</select>
+
+	<!-- [김영후] Notice List Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Notice" id="noticeListMap">
+		<id column="notice_no" property="noticeNo"/>
+		<result column="notice_category" property="noticeCategory"/>
+		<result column="notice_title" property="noticeTitle"/>
+		<result column="create_date" property="createDate"/>
+		<result column="admin_name" property="adminName"/>
+	</resultMap>
+
+	<!-- [김영후] notice 목록 조회 -->
+	<select id="selectNoticeListByCategory" parameterType="Map" resultMap="noticeListMap">
+		SELECT 
+			n.notice_no, 
+			n.notice_category,
+			n.notice_title, 
+			n.create_date, 
+			a.admin_name
+		FROM notice n
+		LEFT JOIN admin a
+			ON n.admin_no = a.admin_no
+		<where>
+			<if test="noticeCategory != null">
+				notice_category = #{noticeCategory}
+			</if>
+		</where>
+		ORDER BY create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- [김영후] notice 갯수 조회-->
+	<select id="selectNoticeTotalCount" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM notice
+	</select>
+</mapper>
