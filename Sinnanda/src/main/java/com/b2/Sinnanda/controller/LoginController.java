@@ -12,6 +12,7 @@ import com.b2.Sinnanda.service.LoginService;
 import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
+import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,16 +25,25 @@ public class LoginController {
 	
 	Member loginMember = new Member();
 	Admin loginAdmin = new Admin();
+	User loginUser = new User();
 	
+	// [이승준] 로그인
+	@PostMapping("login")
+	public String actionLogin(User user, HttpServletRequest request) { // [이원희]로그인 액션 후 인덱스 페이지 이동 21.12.10
+		HttpSession session = request.getSession();
+		log.debug(" ├[param] user : "+user.toString());
+		
+		loginUser = loginService.getLoginCheckAll(user);
+		session.setAttribute("loginUser", loginUser);
+		
+	
+		
+		return "index";	
+	}
 	
 	@GetMapping("login") //[이원희]로그인 페이지 이동 21.12.10
 	public String showLogin() {
 		return "login";
-	}
-	
-	@GetMapping("insertMemberForm") //[이원희]회원가입 페이지 이동 21.12.10
-	public String showInsertForm() {
-		return "insertMemberForm";
 	}
 	
 	@GetMapping("logout") //[이원희]로그아웃 21.12.10
@@ -42,6 +52,13 @@ public class LoginController {
 		session.invalidate();
 		return "index";
 	}
+	
+	/*@GetMapping("insertMemberForm") //[이원희]회원가입 페이지 이동 21.12.10
+	public String showInsertForm() {
+		return "insertMemberForm";
+	}
+	
+	
 	
 	@PostMapping("login")
 	public String actionLogin(Member member, HttpServletRequest request) { // [이원희]로그인 액션 후 인덱스 페이지 이동 21.12.10
@@ -92,7 +109,7 @@ public class LoginController {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "index";
-		}
+		}*/
 	
 	
 }

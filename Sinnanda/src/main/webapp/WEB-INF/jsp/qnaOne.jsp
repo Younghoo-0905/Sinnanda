@@ -50,17 +50,41 @@
 			<td colspan="3">${qna.qnaContent}</td>
 		</tr>
 	</table>
-	<table border="1">
-		<tr>
-			<td>답변 작성자</td>
-			<td>답변 내용</td>
-			<td>답변 작성일</td>
-		</tr>
-		<tr>
-			<td>${qna.adminName}</td>
-			<td>${qna.qnaComments.qnaCommentContent}</td>
-			<td>${qna.qnaComments.commentDate}</td>
-		</tr>
-	</table>
+	
+	<!-- 답변 : 멤버, 답변이 없을 때 -->
+	<c:if test="${(qna.qnaComments == null) && (loginMember.memberLevel == 1)}">
+		<div>답변 없음</div>
+	</c:if>
+	<!-- 답변 : 어드민, 답변이 없을 때 -->
+	<c:if test="${(qna.qnaComments == null) && (loginMember.memberLevel == 3)}">
+		<form id="addQnaCommentForm" action="addQnaComment" method="post">
+			<input id="qnaNo" name="qnaNo" type="hidden" value="${qna.qnaNo}">
+			<input id="adminNo" name="adminNo" type="hidden" value="${loginMember.memberNo}">
+			<table border="1">
+				<tr>
+					<td>문의 답변하기</td>
+				</tr>
+				<tr>
+					<td><textarea id="qnaCommentContent" name="qnaCommentContent" cols="30" rows="5"></textarea></td>
+				</tr>
+			</table>
+			<button id="addQnaCommentBtn" type="submit">답변하기</button>
+		</form>
+	</c:if>
+	<!-- 답변 : 공통, 답변이 있을 때 -->
+	<c:if test="${(qna.qnaComments != null)}">
+		<table border="1">
+			<tr>
+				<td>답변 작성자</td>
+				<td>답변 내용</td>
+				<td>답변 작성일</td>
+			</tr>
+			<tr>
+				<td>${qna.adminName}</td>
+				<td>${qna.qnaComments.qnaCommentContent}</td>
+				<td>${qna.qnaComments.commentDate}</td>
+			</tr>
+		</table>
+	</c:if>
 </body>
 </html>

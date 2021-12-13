@@ -6,9 +6,13 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.b2.Sinnanda.vo.Qna;
+import com.b2.Sinnanda.vo.QnaComment;
 
 @Mapper
 public interface QnaMapper {
+	
+	// [이승준] QnA 답변 삽입
+	void insertQnaComment(QnaComment qnaComment);
 	
 	// [이승준] QnA 삭제
 	void deleteQna(int qnaNo, int memberNo);

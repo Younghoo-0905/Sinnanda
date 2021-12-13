@@ -34,10 +34,10 @@
               <h6 class="font-weight-light">Sign in to continue.</h6>
               <form class="pt-3" id="loginForm" action="login" method="post">
                 <div class="form-group">
-                  <input type="email" class="form-control form-control-lg" name ="memberId" id="userId" placeholder="Username">
+                  <input type="email" class="form-control form-control-lg" name ="userId" id="userId" placeholder="Username">
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" name="memberPw" id="userPw" placeholder="Password">
+                  <input type="password" class="form-control form-control-lg" name="userPw" id="userPw" placeholder="Password">
                 </div>
                 <div class="mt-3">
                   <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="#" onclick="return chk_form()">SIGN IN</a>

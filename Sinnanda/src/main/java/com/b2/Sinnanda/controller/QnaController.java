@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.b2.Sinnanda.service.QnaService;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.Qna;
+import com.b2.Sinnanda.vo.QnaComment;
+import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +29,26 @@ public class QnaController {
 	
 	// [이승준] QnA 목록 페이징용 상수
 	private final int ROW_PER_PAGE = 10;
+	
+	// [이승준] QnA 답변 삽입
+	@GetMapping("/addQnaComment")
+	public String addQnaComment(HttpServletRequest request) {
+		log.debug("[Debug] \"START\" QnaController.addQnaComment() | Get");
+		
+		return "addQnaComment";
+	}
+	@PostMapping("/addQnaComment")
+	public String addQnaComment(HttpServletRequest request, QnaComment qnaComment) {
+		log.debug("[Debug] \"START\" QnaController.addQnaComment() | Post");
+		log.debug(" ├[param] qnaComment : "+qnaComment.toString());
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		log.debug(" ├[param] loginMember : "+loginMember.toString());
+		
+		return "redirect:/qnaOne?qnaNo="+qnaComment.getQnaNo();
+	}
 	
 	// [이승준] QnA 삭제
 	@GetMapping("/removeQna")
@@ -131,10 +153,11 @@ public class QnaController {
 		
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
-		Member loginMember = (Member) session.getAttribute("loginMember");
+		User loginUser = (User) session.getAttribute("loginUser");
+		//Member loginMember = (Member) session.getAttribute("loginMember");
 		
 		/* 모델 추가 */
-		model.addAttribute("loginMember", loginMember);	// 로그인 세선 정보
+		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
 		model.addAttribute("qnaCategory", map.get("qnaCategory"));	// 선택된 QnA 카테고리
 		model.addAttribute("qnaList", map.get("qnaList"));	// QnA 목록 정보
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)

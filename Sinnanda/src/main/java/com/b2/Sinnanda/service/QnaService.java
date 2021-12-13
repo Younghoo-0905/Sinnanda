@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.b2.Sinnanda.mapper.QnaMapper;
 import com.b2.Sinnanda.vo.Qna;
+import com.b2.Sinnanda.vo.QnaComment;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,6 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 public class QnaService {
 	@Autowired
 	private QnaMapper qnaMapper;
+	
+	// [이승준] QnA 답변 삽입
+	public void addQnaComment(QnaComment qnaComment) {
+		log.debug("[Debug] \"START\" QnaService.addQnaComment()");
+		log.debug(" ├[param] qnaComment : "+qnaComment.toString());
+		
+		qnaMapper.insertQnaComment(qnaComment);
+	}
 	
 	/* [이승준] QnA 삭제 */
 	public void removeQna(int qnaNo, int memberNo) {

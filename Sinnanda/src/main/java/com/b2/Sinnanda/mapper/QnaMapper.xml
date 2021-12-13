@@ -5,6 +5,19 @@
 	<!-- [이승준] QnA 답변 삭제 -->
 	
 	<!-- [이승준] QnA 답변 삽입 -->
+	<insert id="insertQnaComment">
+		INSERT INTO qna_comment(
+			qna_no, 
+			admin_no, 
+			qna_comment_content, 
+			comment_date
+		) VALUES(
+			#{qnaNo}, 
+			#{adminNo},
+			#{qnaCommentContent}, 
+			NOW()
+		)
+	</insert>
 	
 	<!-- [이승준] QnA 삭제 -->
 	<delete id="deleteQna" >

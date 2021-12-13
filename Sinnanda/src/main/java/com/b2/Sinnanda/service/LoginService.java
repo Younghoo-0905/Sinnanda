@@ -6,31 +6,52 @@ import org.springframework.stereotype.Service;
 import com.b2.Sinnanda.mapper.LoginMapper;
 import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
+import com.b2.Sinnanda.vo.User;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class LoginService {
 	
 	@Autowired LoginMapper loginMapper;
-	Member loginMember = new Member();
-	Admin loginAdmin = new Admin();
+	User loginUser = new User();
 	
-	public Member getLogin(Member member) {
+	// [이승준] 통합 로그인 
+	public User getLoginCheckAll(User user) {
+		log.debug("[Debug] \"START\" LoginService.getLoginCheckAll()");
+		log.debug(" ├[param] user : "+user.toString());
 		
-		//[이원희]로그인 결과가 없으면 null 있으면 멤버 반환 21.12.10
-		loginMember = loginMapper.selectlogin(member);
-		if(loginMember == null) {
-			return null;
-		}
-		return loginMember;
-	}
-	
-	//[윤경환] 관리자 로그인 null이면 null리턴 아니면 loginAdmin 반환
-		public Admin getAdminLogin(Admin admin) {
-			loginAdmin = loginMapper.selectAdminLogin(admin);
-			if(loginAdmin == null) {
-				return null;
-			}
-			return loginAdmin;
+		loginUser = loginMapper.selectLoginCheckAll(user);
+		log.debug(" ├[param] userLevel : "+loginUser.getUserLevel());
+		
+		// 회원인 경우
+		if(loginUser.getUserLevel() == 1) {
+			log.info(" ├[info] 회원 로그인");
+			Member member = new Member();
 			
+			member.setMemberId(loginUser.getUserId());
+			member.setMemberPw(loginUser.getUserPw());
+			
+			member = loginMapper.selectMemberLogin(member);
+			log.debug(" ├[param] member : "+member.toString());
+			loginUser.setMember(member);
+		// 사업자인 경우
+		} else if(loginUser.getUserLevel() == 2) {
+			log.info(" ├[info] 사업자 로그인");
+			
+		// 관리자인 경우
+		} else if(loginUser.getUserLevel() == 3) {
+			log.info(" ├[info] 관리자 로그인");
+			Admin admin = new Admin();
+			
+			admin.setAdminId(loginUser.getUserId());
+			admin.setAdminPw(loginUser.getUserPw());
+			
+			admin = loginMapper.selectAdminLogin(admin);
+			log.debug(" ├[param] admin : "+admin.toString());
+			loginUser.setAdmin(admin);
 		}
+		
+		return loginUser;
+	}
 }

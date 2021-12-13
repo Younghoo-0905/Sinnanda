@@ -24,25 +24,5 @@
 				NOW()
 				)
 	</insert>
-	
-	<!--[윤경환] AdminOne Map -->
-	<resultMap type="" id="AdminOneMap">
-	
-	</resultMap>
-	
-	
-	<!--[윤경환]관리자 세부내용 -->
-	<select id="selectAdminOne" parameterType="Map" resultMap="AdminOneMap">
-		SELECT 
-			a.admin_id,
-			a.admin_name,
-			ap.admin_position,
-			ap.admin_level,
-			a.update_date 
- 			FROM admin AS a 
- 	LEFT JOIN admin_position AS ap 
- 	ON a.admin_position_no = ap.admin_position_no 
- 	WHERE a.admin_id =#{adminId}
-	
-	</select>
+
 </mapper>

@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.LoginMapper">
-	<select id="selectlogin" parameterType="com.b2.Sinnanda.vo.Member" resultType="com.b2.Sinnanda.vo.Member">
+	
+	<!-- [이승준] 로그인 회원 유형 조회 -->
+	<select id="selectLoginCheckAll" parameterType="com.b2.Sinnanda.vo.User" resultType="com.b2.Sinnanda.vo.User">
+		SELECT member_id userId, member_pw userPw, member_level userLevel FROM member WHERE member_id = #{userId}
+		UNION
+		SELECT admin_id userId, admin_pw userPw, member_level userLevel FROM admin WHERE admin_id = #{userId}
+		UNION
+		SELECT host_id userId, host_pw userPw, member_level userLevel FROM host WHERE host_id = #{userId}
+	</select>
+	
+	<!-- [이승준] 회원 로그인 정보 조회 -->
+	<select id="selectMemberLogin" parameterType="com.b2.Sinnanda.vo.Member" resultType="com.b2.Sinnanda.vo.Member">
 		SELECT member_no memberNo, 
 			   member_id memberId, 
 			   member_pw memberPw, 
@@ -9,21 +20,37 @@
 			   member_age memberAge, 
 			   member_tel memberTel, 
 			   member_email memberEmail, 
+			   member_level memberLevel, 
 			   create_date createDate, 
 			   update_date updateDate 
 		FROM member WHERE member_id= #{memberId} AND member_pw= #{memberPw}
 	</select>
 	
+	<!-- [이승준] 사업자 로그인 정보 조회 -->
+	<select id="selectHostLogin" parameterType="com.b2.Sinnanda.vo.Host" resultType="com.b2.Sinnanda.vo.Host">
+		SELECT host_no hostNo, 
+			host_id hostId, 
+			host_pw hostPw, 
+			host_name hostName, 
+			host_tel hostTel, 
+			host_active hostActive, 
+			member_level memberLevel, 
+			create_date createDate, 
+			update_date updateDate 
+		FROM member WHERE member_id= #{memberId} AND member_pw= #{memberPw}
+	</select>
+	
+	<!-- [이승준] 관리자 로그인 정보 조회 -->
 	<select id="selectAdminLogin" parameterType="com.b2.Sinnanda.vo.Admin" resultType="com.b2.Sinnanda.vo.Admin">
-	SELECT 
-		admin_no amdinNo,
-		admin_id adminId,
-		admin_pw adminPw,
-		admin_position_no adminPositionNo,
-		admin_name adminName,
-		member_level memberLevel,
-		create_date createDate,
-		update_date updateDate
-	FROM admin WHERE admin_id=#{adminId} AND admin_pw =#{adminPw}
+		SELECT 
+			admin_no amdinNo,
+			admin_id adminId,
+			admin_pw adminPw,
+			admin_position_no adminPositionNo,
+			admin_name adminName,
+			member_level memberLevel,
+			create_date createDate,
+			update_date updateDate
+		FROM admin WHERE admin_id = #{adminId} AND admin_pw = #{adminPw}
 	</select>  
 </mapper>

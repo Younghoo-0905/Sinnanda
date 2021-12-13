@@ -14,17 +14,33 @@
 		<a href="index">홈 화면</a>
 	</div>
 	<!-- 상단 로그인 부분 -->
-		<!-- 로그인 정보가 없는 경우 -->
-	<c:if test="${loginMember == null}">
+	<!-- 로그인 정보가 없는 경우 -->
+	<c:if test="${loginUser == null}">
 		<div>
 			<a href="login">로그인하기</a>
 			<a href="insertMemberForm">회원가입</a>
 		</div>
 	</c:if>
-		<!-- 로그인 정보가 있는 경우 -->
-	<c:if test="${loginMember != null}">
+	<!-- 회원인 경우 -->
+	<c:if test="${loginUser.userLevel == 1}">
 		<div>
-			<a href="마이페이지?memberNo=${loginMember.memberNo}">${loginMember.memberName}</a>
+			<a href="마이페이지?memberNo=${loginUser.member.memberNo}">${loginUser.member.memberName}</a>
+			<a href="logout">로그아웃</a>
+		</div>
+	</c:if>
+	<!-- 사업자인 경우 -->
+	<c:if test="${loginUser.userLevel == 2}">
+		<div>
+			<img src="/images/jun_test/hostImg.png" width="20px" height="20px">
+			<a href="마이페이지?hostNo=${loginUser.host.hostNo}">${loginUser.host.hostName}</a>
+			<a href="logout">로그아웃</a>
+		</div>
+	</c:if>
+	<!-- 관리자인 경우 -->
+	<c:if test="${loginUser.userLevel == 3}">
+		<div>
+			<img src="/images/jun_test/adminImg.png" width="20px" height="20px">
+			<a href="마이페이지?adminNo=${loginUser.admin.adminNo}">${loginUser.admin.adminName}</a>
 			<a href="logout">로그아웃</a>
 		</div>
 	</c:if>
