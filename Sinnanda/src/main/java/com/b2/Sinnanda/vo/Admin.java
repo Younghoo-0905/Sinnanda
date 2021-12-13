@@ -12,5 +12,7 @@ public class Admin {
 	private String memberLevel;
 	private String createdate;
 	private String updateDate;
+	private String adminPosition;
+	private int adminLevel;
 	
 }

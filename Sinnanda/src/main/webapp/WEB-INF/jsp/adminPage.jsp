@@ -376,7 +376,7 @@
             <!-- 마이 페이지 -->
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#"> 마이 페이지 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="adminOne?adminNo=${loginUser.admin.adminNo}"> 마이 페이지 </a></li>
               </ul>
             </div>
           </li>

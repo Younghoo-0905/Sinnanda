@@ -20,5 +20,10 @@ public class AdminService {
 		adminMapper.insertAdmin(admin);
 		
 	}
-	
+	//[윤경환]관리자 상세 조회
+	public Admin getAdminOne(int adminNo) {
+		log.debug("adminNo++++++++++++"+adminNo);
+		return adminMapper.selectAdminOne(adminNo);
+		
+	}
 }

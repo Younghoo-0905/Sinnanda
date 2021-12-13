@@ -24,5 +24,28 @@
 				NOW()
 				)
 	</insert>
-
+	
+	<!--[윤경환] AdminOne Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Admin" id="AdminOneMap">
+		<id column="admin_id" property="adminId"></id>
+		<id column="admin_name" property="adminName"></id>
+		<id column="admin_position" property="adminPosition"></id>
+		<id column="admin_level" property="adminLevel"></id>
+		<id column="update_date" property="updateDate"></id>
+	</resultMap>
+	
+	<!--[윤경환]관리자 세부내용 -->
+	<select id="selectAdminOne" parameterType="Map" resultMap="AdminOneMap">
+		SELECT 
+			a.admin_id,
+			a.admin_name,
+			ap.admin_position,
+			ap.admin_level,
+			a.update_date 
+ 			FROM admin AS a 
+ 	LEFT JOIN admin_position AS ap 
+ 	ON a.admin_position_no = ap.admin_position_no 
+ 	WHERE a.admin_No =#{adminNo}
+	</select>
+	
 </mapper>

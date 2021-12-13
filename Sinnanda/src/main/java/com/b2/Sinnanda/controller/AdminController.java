@@ -1,5 +1,8 @@
 package com.b2.Sinnanda.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.b2.Sinnanda.service.AdminService;
 import com.b2.Sinnanda.vo.Admin;
+import com.b2.Sinnanda.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,10 +33,33 @@ public class AdminController {
 		return "adminLoginForm";
 	}
 	
-	
 	//[윤경환] 관리자 페이지
-	@GetMapping("adminPage")
+	@GetMapping("/adminPage")
 	public String getAdminPage() {
 		return "adminPage";
+	}
+	
+	//[윤경환] 관리자 상세 조회
+	@GetMapping("/adminOne")
+	public String getAdminOne(int adminNo, Model model) {
+		log.debug("adminID+++++++++++++"+adminNo);
+		
+		Admin admin =  adminService.getAdminOne(adminNo); 
+		log.debug("admin+++++++++++++"+admin);
+		
+		model.addAttribute(admin);
+		
+		return "adminOne";	
+	}
+	@GetMapping("/modifyAdminOne")
+	public String getmodifyAdminOne() {
+		
+		
+		return "modifyAdminOne";
+	}
+	@PostMapping("modifyAdminOne")
+	public String postmodifyAdminOne() {
+		return "modifyAdminOne";
+		
 	}
 }
