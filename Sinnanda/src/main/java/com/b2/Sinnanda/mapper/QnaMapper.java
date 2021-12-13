@@ -11,6 +11,9 @@ import com.b2.Sinnanda.vo.QnaComment;
 @Mapper
 public interface QnaMapper {
 	
+	// [이승준] QnA 답변 삭제
+	void deleteQnaComment(QnaComment qnaComment);
+	
 	// [이승준] QnA 답변 삽입
 	void insertQnaComment(QnaComment qnaComment);
 	

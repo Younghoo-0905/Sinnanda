@@ -28,9 +28,31 @@ public class QnaController {
 	// [이승준] QnA 목록 페이징용 상수
 	private final int ROW_PER_PAGE = 10;
 	
+	// [이승준] QnA 답변 삭제
+	@GetMapping("/removeQnaComment")
+	public String removeQnaComment(HttpServletRequest request, int qnaNo) {
+		log.debug("[Debug] \"START\" QnaController.removeQnaComment() | Get");
+		log.debug(" ├[param] qnaNo : "+qnaNo);
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+		}
+		
+		// 답변 삽입
+		qnaService.removeQnaComment(loginUser, qnaNo);
+		
+		return "redirect:/qnaOne?qnaNo="+qnaNo;
+	}
+	
 	// [이승준] QnA 답변 삽입
 	@GetMapping("/addQnaComment")
-	public String addQnaComment(HttpServletRequest request) {
+	public String addQnaComment() {
 		log.debug("[Debug] \"START\" QnaController.addQnaComment() | Get");
 		
 		return "addQnaComment";
@@ -49,6 +71,9 @@ public class QnaController {
 		} else {
 			log.debug(" ├[param] loginUser : Null");
 		}
+		
+		// 답변 삽입
+		qnaService.addQnaComment(qnaComment);
 		
 		return "redirect:/qnaOne?qnaNo="+qnaComment.getQnaNo();
 	}

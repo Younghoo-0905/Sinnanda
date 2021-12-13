@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.b2.Sinnanda.vo.Member;
+import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,17 +33,20 @@ public class MemberFilter implements Filter {
 			throws IOException, ServletException {
 		log.debug("[Debug] \"Member 필터 시작\" MemberFilter.doFilter()");
 		
-		Member member = new Member();
+		User user = new User();
+		
+		// request 호출
 		HttpServletRequest req = (HttpServletRequest) request;
+		// 세션 정보 가져오기
 		HttpSession session = req.getSession();
-		member = (Member)session.getAttribute("loginMember");
-		log.debug(" ├[param] member : "+member);
+		user = (User)session.getAttribute("loginUser");
+		log.debug(" ├[param] user : "+user.toString());
 		
 		// 로그인 정보가 없을 시, login 페이지로 이동
-		if(member == null) {
+		if(user == null) {
 			log.info(" ├[info] \"로그인 정보 없음, 로그인 페이지로 이동\" MemberFilter.doFilter()");
 			req.getRequestDispatcher("/login").forward(request, response);
-		} else {	// 
+		} else {
 			log.info(" ├[info] \"로그인 정보 존재\" MemberFilter.doFilter()");
 			chain.doFilter(request, response);
 		}

@@ -3,6 +3,11 @@
 <mapper namespace="com.b2.Sinnanda.mapper.QnaMapper">
 	
 	<!-- [이승준] QnA 답변 삭제 -->
+	<delete id="deleteQnaComment" >
+		DELETE 
+		FROM qna_comment 
+		WHERE qna_no = #{qnaNo} AND admin_no = #{adminNo}
+	</delete>
 	
 	<!-- [이승준] QnA 답변 삽입 -->
 	<insert id="insertQnaComment">
