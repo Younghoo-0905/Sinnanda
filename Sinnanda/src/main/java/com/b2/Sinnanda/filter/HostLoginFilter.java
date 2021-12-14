@@ -16,23 +16,22 @@ import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 
-// [이승준] Member 관련 필터
 //	[김영후] 유저 권한 별 필터링 작업 21.12.14
 
 @Slf4j
-@WebFilter(urlPatterns = "/member/*")
-public class MemberFilter implements Filter {
+@WebFilter(urlPatterns = "/host/*")
+public class HostLoginFilter implements Filter{
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		log.debug("[Debug] \"Member 필터 생성\" MemberFilter.init()");
+		log.debug("[Debug] \"host 필터 생성\" HostFilter.init()");
 	}
 	
+	//	[김영후] Host필터
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		log.debug("[Debug] \"Member 필터 시작\" MemberFilter.doFilter()");
-				
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		log.debug("[Debug] \"host 필터 시작\" HostFilter.doFilter()");
+		
 		//	User 객체 생성
 		User loginUser = new User();
 		// request 호출
@@ -41,24 +40,24 @@ public class MemberFilter implements Filter {
 		HttpSession session = req.getSession();
 		// 로그인 정보가 없을 시, login 페이지로 이동
 		if(session.getAttribute("loginUser") == null) {
-			log.info(" ├[info] \"로그인 정보 없음, 로그인 페이지로 이동\" MemberFilter.doFilter()");
+			log.info(" ├[info] \"로그인 정보 없음, 로그인 페이지로 이동\" HostFilter.doFilter()");
 			req.getRequestDispatcher("/login").forward(request, response);
 			return;
 		} else {
 			loginUser = (User)session.getAttribute("loginUser");
 			log.debug(" ├[param] user : "+loginUser.toString());	
 			//	UserLevel 검사
-			if(loginUser.getUserLevel() < 1) {
-				log.info(" ├[info] \"User 권한 부족, 로그인 페이지로 이동\" MemberFilter.doFilter()");
+			if(loginUser.getUserLevel() < 2) {
+				log.info(" ├[info] \"User 권한 부족, 로그인 페이지로 이동\" HostFilter.doFilter()");
 				req.getRequestDispatcher("/login").forward(request, response);				
 			}
 		}		
 		chain.doFilter(request, response);
-		log.debug("[Debug] \"Member 필터 종료\" MemberFilter.doFilter()");
-	}
-	
+		log.debug("[Debug] \"host 필터 종료\" HostFilter.doFilter()"); 
+    }
+
 	@Override
 	public void destroy() {
-		log.debug("[Debug] \"Member 필터 파기\" MemberFilter.destroy()");
+
 	}
 }

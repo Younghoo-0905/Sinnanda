@@ -9,10 +9,9 @@
 <title>공지사항 목록 페이지</title>
 </head>
 <body>
-	<h1>Notice List</h1>
-	<c:if test="${loginUser.getUserLevel() == 3}">
+	<c:if test="${loginUser.userLevel == 3}">
 		<div>
-			<a href="addNotice">공지사항 작성</a>
+			<a href="/admin/addNotice">공지사항 작성</a>
 		</div>
 	</c:if>
 	<table border="1">

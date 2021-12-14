@@ -16,28 +16,46 @@ import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
+
+//	[김영후] 유저 권한 별 필터링 작업 21.12.14
+
 @Slf4j
-@WebFilter(urlPatterns = {"/adminPage","/adminLoginForm","/addNotice","/modifyNotice","/removeNotice"})
-public class adminLoginFilter implements Filter{
+//	@WebFilter(urlPatterns = {"/adminPage","/adminLoginForm","/addNotice","/modifyNotice","/removeNotice"})
+@WebFilter(urlPatterns = "/admin/*")
+public class AdminLoginFilter implements Filter{
+	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		
+		log.debug("[Debug] \"admin 필터 생성\" AdminFilter.init()");
 	}
+	
 	//[윤경환] 관리자 필터 		[김영후] 수정 21.12.13
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		log.debug("관리자 로그인 필터 작동!!!!!!!!!");
+		log.debug("[Debug] \"admin 필터 시작\" AdminFilter.doFilter()");
+		
+		//	User 객체 생성
+		User loginUser = new User();
+		// request 호출
 		HttpServletRequest req = (HttpServletRequest) request;
+		// 세션 정보 가져오기
 		HttpSession session = req.getSession();
-		User loginUser = (User)session.getAttribute("loginUser");
-		log.debug("관리자 로그인 필터 세션값 확인 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + loginUser);
-			
-		if(loginUser == null) {
-			log.debug("비회원은 로그인 필터가 처리했으니 안심하라굿!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		// 로그인 정보가 없을 시, login 페이지로 이동
+		if(session.getAttribute("loginUser") == null) {
+			log.info(" ├[info] \"로그인 정보 없음, 로그인 페이지로 이동\" AdminFilter.doFilter()");
 			req.getRequestDispatcher("/login").forward(request, response);
 			return;
-		}
+		} else {
+			loginUser = (User)session.getAttribute("loginUser");
+			log.debug(" ├[param] user : "+loginUser.toString());	
+			//	UserLevel 검사
+			if(loginUser.getUserLevel() < 3) {
+				log.info(" ├[info] \"User 권한 부족, 로그인 페이지로 이동\" AdminFilter.doFilter()");
+				req.getRequestDispatcher("/login").forward(request, response);				
+			}
+		}		
 		chain.doFilter(request, response);
+		log.debug("[Debug] \"admin 필터 종료\" AdminFilter.doFilter()"); 
     }
 
 	@Override

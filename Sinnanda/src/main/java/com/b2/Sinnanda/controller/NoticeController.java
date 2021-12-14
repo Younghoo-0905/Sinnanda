@@ -24,7 +24,7 @@ public class NoticeController {
 	@Autowired NoticeService noticeService;
 
 	//	[김영후]	notice 삭제
-	@GetMapping("/removeNotice")
+	@GetMapping("/admin/removeNotice")
 	public String removeNotice(HttpServletRequest request, int noticeNo) {
 		log.debug("[Debug] \"START\" NoticeController.removeNotice() | Get");
 		log.debug(" ├[param] noticeNo : " + noticeNo);
@@ -41,7 +41,7 @@ public class NoticeController {
 	}
 
 	//	[김영후]	notice 수정
-	@GetMapping("/modifyNotice")
+	@GetMapping("/admin/modifyNotice")
 	public String modifyNotice(Model model, int noticeNo) {
 		log.debug("[Debug] \"START\" NoticeController.modifyNotice() | Get");
 		log.debug(" ├[param] noticeNo : " + noticeNo);
@@ -52,7 +52,7 @@ public class NoticeController {
 		
 		return "modifyNotice";
 	}
-	@PostMapping("/modifyNotice")
+	@PostMapping("/admin/modifyNotice")
 	public String modifyNotice(Notice notice) {
 		log.debug("[Debug] \"START\" NoticeController.modifyNotice() | Post");
 		log.debug(" ├[param] Notice : "+ notice.toString());
@@ -63,13 +63,13 @@ public class NoticeController {
 	}
 	
 	//	[김영후]	notice 추가
-	@GetMapping("/addNotice")
+	@GetMapping("/admin/addNotice")
 	public String addNotice() {
 		log.debug("[Debug] \"START\" noticeController.addNotice() | Get");
 		
 		return "addNotice";
 	}
-	@PostMapping("/addNotice")
+	@PostMapping("/admin/addNotice")
 	public String addNotice(Notice notice, HttpServletRequest req) {
 		log.debug("[Debug] \"START\" noticeController.addNotice() | Post");
 		log.debug(" ├[param] notice : " + notice.toString());
