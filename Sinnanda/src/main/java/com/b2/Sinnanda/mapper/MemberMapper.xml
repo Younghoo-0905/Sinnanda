@@ -13,19 +13,21 @@
       <result column="create_date" property="createDate"/>
       <result column="update_date" property="updateDate"/>      
    </resultMap>
-     
-     <!-- 마이페이지 -->
-	<select id="selectMyPage" parameterType="com.b2.Sinnanda.vo.Member" resultMap="resultMember">
+    
+    <!-- [유동진] 마이페이지 -->
+	<select id="selectMyPage" parameterType="int" resultMap="resultMember">
 		SELECT
 			member_id,
 			member_name,
 			member_age,
 			member_tel,
-			member_email
+			member_email,
+			create_date
+		FROM member
 		WHERE member_no = #{memberNo}
 	</select>
   
-	<!-- 회원 정보 수정 -->
+	<!-- [유동진] 회원 정보 수정 -->
 	<update id="updateMember" parameterType="com.b2.Sinnanda.vo.Member">
 		UPDATE member 
 	    SET
@@ -34,6 +36,7 @@
 	        member_name = #{memberName},
 	        member_age = #{memberAge},
 	        member_tel = #{memberTel},
+	        member_email = #{memberEmail},
 	        update_date = NOW()
 	    WHERE member_no = #{memberNo}
 	</update>

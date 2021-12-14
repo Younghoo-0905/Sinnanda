@@ -10,7 +10,7 @@ import com.b2.Sinnanda.vo.MemberOut;
 @Mapper
 public interface MemberMapper {
 	// [유동진] 마이페이지
-	int selectMyPage(int memberNo);
+	Member selectMyPage(int memberNo);
 		
 	// [유동진] 회원 정보 수정
 	int updateMember(Member member);

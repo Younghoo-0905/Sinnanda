@@ -48,14 +48,14 @@
           <li class="nav-item"><a href="" class="nav-link"> 쿠폰함</a></li>
           
 			<!--memberId가 없을때--> 
-         <c:if test ="${loginMember == null}">
+         <c:if test ="${loginUser == null}">
           <li class="nav-item"><a href="login" class="nav-link">로그인</a></li>
           <li class="nav-item"><a href="insertMemberForm" class="nav-link">회원가입</a></li>
          </c:if>
          
           <!--memberId가 있을떄  -->
-         <c:if test = "${loginMember != null}">
-          <li class="nav-item"><a href="" class="nav-link">마이페이지</a></li>
+         <c:if test = "${loginUser != null}">
+          <li class="nav-item"><a href="myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">마이페이지</a></li>
           <li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>
           </c:if>
      	

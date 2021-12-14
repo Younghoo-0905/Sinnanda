@@ -15,6 +15,7 @@ import com.b2.Sinnanda.service.CertifyEmailService;
 import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
+import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,26 +26,40 @@ public class MemberController {
 	@Autowired CertifyEmailService certifyEmailService;
 	
 	// [유동진] 마이페이지
-	@GetMapping("myPage")
-	public String myPage(Model model, HttpServletRequest request) {
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		log.debug("멤버 넘버 : "+ memberNo);
-		// Member member = memberService.myPage(memberNo);
-		return "myPage";
-	}
+	   @GetMapping("myPage")
+	   public String myPage(Model model, int memberNo) {
+	      // memberNo을 이용해서 member의 데이터들을 조회하고, member 객체에 삽입
+	      Member member = memberService.myPage(memberNo);
+	      log.debug("멤버 넘버 : "+ memberNo);
+	      
+	      // member 객체의 데이터를 전달
+	      model.addAttribute(member);
+	      return "myPage";
+	   }
 	
 	
 	// [유동진] 회원 정보 수정
 	@GetMapping("/modifyMember")
-	public String modifyMember(HttpSession session, Model model) {
+	public String modifyMember(HttpServletRequest request, Model model) {
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+		}
+		
+		model.addAttribute(loginUser);
 		return "modifyMember";
 	}
 	@PostMapping("/modifyMember")
 	public String modifyMember(Member member) {
-		log.debug("MemberController : modifyMember -> " + member.toString());
+		log.debug("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥MemberController : modifyMember -> " + member.toString());
 		memberService.modifyMember(member);
-		log.debug("MemberController : 수정 성공!");
-		return "redirect:/myPage";
+		log.debug("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥MemberController : 회원정보수정 성공!");
+		return "redirect:/myPage?memberNo="+member.getMemberNo();
 	}
 
 	//	[김영후] 회원 가입

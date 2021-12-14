@@ -17,8 +17,8 @@ public class MemberService {
 	@Autowired MemberMapper memberMapper;
 	
 	// [유동진] 마이페이지
-	public void myPage(int memberNo) {
-		memberMapper.selectMyPage(memberNo);
+	public Member myPage(int memberNo) {
+		return memberMapper.selectMyPage(memberNo);		
 	}
 	
 	// [유동진] 회원 정보 수정
