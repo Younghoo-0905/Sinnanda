@@ -473,6 +473,17 @@ pre {
     .container {
       max-width: 1140px; } }
 
+/* [이승준] 컨테이너2 */
+.container2 {
+	width: 100%;
+	padding-top: 15px;
+	padding-bottom: 0px;
+}
+.hc { position:absolute; width:80%; left:0; right:0; margin-left:100px; margin-right:100px; } /* 가로 중앙 정렬 */ 
+.vc { height:40px; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; } /* 세로 중앙 정렬 */
+
+
+
 .container-fluid {
   width: 100%;
   padding-right: 15px;
@@ -1339,12 +1350,14 @@ pre {
     margin-left: 83.33333%; }
   .offset-xl-11 {
     margin-left: 91.66667%; } }
-
+/* [이승준] 테이블 */
 .table {
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: 1rem;
-  background-color: transparent; }
+	width: 100%;
+	max-width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: transparent;
+}
   .table th,
   .table td {
     padding: 0.75rem;
@@ -6330,7 +6343,13 @@ button.bg-dark:focus {
 
 .ml-auto,
 .mx-auto {
-  margin-left: auto !important; }
+	margin-left: auto !important;
+}
+
+/* [이승준] 내비바 마진떄문에 만든 새로운 클래스 */
+.mj-auto {
+	margin-left: 5% !important;
+}
 
 @media (min-width: 576px) {
   .m-sm-0 {
@@ -7360,9 +7379,10 @@ h1, h2, h3, h4, h5,
       @media (max-width: 991.98px) {
         .ftco-navbar-light .navbar-nav > .nav-item.ftco-seperator:before {
           display: none; } }
+/* [이승준] 내비 버튼 cta 수정 */
   .ftco-navbar-light .navbar-nav > .nav-item.cta > a {
     color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: opx solid rgba(255, 255, 255, 0.4);
     padding-top: .5rem;
     padding-bottom: .5rem;
     padding-left: 20px;
@@ -7387,7 +7407,7 @@ h1, h2, h3, h4, h5,
 /* [이승준] 내비바 버튼 커서 온, 버튼 색상 변경 */
 .ftco-navbar-light .navbar-nav > .nav-item.cta > a:hover {
 	/* 기존 : background: #f85959; */
-	background-color:rgba(248, 89, 89, 0.5);	/* 뒤 배경 색 */
+	background-color:rgba(248, 89, 89, 0.4);	/* 뒤 배경 색 */
 }
 
   .ftco-navbar-light .navbar-nav > .nav-item.cta.cta-colored span {
@@ -7411,12 +7431,6 @@ h1, h2, h3, h4, h5,
 	border-radius: 30px;
 }
 /* 추가------------------------------------------------------------- */
-/* [이승준] 상단 내비바 버튼 액티브 */
-.ftco-navbar-light.scrolled .nav-item.member > a {
-	/* 기존 : color: #f85959 !important; */
-	color: #0080ff!important;
-	opacity:0.8;
-}
 
 /* [이승준] +내비바 멤버 버튼 모양, 글씨 및 모양 변경 */
 .ftco-navbar-light .navbar-nav > .nav-item.member > a {
@@ -7424,18 +7438,17 @@ h1, h2, h3, h4, h5,
 	margin: 3px;
 	color: #000000!important;
 	font-weight: 600;
-	background: #0080ff;
+	background: #ffff;
 	border: none !important;
 	padding-top: 0.5rem !important;
 	padding-bottom: .5rem !important;
 	padding-left: 20px;
 	padding-right: 20px;
 	margin-top: 6px !important;
-	-webkit-border-radius: 30px;
-	-moz-border-radius: 30px;
-	-ms-border-radius: 30px;
-	border-radius: 30px;
-	opacity:0.8;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-ms-border-radius: 10px;
+	border-radius: 10px;
 }
 /* 추가------------------------------------------------------------- */
   .ftco-navbar-light .navbar-toggler {
@@ -7711,14 +7724,32 @@ h1, h2, h3, h4, h5,
   box-shadow: none !important; }
   .btn:hover, .btn:active, .btn:focus {
     outline: none; }
-  .btn.btn-primary {
-    background: #f85959;
-    border: 1px solid #f85959;
-    color: #fff; }
-    .btn.btn-primary:hover {
-      border: 1px solid #f85959;
-      background: transparent;
-      color: #f85959; }
+
+/* [이승준] 버튼-기본  */
+.btn.btn-primary {
+	background: #f85959;
+	border: 1px solid #f85959;
+	color: #fff;
+	
+	/* 추가한 부분 */
+	font-weight: 600;
+	padding-top: 0.5rem !important;
+	padding-bottom: .5rem !important;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-top: 6px !important;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-ms-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* [이승준] 버튼-기본:호버  */
+.btn.btn-primary:hover {
+	border: 1px solid #f85959;
+	background: transparent;
+	color: #f85959;
+}
     .btn.btn-primary.btn-outline-primary {
       border: 1px solid #f85959;
       background: transparent;
