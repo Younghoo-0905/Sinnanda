@@ -26,5 +26,5 @@ public interface NoticeMapper {
 	List<Notice> selectNoticeListByCategory(Map<String, Object> map);
 	
 	//	[김영후]	notice 총 갯수 조회
-	int selectNoticeTotalCount();
+	int selectNoticeTotalCount(String noticeCategory);
 }

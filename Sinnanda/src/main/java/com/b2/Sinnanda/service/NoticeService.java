@@ -54,15 +54,14 @@ public class NoticeService {
 	}
 	
 	//	[김영후]	카테고리별로 공지사항 목록조회
-	public Map<String, Object> getNoticeListByCategory(String noticeCategory, int currentPage, int rowPerPage){
+	public Map<String, Object> getNoticeListByCategory(String noticeCategory, int beginRow, int rowPerPage){
 		log.debug("[Debug] \"START\" NoticeService.getNoticeList()");
 		log.debug(" ├[param] noticeCategory : " + noticeCategory);
-		log.debug(" ├[param] currentPage : " + currentPage);
+		log.debug(" ├[param] beginRow : " + beginRow);
 		log.debug(" ├[param] rowPerPage : " + rowPerPage);
 		
 		// 1. 매개변수 가공 (paraMap <-- noticeCategory, currentPage, rowPerPage)
 		Map<String, Object> paramMap = new HashMap<>();
-		int beginRow = (currentPage-1) * rowPerPage;
 		
 		paramMap.put("noticeCategory", noticeCategory);
 		paramMap.put("beginRow", beginRow);
@@ -75,7 +74,7 @@ public class NoticeService {
 		Map<String, Object> returnMap = new HashMap<>();
 		
 		int lastPage = 0;
-		int totalCount = noticeMapper.selectNoticeTotalCount();
+		int totalCount = noticeMapper.selectNoticeTotalCount(noticeCategory);
 		log.debug(" ├[param] notice TotalCount : " + totalCount);
 		
 		lastPage = totalCount / rowPerPage;

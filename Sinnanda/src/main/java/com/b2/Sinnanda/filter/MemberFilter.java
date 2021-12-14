@@ -27,7 +27,8 @@ public class MemberFilter implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		log.debug("[Debug] \"Member 필터 생성\" MemberFilter.init()");
 	}
-	
+
+	//	[김영후] Member filter 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {

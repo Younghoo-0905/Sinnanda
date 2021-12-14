@@ -99,9 +99,14 @@
 	</select>
 	
 	<!-- [김영후] Notice 갯수 조회-->
-	<select id="selectNoticeTotalCount" resultType="int">
+	<select id="selectNoticeTotalCount" parameterType="String" resultType="int">
 		SELECT 
 			COUNT(*) 
 		FROM notice
+		<where>
+			<if test="noticeCategory != null or noticeCategory != ''">
+				notice_category = #{noticeCategory}
+			</if>
+		</where>
 	</select>
 </mapper>

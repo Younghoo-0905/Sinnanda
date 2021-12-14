@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class LoginController {
 	
-	@Autowired MemberService memberService;	//	[김영후]
+	@Autowired MemberService memberService;
 	@Autowired LoginService loginService;
 	
 	User loginUser = new User();
@@ -43,6 +43,14 @@ public class LoginController {
 		loginUser = loginService.getLoginCheckAll(user);
 		session.setAttribute("loginUser", loginUser);
 		
+		//	[김영후] 이메일 인증여부 확인
+		if(loginUser.getMember() != null) {		//	로그인 요청한 유저가 Member인 경우 실행
+			int memberActive = memberService.getCertifyMember(loginUser.getMember());
+			log.debug("로그인 멤버 이메일 인증 여부 : " + memberActive);
+			if(memberActive == 0) {		//	active = 0 인 Member는 이메일 인증 화면으로
+				return "certifyEmailForm";
+			}
+		}		
 		return "index";	
 	}
 	
@@ -101,13 +109,5 @@ public class LoginController {
 			return "adminPage";
 		}
 		*/
-		//[윤경환] amin 로그아웃 
-		@GetMapping("adminLogout")
-		public String AdminLogout(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.invalidate();
-		return "index";
-		}
-	
 	
 }

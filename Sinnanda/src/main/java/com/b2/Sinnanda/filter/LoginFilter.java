@@ -23,37 +23,29 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginFilter implements Filter{
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		
+		log.debug("[Debug] \"Login 필터 생성\" LoginFilter.init()");		
 	}
 
+	//	[김영후] Login filter
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		log.debug("로그인 필터 작동!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		boolean isRedirect = false;
-		User user = new User();
+		log.debug("[Debug] \"Login 필터 시작\" LoginFilter.doFilter()");
+
+		// request 호출
 		HttpServletRequest req = (HttpServletRequest) request;
+		// 세션 정보 가져오기
 		HttpSession session = req.getSession();
-		user = (User)session.getAttribute("loginUser");
-		log.debug("로그인 필터 세션값 확인 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+user);
-		
-		if(user == null) {
-			isRedirect = true;
+		//	이미 로그인 된 유저는 메인 화면으로
+		if(session.getAttribute("loginUser") != null) {
+			log.info(" ├[info] \"이미 로그인 된 유저입니다. \" LoginFilter.doFilter()");		
+			req.getRequestDispatcher("/index").forward(request, response);					
 		}
-		
-		if(isRedirect == true) {
-			log.debug("비회원은 로그인 필터가 처리했으니 안심하라굿!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			req.getRequestDispatcher("/login").forward(request, response);
-			return;
-		}else {
-			log.debug("너는 로그인 했으니 로그인 페이지로 그만가셈!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			req.getRequestDispatcher("/index").forward(request, response);
-			chain.doFilter(request, response);
-			return;
-		}
+		chain.doFilter(request, response);
+		log.debug("[Debug] \"Login 필터 종료\" LoginFilter.doFilter()"); 
     }
 
 	@Override
 	public void destroy() {
-
+		log.debug("[Debug] \"Login 필터 파기\" LoginFilter.destroy()");
 	}
 }

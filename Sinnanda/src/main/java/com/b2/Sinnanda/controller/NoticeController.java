@@ -23,6 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 public class NoticeController {
 	@Autowired NoticeService noticeService;
 
+	//	[김영후]	notice 목록 페이징용 상수
+	private final int ROW_PER_PAGE = 10;	
+
 	//	[김영후]	notice 삭제
 	@GetMapping("/admin/removeNotice")
 	public String removeNotice(HttpServletRequest request, int noticeNo) {
@@ -95,8 +98,6 @@ public class NoticeController {
 		return "noticeOne";
 	}
 	
-	//	[김영후]	notice 목록 페이징용 상수
-	private final int ROW_PER_PAGE = 10;	
 	//	[김영후]	notice 목록 조회
 	@GetMapping("/noticeList")
 	public String noticeList(Model model, 
@@ -105,12 +106,31 @@ public class NoticeController {
 		log.debug("[Debug] \"START\" noticeController.noticeList() | Get");
 		log.debug(" ├[param] currentPage : "+currentPage);
 		
-		Map<String, Object> map = noticeService.getNoticeListByCategory(noticeCategory, currentPage, ROW_PER_PAGE);
+		//	출력을 시작하는 행 구하기 수식
+		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1); 
 		
-		model.addAttribute("noticeCategory", map.get("noticeCategory"));
+		Map<String, Object> map = noticeService.getNoticeListByCategory(noticeCategory, beginRow, ROW_PER_PAGE);
+
+		//	값 디버깅
+		log.debug("[Debug] : Notice 목록 조회 값");
+		log.debug(" ├ beginRow : " + beginRow);
+		log.debug(" ├ noticeCategory : " + noticeCategory);
+		log.debug(" ├ currentPage : " + currentPage);
+		//	log.debug(" ├ noticeList : " + map.get("noticeList"));
+		log.debug(" ├ lastPage : " + map.get("lastPage"));
+		
+		//	값 전달
+		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
+		model.addAttribute("noticeCategory", noticeCategory);
 		model.addAttribute("noticeList", map.get("noticeList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
+		
+		//	10개의 page 번호를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10);
+		log.debug(" ├ pageNo : " + "pageNo");
+		model.addAttribute("pageNo", pageNo);
 		
 		return "noticeList";
 	}

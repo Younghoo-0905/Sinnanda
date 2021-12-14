@@ -24,13 +24,13 @@ public class HostLoginFilter implements Filter{
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		log.debug("[Debug] \"host 필터 생성\" HostFilter.init()");
+		log.debug("[Debug] \"Host 필터 생성\" HostFilter.init()");
 	}
 	
-	//	[김영후] Host필터
+	//	[김영후] Host filter
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		log.debug("[Debug] \"host 필터 시작\" HostFilter.doFilter()");
+		log.debug("[Debug] \"Host 필터 시작\" HostFilter.doFilter()");
 		
 		//	User 객체 생성
 		User loginUser = new User();
@@ -53,11 +53,11 @@ public class HostLoginFilter implements Filter{
 			}
 		}		
 		chain.doFilter(request, response);
-		log.debug("[Debug] \"host 필터 종료\" HostFilter.doFilter()"); 
+		log.debug("[Debug] \"Host 필터 종료\" HostFilter.doFilter()"); 
     }
 
 	@Override
 	public void destroy() {
-
+		log.debug("[Debug] \"Host 필터 파기\" HostFilter.destroy()");
 	}
 }

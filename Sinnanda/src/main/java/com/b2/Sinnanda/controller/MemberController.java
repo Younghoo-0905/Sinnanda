@@ -1,6 +1,5 @@
 package com.b2.Sinnanda.controller;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -85,6 +84,7 @@ public class MemberController {
 		return "redirect:/myPage?memberNo="+member.getMemberNo();
 	}
 	
+
 	//	[김영후] 회원 가입
 	@GetMapping("/insertMember")
 	public String getInsertMember() {
@@ -105,11 +105,11 @@ public class MemberController {
 	@PostMapping("/certifyMember")
 	public String certifyMember(Member member) {
 		int result = memberService.certifyMember(member);
-		log.debug("@@@@@@@@@@@@@@@@@@@@@@" + result);
-		if(result == 1) {
+		log.debug("├[Debug] 이메일 인증 result : " + result);
+		if(result == 1) {	//	인증 완료 후, Member 정보 update
 			memberService.certifyMemberUpdate(member);
 			return "index";
-		} else {
+		} else {	//	인증 실패시 다시 인증 화면
 			return "certifyEmailForm";
 		}
 	}

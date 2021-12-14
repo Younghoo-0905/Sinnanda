@@ -20,19 +20,18 @@ import lombok.extern.slf4j.Slf4j;
 //	[김영후] 유저 권한 별 필터링 작업 21.12.14
 
 @Slf4j
-//	@WebFilter(urlPatterns = {"/adminPage","/adminLoginForm","/addNotice","/modifyNotice","/removeNotice"})
 @WebFilter(urlPatterns = "/admin/*")
 public class AdminLoginFilter implements Filter{
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		log.debug("[Debug] \"admin 필터 생성\" AdminFilter.init()");
+		log.debug("[Debug] \"Admin 필터 생성\" AdminFilter.init()");
 	}
 	
 	//[윤경환] 관리자 필터 		[김영후] 수정 21.12.13
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		log.debug("[Debug] \"admin 필터 시작\" AdminFilter.doFilter()");
+		log.debug("[Debug] \"Admin 필터 시작\" AdminFilter.doFilter()");
 		
 		//	User 객체 생성
 		User loginUser = new User();
@@ -55,11 +54,11 @@ public class AdminLoginFilter implements Filter{
 			}
 		}		
 		chain.doFilter(request, response);
-		log.debug("[Debug] \"admin 필터 종료\" AdminFilter.doFilter()"); 
+		log.debug("[Debug] \"Admin 필터 종료\" AdminFilter.doFilter()"); 
     }
 
 	@Override
 	public void destroy() {
-
+		log.debug("[Debug] \"Admin 필터 파기\" AdminFilter.destroy()");
 	}
 }
