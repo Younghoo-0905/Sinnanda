@@ -20,10 +20,6 @@
 				<td><input type = "text" name ="memberName" value = "${loginUser.member.memberName}" readonly></td>
 			</tr>
 			<tr>
-				<td>비밀번호</td>
-				<td><input type ="password" name ="memberPw"></td>
-			</tr>
-			<tr>
 				<td>나이</td>
 				<td><input type ="text" name ="memberAge" value = "${loginUser.member.memberAge}"></td>
 			</tr>

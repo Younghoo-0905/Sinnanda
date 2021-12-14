@@ -26,13 +26,12 @@
 		FROM member
 		WHERE member_no = #{memberNo}
 	</select>
-  
+  	
 	<!-- [유동진] 회원 정보 수정 -->
 	<update id="updateMember" parameterType="com.b2.Sinnanda.vo.Member">
 		UPDATE member 
 	    SET
 	        member_id = #{memberId},
-	        member_pw = #{memberPw},
 	        member_name = #{memberName},
 	        member_age = #{memberAge},
 	        member_tel = #{memberTel},
@@ -40,7 +39,16 @@
 	        update_date = NOW()
 	    WHERE member_no = #{memberNo}
 	</update>
-
+	
+	<!-- [유동진] 회원 비밀번호 변경 -->
+	<update id="updateMemberPw" parameterType="com.b2.Sinnanda.vo.Member">
+		UPDATE member 
+	    SET
+	    	member_pw = #{memberPw},
+	    	update_date = NOW()
+	    WHERE member_no = #{memberNo}
+	</update>
+	
 	<!-- [김영후] 회원 가입 -->
 	<insert id="insertMember" parameterType="com.b2.Sinnanda.vo.Member">
 		INSERT INTO 

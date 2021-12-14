@@ -26,6 +26,11 @@ public class MemberService {
 		memberMapper.updateMember(member);
 	}
 	
+	// [유동진] 비밀번호 변경
+	public void modifyMemberPw(Member member) {
+		memberMapper.updateMemberPw(member);
+	}
+	
 	//	[김영후] 회원 이메일 인증
 	public int certifyMember(Member member) {
 		int result = memberMapper.certifyMember(member);

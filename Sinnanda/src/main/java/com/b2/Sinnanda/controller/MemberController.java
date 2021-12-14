@@ -26,19 +26,18 @@ public class MemberController {
 	@Autowired CertifyEmailService certifyEmailService;
 	
 	// [유동진] 마이페이지
-	   @GetMapping("myPage")
-	   public String myPage(Model model, int memberNo) {
-	      // memberNo을 이용해서 member의 데이터들을 조회하고, member 객체에 삽입
-	      Member member = memberService.myPage(memberNo);
-	      log.debug("멤버 넘버 : "+ memberNo);
-	      
-	      // member 객체의 데이터를 전달
-	      model.addAttribute(member);
-	      return "myPage";
-	   }
-	
-	
-	// [유동진] 회원 정보 수정
+	@GetMapping("myPage")
+	public String myPage(Model model, int memberNo) {
+      // memberNo을 이용해서 member의 데이터들을 조회하고, member 객체에 삽입
+      Member member = memberService.myPage(memberNo);
+      log.debug("멤버 넘버 : "+ memberNo);
+      
+      // member 객체의 데이터를 전달
+      model.addAttribute(member);
+      return "myPage";
+	}
+		
+	// [유동진] 회원 정보 수정(프로필)
 	@GetMapping("/modifyMember")
 	public String modifyMember(HttpServletRequest request, Model model) {
 		// 로그인 세션 조회
@@ -61,7 +60,31 @@ public class MemberController {
 		log.debug("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥MemberController : 회원정보수정 성공!");
 		return "redirect:/myPage?memberNo="+member.getMemberNo();
 	}
-
+	
+	// [유동진] 비밀번호 변경
+	@GetMapping("/modifyMemberPw")
+	public String modifyMemberPw(HttpServletRequest request, Model model) {
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+		}
+		
+		model.addAttribute(loginUser);
+		return "modifyMemberPw";
+	}
+	@PostMapping("/modifyMemberPw")
+	public String modifyMemberPw(Member member) {
+		log.debug("★★★★★★★★★★★★★MemberController : modifyMember -> " + member.toString());
+		memberService.modifyMemberPw(member);
+		log.debug("★★★★★★★★★★★★★MemberController : 회원비밀번호 변경 성공!");
+		return "redirect:/myPage?memberNo="+member.getMemberNo();
+	}
+	
 	//	[김영후] 회원 가입
 	@GetMapping("/insertMember")
 	public String getInsertMember() {
