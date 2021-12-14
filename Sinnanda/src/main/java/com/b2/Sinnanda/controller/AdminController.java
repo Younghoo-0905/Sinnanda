@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.b2.Sinnanda.service.AdminService;
 import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
+import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,15 +52,26 @@ public class AdminController {
 		
 		return "adminOne";	
 	}
+	//[윤경환] 관리자 수정 폼
 	@GetMapping("/modifyAdminOne")
-	public String getmodifyAdminOne() {
-		
-		
+	public String getmodifyAdminOne(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User loginUser = (User) session.getAttribute("loginUser");
+		log.debug("loginUser456456456"+loginUser.toString());
+	
 		return "modifyAdminOne";
+		
 	}
-	@PostMapping("modifyAdminOne")
-	public String postmodifyAdminOne() {
-		return "modifyAdminOne";
+	@PostMapping("/modifyAdminOne")
+	public String postmodifyAdminOne(String adminId, String adminPw, Model model) {
+		log.debug("admin<-----"+adminId);
+		log.debug("admin<-----"+adminPw);
+		
+		
+		Admin admin = adminService.getModifyAdmin(adminId,adminPw);
+		model.addAttribute(admin);
+		
+		return "modifyAdminForm";
 		
 	}
 }

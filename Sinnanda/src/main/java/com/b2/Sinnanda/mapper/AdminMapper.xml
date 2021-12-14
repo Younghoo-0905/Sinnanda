@@ -48,4 +48,29 @@
  	WHERE a.admin_No =#{adminNo}
 	</select>
 	
+	<!--[윤경환] modifyAdmin Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Admin" id="modifyAdmin">
+		<id column="admin_id" property="adminId"></id>
+		<id column="admin_pw" property="adminPw"></id>
+		<id column="admin_name" property="adminName"></id>
+		<id column="admin_position" property="adminPosition"></id>
+	</resultMap>
+	
+	
+	<!-- [윤경환] 관리자 내용 수정 폼으로 이동  -->
+	<select id="modifyAdmin" parameterType="Map" resultMap="modifyAdmin">
+		SELECT 
+			a.admin_id, 
+			a.admin_pw,
+			a.admin_name,
+			ap.admin_position
+		FROM 
+			admin AS a
+			LEFT JOIN 
+			admin_position AS ap
+		ON	a.admin_position_no = ap.admin_position_no 
+		WHERE a.admin_id = #{adminId} AND a.admin_pw =#{adminPw}
+ 
+	</select>
+	
 </mapper>

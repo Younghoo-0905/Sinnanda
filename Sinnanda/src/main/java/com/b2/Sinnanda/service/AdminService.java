@@ -26,4 +26,12 @@ public class AdminService {
 		return adminMapper.selectAdminOne(adminNo);
 		
 	}
+	
+	//[윤경환] 관리자 수정 전 로그인 
+	public Admin getModifyAdmin(String adminId, String adminPw) {
+		log.debug("adminId++++++++++++"+adminId);
+		log.debug("adminPw++++++++++++"+adminPw);
+		
+		return adminMapper.modifyAdmin(adminId, adminPw);
+	}
 }

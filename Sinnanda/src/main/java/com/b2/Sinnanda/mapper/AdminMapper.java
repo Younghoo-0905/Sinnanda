@@ -12,5 +12,8 @@ public interface AdminMapper {
 	
 	//[윤경환] 관리자 세부정보
 	Admin selectAdminOne(int adminNo);
+	
+	//[윤경환] 관리자 회원정보 수정
+	Admin modifyAdmin(String adminId, String adminPw);
 
 }

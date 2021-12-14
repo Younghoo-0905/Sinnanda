@@ -409,7 +409,7 @@
               <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                    <!-- 관리자 관련된것은 나중에 수정 필요 -->
-                  <h3 class="font-weight-bold">${loginAdmin.adminName}</h3>
+                  <h3 class="font-weight-bold">${loginUser.admin.adminName}</h3>
                   <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6>
                 </div>
                 <div class="col-12 col-xl-4">

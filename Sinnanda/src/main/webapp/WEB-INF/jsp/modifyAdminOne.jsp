@@ -13,14 +13,15 @@
 	<table>
 		<tr>
 			<td>관리자ID</td>
-			<td><input type ="text" name ="adminId" value="${loginAdmin.adminId}" id ="adminId" readonly></td>
+			<td><input type ="text" name ="adminId" value="${loginUser.admin.adminId}" id ="adminId" readonly></td>
 		</tr>
 		<tr>
 			<td>관리자PW</td>
 			<td><input type ="password" name ="adminPw" id ="adminPw" placeholder ="adminPw"></td>
 		</tr>
 	</table>
-	<button type="button">수정</button>
+         <button onclick="return chk_form()">수정</button>
+ 
 	</form>
 	 <script src="../../vendors/js/vendor.bundle.base.js"></script>
 	 <script src="../../js/off-canvas.js"></script>
@@ -30,17 +31,18 @@
  	 <script src="../../js/todolist.js"></script>
 	<script>
 		function chk_form() {
+	
 		if(document.getElementById("adminId").value==''){
 			alert("아이디를 입력해주십시오.");
 			return false;
 		}
-		if(document.getElementById("adminPw").value==''){
+		if(document.getElementById("adminPw").value=='' || document.getElementById("adminPw") =! ${loginUser.admin.adminPw}){
 			alert("비밀번호를 입력해주십시오.");
 			return false;
 		}
+	}
 		
-		document.getElementById("adminForm").submit();
-		}
+}
 	</script>
 </body>
 </html>

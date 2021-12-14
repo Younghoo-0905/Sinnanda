@@ -100,13 +100,14 @@ public class LoginController {
 			session.setAttribute("loginAdmin", loginAdmin);
 			return "adminPage";
 		}
+		*/
 		//[윤경환] amin 로그아웃 
 		@GetMapping("adminLogout")
 		public String AdminLogout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "index";
-		}*/
+		}
 	
 	
 }
