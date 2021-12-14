@@ -168,15 +168,15 @@
 		    					<div class="text p-3">
 		    						<div class="d-flex">
 		    							<div class="one">
-				    						<a href="hotel-single.html">${ac.accomName}</a>
-				    						<p class="rate">
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star"></i>
-				    							<i class="icon-star-o"></i>
-				    							<span>8 Rating</span>
-				    						</p>
+		    								<!--[이원희] 숙소 이름 -->
+		    								<div>
+				    							<a href="hotel-single.html">${ac.accomName}</a>
+		    								</div>
+				    						<!--[이원희] 별 개수  -->
+				    						<div style="CLEAR: both; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: url(icon_star2.gif) 0px 0px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 90px; PADDING-TOP: 0px; HEIGHT: 18px;">
+ 												<p style="WIDTH: 72%; PADDING-RIGHT:0px; PADDING-LEFT:0px; BACKGROUND: url(icon_star.gif) 0px 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; HEIGHT: 18px;">
+ 												</p>
+ 											</div>
 			    						</div>
 			    						<div class="two">
 			    							<span class="price per-price">$40<br><small>/night</small></span>
