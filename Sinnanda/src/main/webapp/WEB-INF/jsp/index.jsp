@@ -58,7 +58,12 @@
           <li class="nav-item"><a href="myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">마이페이지</a></li>
           <li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>
           </c:if>
-     	
+          
+     	 <!--memberId가 있을떄  -->
+         <c:if test = "${loginUser != null}">
+          <li class="nav-item"><a href="adminPage?adminNo=${loginUser.admin.adminNo}" class="nav-link">마이페이지</a></li>
+          <li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>
+          </c:if>
         </ul>
       </div>
     </div>

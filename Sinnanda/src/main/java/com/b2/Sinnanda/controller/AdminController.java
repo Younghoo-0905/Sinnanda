@@ -1,5 +1,6 @@
 package com.b2.Sinnanda.controller;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.b2.Sinnanda.service.AdminService;
 import com.b2.Sinnanda.vo.Admin;
@@ -36,7 +38,12 @@ public class AdminController {
 	
 	//[윤경환] 관리자 페이지
 	@GetMapping("/adminPage")
-	public String getAdminPage() {
+	public String getAdminPage(int adminNo, Model model) {
+		log.debug("adminNo>---------------"+adminNo); 
+		Admin admin =  adminService.getAdminOne(adminNo); 
+		
+		model.addAttribute(admin);
+		
 		return "adminPage";
 	}
 	
@@ -54,11 +61,14 @@ public class AdminController {
 	}
 	//[윤경환] 관리자 수정 폼
 	@GetMapping("/modifyAdminOne")
-	public String getmodifyAdminOne(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		User loginUser = (User) session.getAttribute("loginUser");
-		log.debug("loginUser456456456"+loginUser.toString());
+	public String getmodifyAdminOne(int adminNo, Model model) {
+		log.debug("adminID+++++++++++++"+adminNo);
+		
+		log.debug("adminNo>---------------"+adminNo); 
+		Admin admin = adminService.getSelectAdminName(adminNo); 
 	
+		model.addAttribute(admin);
+		
 		return "modifyAdminOne";
 		
 	}
@@ -67,11 +77,26 @@ public class AdminController {
 		log.debug("admin<-----"+adminId);
 		log.debug("admin<-----"+adminPw);
 		
-		
+	
+	
 		Admin admin = adminService.getModifyAdmin(adminId,adminPw);
+			
 		model.addAttribute(admin);
-		
+	
 		return "modifyAdminForm";
 		
 	}
+	
+	@PostMapping("/modifyAdminForm")
+	public String postmodifyAdminForm(Admin admin) {
+		log.debug("admin<---------"+admin);
+		
+		
+		adminService.getModifyAdminForm(admin);
+		log.debug("admin.getAdminName()+++++++++++"+admin.getAdminName());
+		return "adminPage";
+		
+	}
+	
+	
 }

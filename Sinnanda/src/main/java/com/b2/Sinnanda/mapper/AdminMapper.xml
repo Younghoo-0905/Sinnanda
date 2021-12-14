@@ -38,6 +38,7 @@
 	<select id="selectAdminOne" parameterType="Map" resultMap="AdminOneMap">
 		SELECT 
 			a.admin_id,
+			a.admin_pw,
 			a.admin_name,
 			ap.admin_position,
 			ap.admin_level,
@@ -50,6 +51,7 @@
 	
 	<!--[윤경환] modifyAdmin Map -->
 	<resultMap type="com.b2.Sinnanda.vo.Admin" id="modifyAdmin">
+		<id column="admin_no" property="adminNo"></id>
 		<id column="admin_id" property="adminId"></id>
 		<id column="admin_pw" property="adminPw"></id>
 		<id column="admin_name" property="adminName"></id>
@@ -59,7 +61,8 @@
 	
 	<!-- [윤경환] 관리자 내용 수정 폼으로 이동  -->
 	<select id="modifyAdmin" parameterType="Map" resultMap="modifyAdmin">
-		SELECT 
+		SELECT 	
+			a.admin_no,
 			a.admin_id, 
 			a.admin_pw,
 			a.admin_name,
@@ -71,6 +74,30 @@
 		ON	a.admin_position_no = ap.admin_position_no 
 		WHERE a.admin_id = #{adminId} AND a.admin_pw =#{adminPw}
  
+	</select>
+	
+	<!-- [윤경환] 관리자 내용 수정 -->
+	<update id="modifyAdminForm" parameterType="com.b2.Sinnanda.vo.Admin">
+		UPDATE admin SET 
+			admin_pw = #{adminPw},
+			admin_name = #{adminName}
+		WHERE admin_no = #{adminNo}
+	</update>	
+	
+	<!--[윤경환] modifyAdmin Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Admin" id="selectAdminName">
+		<id column="admin_name" property="adminName"></id>
+		<id column="admin_pw" property="adminPw"></id>
+	</resultMap>
+	
+	
+	<!--[윤경환]  관리자 이름 및 비번 가져오기-->
+	<select id="selectAdminName"  parameterType="Map" resultMap="modifyAdmin">
+			SELECT 
+				admin_name,
+				admin_pw
+				FROM admin 
+				WHERE admin_no = #{adminNo}
 	</select>
 	
 </mapper>

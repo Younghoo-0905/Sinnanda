@@ -34,4 +34,16 @@ public class AdminService {
 		
 		return adminMapper.modifyAdmin(adminId, adminPw);
 	}
+	
+	//[윤경환] 관리자 수정 
+	public void getModifyAdminForm(Admin admin) {
+		log.debug("Admin <--------------"+ admin);
+		adminMapper.modifyAdminForm(admin);
+	}
+	
+	public Admin getSelectAdminName(int adminNo) {
+		log.debug("Admin <--------------"+ adminNo);
+		return adminMapper.selectAdminName(adminNo);
+	}
+
 }

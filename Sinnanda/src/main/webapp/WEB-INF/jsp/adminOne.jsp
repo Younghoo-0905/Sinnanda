@@ -32,6 +32,6 @@
 		</tr>
 	</table>
 	<a class="navbar-brand brand-logo mr-5" href="adminPage">메인페이지</a>
-	<a class="navbar-brand brand-logo mr-5" href="modifyAdminOne">수정페이지</a>
+	<a class="navbar-brand brand-logo mr-5" href="modifyAdminOne?adminNo=${loginUser.admin.adminNo}">수정페이지</a>
 </body>
 </html>

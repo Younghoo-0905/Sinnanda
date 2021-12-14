@@ -9,6 +9,7 @@
 </head>
 <body>
 	<h1>관리자 수정</h1>
+	 
 	<form id="adminForm" method ="post" action ="modifyAdminOne">
 	<table>
 		<tr>
@@ -21,27 +22,19 @@
 		</tr>
 	</table>
          <button onclick="return chk_form()">수정</button>
- 
 	</form>
-	 <script src="../../vendors/js/vendor.bundle.base.js"></script>
-	 <script src="../../js/off-canvas.js"></script>
- 	 <script src="../../js/hoverable-collapse.js"></script>
- 	 <script src="../../js/template.js"></script>
- 	 <script src="../../js/settings.js"></script>
- 	 <script src="../../js/todolist.js"></script>
 	<script>
 		function chk_form() {
 	
-		if(document.getElementById("adminId").value==''){
-			alert("아이디를 입력해주십시오.");
-			return false;
-		}
-		if(document.getElementById("adminPw").value=='' || document.getElementById("adminPw") =! ${loginUser.admin.adminPw}){
+		if(document.getElementById("adminPw").value==''){
 			alert("비밀번호를 입력해주십시오.");
 			return false;
+		}if(${admin.adminPw} != document.getElementById("adminPw").value){
+			alert("비밀번호를 다시 입력해 주세요");
+			return false;
 		}
-	}
 		
+			document.getElementById("adminForm").submit();
 }
 	</script>
 </body>
