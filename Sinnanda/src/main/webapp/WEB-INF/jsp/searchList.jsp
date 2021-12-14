@@ -41,7 +41,7 @@
 
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="index" class="nav-link">Home</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
           <li class="nav-item"><a href="tour.html" class="nav-link">Tour</a></li>
           <li class="nav-item active"><a href="hotel.html" class="nav-link">Hotels</a></li>
@@ -72,11 +72,13 @@
         <div class="row">
         	<div class="col-lg-3 sidebar">
         		<div class="sidebar-wrap bg-light ftco-animate">
+        		
+		             <!-- [이원희] 검색리스트뷰 검색바-->
         			<h3 class="heading mb-4">Find City</h3>
-        			<form action="#">
+        			 <form action="searchList" method="post" class="d-block d-flex" id="searchForm">
         				<div class="fields">
 		              <div class="form-group">
-		                <input type="text" class="form-control" placeholder="Destination, City">
+		                <input type="text" name="accomName" class="form-control" placeholder="Destination, City">
 		              </div>
 		              <div class="form-group">
 		                <div class="select-wrap one-third">
@@ -108,7 +110,7 @@
 										</div>
 		              </div>
 		              <div class="form-group">
-		                <input type="submit" value="Search" class="btn btn-primary py-3 px-5">
+		                <button type="submit" class="search-submit btn btn-primary">Search</button>
 		              </div>
 		            </div>
 	            </form>
@@ -156,7 +158,7 @@
 			    	검색결과가 없슴.
 			    </c:when>
 			    <c:otherwise>
-		    		<c:forEach items="${accomList}" var="ac">
+		    		<c:forEach items="${accomList}" var="ac" varStatus="status">
 						<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
 		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-1.jpg);">
@@ -174,8 +176,16 @@
 		    								</div>
 				    						<!--[이원희] 별 개수  -->
 				    						<div style="CLEAR: both; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: url(icon_star2.gif) 0px 0px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 90px; PADDING-TOP: 0px; HEIGHT: 18px;">
- 												<p style="WIDTH: 72%; PADDING-RIGHT:0px; PADDING-LEFT:0px; BACKGROUND: url(icon_star.gif) 0px 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; HEIGHT: 18px;">
- 												</p>
+ 												<c:choose>
+	 												<c:when test="${empty accomRankList[status.index]}">
+		 												<p style="WIDTH: 0%; PADDING-RIGHT:0px; PADDING-LEFT:0px; BACKGROUND: url(icon_star.gif) 0px 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; HEIGHT: 18px;">
+		 												</p>
+	 												</c:when>
+	 												<c:otherwise>
+	 													<p style="WIDTH:${accomRankList[status.index]}%; PADDING-RIGHT:0px; PADDING-LEFT:0px; BACKGROUND: url(icon_star.gif) 0px 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; HEIGHT: 18px;">
+		 												</p>
+	 												</c:otherwise>
+ 												</c:choose>
  											</div>
 			    						</div>
 			    						<div class="two">
@@ -195,17 +205,38 @@
 		    	</c:otherwise>
 		    </c:choose>
           	</div>
+          	<!-- [이원희] 숙소리스트 네비게이션바-->
           	<div class="row mt-5">
 		          <div class="col text-center">
 		            <div class="block-27">
 		              <ul>
-		                <li><a href="#">&lt;</a></li>
-		                <li class="active"><span>1</span></li>
-		                <li><a href="#">2</a></li>
-		                <li><a href="#">3</a></li>
-		                <li><a href="#">4</a></li>
-		                <li><a href="#">5</a></li>
-		                <li><a href="#">&gt;</a></li>
+		              	<c:choose>
+		              		<c:when test="${currentPage eq 1}">
+		              			<li><a>&lt;</a></li>
+		              		</c:when>
+		              		<c:otherwise>
+		              			<li><a href="searchList?accomName=${accomName}&currentPage=${currentPage-1}">&lt;</a></li>
+		              		</c:otherwise>
+		              	</c:choose>
+		              	<c:forEach var="page" begin = "1" end="${lastPage}" step="1">
+		              		<c:choose>
+		              		<c:when test="${currentPage eq page}">
+		              			 <li class="active"><span>${page}</span></li>
+		              		</c:when>
+		              		<c:otherwise>
+		              			<li><a href="searchList?accomName=${accomName}&currentPage=${page}">${page}</a></li>
+		              		</c:otherwise>
+		              	</c:choose>
+		              	</c:forEach>
+		              	<c:choose>
+		              		<c:when test="${currentPage eq lastPage}">
+		              			<li><a>&gt;</a></li>
+		              		</c:when>
+		              		<c:otherwise>
+		              			<li><a href="searchList?accomName=${accomName}&currentPage=${currentPage+1}">&gt;</a></li>
+		              		</c:otherwise>
+		              	</c:choose>
+		               
 		              </ul>
 		            </div>
 		          </div>

@@ -37,4 +37,16 @@
 		FROM accom WHERE accom_name LIKE CONCAT('%',#{accomName},'%')
 	</select>
 	
+	<!-- [이원희] 검색 대상 숙소 별점 조회 -->
+	<select id="selectAccomRank" parameterType="Map" resultType ="double">
+		SELECT ((sum(rev.review_rank)/COUNT(rev.review_rank))*10) 
+		FROM accom a 
+		LEFT JOIN room r ON r.accom_no = a.accom_no 
+		LEFT JOIN reserve re ON r.room_no = re.room_no 
+		LEFT JOIN payment pa ON pa.reserve_no = re.reserve_no 
+		LEFT JOIN review rev ON rev.payment_no = pa.payment_no
+		WHERE a.accom_name LIKE CONCAT('%',#{accomName},'%')
+		GROUP BY a.accom_no ORDER BY a.create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
 </mapper>

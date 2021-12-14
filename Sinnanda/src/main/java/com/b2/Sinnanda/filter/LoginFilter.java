@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
 import com.b2.Sinnanda.vo.Member;
+import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -29,13 +30,13 @@ public class LoginFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		log.debug("로그인 필터 작동!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		boolean isRedirect = false;
-		Member member = new Member();
+		User user = new User();
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
-		member = (Member)session.getAttribute("loginMember");
-		log.debug("로그인 필터 세션값 확인 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+member);
+		user = (User)session.getAttribute("loginUser");
+		log.debug("로그인 필터 세션값 확인 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+user);
 		
-		if(member == null) {
+		if(user == null) {
 			isRedirect = true;
 		}
 		

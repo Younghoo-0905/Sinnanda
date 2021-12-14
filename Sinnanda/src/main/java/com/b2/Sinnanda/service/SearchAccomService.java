@@ -59,10 +59,16 @@ public class SearchAccomService {
 			lastPage += 1;
 		}
 		
+		// 4. 별점 값 저장
+		List<Double> accomRankList = accomMapper.selectAccomRank(paraMap);
+		
 		log.debug(" ├[param] lastPage : "+lastPage);
 		log.debug(" ├[param] accomList : "+accomList);
+		log.debug(" ├[param] accomRankList : "+accomRankList);
+		
 		returnMap.put("accomList", accomList);
 		returnMap.put("lastPage", lastPage);
+		returnMap.put("accomRankList", accomRankList);
 		
 		return returnMap;
 	}
