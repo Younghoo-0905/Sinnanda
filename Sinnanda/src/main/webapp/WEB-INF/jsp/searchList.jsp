@@ -109,7 +109,7 @@
 										  </svg>
 										</div>
 		              </div>
-		              <div class="form-group">
+		              <div class="form-group"> 6                                                              
 		                <button type="submit" class="search-submit btn btn-primary">Search</button>
 		              </div>
 		            </div>
