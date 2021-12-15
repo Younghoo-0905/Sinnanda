@@ -1,5 +1,7 @@
 package com.b2.Sinnanda.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.b2.Sinnanda.service.CertifyEmailService;
@@ -78,23 +81,56 @@ public class MemberController {
 		return "checkMemberPw";
 	}
 	@PostMapping("/checkMemberPw")
-	public String postmodifyAdminOne(String memberPw) {
+	public String postcheckMemberPw(String memberPw) {
 		log.debug("memberPw ->->->->->->-> " + memberPw);
 		
 		memberService.getCheckMemberPw(memberPw);
-		
-		
-		
+
 		return "modifyMemberPw";		
 	}
 	@PostMapping("/modifyMemberPw")
-	public String modifyMemberPw(Member member) {
+	public String modifyMemberPw(HttpSession session, Member member) {
 
 		memberService.modifyMemberPw(member);
-		log.debug("★★★★★★★★★★★★★MemberController : 회원비밀번호 변경 성공!");
-		return "myPage";
+		session.invalidate();
+		log.debug("★★★★★★★★★★★★★ 회원비밀번호 변경 성공!!! 다시 로그인 해주세요!!!!");
+		return "redirect:/index";
 	}
 	
+	// [유동진] QnA 목록 페이징용 상수
+	private final int ROW_PER_PAGE = 10;
+	
+	// [유동진] 내가 작성한 QnA 목록 조회
+	@GetMapping("/myQnaList")
+	public String myQnaList(HttpServletRequest request, Model model, 
+			@RequestParam(defaultValue = "1") int currentPage, 
+			@RequestParam(required = false) String qnaCategory) {
+		log.debug("[Debug] \"START\" QnaController.qnaList() | Get");
+		log.debug(" ├[param] currentPage : "+currentPage);
+		
+		// QnA 목록 조회
+		Map<String, Object> map = memberService.getMyQnaListByQnaCategory(qnaCategory, currentPage, ROW_PER_PAGE);
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User) session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+		}
+		
+		
+		/* 모델 추가 */
+		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+		model.addAttribute("qnaCategory", map.get("qnaCategory"));	// 선택된 QnA 카테고리
+		model.addAttribute("MyQnaList", map.get("MyQnaList"));	// QnA 목록 정보
+		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
+		model.addAttribute("currentPage", currentPage);	// 현재 페이지
+		
+		return "MyQnaList";
+	}
 
 	//	[김영후] 회원 가입
 	@GetMapping("/insertMember")

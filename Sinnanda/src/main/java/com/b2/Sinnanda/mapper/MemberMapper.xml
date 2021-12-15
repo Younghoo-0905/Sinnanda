@@ -63,6 +63,35 @@
 	    WHERE member_no = #{memberNo}
 	</update>
 	
+	<!-- [유동진] QnA List Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Qna" id="MyQnaListMap">
+		<id column="qna_no" property="qnaNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="qna_category" property="qnaCategory"/>
+		<result column="qna_title" property="qnaTitle"/>
+		<result column="qna_secret" property="qnaSecret"/>
+		<result column="create_date" property="createDate"/>
+		<result column="member_name" property="memberName"/>
+	</resultMap>
+	
+	<!-- [유동진] 내가 작성한 QnA 목록 조회 -->
+	<select id="selectMyQnaListQnaCategory" parameterType="Map" resultMap="MyQnaListMap">
+		SELECT 
+			q.qna_no, 
+			q.member_no, 
+			q.qna_category,
+			q.qna_title, 
+			q.qna_secret, 
+			q.create_date, 
+			m.member_name
+		FROM qna q
+		LEFT JOIN member m
+			ON q.member_no = m.member_no
+		WHERE m.member_no = #{memberNo}
+		ORDER BY create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
 	<!-- [김영후] 회원 가입 -->
 	<insert id="insertMember" parameterType="com.b2.Sinnanda.vo.Member">
 		INSERT INTO 

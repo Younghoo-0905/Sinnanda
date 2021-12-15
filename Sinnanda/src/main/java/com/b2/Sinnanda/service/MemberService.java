@@ -1,5 +1,8 @@
 package com.b2.Sinnanda.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +13,11 @@ import com.b2.Sinnanda.mapper.MemberMapper;
 import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
+import com.b2.Sinnanda.vo.Qna;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional
 public class MemberService {
@@ -35,6 +42,43 @@ public class MemberService {
 	// [유동진] 비밀번호 변경
 	public void modifyMemberPw(Member member) {
 		memberMapper.updateMemberPw(member);
+	}
+	
+	// [유동진] 내가 작성한 QnA 목록 조회
+	public Map<String, Object> getMyQnaListByQnaCategory(String qnaCategory, int currentPage, int rowPerPage){
+		log.debug("[Debug] \"START\" QnaService.getQnaList()");
+		log.debug(" ├[param] qnaCategory : "+qnaCategory);
+		log.debug(" ├[param] currentPage : "+currentPage);
+		log.debug(" ├[param] rowPerPage : "+rowPerPage);
+		
+		// 1. 매개변수 가공 (paraMap <-- qnaCategory, currentPage, rowPerPage)
+		Map<String, Object> paraMap = new HashMap<>();
+		int beginRow = (currentPage-1) * rowPerPage;
+		
+		paraMap.put("qnaCategory", qnaCategory);
+		paraMap.put("beginRow", beginRow);
+		paraMap.put("rowPerPage", rowPerPage);
+		
+		// 2. qna 리스트 조회
+		List<Qna> qnaList = memberMapper.selectMyQnaListQnaCategory(paraMap);
+		
+		// 3. 리턴 값 가공 (return : qna & lastPage)
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		int lastPage = 0;
+		int totalCount = memberMapper.selectMyQnaTotalCount();
+		log.debug(" ├[param] totalCount : "+totalCount);
+		
+		lastPage = totalCount / rowPerPage;
+		if(totalCount % rowPerPage !=0) {
+			lastPage += 1;
+		}
+		
+		log.debug(" ├[param] lastPage : "+lastPage);
+		returnMap.put("qnaList", qnaList);
+		returnMap.put("lastPage", lastPage);
+		
+		return returnMap;
 	}
 	
 	//	[김영후] 회원 이메일 인증

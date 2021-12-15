@@ -36,7 +36,7 @@
 				<td><input type ="text" name ="updateDate" value = "${loginUser.member.updateDate}" readonly></td>
 			</tr>
 		</table>
-		<button type = "submit">수정하기</button>
+		<button type = "submit">수정완료</button>
 		<a href="myPage?memberNo=${loginUser.member.memberNo}">마이페이지</a>
 	</form>
 </body>
