@@ -102,22 +102,22 @@ public class NoticeController {
 	@GetMapping("/noticeList")
 	public String noticeList(Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
-			@RequestParam(required = false) String noticeCategory) {
+			String noticeCategory) {
 		log.debug("[Debug] \"START\" noticeController.noticeList() | Get");
 		log.debug(" ├[param] currentPage : "+currentPage);
-		
+				
 		//	출력을 시작하는 행 구하기 수식
 		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1); 
-		
+
+		//	목록 출력
 		Map<String, Object> map = noticeService.getNoticeListByCategory(noticeCategory, beginRow, ROW_PER_PAGE);
 
 		//	값 디버깅
-		log.debug("[Debug] : Notice 목록 조회 값");
-		log.debug(" ├ beginRow : " + beginRow);
-		log.debug(" ├ noticeCategory : " + noticeCategory);
-		log.debug(" ├ currentPage : " + currentPage);
+		log.debug(" ├[param] beginRow : " + beginRow);
+		log.debug(" ├[param] noticeCategory : " + noticeCategory);
+		log.debug(" ├[param] currentPage : " + currentPage);
 		//	log.debug(" ├ noticeList : " + map.get("noticeList"));
-		log.debug(" ├ lastPage : " + map.get("lastPage"));
+		log.debug(" ├[param] lastPage : " + map.get("lastPage"));
 		
 		//	값 전달
 		model.addAttribute("beginRow", beginRow);
@@ -129,7 +129,7 @@ public class NoticeController {
 		
 		//	10개의 page 번호를 출력하기 위한 변수
 		int pageNo = ((beginRow / 100) * 10);
-		log.debug(" ├ pageNo : " + "pageNo");
+		log.debug(" ├[param] pageNo : " + "pageNo");
 		model.addAttribute("pageNo", pageNo);
 		
 		return "noticeList";

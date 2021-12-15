@@ -89,11 +89,11 @@
 		FROM notice n
 		LEFT JOIN admin a
 			ON n.admin_no = a.admin_no
-		<where>
-			<if test="noticeCategory != null">
+		<if test="noticeCategory != null">
+			<where>
 				notice_category = #{noticeCategory}
-			</if>
-		</where>
+			</where>
+		</if>
 		ORDER BY create_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
@@ -103,10 +103,10 @@
 		SELECT 
 			COUNT(*) 
 		FROM notice
-		<where>
-			<if test="noticeCategory != null or noticeCategory != ''">
+		<if test="noticeCategory != null">
+			<where>
 				notice_category = #{noticeCategory}
-			</if>
-		</where>
+			</where>
+		</if>
 	</select>
 </mapper>

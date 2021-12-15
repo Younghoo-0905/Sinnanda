@@ -18,7 +18,7 @@
 	<div>
 		<select id="noticeCategory" name="noticeCategory" onchange="location.href=this.value">
 			<option value="">선택</option>
-			<option value="/noticeList">전체문의</option>
+			<option value="/noticeList?noticeCategory=전체">전체문의</option>
 			<option value="/noticeList?noticeCategory=기타">기타</option>
 			<option value="/noticeList?noticeCategory=정보">정보</option>
 			<option value="/noticeList?noticeCategory=시스템">시스템</option>
