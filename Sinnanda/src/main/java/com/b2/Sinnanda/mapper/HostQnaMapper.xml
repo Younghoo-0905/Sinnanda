@@ -65,7 +65,7 @@
 	</resultMap>
 	
 	<!-- [이승준] Host QnA 목록 조회 -->
-	<select id="selectHostQnaListQnaCategory" parameterType="Map" resultMap="HostQnaListMap">
+	<select id="selectHostQnaListByHostQnaCategory" parameterType="Map" resultMap="HostQnaListMap">
 		SELECT 
 			hq.host_qna_no, 
 			hq.host_no, 
@@ -80,7 +80,10 @@
 			ON hq.host_no = h.host_no
 		<where>
 			<if test="hostQnaCategory != null">
-				host_qna_category = #{hostQnaCategory}
+				hq.host_no = #{hostNo} AND hq.host_qna_category = #{hostQnaCategory}
+			</if>
+			<if test="hostQnaCategory == null">
+				hq.host_no = #{hostNo}
 			</if>
 		</where>
 		ORDER BY create_date DESC

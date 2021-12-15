@@ -37,7 +37,7 @@
 			member_level memberLevel, 
 			create_date createDate, 
 			update_date updateDate 
-		FROM member WHERE member_id= #{memberId} AND member_pw= #{memberPw}
+		FROM host WHERE host_id= #{hostId} AND host_pw= #{hostPw}
 	</select>
 	
 	<!-- [이승준] 관리자 로그인 정보 조회 -->

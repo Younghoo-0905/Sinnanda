@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.b2.Sinnanda.mapper.LoginMapper;
 import com.b2.Sinnanda.vo.Admin;
+import com.b2.Sinnanda.vo.Host;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.User;
 
@@ -38,6 +39,15 @@ public class LoginService {
 		// 사업자인 경우
 		} else if(loginUser.getUserLevel() == 2) {
 			log.info(" ├[info] 사업자 로그인");
+			
+			Host host = new Host();
+			
+			host.setHostId(loginUser.getUserId());
+			host.setHostPw(loginUser.getUserPw());
+			
+			host = loginMapper.selectHostLogin(host);
+			log.debug(" ├[param] host : "+host.toString());
+			loginUser.setHost(host);
 			
 		// 관리자인 경우
 		} else if(loginUser.getUserLevel() == 3) {

@@ -15,7 +15,7 @@ public interface HostQnaMapper {
 	
 	// [이승준] Host QnA 목록 조회
 		/* 매개변수 : 페이징을 위한 "hostQnaCategory, beginRow, rowPerPage" */
-	List<HostQna> selectHostQnaListQnaCategory(Map<String, Object> map);
+	List<HostQna> selectHostQnaListByHostQnaCategory(Map<String, Object> map);
 	
 	// [이승준] Host QnA의 총 갯수 조회
 	int selectHostQnaTotalCount();

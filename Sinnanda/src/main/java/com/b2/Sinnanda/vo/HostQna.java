@@ -14,7 +14,7 @@ public class HostQna {
 	private String createDate;
 	private String updateDate;
 	
-	HostQnaComment hostQnaComment;	// [이승준] Qna에 대한 1개의 답변
+	HostQnaComment hostQnaComments;	// [이승준] Qna에 대한 1개의 답변
 	private String hostName;	// [이승준] Host QnA를 작성한 host의 이름을 저장하기 위한 변수, Host 테이블의 데이터
 	private String adminName;	// [이승준] Host QnA에 답변한 admin의 이름을 저장하기 위한 변수, Admin 테이블의 데이터
 }

@@ -7749,15 +7749,20 @@ h1, h2, h3, h4, h5,
   background: #f85959; }
 
 .btn {
-  cursor: pointer;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  -ms-border-radius: 30px;
-  border-radius: 30px;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important; }
-  .btn:hover, .btn:active, .btn:focus {
-    outline: none; }
+	cursor: pointer;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	-ms-border-radius: 30px;
+	border-radius: 30px;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.btn:hover,
+.btn:active,
+.btn:focus {
+	outline: none;
+}
 
 /* [이승준] 버튼-기본  */
 .btn.btn-primary {

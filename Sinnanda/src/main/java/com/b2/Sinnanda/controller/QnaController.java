@@ -163,7 +163,7 @@ public class QnaController {
 		
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
-		User loginUser = (User) session.getAttribute("loginUser");
+		User loginUser = (User)session.getAttribute("loginUser");
 		// 로그인 세션 디버깅
 		if(loginUser != null) {
 			log.debug(" ├[param] loginUser : "+loginUser.toString());
@@ -171,17 +171,24 @@ public class QnaController {
 			log.debug(" ├[param] loginUser : Null");
 		}
 		
-		// *비밀문의인 경우, 작성자 또는 관리자 외에는 접근 방지
+		// *비밀문의인 경우, 접근제한 필요(작성자 본인 or 관리자)
 		if(qna.getQnaSecret().equals("비밀문의")) {
-			log.debug(" ├[param] 글 작성자 No : "+qna.getMemberNo());
+			// 1. 비회원 or 사업자인 경우 -> qnaList
+			if((loginUser == null) || (loginUser.getUserLevel() == 2)) {
+				log.info(" ├[info] qnaOne 접근 불가 : 비회원 or 사업자");
+				return "redirect:/qnaList";
+			}
+			log.debug(" ├[param] 작성자 memberNo : "+qna.getMemberNo());
 			log.debug(" ├[param] 접근자 Level : "+loginUser.getUserLevel());
 			
-			// QnA 작성자와 현재 접근하려는 사람이 맞는지 확인 5!=5->F || 1==3->F / 5!=0 || 3==3->T
-			if(loginUser.getUserLevel() != 3) {
+			// 2. 멤버인 경우, 작성자 No + 세션 No = 일치 X -> qnaList
+			if(loginUser.getUserLevel() == 1) {
+				log.debug(" ├[param] 세션 memberNo : "+loginUser.getMember().getMemberNo());
 				if(qna.getMemberNo() != loginUser.getMember().getMemberNo()) {
 					return "redirect:/qnaList";
 				}
 			}
+			log.info(" ├[info] qnaOne 접근 허용");
 		}
 		
 		/* 모델 추가 */
