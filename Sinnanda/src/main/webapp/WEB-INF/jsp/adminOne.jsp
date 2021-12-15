@@ -31,7 +31,7 @@
 			<td>${admin.updateDate}</td>
 		</tr>
 	</table>
-	<a class="navbar-brand brand-logo mr-5" href="adminPage">메인페이지</a>
+	<a class="navbar-brand brand-logo mr-5" href="adminPage?adminNo=${loginUser.admin.adminNo }">메인페이지</a>
 	<a class="navbar-brand brand-logo mr-5" href="modifyAdminOne?adminNo=${loginUser.admin.adminNo}">수정페이지</a>
 </body>
 </html>

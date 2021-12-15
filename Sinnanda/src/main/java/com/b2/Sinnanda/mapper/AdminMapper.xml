@@ -88,6 +88,7 @@
 	
 	<!--[윤경환] modifyAdmin Map -->
 	<resultMap type="com.b2.Sinnanda.vo.Admin" id="selectAdminName">
+		<id column="admin_no" property="adminNo"></id>
 		<id column="admin_name" property="adminName"></id>
 		<id column="admin_pw" property="adminPw"></id>
 	</resultMap>
@@ -96,10 +97,65 @@
 	<!--[윤경환]  관리자 이름 및 비번 가져오기-->
 	<select id="selectAdminName"  parameterType="Map" resultMap="modifyAdmin">
 			SELECT 
+				admin_no,
+				admin_id,
 				admin_name,
 				admin_pw
 				FROM admin 
 				WHERE admin_no = #{adminNo}
 	</select>
+	
+	
+	<!-- [윤경환] Admin List Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Admin" id="AdminListMap">
+		<id column="admin_no" property="adminNo"/>
+		<result column="admin_id" property="adminId"/>
+		<result column="admin_name" property="adminName"/>
+		<result column="admin_position" property="adminPosition"/>
+		<result column="admin_level" property="adminLevel"/>
+		<result column="update_date" property="updateDate"/>
+	</resultMap>
+	
+	<!--[윤경환] 관리자 리스트  -->
+	<select id="selectAdminList" parameterType="Map" resultMap="AdminListMap">
+		 
+	 		SELECT 
+	 			a.admin_no,
+				a.admin_id ,
+				a.admin_name,
+				ap.admin_position,
+				ap.admin_level,
+				a.update_date
+			 FROM admin AS a 
+				 LEFT JOIN admin_position AS ap 
+				 ON a.admin_position_no = ap.admin_position_no
+				 <where>
+				 	<if test ="adminPosition != null">
+				 		admin_position = #{adminPosition}
+				 	</if>
+				 </where>
+			 ORDER BY a.update_date DESC
+			 LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!--[윤경환] 관리자 총합 -->
+	
+	<select id="selectAdminTotalCount" resultType="int">
+		 
+ 		SELECT
+ 			 COUNT(*)
+ 			FROM admin
+	
+	</select>
+	
+	
+	<!-- [운경환] 관리자 등급 수정 -->
+	<update id="">
+		 UPDATE admin SET 
+			admin_position_no = #{adminPositionNo}
+		WHERE admin_no = #{adminNo}
+	
+	</update>
+	
 	
 </mapper>

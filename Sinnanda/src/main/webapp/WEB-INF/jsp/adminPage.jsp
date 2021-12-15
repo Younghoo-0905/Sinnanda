@@ -380,7 +380,7 @@
                  <a class="nav-link" href="adminOne?adminNo=${loginUser.admin.adminNo}">마이 페이지 </a>
                  
                  <!-- 관리자 레벨이 5이어야 다른 관리자 수정 가능  -->
-                 <c:if test="${admin.adminPositionNo == 5}">
+                 <c:if test="${admin.adminPositionNo == 1}">
                     <li class="nav-item">
                 		<a class="nav-link" href="adminList">관리자 리스트</a>
                 	</li>

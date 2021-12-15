@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,17 +31,19 @@
               <div class="brand-logo">
                 <img src="../../images/logo.svg" alt="logo">
               </div>
-              <h4>관리자 회원가입</h4>
-              <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
-              <form class="pt-3" method="post" action="insertAdminForm" id="insertAdminForm">
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="adminId" id="adminId" placeholder="UserID">
+              <h4>관리자 등급 수정</h4>
+              <form class="pt-3" method="post" action= "modifyAdminList" id="modifyAdminList">
+                  <div class="form-group">
+                  <input type="text" class="form-control form-control-lg" value="${admin.adminNo}" readonly>
                 </div>
-               <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" name="adminPw" id="adminPw" placeholder="Password">
+                 <div class="form-group">
+                  <input type="text" class="form-control form-control-lg" value="${admin.adminId}" readonly>
+                </div>
+                 <div class="form-group">
+                  <input type="text" class="form-control form-control-lg" value="${admin.adminName}" readonly>
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" id="adminPw2" placeholder="Repeat Password">
+                  <input type="text" class="form-control form-control-lg"" readonly>
                 </div>
                 <div class="form-group">
                   <select name="adminPositionNo" id="adminPositionNo" class="form-control form-control-lg">
@@ -51,27 +53,11 @@
                   	<option value ="4">4 : 재무 관리자</option>
                   </select>
                 </div>
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" id="adminName" name ="adminName" placeholder="adminName">
-                </div>
-                <div class="form-group">
-                  <input type="hidden" class="form-control form-control-lg" name="memberLevel" id="memberLevel" placeholder="memberLevel" value="3" readonly>
-                </div>
-             
-                <div class="mb-4">
-                  <div class="form-check">
-                    <label class="form-check-label text-muted">
-                      <input type="checkbox" class="form-check-input">
-                      I agree to all Terms & Conditions
-                    </label>
-                  </div>
-                </div>
+        
                 <div class="mt-3">
-                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onclick="return chk_form()">SIGN UP</a>
+                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onclick="return chk_form()">등급 수정</a>
                 </div>
-                <div class="text-center mt-4 font-weight-light">
-                  Already have an account? <a href="login.html" class="text-primary">Login</a>
-                </div>
+       
               </form>
             </div>
           </div>
@@ -98,29 +84,13 @@
   
   <!-- 유효성 검사 -->
   	<script>
-		function chk_form() {
-		if(document.getElementById("adminId").value==''){
-			alert("ID를 입력하세요.");
-			return false;
-		}
-		if(document.getElementById("adminPw").value==''){
-			alert("Password를 입력하세요.");
-			return false;
-		}
-		if(document.getElementById("adminPw").value!=document.getElementById("adminPw2").value){
-			alert("비밀번호가 일치하지 않습니다.");
-			return false;
-		}		
+		
 		if(document.getElementById("adminPositionNo").value==''){
 			alert("포지션을 입력해주세여");
 			return false;
 		}
-		if(document.getElementById("adminName").value==''){
-			alert("나이를 입력하세요.");
-			return false;
-		}
 		
-		document.getElementById("insertAdminForm").submit();
+		document.getElementById("modifyAdminList").submit();
 		}
 	</script>
 </body>

@@ -1,5 +1,9 @@
 package com.b2.Sinnanda.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,5 +49,43 @@ public class AdminService {
 		log.debug("Admin <--------------"+ adminNo);
 		return adminMapper.selectAdminName(adminNo);
 	}
+	
+	
+	//[윤경환] 관리자 리스트 조회
+	public Map<String, Object> getAdminList(String adminPosition, int currentPage, int rowPerPage){
+		
+		Map<String, Object> paraMap = new HashMap<>();
+		int beginRow = (currentPage-1) * rowPerPage;
+		
+		paraMap.put("adminPosition", adminPosition);
+		paraMap.put("beginRow", beginRow);
+		paraMap.put("rowPerPage", rowPerPage);
+		
+		List<Admin> adminList =  adminMapper.selectAdminList(paraMap);
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		int lastPage = 0;
+		int totalCount = adminMapper.selectAdminTotalCount();
+		
+		
+		lastPage = totalCount / rowPerPage;
+		
+		if(totalCount % rowPerPage !=0) {
+			lastPage += 1;
+		}
+		
+		returnMap.put("adminList", adminList);
+		returnMap.put("lastPage", lastPage);
+		
+		return returnMap;
+		
+	}
+	//[윤경환] 관리자 등급수정 
+	public void getmodifyAdminList(Admin admin) {
+		adminMapper.modifyAdminList(admin);
+	}
+	
+	
 
 }
