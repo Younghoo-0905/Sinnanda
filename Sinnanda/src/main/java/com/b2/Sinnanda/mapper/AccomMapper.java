@@ -17,5 +17,7 @@ public interface AccomMapper {
 	int selectAccomTotalCount(String accomName);
 	//[이원희] 숙소별 별점 값
 	List<Double> selectAccomRank(Map<String, Object> map);
+	//[이원희] 해당 숙소 객실 리스트
+	
 	
 }

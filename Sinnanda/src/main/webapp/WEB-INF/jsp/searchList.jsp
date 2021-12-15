@@ -5,7 +5,7 @@
 <html>
  <head>
     <title>DirEngine - Free Bootstrap 4 Template by Colorlib</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
@@ -65,7 +65,6 @@
         </div>
       </div>
     </div>
-
 
     <section class="ftco-section ftco-degree-bg">
       <div class="container">
@@ -161,7 +160,7 @@
 		    		<c:forEach items="${accomList}" var="ac" varStatus="status">
 						<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
-		    					<a href="hotel-single.html" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-1.jpg);">
+		    					<a href="searchOne?accomName=${ac.accomName}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-1.jpg);">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     							<span class="icon-search2"></span>
     						
@@ -172,7 +171,7 @@
 		    							<div class="one">
 		    								<!--[이원희] 숙소 이름 -->
 		    								<div>
-				    							<a href="hotel-single.html">${ac.accomName}</a>
+				    							<a href="searchOne?accomName=${ac.accomName}">${ac.accomName}</a>
 		    								</div>
 				    						<!--[이원희] 별 개수  -->
 				    						<div style="CLEAR: both; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: url(icon_star2.gif) 0px 0px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 90px; PADDING-TOP: 0px; HEIGHT: 18px;">

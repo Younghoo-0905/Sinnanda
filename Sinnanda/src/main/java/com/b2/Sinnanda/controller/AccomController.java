@@ -64,4 +64,10 @@ public class AccomController {
 			
 		return"searchList";
 	}
+	
+	@GetMapping("searchOne")
+	public String getSearchOne(Accom accom, Model model) {
+		log.debug(accom.getAccomName()+"<------------------get값");
+		return "searchOne";
+	}
 }
