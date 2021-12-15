@@ -1358,6 +1358,24 @@ pre {
 	margin-bottom: 20px;
 	background-color: transparent;
 }
+/* [이승준] 보드용 테이블 추가 */
+.table-board {
+	background-color: rgb(128, 128, 128, 0.05);
+}
+/* [이승준] 보드용 테이블 th, hf 추가 */
+.table-board th {
+	background-color: rgb(248, 89, 89, 0.5);
+	padding: 0.75rem;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
+}
+
+.table-board td {
+	padding: 0.75rem;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
+}
+
   .table th,
   .table td {
     padding: 0.75rem;
@@ -7379,6 +7397,7 @@ h1, h2, h3, h4, h5,
       @media (max-width: 991.98px) {
         .ftco-navbar-light .navbar-nav > .nav-item.ftco-seperator:before {
           display: none; } }
+
 /* [이승준] 내비 버튼 cta 수정 */
   .ftco-navbar-light .navbar-nav > .nav-item.cta > a {
     color: #fff;
@@ -7450,6 +7469,13 @@ h1, h2, h3, h4, h5,
 	-ms-border-radius: 10px;
 	border-radius: 10px;
 }
+
+/* [이승준] 내비바 버튼 커서 온 호버 - 버튼 색상 변경 */
+.ftco-navbar-light .navbar-nav > .nav-item.member > a:hover {
+	/* 기존 : background: #f85959; */
+	background-color:rgba(128, 128, 128, 0.9);	/* 뒤 배경 색 */
+}
+
 /* 추가------------------------------------------------------------- */
   .ftco-navbar-light .navbar-toggler {
     border: none;
@@ -7469,16 +7495,15 @@ h1, h2, h3, h4, h5,
     -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1); }
 
-/* [이승준] 상단 내비바 버튼 액티브 */
+/* [이승준] 상단 내비바 버튼 스크롤 액티브 글씨 - 버튼 액티브 */
 .ftco-navbar-light.scrolled .nav-item.active > a {
 	/* 기존 : color: #f85959 !important; */
-	color: #f85959 !important;
+	color: #000000 !important;
 }
 
 /* [이승준] 상단 내비바 버튼 cta */
 .ftco-navbar-light.scrolled .nav-item.cta > a {
 	color: #fff !important;
-	background: #f85959;
 	border: none !important;
 	padding-top: 0.5rem !important;
 	padding-bottom: .5rem !important;
@@ -7522,17 +7547,26 @@ h1, h2, h3, h4, h5,
       color: #000000 !important; }
       .ftco-navbar-light.scrolled .nav-link.active {
         color: #f85959 !important; }
-    .ftco-navbar-light.scrolled.awake {
-      margin-top: 0px;
-      -webkit-transition: .3s all ease-out;
-      -o-transition: .3s all ease-out;
-      transition: .3s all ease-out; }
-    .ftco-navbar-light.scrolled.sleep {
-      -webkit-transition: .3s all ease-out;
-      -o-transition: .3s all ease-out;
-      transition: .3s all ease-out; }
-    .ftco-navbar-light.scrolled .navbar-brand {
-      color: #000000; }
+
+/* [이승준] 상단 내비바 모바일 - 시작 */
+.ftco-navbar-light.scrolled.awake {
+	background-color: #000000 !important;	/* 색상 변경 */
+	margin-top: 0px;
+	-webkit-transition: .3s all ease-out;
+	-o-transition: .3s all ease-out;
+	transition: .3s all ease-out;
+}
+
+.ftco-navbar-light.scrolled.sleep {
+	-webkit-transition: .3s all ease-out;
+	-o-transition: .3s all ease-out;
+	transition: .3s all ease-out;
+}
+
+/* [이승준] 상단 내비바 모바일 - 로고 */
+.ftco-navbar-light.scrolled .navbar-brand {
+	color: #fff;	/* 000000에서 fff으로 변경 */
+}
 
 .navbar-brand {
   font-weight: 700;
