@@ -34,5 +34,5 @@ public interface QnaMapper {
 	List<Qna> selectQnaListQnaCategory(Map<String, Object> map);
 	
 	// [이승준] QnA의 총 갯수 조회
-	int selectQnaTotalCount();
+	int selectQnaTotalCount(String qnaCategory);
 }

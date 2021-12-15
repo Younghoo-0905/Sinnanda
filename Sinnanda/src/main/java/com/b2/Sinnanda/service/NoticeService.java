@@ -57,7 +57,7 @@ public class NoticeService {
 	public Map<String, Object> getNoticeListByCategory(String noticeCategory, int beginRow, int rowPerPage){
 		
 		//	'전체' 조회인 경우 noticeCategory를 null 값으로 변경하여 쿼리에서 where절이 실행되지 않도록 한다
-		if(noticeCategory.equals("전체")) {
+		if(noticeCategory == null || noticeCategory.equals("전체")) {
 			noticeCategory = null;
 		}
 		

@@ -64,7 +64,7 @@
 							<li class="nav-item member"><a href="myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
 						</c:if>
 						<c:if test="${loginUser.userLevel == 2}">
-							<li class="nav-item member"><a href="myPage?memberNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
+							<li class="nav-item member"><a href="myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
 						</c:if>
 						<c:if test="${loginUser.userLevel == 3}">
 							<li class="nav-item member">
@@ -103,7 +103,7 @@
 			<div class="container2">
 				<select id="qnaCategory" name="qnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
 					<option value="">선택</option>
-					<option value="/qnaList">전체문의</option>
+					<option value="/qnaList?qnaCategory=전체">전체문의</option>
 					<option value="/qnaList?qnaCategory=기타문의">기타문의</option>
 					<option value="/qnaList?qnaCategory=결제문의">결제문의</option>
 					<option value="/qnaList?qnaCategory=이용문의">이용문의</option>
@@ -138,15 +138,49 @@
 				</c:forEach>
 			</table>
 			<a class="btn btn-primary" href="addQna" style="float: right; margin-top: auto;">문의사항 작성</a>
-			<!-- [이승준] 본문 - 내용 - 페이징 부분 -->
-			<div>
-				<c:if test="${currentPage > 1}" >
-					<a href="qnaList?currentPage=${currentPage-1}">이전</a>
-				</c:if>
-				<c:if test="${currentPage < lastPage}" >
-					<a href="qnaList?currentPage=${currentPage+1}">다음</a>
-				</c:if>
+			
+			
+			<!-- Paging -->			
+			<div class="row mt-5">
+		    	<div class="col text-center">
+		            <div class="block-27">
+						<ul>
+							<!-- '이전' 버튼 -->
+							<c:if test="${beginRow > (ROW_PER_PAGE * 10)}">
+								<li><a href="qnaList?currentPage=${pageNo-1}&qnaCategory=${qnaCategory}">&lt;</a></li>
+							</c:if>
+							
+							<!-- Page 번호 -->
+							<c:set var="doneLoop" value="false"></c:set>
+							<c:forEach var="i" begin="${pageNo}" end="${pageNo + 9}">
+							
+								<!-- Page 숫자 10개 출력 -->
+								<c:if test="${not doneLoop}">
+									<c:choose>
+										<c:when test="${currentPage == i}">				
+											<li class="active"><span>${i}</span></li>
+										</c:when>
+					    				<c:otherwise>
+											<li><a href="/qnaList?currentPage=${i}&qnaCategory=${qnaCategory}">${i}</a></li>	
+										</c:otherwise>		
+									</c:choose>
+									<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
+									<c:if test="${i == lastPage}">
+										<c:set var="doneLoop" value="true"></c:set>
+									</c:if>
+								</c:if>
+							</c:forEach>
+							
+							<!-- '다음' 버튼 -->
+							<c:if test="${currentPage + 10 <= lastPage}">
+								<li><a href="qnaList?currentPage=${pageNo+10}&qnaCategory=${qnaCategory}">&gt;</a></li>
+							</c:if>
+						</ul>
+					</div>
+				</div>
 			</div>
+			<!-- Paging -->
+
 		</div>
 	</section>
 	<!-- [이승준] 본문 QnA 목록 부분 - END -->

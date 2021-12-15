@@ -102,7 +102,7 @@ public class NoticeController {
 	@GetMapping("/noticeList")
 	public String noticeList(Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
-			String noticeCategory) {
+			@RequestParam(defaultValue = "전체") String noticeCategory) {
 		log.debug("[Debug] \"START\" noticeController.noticeList() | Get");
 		log.debug(" ├[param] currentPage : "+currentPage);
 				
@@ -128,7 +128,7 @@ public class NoticeController {
 		model.addAttribute("currentPage", currentPage);
 		
 		//	10개의 page 번호를 출력하기 위한 변수
-		int pageNo = ((beginRow / 100) * 10);
+		int pageNo = ((beginRow / 100) * 10 + 1);
 		log.debug(" ├[param] pageNo : " + "pageNo");
 		model.addAttribute("pageNo", pageNo);
 		

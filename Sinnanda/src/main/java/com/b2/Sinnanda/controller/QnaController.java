@@ -202,12 +202,15 @@ public class QnaController {
 	@GetMapping("/qnaList")
 	public String qnaList(HttpServletRequest request, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
-			@RequestParam(required = false) String qnaCategory) {
+			@RequestParam(defaultValue = "전체") String qnaCategory) {
 		log.debug("[Debug] \"START\" QnaController.qnaList() | Get");
 		log.debug(" ├[param] currentPage : "+currentPage);
 		
+		//	출력을 시작하는 행 구하기 수식
+		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1); 
+
 		// QnA 목록 조회
-		Map<String, Object> map = qnaService.getQnaListByQnaCategory(qnaCategory, currentPage, ROW_PER_PAGE);
+		Map<String, Object> map = qnaService.getQnaListByQnaCategory(qnaCategory, beginRow, ROW_PER_PAGE);
 		
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
@@ -222,11 +225,18 @@ public class QnaController {
 		
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
-		model.addAttribute("qnaCategory", map.get("qnaCategory"));	// 선택된 QnA 카테고리
+		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
+		model.addAttribute("qnaCategory", qnaCategory);	// 선택된 QnA 카테고리
 		model.addAttribute("qnaList", map.get("qnaList"));	// QnA 목록 정보
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
 		
+		//	10개의 page 번호를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		log.debug(" ├[param] pageNo : " + "pageNo");
+		model.addAttribute("pageNo", pageNo);
+			
 		return "qnaList";
 	}
 }

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.b2.Sinnanda.mapper.ComplainMapper">
+
+	<!-- [김영후] Complain 답변 삭제 -->
+	<delete id="deleteComplainComment" parameterType="com.b2.Sinnanda.vo.ComplainComment">
+		DELETE 
+		FROM complain_comment 
+		WHERE complain_no = #{complainNo}
+	</delete>
+
+	<!-- [김영후] Complain 답변 삽입 -->
+	<insert id="insertComplainComment" parameterType="com.b2.Sinnanda.vo.ComplainComment">
+		INSERT INTO complain_comment(
+			complain_no, 
+			complain_comment_content, 
+			comment_date
+		) VALUES(
+			#{complainNo}, 
+			#{complainCommentContent}, 
+			NOW()
+		)
+	</insert>
+
+	<!-- [김영후] Complain 삭제 -->
+	<delete id="deleteComplain" parameterType="com.b2.Sinnanda.vo.Complain">
+		DELETE 
+		FROM complain 
+		WHERE 
+			complain_no = #{complainNo} AND payment_no = #{paymentNo}
+	</delete>
+
+	<!-- [김영후] Complain 수정 -->
+	<update id="updateComplain" parameterType="com.b2.Sinnanda.vo.Complain">
+		UPDATE complain 
+		SET complain_title = #{complainTitle}, 
+			complain_content = #{complainContent}, 
+			update_date = NOW()
+		WHERE complain_no = #{complainNo} AND payment_no = #{paymentNo}
+	</update>
+
+	<!-- [김영후] Complain 추가 -->
+	<insert id="insertComplain" parameterType="com.b2.Sinnanda.vo.Complain">
+		INSERT INTO complain(
+			payment_no, 
+			complain_category, 
+			complain_title, 
+			complain_content, 
+			create_date, 
+			update_date 
+		) VALUES (
+			#{paymentNo}, 
+			#{complainCategory}, 
+			#{complainTitle}, 
+			#{complainContent}, 
+			NOW(), 
+			NOW()
+		)
+		<selectKey keyProperty="complainNo" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<!-- [김영후] Complain 상세조회 Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Complain" id="ComplainOneMap">
+		<id column="complain_no" property="complainNo"/>
+		<result column="complain_category" property="complainCategory"/>
+		<result column="complain_title" property="complainTitle"/>
+		<result column="complain_content" property="complainContent"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="member_name" property="memberName"/>
+		
+		<collection property="complainComment" ofType="com.b2.Sinnanda.vo.ComplainComment">
+			<result column="complain_no" property="complainNo"/>
+			<result column="complain_comment_content" property="complainCommentContent"/>
+			<result column="comment_date" property="commentDate"/>
+			<result column="host_name" property="hostName"/>
+		</collection>
+	</resultMap>
+	
+	<!-- [김영후] Complain 상세조회 -->
+	<select id="selectComplainOne"  parameterType="Map" resultMap="ComplainOneMap">
+		SELECT 
+			c.complain_no, 
+			c.complain_category, 
+			c.complain_title, 
+			c.complain_content, 
+			c.create_date, 
+			c.update_date, 
+			m.member_name
+			h.host_name
+			cc.complain_comment_content
+			cc.comment_date
+		FROM complain c
+		LEFT JOIN complain_comment cc
+			ON c.complain_no = cc.complain_no
+		LEFT JOIN payment p 
+			ON c.payment_no = p.payment_no 
+		LEFT JOIN reserve re
+			ON p.reserve_no = re.reserve_no
+		LEFT JOIN room ro
+			ON re.room_no = ro.room_no 
+		LEFT JOIN accom a
+			ON ro.accom_no = a.accom_no
+		LEFT JOIN host h
+			ON a.host_no = h.host_no		
+		LEFT JOIN member m
+			ON re.member_no = m.member_no			
+		ORDER BY create_date DESC
+		
+		WHERE c.complain_no = #{complainNo}
+	</select>	
+
+	<!-- [김영후] Complain 목록조회 Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Complain" id="ComplainListMap">
+		<id column="complain_no" property="complainNo"/>
+		<result column="payment_no" property="paymentNo"/>
+		<result column="complain_category" property="complainCategory"/>
+		<result column="complain_title" property="complainTitle"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="member_name" property="member_name"/>
+	</resultMap>
+
+	<!-- [김영후] Complain 목록조회 -->
+	<select id="selectComplainList" parameterType="Map" resultMap="ComplainListMap">
+		SELECT 
+			c.complain_no, 
+			p.payment_no, 
+			c.complain_category, 
+			c.complain_title, 
+			c.create_date, 
+			c.update_date, 
+			m.member_name
+		FROM complain c
+		LEFT JOIN payment p 
+			ON c.payment_no = p.payment_no 
+		LEFT JOIN reserve r
+			ON p.reserve_no = r.reserve_no
+		LEFT JOIN member m
+			ON r.member_no = m.member_no			
+		ORDER BY create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+</mapper>

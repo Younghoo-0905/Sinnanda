@@ -6,5 +6,6 @@ import lombok.Data;
 public class ComplainComment {
 	private int complainNo;
 	private String complainCommentContent;
-	private String commentDate;	
+	private String commentDate;
+	private String hostName;
 }

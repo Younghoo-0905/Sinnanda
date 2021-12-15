@@ -6,7 +6,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 목록 페이지</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+
+	<title>공지사항 목록 페이지</title>
 </head>
 <body>
 	<c:if test="${loginUser.userLevel == 3}">
@@ -26,7 +51,7 @@
 			<option value="/noticeList?noticeCategory=뉴스">뉴스</option>
 		</select>
 	</div>
-	<table border="1">
+	<table class="table table-board" border="1">
 		<tr style="text-align:center">
 			<td width="5%">번호</td>
 			<td width="50%">제목</td>
@@ -50,40 +75,46 @@
 		</c:forEach>
 	</table>
 	
-		<!-- [김영후] Paging -->	
-			
-	<div class="pagination">
+	<!-- [김영후] Paging -->	
+	<div class="row mt-5">
+    	<div class="col text-center">
+            <div class="block-27">
+				<ul>
+					<!-- '이전' 버튼 -->
+					<c:if test="${beginRow > ROW_PER_PAGE}">
+						<li><a href="noticeList?currentPage=${currentPage-1}&noticeCategory=${noticeCategory}">&lt;</a></li>
+					</c:if>
+					
+					<!-- Page 번호 -->
+					<c:set var="doneLoop" value="false"></c:set>
+					<c:forEach var="i" begin="${pageNo}" end="${pageNo + 9}">
+					
+						<!-- Page 숫자 10개 출력 -->
+						<c:if test="${not doneLoop}">
+							<c:choose>
+								<c:when test="${currentPage == i}">				
+									<li class="active"><span>${i}</span></li>
+								</c:when>
+			    				<c:otherwise>
+									<li><a href="/noticeList?currentPage=${i}&noticeCategory=${noticeCategory}">${i}</a></li>	
+								</c:otherwise>		
+							</c:choose>
+							<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
+							<c:if test="${i == lastPage}">
+								<c:set var="doneLoop" value="true"></c:set>
+							</c:if>
+						</c:if>
+					</c:forEach>
+					
+					<!-- '다음' 버튼 -->
+					<c:if test="${currentPage != lastPage}">
+						<li><a href="noticeList?currentPage=${currentPage+1}&noticeCategory=${noticeCategory}">&gt;</a></li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
+	</div>	
+	<!-- Paging -->
 	
-		<!-- '이전' 버튼 -->
-		<c:if test="${beginRow > ROW_PER_PAGE}">
-			<a href="noticeList?currentPage=${currentPage-1}&noticeCategory=${noticeCategory}">[이전]</a>
-		</c:if>
-		
-		<!-- Page 번호 -->
-		<c:set var="doneLoop" value="false"></c:set>
-		<c:forEach var="i" begin="${pageNo + 1}" end="${pageNo + 10}">
-		
-			<!-- Page 숫자 10개 출력 -->
-			<c:if test="${not doneLoop}">
-				<c:choose>
-					<c:when test="${currentPage} == i">				
-						<a class="active" href="/noticeList?currentPage=${i}&noticeCategory=${noticeCategory}">[${i}]</a>
-					</c:when>
-    				<c:otherwise>
-						<a href="/noticeList?currentPage=${i}&noticeCategory=${noticeCategory}">[${i}]</a>	
-					</c:otherwise>		
-				</c:choose>
-				<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
-				<c:if test="${i == lastPage}">
-					<c:set var="doneLoop" value="true"></c:set>
-				</c:if>
-			</c:if>
-		</c:forEach>
-		
-		<!-- '다음' 버튼 -->
-		<c:if test="${currentPage != lastPage}">
-			<a href="noticeList?currentPage=${currentPage+1}&noticeCategory=${noticeCategory}">[다음]</a>
-		</c:if>
-	</div>
 </body>
 </html>

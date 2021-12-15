@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Complain {
+	private int complainNo;
 	private int paymentNo;
 	private String complainCategory;
 	private String complainTitle;
@@ -11,4 +12,5 @@ public class Complain {
 	private String createDate;
 	private String updateDate;
 	private ComplainComment complainComment;
+	private String memberName;
 }

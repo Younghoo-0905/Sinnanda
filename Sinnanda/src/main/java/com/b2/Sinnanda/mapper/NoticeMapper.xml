@@ -40,7 +40,7 @@
 		</selectKey>
 	</insert>
 
-	<!-- [김영후] NoticeOne Map -->
+	<!-- [김영후] Notice 상세조회 Map -->
 	<resultMap type="com.b2.Sinnanda.vo.Notice" id="NoticeOneMap">
 		<id column="notice_no" property="noticeNo"/>
 		<result column="admin_no" property="adminNo"/>
@@ -52,7 +52,7 @@
 		<result column="admin_name" property="adminName"/>
 	</resultMap>
 	
-	<!-- [김영후] Notice 상세 조회 -->
+	<!-- [김영후] Notice 상세조회 -->
 	<select id="selectNoticeOne"  parameterType="Map" resultMap="NoticeOneMap">
 		SELECT 
 			n.notice_no, 
@@ -69,8 +69,8 @@
 		WHERE n.notice_no = #{noticeNo}
 	</select>
 
-	<!-- [김영후] Notice List Map -->
-	<resultMap type="com.b2.Sinnanda.vo.Notice" id="noticeListMap">
+	<!-- [김영후] Notice 목록조회 Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Notice" id="NoticeListMap">
 		<id column="notice_no" property="noticeNo"/>
 		<result column="notice_category" property="noticeCategory"/>
 		<result column="notice_title" property="noticeTitle"/>
@@ -78,8 +78,8 @@
 		<result column="admin_name" property="adminName"/>
 	</resultMap>
 
-	<!-- [김영후] Notice 목록 조회 -->
-	<select id="selectNoticeListByCategory" parameterType="Map" resultMap="noticeListMap">
+	<!-- [김영후] Notice 목록조회 -->
+	<select id="selectNoticeListByCategory" parameterType="Map" resultMap="NoticeListMap">
 		SELECT 
 			n.notice_no, 
 			n.notice_category,

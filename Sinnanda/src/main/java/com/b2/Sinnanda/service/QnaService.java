@@ -91,15 +91,20 @@ public class QnaService {
 	}
 	
 	/* [이승준] QnA 목록 조회 by Category */
-	public Map<String, Object> getQnaListByQnaCategory(String qnaCategory, int currentPage, int rowPerPage){
+	public Map<String, Object> getQnaListByQnaCategory(String qnaCategory, int beginRow, int rowPerPage){
+		
+		//	'전체' 조회인 경우 qnaCategory를 null 값으로 변경하여 쿼리에서 where절이 실행되지 않도록 한다
+		if(qnaCategory == null || qnaCategory.equals("전체")) {
+			qnaCategory = null;
+		}
+		
 		log.debug("[Debug] \"START\" QnaService.getQnaList()");
 		log.debug(" ├[param] qnaCategory : "+qnaCategory);
-		log.debug(" ├[param] currentPage : "+currentPage);
+		log.debug(" ├[param] beginRow : "+beginRow);
 		log.debug(" ├[param] rowPerPage : "+rowPerPage);
 		
 		// 1. 매개변수 가공 (paraMap <-- qnaCategory, currentPage, rowPerPage)
 		Map<String, Object> paraMap = new HashMap<>();
-		int beginRow = (currentPage-1) * rowPerPage;
 		
 		paraMap.put("qnaCategory", qnaCategory);
 		paraMap.put("beginRow", beginRow);
@@ -112,7 +117,7 @@ public class QnaService {
 		Map<String, Object> returnMap = new HashMap<>();
 		
 		int lastPage = 0;
-		int totalCount = qnaMapper.selectQnaTotalCount();
+		int totalCount = qnaMapper.selectQnaTotalCount(qnaCategory);
 		log.debug(" ├[param] totalCount : "+totalCount);
 		
 		lastPage = totalCount / rowPerPage;
