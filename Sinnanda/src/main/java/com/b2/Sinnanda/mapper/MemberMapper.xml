@@ -40,6 +40,20 @@
 	    WHERE member_no = #{memberNo}
 	</update>
 	
+	<!-- [유동진] 회원 비밀번호 변경전 현재 비밀번호 확인 -->	
+	<!-- [유동진] selectMemberPw Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Member" id="selectMemberPwMap">
+		<id column="member_pw" property="memberPw"></id>
+	</resultMap>
+	
+	<!-- [유동진] 회원 비밀번호 가져오기 -->
+	<select id="selectMemberPw"  parameterType="Map" resultMap="selectMemberPwMap">
+			SELECT 
+				member_pw
+				FROM member 
+			WHERE member_no = #{memberNo}
+	</select>
+	
 	<!-- [유동진] 회원 비밀번호 변경 -->
 	<update id="updateMemberPw" parameterType="com.b2.Sinnanda.vo.Member">
 		UPDATE member 

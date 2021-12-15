@@ -13,16 +13,12 @@
 	<input type = "hidden" name ="memberNo" value = "${loginUser.member.memberNo}">
 	<table border="1">
 		<tr>
-			<td>현재 비밀번호</td>
-			<td><input type = "password" name ="memberPw" id="memberPw" placeholder="현재 비밀번호 입력"></td>
-		</tr>
-		<tr>
 			<td>새 비밀번호</td>
-			<td><input type = "password" name ="newMemberPw" id="newMemberPw" placeholder="새로운 비밀번호 입력"></td>
+			<td><input type = "password" name ="memberPw" id="newMemberPw" placeholder="새로운 비밀번호 입력"></td>
 		</tr>
 		<tr>
 			<td>비밀번호 확인</td>
-			<td><input type = "password" name ="newMemberPw2" id="newMemberPw2" placeholder="새로운 비밀번호 확인"></td>
+			<td><input type = "password"  id="newMemberPw2" placeholder="새로운 비밀번호 확인"></td>
 		</tr>
 	</table>
 	<button id="pwBtn" type = "button">변경하기</button>

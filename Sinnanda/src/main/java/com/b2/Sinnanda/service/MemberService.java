@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.b2.Sinnanda.mapper.MemberMapper;
+import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
 
@@ -24,6 +25,11 @@ public class MemberService {
 	// [유동진] 회원 정보 수정
 	public void modifyMember(Member member) {
 		memberMapper.updateMember(member);
+	}
+	
+	//[유동진] 회원 비밀번호 변경전 현재 비밀번호 확인 
+	public Member getCheckMemberPw(String memberPw) {	
+		return memberMapper.selectMemberPw(memberPw);
 	}
 	
 	// [유동진] 비밀번호 변경

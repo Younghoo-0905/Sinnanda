@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.b2.Sinnanda.service.CertifyEmailService;
 import com.b2.Sinnanda.service.MemberService;
+import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
 import com.b2.Sinnanda.vo.User;
@@ -61,8 +62,8 @@ public class MemberController {
 	}
 	
 	// [유동진] 비밀번호 변경
-	@GetMapping("/modifyMemberPw")
-	public String modifyMemberPw(HttpServletRequest request, Model model) {
+	@GetMapping("/checkMemberPw")
+	public String checkMemberPw(HttpServletRequest request, Model model) {
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
@@ -74,14 +75,24 @@ public class MemberController {
 		}
 		
 		model.addAttribute(loginUser);
-		return "modifyMemberPw";
+		return "checkMemberPw";
+	}
+	@PostMapping("/checkMemberPw")
+	public String postmodifyAdminOne(String memberPw) {
+		log.debug("memberPw ->->->->->->-> " + memberPw);
+		
+		memberService.getCheckMemberPw(memberPw);
+		
+		
+		
+		return "modifyMemberPw";		
 	}
 	@PostMapping("/modifyMemberPw")
 	public String modifyMemberPw(Member member) {
-		log.debug("★★★★★★★★★★★★★MemberController : modifyMember -> " + member.toString());
+
 		memberService.modifyMemberPw(member);
 		log.debug("★★★★★★★★★★★★★MemberController : 회원비밀번호 변경 성공!");
-		return "redirect:/myPage?memberNo="+member.getMemberNo();
+		return "myPage";
 	}
 	
 
