@@ -59,7 +59,7 @@ public class AdminController {
 		
 		return "adminOne";	
 	}
-	//[윤경환] 관리자 수정 폼
+	//[윤경환] 관리자 수정 전
 	@GetMapping("/modifyAdminOne")
 	public String getmodifyAdminOne(int adminNo, Model model) {
 		log.debug("adminID+++++++++++++"+adminNo);
@@ -86,7 +86,7 @@ public class AdminController {
 		return "modifyAdminForm";
 		
 	}
-	
+	//[윤경환] 관리자 수정 후
 	@PostMapping("/modifyAdminForm")
 	public String postmodifyAdminForm(Admin admin) {
 		log.debug("admin<---------"+admin);
@@ -95,6 +95,11 @@ public class AdminController {
 		adminService.getModifyAdminForm(admin);
 		log.debug("admin.getAdminName()+++++++++++"+admin.getAdminName());
 		return "adminPage";
+		
+	}
+	@GetMapping("/adminList")
+	public String getAdminList() {
+		return "adminList";
 		
 	}
 	

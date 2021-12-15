@@ -29,6 +29,7 @@
 	<resultMap type="com.b2.Sinnanda.vo.Admin" id="AdminOneMap">
 		<id column="admin_id" property="adminId"></id>
 		<id column="admin_name" property="adminName"></id>
+		<id column="admin_position_no" property="adminPositionNo"></id>
 		<id column="admin_position" property="adminPosition"></id>
 		<id column="admin_level" property="adminLevel"></id>
 		<id column="update_date" property="updateDate"></id>
@@ -40,6 +41,7 @@
 			a.admin_id,
 			a.admin_pw,
 			a.admin_name,
+			a.admin_position_no,
 			ap.admin_position,
 			ap.admin_level,
 			a.update_date 
