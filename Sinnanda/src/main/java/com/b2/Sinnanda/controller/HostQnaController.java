@@ -29,7 +29,7 @@ public class HostQnaController {
 	
 	// [이승준] Host QnA 상세 조회
 	@GetMapping("/host/hostQnaOne")
-	public String hostQnaOneForHost(HttpServletRequest request, Model model, int hostQnaNo) {
+	public String hostQnaOne(HttpServletRequest request, Model model, int hostQnaNo) {
 		log.debug("[Debug] \"START\" HostQnaController.hostQnaOne() | Get");
 		log.debug(" ├[param] hostQnaNo : "+hostQnaNo);
 		
@@ -38,7 +38,7 @@ public class HostQnaController {
 		
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
-		User loginUser = (User) session.getAttribute("loginUser");
+		User loginUser = (User)session.getAttribute("loginUser");
 		// 로그인 세션 디버깅
 		if(loginUser != null) {
 			log.debug(" ├[param] loginUser : "+loginUser.toString());
@@ -46,36 +46,9 @@ public class HostQnaController {
 			log.debug(" ├[param] loginUser : Null");
 		}
 		
-		// 작성한 본인의 글만 출력
-		if(hostQna.getHostNo() != loginUser.getHost().getHostNo()) {
-			
-		}
-		
-		// 1. 사업자여야 함, 2. 사업자 본인이여야 함, 3. 
-		
-		
-		// 작성한 사업자 이거나 관리자만 접근 가능
-		if((hostQna.getHostQnaNo() != loginUser.getHost().getHostNo()) || (loginUser.getUserLevel() != 3)) {
-			
-		}
-		
-		/*
-		// 작성한 사업자 또는 관리자 외에는 접근 방지
-		if(hostQna.getHostQnaNo() == loginUser.getHost().getHostNo()) {
-			log.debug(" ├[param] 글 작성한 hostNo : "+hostQna.getHostQnaNo());
-			log.debug(" ├[param] 현재 세션 hostNo : "+loginUser.getHost().getHostNo());
-			
-			// Host QnA 작성자와 현재 접근하려는 사람이 맞는지 확인
-			if(loginUser.getUserLevel() != 3) {
-				if(qna.getMemberNo() != loginUser.getMember().getMemberNo()) {
-					return "redirect:/qnaList";
-				}
-			}
-		}
-		
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
-		model.addAttribute(hostQnaNo);	// 선택된 QnA 상세 정보 */
+		model.addAttribute("hostQna", hostQna);	// 선택된 QnA 상세 정보 */
 		
 		return "qnaOne";
 	}

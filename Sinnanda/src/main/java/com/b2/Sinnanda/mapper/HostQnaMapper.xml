@@ -19,7 +19,7 @@
 		<!-- [이승준] Host QnA에 대한 답변 -->
 		<collection property="hostQnaComments" ofType="com.b2.Sinnanda.vo.HostQnaComment">
 			<result column="admin_no" property="adminNo"/>
-			<result column="host_qna_comment_content" property="ostQnaCommentContent"/>
+			<result column="host_qna_comment_content" property="hostQnaCommentContent"/>
 			<result column="comment_date" property="commentDate"/>
 		</collection>
 	</resultMap>

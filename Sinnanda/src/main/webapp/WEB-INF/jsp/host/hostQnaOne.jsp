@@ -13,45 +13,28 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
     
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
 
-    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="/css/aos.css">
 
-    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
 
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/jquery.timepicker.css">
 
     
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
     
-	<title>회원 문의사항 목록</title>
+	<title>사업자 문의사항 상세보기</title>
 </head>
 <body>
-<script>
-
-	$(document).ready(function(){
-
-		$('#btn1').click(function(){
-
-			var offset = $('#div1').offset(); //선택한 태그의 위치를 반환
-
-                //animate()메서드를 이용해서 선택한 태그의 스크롤 위치를 지정해서 0.4초 동안 부드럽게 해당 위치로 이동함 
-
-	        $('html').animate({scrollTop : offset.top}, 400);
-
-		});
-
-	});
-
-</script>
 	<!-- [이승준] 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
@@ -104,103 +87,77 @@
 		<div class="container">
 			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
 				<div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-					<h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>고객지원<br></strong> 최상의 서비스를 위해</h1>
+					<h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>사업자 지원<br></strong>최상의 서비스를 위해</h1>
 					<p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">궁금하신게 있으면 무엇이든 물어봐주세요.</p>
 				</div>
 			</div>
 		</div>
 	</div>
     <!-- [이승준] 상단 이미지 배너 - END -->
-    
-    <!-- [이승준] 본문 QnA 목록 부분 - START -->
-    <section class="ftco-section testimony-section bg-light">
-	    <div class="container">
-	    	<span class="subheading">회원 문의사항</span>
-			<h1><strong>고객문의</strong></h1>
-			<div class="container2">
-				<select id="qnaCategory" name="qnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
-					<option value="">선택</option>
-					<option value="/qnaList?qnaCategory=전체">전체문의</option>
-					<option value="/qnaList?qnaCategory=기타문의">기타문의</option>
-					<option value="/qnaList?qnaCategory=결제문의">결제문의</option>
-					<option value="/qnaList?qnaCategory=이용문의">이용문의</option>
-					<option value="/qnaList?qnaCategory=예약문의">예약문의</option>
-					<option value="/qnaList?qnaCategory=숙소문의">숙소문의</option>
-				</select>
-			</div>
+	
+	<!-- [이승준] 본문 QnA One 부분 - START -->
+	<section class="ftco-section testimony-section bg-light">
+		 <div class="container">
+	    	<span class="subheading">사업자 Q&A > 상세보기</span>
+			<h1><strong>사업자 Q&A 상세보기</strong></h1>
+			
+			<a href="host/modifyQna?hostQnaNo=${hostQna.hostQnaNo}">문의 수정</a>
+			<a href="host/removeQna?hostQnaNo=${hostQna.hostQnaNo}">문의 삭제</a>
+			
 			<table class="table table-board" style="width: 100%;">
-				<tr style="text-align:center">
-					<th width="5%">번호</th>
-					<th width="40%">제목</th>
-					<th width="10%">문의유형</th>
-					<th width="10%">작성자</th>
-					<th width="10%">작성일</th>
+				<tr>
+					<th style="width: 100px; font-size: 20px; text-align:center;">제목</th>
+					<td colspan="3" style="font-size: 20px;">${hostQna.hostQnaTitle}</td>
 				</tr>
-				<c:forEach items="${qnaList}" var="qna">
-					<tr>
-						<td style="text-align:center">${qna.qnaNo}</td>
-						<td>
-							<a href="/qnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
-							<c:if test="${qna.qnaSecret == '비밀문의'}">
-								<img src="/images/qna/lockImg.png" width="20px" height="20px">
-							</c:if>
-						</td>
-						<td style="text-align:center">${qna.qnaCategory}</td>
-						<td style="text-align:center">${qna.memberName}</td>
-						<td style="text-align:center">
-							<fmt:parseDate value="${qna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-							<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
-						</td>
-					</tr>
-				</c:forEach>
+				<tr>
+					<th style="text-align:center;">작성자</th>
+					<td style="width: 60%;">${hostQna.hostName}</td>
+					<th style="width: 100px; text-align:center;">작성일</th>
+					<td>
+						<fmt:parseDate value="${hostQna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+						<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align:center;">내용</th>
+					<td colspan="3">${hostQna.hostQnaContent}</td>
+				</tr>
 			</table>
-			<a class="btn btn-primary" href="addQna" style="float: right; margin-top: auto;">문의사항 작성</a>
-			
-			
-			<!-- Paging -->			
-			<div class="row mt-5">
-		    	<div class="col text-center">
-		            <div class="block-27">
-						<ul>
-							<!-- '이전' 버튼 -->
-							<c:if test="${beginRow > (ROW_PER_PAGE * 10)}">
-								<li><a href="qnaList?currentPage=${pageNo-1}&qnaCategory=${qnaCategory}">&lt;</a></li>
-							</c:if>
-							
-							<!-- Page 번호 -->
-							<c:set var="doneLoop" value="false"></c:set>
-							<c:forEach var="i" begin="${pageNo}" end="${pageNo + 9}">
-							
-								<!-- Page 숫자 10개 출력 -->
-								<c:if test="${not doneLoop}">
-									<c:choose>
-										<c:when test="${currentPage == i}">				
-											<li class="active"><span>${i}</span></li>
-										</c:when>
-					    				<c:otherwise>
-											<li><a href="/qnaList?currentPage=${i}&qnaCategory=${qnaCategory}">${i}</a></li>	
-										</c:otherwise>		
-									</c:choose>
-									<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
-									<c:if test="${i == lastPage}">
-										<c:set var="doneLoop" value="true"></c:set>
-									</c:if>
-								</c:if>
-							</c:forEach>
-							
-							<!-- '다음' 버튼 -->
-							<c:if test="${currentPage + 10 <= lastPage}">
-								<li><a href="qnaList?currentPage=${pageNo+10}&qnaCategory=${qnaCategory}">&gt;</a></li>
-							</c:if>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<!-- Paging -->
-
 		</div>
 	</section>
-	<!-- [이승준] 본문 QnA 목록 부분 - END -->
+	<!-- [이승준] 본문 QnA One 부분 - END -->
+	
+	<!-- [이승준] 본문 QnA One 답변 부분 - START -->
+	<section class="ftco-section services-section bg-light">
+		<div class="container">
+			<h2><strong>관리자 답변</strong></h2>
+			
+			<table class="table table-board" style="width: 100%;">
+				<!-- [이승준] 비회원 or 회원, 답변이 없을 때 -->
+				<c:if test="${hostQna.hostQnaComments == null}">
+					<th style="text-align:center; font-size: 30px;">답변 없음</th>
+				</c:if>
+				
+				<!-- [이승준] 공통, 답변이 있을 때 -->
+				<c:if test="${hostQna.hostQnaComments != null}">
+						<tr>
+							<th style="width: 100px; text-align:center;">답변자</th>
+							<th style="text-align:center;">답변 내용</th>
+							<th style="width: 150px; text-align:center;">작성일</th>
+						</tr>
+						<tr>
+							<td style="text-align:center;">${hostQna.adminName}</td>
+							<td>${hostQna.hostQnaComments.hostQnaCommentContent}</td>
+							<td style="text-align:center;">
+								<fmt:parseDate value="${hostQna.hostQnaComments.commentDate}" var="commentDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+								<fmt:formatDate value="${commentDate}" pattern="yy/MM/dd HH:mm"/>
+							</td>
+						</tr>
+				</c:if>
+			</table>
+		</div>
+	</section>
+	<!-- [이승준] 본문 QnA One 답변 부분 - END -->
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
 	<footer class="ftco-footer ftco-bg-dark ftco-section">
@@ -268,21 +225,21 @@
 	
 	<!-- [이승준] js 소스코드 -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.easing.1.3.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.stellar.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/aos.js"></script>
-	<script src="js/jquery.animateNumber.min.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/jquery.timepicker.min.js"></script>
-	<script src="js/scrollax.min.js"></script>
-	<script src="direngine-master/js/google-map.js"></script>
-	<script src="direngine-master/js/main.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="/js/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.easing.1.3.js"></script>
+	<script src="/js/jquery.waypoints.min.js"></script>
+	<script src="/js/jquery.stellar.min.js"></script>
+	<script src="/js/owl.carousel.min.js"></script>
+	<script src="/js/jquery.magnific-popup.min.js"></script>
+	<script src="/js/aos.js"></script>
+	<script src="/js/jquery.animateNumber.min.js"></script>
+	<script src="/js/bootstrap-datepicker.js"></script>
+	<script src="/js/jquery.timepicker.min.js"></script>
+	<script src="/js/scrollax.min.js"></script>
+	<script src="/direngine-master/js/google-map.js"></script>
+	<script src="/direngine-master/js/main.js"></script>
 </body>
 </html>

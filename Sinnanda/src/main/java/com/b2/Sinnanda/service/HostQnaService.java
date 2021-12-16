@@ -20,13 +20,14 @@ public class HostQnaService {
 	@Autowired
 	private HostQnaMapper hostQnaMapper;
 	
-	/* [이승준] QnA 상세 조회 */
-	public HostQna getHostQnaOne(int hosytQnaNo) {
+	/* [이승준] Host QnA 상세 조회 */
+	public HostQna getHostQnaOne(int hostQnaNo) {
+		log.debug(" ├[param] hosytQnaNo : "+hostQnaNo);
 		
-		return hostQnaMapper.selectHostQnaOne(hosytQnaNo);
+		return hostQnaMapper.selectHostQnaOne(hostQnaNo);
 	}
 	
-	/* [이승준] HOst QnA 목록 조회 by Category */
+	/* [이승준] Host QnA 목록 조회 by hostQnaCategory */
 	public Map<String, Object> getHostQnaListByHostQnaCategory(int hostNo, String hostQnaCategory, int currentPage, int rowPerPage){
 		log.debug("[Debug] \"START\" HostQnaService.getHostQnaListByQnaCategory()");
 		log.debug(" ├[param] hostNo : "+hostNo);
