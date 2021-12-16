@@ -49,4 +49,45 @@
 		GROUP BY a.accom_no ORDER BY a.create_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
+	
+	<!-- [이원희] 숙소 One Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Accom" id="RoomMap">
+		<id column="room_no" property="roomNo"/>
+		<result column="accom_no" property="accomNo"/>
+		<result column="room_name" property="roomName"/>
+		<result column="room_main_img" property="roomMainImg"/>
+		<result column="room_description" property="roomDescription"/>
+		<result column="room_person" property="roomPerson"/>
+		<result column="room_price" property="roomPrice"/>
+		<result column="room_check_in" property="roomCheckIn"/>
+		<result column="room_check_out" property="roomCheckOut"/>
+		<result column="room_use" property="roomUse"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+	</resultMap>
+	
+	<!-- [이원희] 숙소 정보조회-->
+	<!-- 
+	<select id="selectAccomOne" parameterType="Integer" resultMap ="AccomListMap">
+	SELECT accom_no, 
+			   host_no, 
+			   admin_no, 
+			   commission_no, 
+			   accom_name, 
+			   accom_img, 
+			   accom_description, 
+			   create_date, 
+			   update_date 
+			   FROM accom WHERE accom_no = #{accomNo}
+	</select>
+	 -->
+	<!-- [이원희] 숙소 객실 리스트 조회
+	
+	<select id="selectAccomOne" parameterType="Integer" resultMap="RoomMap">
+	SELECT r.*
+		FROM room r 
+		LEFT JOIN accom a ON r.accom_no = a.accom_no
+		WHERE a.accom_no = #{accomNo}
+	</select>
+	 -->
 </mapper>

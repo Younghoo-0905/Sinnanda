@@ -61,7 +61,7 @@ public class AccomController {
 		model.addAttribute("accomRankList",map.get("accomRankList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
-			
+		
 		return"searchList";
 	}
 	

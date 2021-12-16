@@ -30,6 +30,7 @@ public class SearchAccomService {
 	}
 	
 	/* [이원희] 숙소 목록 조회 by accomName */
+	
 	public Map<String, Object> getAccomListByName(Accom accomName, int currentPage, int rowPerPage){
 		log.debug("[Debug] \"START\" SearchAccomService.getAccomListByName()");
 		log.debug(" ├[param] accomName : "+accomName);
@@ -72,4 +73,11 @@ public class SearchAccomService {
 		
 		return returnMap;
 	}
+	/*
+	// [이원희]숙소 정보 불러오기
+	public List<Map<String, Object>> getAccomOne(int accomNo){
+		Map<String, Object> AccomMap = accomMapper.selectAccomOne(accomNo); // 숙소정보
+		log.debug(" ├[param] returnMap : "+returnMap);
+		return returnMap;
+	}*/
 }
