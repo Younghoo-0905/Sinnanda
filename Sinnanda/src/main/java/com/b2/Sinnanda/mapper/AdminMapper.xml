@@ -150,9 +150,10 @@
 	
 	
 	<!-- [운경환] 관리자 등급 수정 -->
-	<update id="">
+	<update id="modifyAdminList" parameterType="com.b2.Sinnanda.vo.Admin">
 		 UPDATE admin SET 
-			admin_position_no = #{adminPositionNo}
+			admin_position_no = #{adminPositionNo},
+			update_date = NOW()
 		WHERE admin_no = #{adminNo}
 	
 	</update>

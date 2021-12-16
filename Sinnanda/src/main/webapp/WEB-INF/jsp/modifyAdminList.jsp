@@ -34,7 +34,7 @@
               <h4>관리자 등급 수정</h4>
               <form class="pt-3" method="post" action= "modifyAdminList" id="modifyAdminList">
                   <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" value="${admin.adminNo}" readonly>
+                  <input type="text" class="form-control form-control-lg" name = "adminNo"value="${admin.adminNo}" readonly>
                 </div>
                  <div class="form-group">
                   <input type="text" class="form-control form-control-lg" value="${admin.adminId}" readonly>
@@ -43,14 +43,11 @@
                   <input type="text" class="form-control form-control-lg" value="${admin.adminName}" readonly>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-lg"" readonly>
-                </div>
-                <div class="form-group">
                   <select name="adminPositionNo" id="adminPositionNo" class="form-control form-control-lg">
-                  	<option value ="1">1 : 운영관리자</option>
-                  	<option value ="2">2 : 회원관리자</option>
+                  	<option value ="5">1 : 운영관리자</option>
+                  	<option value ="4">2 : 회원관리자</option>
                   	<option value ="3">3 : 숙소 관리자</option>
-                  	<option value ="4">4 : 재무 관리자</option>
+                  	<option value ="2">4 : 재무 관리자</option>
                   </select>
                 </div>
         
@@ -84,7 +81,7 @@
   
   <!-- 유효성 검사 -->
   	<script>
-		
+	function chk_form() {
 		if(document.getElementById("adminPositionNo").value==''){
 			alert("포지션을 입력해주세여");
 			return false;

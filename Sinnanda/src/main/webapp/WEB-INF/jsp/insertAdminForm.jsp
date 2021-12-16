@@ -45,10 +45,10 @@
                 </div>
                 <div class="form-group">
                   <select name="adminPositionNo" id="adminPositionNo" class="form-control form-control-lg">
-                  	<option value ="1">1 : 운영관리자</option>
-                  	<option value ="2">2 : 회원관리자</option>
+                  	<option value ="5">1 : 운영관리자</option>
+                  	<option value ="4">2 : 회원관리자</option>
                   	<option value ="3">3 : 숙소 관리자</option>
-                  	<option value ="4">4 : 재무 관리자</option>
+                  	<option value ="2">4 : 재무 관리자</option>
                   </select>
                 </div>
                 <div class="form-group">

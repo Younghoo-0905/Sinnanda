@@ -109,10 +109,11 @@ public class AdminController {
 	@GetMapping("/adminList")
 	public String getAdminList(HttpServletRequest request, Model model,
 			@RequestParam(defaultValue = "1") int currentPage,
-			@RequestParam(required = false) String adminPosition) {
+			@RequestParam(defaultValue = "전체 관리자") String adminPosition) {
 		
 		log.debug("currntPage++++++++++"+currentPage);
 		
+		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1);
 		
 		Map<String, Object> map = adminService.getAdminList(adminPosition, currentPage, ROW_PER_PAGE);
 		
@@ -130,10 +131,18 @@ public class AdminController {
 		
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
-		model.addAttribute("adminPosition", map.get("adminPosition"));	// 선택된 QnA 카테고리
-		model.addAttribute("adminList", map.get("adminList"));	// QnA 목록 정보
+		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
+		model.addAttribute("adminPosition", adminPosition);	// 선택된 Admin 포지션
+		model.addAttribute("adminList", map.get("adminList"));	// admin 리스트 
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
+		
+		//	10개의 page 번호를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		log.debug(" ├[param] pageNo : " + "pageNo");
+		model.addAttribute("pageNo", pageNo);
+		
 		
 		
 		return "adminList";
@@ -154,8 +163,9 @@ public class AdminController {
 	public String postmodifyAdminList(Admin admin) {
 		log.debug("admin++++++++++"+admin);
 		
+		adminService.getmodifyAdminList(admin);
 		
-		return "adminList";
+		return "redirect:/adminList?currentPage="+1;
 		
 	}
 	

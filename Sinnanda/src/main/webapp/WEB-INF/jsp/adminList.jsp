@@ -89,7 +89,7 @@
 			<div class="container2">
 				<select id="adminPosition" name="adminPosition" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
 					<option value="">선택</option>
-					<option value="/adminList">전체관리자</option>
+					<option value="/adminList?adminPosition=전체 관리자">전체관리자</option>
 					<option value="/adminList?adminPosition=운영 관리자">운영 관리자</option>
 					<option value="/adminList?adminPosition=회원 관리자">회원 관리자</option>
 					<option value="/adminList?adminPosition=숙소 관리자">숙소 관리자</option>
@@ -136,15 +136,48 @@
 				</c:forEach>
 			</table>
 			<a class="btn btn-primary" href="insertAdminForm" style="float: right; margin-top: auto;">관리자 추가</a>
-			<!-- [이승준] 본문 - 내용 - 페이징 부분 -->
-			<div>	
-				<c:if test="${currentPage > 1}" >
-					<a href="adminList?currentPage=${currentPage-1}">이전</a>
-				</c:if>
-				<c:if test="${currentPage < lastPage}" >
-					<a href="adminList?currentPage=${currentPage+1}">다음</a>
-				</c:if>
+			
+			<!-- [윤경환] 본문 - 내용 - 페이징 부분 -->
+			<!-- Paging -->			
+			<div class="row mt-5">
+		    	<div class="col text-center">
+		            <div class="block-27">
+						<ul>
+							<!-- '이전' 버튼 -->
+							<c:if test="${beginRow > (ROW_PER_PAGE * 10)}">
+								<li><a href="adminList?currentPage=${pageNo-1}&adminPosition=${adminPosition}">&lt;</a></li>
+							</c:if>
+							
+							<!-- Page 번호 -->
+							<c:set var="doneLoop" value="false"></c:set>
+							<c:forEach var="i" begin="${pageNo}" end="${pageNo + 9}">
+							
+								<!-- Page 숫자 10개 출력 -->
+								<c:if test="${not doneLoop}">
+									<c:choose>
+										<c:when test="${currentPage == i}">				
+											<li class="active"><span>${i}</span></li>
+										</c:when>
+					    				<c:otherwise>
+											<li><a href="/adminList?currentPage=${i}&adminPosition=${adminPosition}">${i}</a></li>	
+										</c:otherwise>		
+									</c:choose>
+									<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
+									<c:if test="${i == lastPage}">
+										<c:set var="doneLoop" value="true"></c:set>
+									</c:if>
+								</c:if>
+							</c:forEach>
+							
+							<!-- '다음' 버튼 -->
+							<c:if test="${currentPage + 10 <= lastPage}">
+								<li><a href="adminList?currentPage=${pageNo+10}&adminPosition=${adminPosition}">&gt;</a></li>
+							</c:if>
+						</ul>
+					</div>
+				</div>
 			</div>
+			<!-- Paging -->
 		</div>
 	</section>
 	<!-- [이승준] 본문 QnA 목록 부분 - END -->

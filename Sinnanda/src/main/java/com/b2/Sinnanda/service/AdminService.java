@@ -54,6 +54,12 @@ public class AdminService {
 	//[윤경환] 관리자 리스트 조회
 	public Map<String, Object> getAdminList(String adminPosition, int currentPage, int rowPerPage){
 		
+		
+		if(adminPosition == null || adminPosition.equals("전체 관리자")) {
+			adminPosition = null;
+		}
+		
+		
 		Map<String, Object> paraMap = new HashMap<>();
 		int beginRow = (currentPage-1) * rowPerPage;
 		
