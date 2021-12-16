@@ -8,8 +8,6 @@
 <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	    
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
 
@@ -38,7 +36,7 @@
 	<!-- [이승준] 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index">신난다</a>
+			<a class="navbar-brand" href="/index">신난다</a>
 			
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
@@ -46,7 +44,7 @@
 			
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a href="/qnaList" class="nav-link">Q&A</a></li>
+					<li class="nav-item cta"><a href="/qnaList" class="nav-link">Q&A</a></li>
 					<li class="nav-item cta"><a href="/noticeList" class="nav-link">공지사항</a></li>
 					<li class="nav-item cta"><a href="/noticeList" class="nav-link">신난다 소개</a></li>
 					
@@ -83,7 +81,7 @@
 	<!-- [이승준] 상단 내비바 - END -->
 	
 	<!-- [이승준] 상단 이미지 배너 - START -->
-	<div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
+	<div class="hero-wrap js-fullheight" style="background-image: url('/images/bg_1.jpg');">
 		<div class="container">
 			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
 				<div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">

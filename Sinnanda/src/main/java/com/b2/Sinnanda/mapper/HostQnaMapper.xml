@@ -48,7 +48,7 @@
 			ON hq.host_no = h.host_no
 		LEFT JOIN admin a 
 			ON hqc.admin_no = a.admin_no
-		WHERE hqc.host_qna_no = #{hostQnaNo}
+		WHERE hq.host_qna_no = #{hostQnaNo}
 	</select>
 	
 	<!-- [이승준] Host QnA List Map -->
@@ -78,16 +78,36 @@
 			h.host_name
 		FROM host_qna hq LEFT JOIN host h 
 			ON hq.host_no = h.host_no
-		<where>
-			<if test="hostQnaCategory != null">
+		<!-- [이승준] 카테고리가 있을 때, WHERE절에 카테고리 조건 추가 -->
+		<if test="hostQnaCategory != null">
+			<where>
 				hq.host_no = #{hostNo} AND hq.host_qna_category = #{hostQnaCategory}
-			</if>
-			<if test="hostQnaCategory == null">
+			</where>
+		</if>
+		<if test="hostQnaCategory == null">
+			<where>
 				hq.host_no = #{hostNo}
-			</if>
-		</where>
+			</where>
+		</if>
 		ORDER BY create_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- [이승준] Host QnA 갯수 조회 -->
+	<select id="selectHostQnaTotalCountByHost" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM host_qna
+		<if test="hostQnaCategory != null">
+			<where>
+				host_no = #{hostNo} AND host_qna_category = #{hostQnaCategory}
+			</where>
+		</if>
+		<if test="hostQnaCategory == null">
+			<where>
+				host_no = #{hostNo}
+			</where>
+		</if>
 	</select>
 	
 	<!-- [이승준] Host QnA 갯수 조회 -->
@@ -95,5 +115,38 @@
 		SELECT 
 			COUNT(*) 
 		FROM host_qna
+		<if test="hostQnaCategory != null">
+			<where>
+				host_qna_category = #{hostQnaCategory}
+			</where>
+		</if>
+	</select>
+	
+	<!-- [이승준] 가변적인 Host QnA 갯수 조회(테스트) -->
+	<select id="selectHostQnaTotalCountAll" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM host_qna
+		<!-- 사업자가 접근하는 경우 -->
+		<if test="userLevel == 2">
+			<if test="hostQnaCategory != null">
+				<where>
+					host_no = #{hostNo} AND host_qna_category = #{hostQnaCategory}
+				</where>
+			</if>
+			<if test="hostQnaCategory == null">
+				<where>
+					host_no = #{hostNo}
+				</where>
+			</if>
+		</if>
+		<!-- 관리자가 접근하는 경우 -->
+		<if test="userLevel == 3">
+			<if test="hostQnaCategory != null">
+				<where>
+					host_qna_category = #{hostQnaCategory}
+				</where>
+			</if>
+		</if>
 	</select>
 </mapper>

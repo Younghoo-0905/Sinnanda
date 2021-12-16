@@ -17,6 +17,12 @@ public interface HostQnaMapper {
 		/* 매개변수 : 페이징을 위한 "hostQnaCategory, beginRow, rowPerPage" */
 	List<HostQna> selectHostQnaListByHostQnaCategory(Map<String, Object> map);
 	
+	// [이승준] hostNo을 기준으로 Host QnA의 총 갯수 조회
+	int selectHostQnaTotalCountByHost(String hostQnaCategory);
+	
 	// [이승준] Host QnA의 총 갯수 조회
-	int selectHostQnaTotalCount();
+	int selectHostQnaTotalCount(String hostQnaCategory);
+	
+	// [이승준] Host QnA 개수 테스트
+	int selectHostQnaTotalCountAll(int userLevel,int hostNo , String hostQnaCategory);
 }

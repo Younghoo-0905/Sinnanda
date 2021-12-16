@@ -35,6 +35,11 @@ public class HostQnaService {
 		log.debug(" ├[param] currentPage : "+currentPage);
 		log.debug(" ├[param] rowPerPage : "+rowPerPage);
 		
+		//	'전체' 조회인 경우 qnaCategory를 null 값으로 변경하여 쿼리에서 where절이 실행되지 않도록 한다
+		if(hostQnaCategory == null || hostQnaCategory.equals("전체")) {
+			hostQnaCategory = null;
+		}
+		
 		// 1. 매개변수 가공 (paraMap <-- qnaCategory, currentPage, rowPerPage)
 		Map<String, Object> paraMap = new HashMap<>();
 		int beginRow = (currentPage-1) * rowPerPage;
@@ -51,7 +56,7 @@ public class HostQnaService {
 		Map<String, Object> returnMap = new HashMap<>();
 		
 		int lastPage = 0;
-		int totalCount = hostQnaMapper.selectHostQnaTotalCount();
+		int totalCount = hostQnaMapper.selectHostQnaTotalCountAll(2, hostNo, hostQnaCategory);
 		log.debug(" ├[param] totalCount : "+totalCount);
 		
 		lastPage = totalCount / rowPerPage;
