@@ -60,7 +60,7 @@ public class MemberService {
 		paraMap.put("rowPerPage", rowPerPage);
 		
 		// 2. qna 리스트 조회
-		List<Qna> qnaList = memberMapper.selectMyQnaListQnaCategory(paraMap);
+		List<Member> qnaList = memberMapper.selectMyQnaListQnaCategory(paraMap);
 		
 		// 3. 리턴 값 가공 (return : qna & lastPage)
 		Map<String, Object> returnMap = new HashMap<>();
