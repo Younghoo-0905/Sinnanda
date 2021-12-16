@@ -123,6 +123,7 @@ public class NoticeController {
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
 		model.addAttribute("noticeCategory", noticeCategory);
+		model.addAttribute("noticePinList", map.get("noticePinList"));
 		model.addAttribute("noticeList", map.get("noticeList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);

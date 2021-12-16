@@ -53,7 +53,7 @@ public class NoticeService {
 		return noticeMapper.selectNoticeOne(noticeNo);
 	}
 	
-	//	[김영후]	카테고리별로 공지사항 목록조회
+	//	[김영후]	상단 고정 공지사항, 카테고리별로 공지사항 목록조회
 	public Map<String, Object> getNoticeListByCategory(String noticeCategory, int beginRow, int rowPerPage){
 		
 		//	'전체' 조회인 경우 noticeCategory를 null 값으로 변경하여 쿼리에서 where절이 실행되지 않도록 한다
@@ -74,6 +74,7 @@ public class NoticeService {
 		paramMap.put("rowPerPage", rowPerPage);
 		
 		// 2. notice 리스트 조회
+		List<Notice> noticePinList = noticeMapper.selectNoticePinList();
 		List<Notice> noticeList = noticeMapper.selectNoticeListByCategory(paramMap);
 		
 		// 3. 리턴 값 가공 (return : notice & lastPage)
@@ -89,6 +90,7 @@ public class NoticeService {
 		}
 		
 		log.debug(" ├[param] lastPage : "+lastPage);
+		returnMap.put("noticePinList", noticePinList);
 		returnMap.put("noticeList", noticeList);
 		returnMap.put("lastPage", lastPage);
 		

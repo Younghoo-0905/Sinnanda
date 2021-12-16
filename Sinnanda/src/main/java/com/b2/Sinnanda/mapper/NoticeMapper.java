@@ -22,6 +22,8 @@ public interface NoticeMapper {
 	//	[김영후]	notice 상세 조회
 	Notice selectNoticeOne(int noticeNo);
 	
+	//	[김영후]	noticePinList 출력
+	List<Notice> selectNoticePinList();
 	//	[김영후]	noticeList 출력
 	List<Notice> selectNoticeListByCategory(Map<String, Object> map);
 	

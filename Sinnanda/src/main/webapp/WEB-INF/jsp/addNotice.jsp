@@ -17,6 +17,15 @@
 				<td><input id="noticeTitle" name="noticeTitle" type="text"></td>
 			</tr>
 			<tr>
+				<td style="text-align:right">상단 고정</td>
+				<td>
+					<select id="noticePin" name="noticePin">
+						<option value="no">No</option>
+						<option value="yes">Yes</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
 				<td style="text-align:right">공지 유형</td>
 				<td>
 					<select id="noticeCategory" name="noticeCategory">

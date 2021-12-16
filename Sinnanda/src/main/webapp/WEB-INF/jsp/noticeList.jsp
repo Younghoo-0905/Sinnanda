@@ -39,7 +39,7 @@
 			<a href="/admin/addNotice">공지사항 작성</a>
 		</div>
 	</c:if>
-	<!-- 공지사항 카테고리 입력 -->	
+	<!-- [김영후] 공지사항 카테고리 입력 -->	
 	<div>
 		<select id="noticeCategory" name="noticeCategory" onchange="location.href=this.value">
 			<option value="">선택</option>
@@ -51,6 +51,8 @@
 			<option value="/noticeList?noticeCategory=뉴스">뉴스</option>
 		</select>
 	</div>
+	
+	<!-- [김영후] 공지사항 목록 출력 -->
 	<table class="table table-board" border="1">
 		<tr style="text-align:center">
 			<td width="5%">번호</td>
@@ -59,6 +61,20 @@
 			<td width="15%">작성자</td>
 			<td width="10%">작성일</td>
 		</tr>
+		<c:forEach items="${noticePinList}" var="p">
+			<tr style="background-color:LightGray;">
+				<td style="text-align:center">${p.noticeNo}</td>
+				<td>
+					<a href="/noticeOne?noticeNo=${p.noticeNo}">${p.noticeTitle}</a>
+				</td>
+				<td style="text-align:center">${p.noticeCategory}</td>
+				<td style="text-align:center">${p.adminName}</td>
+				<td style="text-align:center">
+					<fmt:parseDate value="${p.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+					<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
+				</td>
+			</tr>
+		</c:forEach>
 		<c:forEach items="${noticeList}" var="n">
 			<tr>
 				<td style="text-align:center">${n.noticeNo}</td>

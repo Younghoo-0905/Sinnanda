@@ -25,6 +25,15 @@
 				<td>${notice.updateDate}</td>
 			</tr>
 			<tr>
+				<td>상단 고정</td>
+				<td>
+					<select id="noticePin" name="noticePin">
+						<option value="no">No</option>
+						<option value="yes">Yes</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
 				<td>카테고리</td>
 				<td>${notice.noticeCategory}</td>
 			</tr>
