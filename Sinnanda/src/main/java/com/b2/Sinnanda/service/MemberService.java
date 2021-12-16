@@ -46,7 +46,7 @@ public class MemberService {
 	
 	// [유동진] 내가 작성한 QnA 목록 조회
 	public Map<String, Object> getMyQnaListByQnaCategory(String qnaCategory, int currentPage, int rowPerPage){
-		log.debug("[Debug] \"START\" QnaService.getQnaList()");
+		log.debug("[Debug] \"START\" MemberService.getMyQnaList()");
 		log.debug(" ├[param] qnaCategory : "+qnaCategory);
 		log.debug(" ├[param] currentPage : "+currentPage);
 		log.debug(" ├[param] rowPerPage : "+rowPerPage);
@@ -66,7 +66,7 @@ public class MemberService {
 		Map<String, Object> returnMap = new HashMap<>();
 		
 		int lastPage = 0;
-		int totalCount = memberMapper.selectMyQnaTotalCount();
+		int totalCount = memberMapper.selectMyQnaTotalCount(qnaCategory);
 		log.debug(" ├[param] totalCount : "+totalCount);
 		
 		lastPage = totalCount / rowPerPage;

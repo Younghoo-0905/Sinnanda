@@ -105,7 +105,7 @@ public class MemberController {
 	public String myQnaList(HttpServletRequest request, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
 			@RequestParam(required = false) String qnaCategory) {
-		log.debug("[Debug] \"START\" QnaController.qnaList() | Get");
+		log.debug("[Debug] \"START\" MemberController.myQnaList() | Get");
 		log.debug(" ├[param] currentPage : "+currentPage);
 		
 		// QnA 목록 조회
@@ -129,7 +129,7 @@ public class MemberController {
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
 		
-		return "MyQnaList";
+		return "myQnaList";
 	}
 
 	//	[김영후] 회원 가입

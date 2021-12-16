@@ -92,6 +92,18 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
+		<!-- [유동진] QnA 갯수 조회 -->
+	<select id="selectMyQnaTotalCount" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM qna
+		<if test="qnaCategory != null">
+			<where>
+				qna_category = #{qnaCategory}
+			</where>
+		</if>
+	</select>
+	
 	<!-- [김영후] 회원 가입 -->
 	<insert id="insertMember" parameterType="com.b2.Sinnanda.vo.Member">
 		INSERT INTO 

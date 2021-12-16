@@ -31,7 +31,7 @@ public interface MemberMapper {
 	List<Qna> selectMyQnaListQnaCategory(Map<String, Object> map);
 	
 	// [유동진] 내가 작성한 QnA의 총 갯수 조회
-	int selectMyQnaTotalCount();
+	int selectMyQnaTotalCount(String qnaCategory);
 	
 	//	[김영후] 회원 가입
 	int insertMember(Member member);
