@@ -19,6 +19,19 @@
   <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../../images/favicon.png" />
+  
+  <style>
+		.idOk
+		{
+			color: #6A82FB; 
+			display: none;
+		}
+		.idUsed
+		{
+			color: red; 
+			display: none;
+		}
+	</style>
 </head>
 
 <body>
@@ -36,6 +49,8 @@
               <form class="pt-3" method="post" action="insertAdminForm" id="insertAdminForm">
                 <div class="form-group">
                   <input type="text" class="form-control form-control-lg" name="adminId" id="adminId" placeholder="UserID">
+                   <span class="idOk">사용 가능한 ID입니다</span>
+                   <span class="idUsed">중복된 ID입니다</span>
                 </div>
                <div class="form-group">
                   <input type="password" class="form-control form-control-lg" name="adminPw" id="adminPw" placeholder="Password">
@@ -97,7 +112,39 @@
   <!-- endinject -->
   
   <!-- 유효성 검사 -->
+  
+  
   	<script>
+
+    var checkedId = false
+    
+    	$('#adminId').focusout(function() {
+    		let adminId = $('#adminId').val();
+    		$.ajax({
+  				type: 'get', 
+  				url: '/checkAdminId?adminId=' + adminId, 
+  				success: function(checkResult) {  					
+  					if(checkResult  == "0") {	//		ID가 중복되지 않은 경우 (가입가능)
+  						
+  						$('.idOk').css("display", "inline-block");
+  						$('.idUsed').css("display", "none");
+  				
+  						checkedId = true;
+  					}		
+  					else{	
+//  						ID가 중복인 경우 
+						alert("사용불가 아이디입니다.")
+						location.reload();
+  						$('.idOk').css("display", "none");
+  						$('.idUsed').css("display", "inline-block");
+  						checkedId = false;
+  					}
+  				}
+			})
+  		})
+  		
+  	
+  	
 		function chk_form() {
 		if(document.getElementById("adminId").value==''){
 			alert("ID를 입력하세요.");
@@ -119,9 +166,9 @@
 			alert("나이를 입력하세요.");
 			return false;
 		}
-		
 		document.getElementById("insertAdminForm").submit();
-		}
+		
+	}
 	</script>
 </body>
 </html>

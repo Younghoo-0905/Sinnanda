@@ -166,7 +166,8 @@
 			if($('#memberEmail').val()==''){
 				alert("Email을 입력하세요.");
 				return false;
-			}		
+			}
+		
 			$('#insertMemberForm').submit();
 		}
 	</script>

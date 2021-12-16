@@ -91,6 +91,12 @@ public class AdminService {
 	public void getmodifyAdminList(Admin admin) {
 		adminMapper.modifyAdminList(admin);
 	}
+	//[윤경환] 관리자 등록시 등급 수정
+	public int checkAdminId(String adminId) {
+		int checkResult = adminMapper.checkAdminId(adminId);
+		return checkResult;
+		
+	}
 	
 	
 

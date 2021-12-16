@@ -31,8 +31,11 @@ public interface AdminMapper {
 	//[윤경화] 관리자 총 수 
 	int selectAdminTotalCount();
 	
-	//[윤경환] 관리자 등급 수정 
-	
+	//[윤경환] 관리자 등급 수정 	
 	int modifyAdminList(Admin admin);
+	
+	//[윤경환] 관리자 아이디 중복 체크 
+	int checkAdminId(String adminId);
+	
 
 }

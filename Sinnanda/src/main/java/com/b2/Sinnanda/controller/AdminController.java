@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.b2.Sinnanda.service.AdminService;
 import com.b2.Sinnanda.vo.Admin;
@@ -168,6 +170,16 @@ public class AdminController {
 		return "redirect:/adminList?currentPage="+1;
 		
 	}
+	
+	//[윤경환] 관리자 등록 시 ID 중복 체크 
+		@GetMapping("/checkAdminId")
+		@ResponseBody
+		public int checkAdminId(String adminId) {
+			int checkResult = adminService.checkAdminId(adminId);
+			
+			log.debug("중복값 검사 결과 : " + checkResult);
+			return checkResult;
+		}
 	
 	
 }
