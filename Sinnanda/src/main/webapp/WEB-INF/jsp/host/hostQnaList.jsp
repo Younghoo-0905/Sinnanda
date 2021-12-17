@@ -128,6 +128,9 @@
 					<tr>
 						<td style="text-align:center">${hostQna.hostQnaNo}</td>
 						<td>
+							<c:if test="${hostQna.hostQnaComments.adminNo != null}">
+								<span style="color: #CD5C5C; font-weight: bold;">[답변 완료]</span>
+							</c:if>
 							<a href="/host/hostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
 						</td>
 						<td style="text-align:center">${hostQna.hostQnaCategory}</td>
@@ -139,7 +142,7 @@
 					</tr>
 				</c:forEach>
 			</table>
-			<a class="btn btn-primary" href="addQna" style="float: right; margin-top: auto;">문의사항 작성</a>
+			<a href="addHostQna" class="btn btn-primary" style="float: right; margin-top: auto;">문의사항 작성</a>
 			
 			<!-- Paging -->			
 			<div class="row mt-5">

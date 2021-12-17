@@ -154,15 +154,15 @@
 						<form id="addQnaCommentForm" action="addQnaComment" method="post">
 						<input id="qnaNo" name="qnaNo" type="hidden" value="${qna.qnaNo}">
 						<input id="adminNo" name="adminNo" type="hidden" value="${loginUser.admin.adminNo}">
-						<table border="1">
+						<table class="table table-board" style="width: 100%;">
 							<tr>
-								<td>문의 답변하기</td>
-							</tr>
-							<tr>
-								<td><textarea id="qnaCommentContent" name="qnaCommentContent" cols="30" rows="5"></textarea></td>
+								<th style="width: 150px; font-size: 20px; text-align:center;">
+									문의 답변하기<br><br>
+									<button id="addQnaCommentBtn" type="submit"class="btn btn-primary">답변하기</button>
+								</th>
+								<td><textarea id="qnaCommentContent" name="qnaCommentContent" cols="100" rows="5"></textarea></td>
 							</tr>
 						</table>
-						<button id="addQnaCommentBtn" type="submit">답변하기</button>
 					</form>
 					</c:if>
 				</c:if>
@@ -187,7 +187,7 @@
 							</td>
 							<!-- [이승준] 관리자, 답변이 있을 때, 삭제 기능 사용가능 -->
 							<c:if test="${(loginUser.userLevel == 3)}">
-								<td class="btn btn-primary" style="text-align:center; color: white;"><a href="removeQnaComment?qnaNo=${qna.qnaNo}">삭제</a></td>
+								<td style="text-align:center;"><a class="btn btn-primary"  href="removeQnaComment?qnaNo=${qna.qnaNo}">삭제</a></td>
 							</c:if>
 						</tr>
 				</c:if>

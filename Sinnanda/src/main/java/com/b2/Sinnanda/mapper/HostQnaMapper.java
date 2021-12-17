@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.b2.Sinnanda.vo.HostQna;
+import com.b2.Sinnanda.vo.Qna;
 
 @Mapper
 public interface HostQnaMapper {
@@ -20,6 +21,8 @@ public interface HostQnaMapper {
 	int selectNoCommentsHostQnaTotalCount(Map<String, Object> map);
 	
 // 사업자 기능
+	
+	void insertHostQna(HostQna HostQna);
 	
 // 공통 기능
 	

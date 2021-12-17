@@ -129,7 +129,7 @@ public class QnaController {
 		
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
-		User loginUser = (User) session.getAttribute("loginUser");
+		User loginUser = (User)session.getAttribute("loginUser");
 		// 로그인 세션 디버깅
 		if(loginUser != null) {
 			log.debug(" ├[param] loginUser : "+loginUser.toString());

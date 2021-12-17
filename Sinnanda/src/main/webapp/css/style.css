@@ -1358,6 +1358,8 @@ pre {
 	margin-bottom: 20px;
 	background-color: transparent;
 }
+
+/* 추가------------------------------------------------------------- */
 /* [이승준] 보드용 테이블 추가 */
 .table-board {
 	background-color: rgb(128, 128, 128, 0.05);
@@ -1377,6 +1379,8 @@ pre {
 	border-top: 1px solid #dee2e6;
 }
 
+
+/* 추가------------------------------------------------------------- */
   .table th,
   .table td {
     padding: 0.75rem;

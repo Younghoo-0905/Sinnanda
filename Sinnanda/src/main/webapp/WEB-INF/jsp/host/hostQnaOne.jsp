@@ -99,9 +99,10 @@
 	    	<span class="subheading">사업자 Q&A > 상세보기</span>
 			<h1><strong>사업자 Q&A 상세보기</strong></h1>
 			
-			<a href="host/modifyQna?hostQnaNo=${hostQna.hostQnaNo}">문의 수정</a>
-			<a href="host/removeQna?hostQnaNo=${hostQna.hostQnaNo}">문의 삭제</a>
-			
+			<div style="text-align:right;">
+				<a href="host/modifyQna?hostQnaNo=${hostQna.hostQnaNo}" class="btn btn-primary">문의 수정</a>
+				<a href="host/removeQna?hostQnaNo=${hostQna.hostQnaNo}" class="btn btn-primary">문의 삭제</a>
+			</div>
 			<table class="table table-board" style="width: 100%;">
 				<tr>
 					<th style="width: 100px; font-size: 20px; text-align:center;">제목</th>
@@ -119,6 +120,15 @@
 				<tr>
 					<th style="text-align:center;">내용</th>
 					<td colspan="3">${hostQna.hostQnaContent}</td>
+				</tr>
+				<tr>
+					<th style="text-align:center;">파일</th>
+					<td colspan="3">
+						<c:if test="${hostQna.hostQnaUploadFile == null}">
+							파일 없음
+						</c:if>
+						${hostQna.hostQnaUploadFile}
+					</td>
 				</tr>
 			</table>
 		</div>

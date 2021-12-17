@@ -25,6 +25,13 @@
 	</insert>
 	
 	<!-- [이승준] QnA 삭제 -->
+	<delete id="deleteQnaCommentByMember" >
+		DELETE 
+		FROM qna_comment
+		WHERE qna_no = #{qnaNo}
+	</delete>
+	
+	<!-- [이승준] QnA 삭제 -->
 	<delete id="deleteQna" >
 		DELETE 
 		FROM qna 

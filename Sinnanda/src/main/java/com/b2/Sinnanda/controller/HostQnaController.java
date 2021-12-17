@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.b2.Sinnanda.service.HostQnaService;
 import com.b2.Sinnanda.vo.HostQna;
+import com.b2.Sinnanda.vo.Qna;
 import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +38,7 @@ public class HostQnaController {
 		log.debug(" ├[param] hostQnaCategory : "+hostQnaCategory);
 		
 		// 1. 출력을 시작하는 행 구하기 수식
-		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1); 
+		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE; 
 		
 		// 2. 로그인 세션 조회
 		HttpSession session = request.getSession();
@@ -71,6 +73,35 @@ public class HostQnaController {
 	
 // 사업자 기능
 	
+	// [이승준] QnA 삽입
+	@GetMapping("/host/addHostQna")
+	public String addHostQna(HttpServletRequest request, Model model) {
+		log.debug("[Debug] \"START\" HostQnaController.addHostQna() | Get");
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+		}
+		
+		/* 모델 추가 */
+		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+		
+		return "host/addHostQna";
+	}
+	@PostMapping("/host/addHostQna")
+	public String addHostQna(HostQna hostQna) {
+		log.debug("[Debug] \"START\" HostQnaController.addHostQna() | Post");
+		log.debug(" ├[param] hostQna : "+hostQna.toString());
+		
+		hostQnaService.addHostQna(hostQna);
+		
+		return "redirect:/host/hostQnaOne?hostQnaNo="+hostQna.getHostQnaNo();
+	}
 	
 // 공통 기능
 	

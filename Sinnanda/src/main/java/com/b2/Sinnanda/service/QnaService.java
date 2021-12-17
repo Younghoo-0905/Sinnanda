@@ -32,7 +32,7 @@ public class QnaService {
 		qnaComment.setAdminNo(loginUser.getAdmin().getAdminNo());
 		qnaComment.setQnaNo(qnaNo);
 		
-		qnaMapper.deleteQnaComment(qnaComment);
+		qnaMapper.deleteQnaCommentByAdmin(qnaComment);
 	}
 	
 	// [이승준] QnA 답변 삽입
@@ -49,6 +49,11 @@ public class QnaService {
 		log.debug(" ├[param] qnaNo : "+qnaNo);
 		log.debug(" ├[param] memberNo : "+memberNo);
 		
+		Qna qna = qnaMapper.selectQnaOne(qnaNo);
+		
+		if(qna.getQnaComments() != null) {
+			qnaMapper.deleteQnaCommentByMember(qnaNo);
+		}
 		qnaMapper.deleteQna(qnaNo, memberNo);
 	}
 	
@@ -93,7 +98,7 @@ public class QnaService {
 	/* [이승준] QnA 목록 조회 by Category */
 	public Map<String, Object> getQnaListByQnaCategory(String qnaCategory, int beginRow, int rowPerPage){
 		
-		//	'전체' 조회인 경우 qnaCategory를 null 값으로 변경하여 쿼리에서 where절이 실행되지 않도록 한다
+		// '전체' 조회인 경우 qnaCategory를 null 값으로 변경하여 쿼리에서 where절이 실행되지 않도록 한다
 		if(qnaCategory == null || qnaCategory.equals("전체")) {
 			qnaCategory = null;
 		}

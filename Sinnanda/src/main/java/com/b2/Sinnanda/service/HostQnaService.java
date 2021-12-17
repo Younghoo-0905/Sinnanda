@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.b2.Sinnanda.mapper.HostQnaMapper;
 import com.b2.Sinnanda.vo.HostQna;
+import com.b2.Sinnanda.vo.Qna;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -73,6 +74,13 @@ public class HostQnaService {
 	
 // 사업자 기능
 	
+	/* [이승준] QnA 삽입 */
+	public void addHostQna(HostQna hostQna) {
+		log.debug("[Debug] \"START\" HostQnaService.addHostQna()");
+		log.debug(" ├[param] hostQna : "+hostQna.toString());
+		
+		hostQnaMapper.insertHostQna(hostQna);
+	}
 	
 // 공통 기능
 	
@@ -80,7 +88,8 @@ public class HostQnaService {
 	
 	/* [이승준] Host QnA 상세 조회 */
 	public HostQna getHostQnaOne(int hostQnaNo) {
-		log.debug(" ├[param] hosytQnaNo : "+hostQnaNo);
+		log.debug("[Debug] \"START\" HostQnaService.getHostQnaOne()");
+		log.debug(" ├[param] hostQnaNo : "+hostQnaNo);
 		
 		return hostQnaMapper.selectHostQnaOne(hostQnaNo);
 	}
