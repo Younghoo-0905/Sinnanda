@@ -94,13 +94,6 @@
 		</div>
 	</div>
     <!-- 상단 이미지 배너 - END -->
-    
-    <!-- 관리자인 경우 공지사항 작성 링크 -->
-	<c:if test="${loginUser.userLevel == 3}">
-		<div>
-			<a href="/admin/addNotice">공지사항 작성</a>
-		</div>
-	</c:if>
 	
 	<!-- [김영후] 공지사항 목록 출력 -->
 	<section class="ftco-section testimony-section bg-light">
@@ -121,10 +114,10 @@
 			<table class="table table-board" style="width: 100%;">
 				<tr style="text-align:center">
 					<th width="5%">번호</th>
-					<th width="50%">제목</th>
-					<th width="10%">공지유형</th>
+					<th width="45%">제목</th>
+					<th width="15%">공지유형</th>
 					<th width="15%">작성자</th>
-					<th width="10%">작성일</th>
+					<th width="20%">작성일</th>
 				</tr>
 				<c:forEach items="${noticePinList}" var="p">
 					<tr style="background-color:LightGray;">
@@ -155,6 +148,13 @@
 					</tr>
 				</c:forEach>
 			</table>
+						    
+			<!-- 관리자인 경우 공지사항 작성 링크 -->
+			<c:if test="${loginUser.userLevel == 3}">
+				<div>
+					<a class="btn btn-primary" href="/admin/addNotice" style="float: right; margin-top: auto;">공지사항 작성</a>
+				</div>
+			</c:if>
 			
 			<!-- [김영후] Paging -->	
 			<div class="row mt-5">

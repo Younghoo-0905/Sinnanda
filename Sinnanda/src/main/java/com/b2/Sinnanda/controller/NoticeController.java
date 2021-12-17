@@ -107,7 +107,7 @@ public class NoticeController {
 		log.debug(" ├[param] currentPage : "+currentPage);
 				
 		//	출력을 시작하는 행 구하기 수식
-		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1); 
+		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE; 
 
 		//	목록 출력
 		Map<String, Object> map = noticeService.getNoticeListByCategory(noticeCategory, beginRow, ROW_PER_PAGE);
