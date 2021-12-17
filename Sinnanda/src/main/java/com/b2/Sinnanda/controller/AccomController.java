@@ -1,5 +1,6 @@
 package com.b2.Sinnanda.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.b2.Sinnanda.service.SearchAccomService;
 import com.b2.Sinnanda.vo.Accom;
+import com.b2.Sinnanda.vo.Room;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -70,8 +72,8 @@ public class AccomController {
 		log.debug(accomNo+"<------------------get값");
 		
 		Map<String, Object> map = searchAccomService.getAccomOne(accomNo);
-		
 		model.addAttribute("accom",map.get("accom"));
+		model.addAttribute("roomList", map.get("roomList"));
 		
 		return "searchOne";
 	}

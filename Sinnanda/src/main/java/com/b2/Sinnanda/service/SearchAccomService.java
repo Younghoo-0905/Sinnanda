@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.b2.Sinnanda.mapper.AccomMapper;
 import com.b2.Sinnanda.vo.Accom;
 import com.b2.Sinnanda.vo.Qna;
+import com.b2.Sinnanda.vo.Room;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -77,11 +78,15 @@ public class SearchAccomService {
 	// [이원희]숙소 정보 불러오기
 	public Map<String, Object> getAccomOne(int accomNo){
 		Accom accom = accomMapper.selectAccomOne(accomNo); // 숙소정보
+		List<Room> roomList = accomMapper.selectAccomOneByRoom(accomNo);
+		
 		log.debug(" ├[param] accom : "+accom);
+		log.debug(" ├[param] accom : "+roomList);
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		returnMap.put("accom", accom);
+		returnMap.put("roomList", roomList);
 		
 		return returnMap;
 	}
