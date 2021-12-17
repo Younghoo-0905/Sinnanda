@@ -108,19 +108,19 @@ public class MemberController {
 		log.debug("[Debug] \"START\" MemberController.myQnaList() | Get");
 		log.debug(" ├[param] currentPage : "+currentPage);
 		
-		// QnA 목록 조회
-		Map<String, Object> map = memberService.getMyQnaListByQnaCategory(qnaCategory, currentPage, ROW_PER_PAGE);
-		
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
-		User loginUser = (User) session.getAttribute("loginUser");
+		User loginUser = (User)session.getAttribute("loginUser");
 		// 로그인 세션 디버깅
 		if(loginUser != null) {
 			log.debug(" ├[param] loginUser : "+loginUser.toString());
 		} else {
 			log.debug(" ├[param] loginUser : Null");
+			return "redirect:/index";
 		}
-		
+
+		// QnA 목록 조회
+		Map<String, Object> map = memberService.getMyQnaListByQnaCategory(loginUser.getMember().getMemberNo(), qnaCategory, currentPage, ROW_PER_PAGE);
 		
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보

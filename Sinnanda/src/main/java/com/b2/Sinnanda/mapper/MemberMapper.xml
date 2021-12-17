@@ -87,7 +87,11 @@
 		FROM qna q
 		LEFT JOIN member m
 			ON q.member_no = m.member_no
-		WHERE m.member_no = #{memberNo}
+		<if test="qnaCategory != null">
+			<where>
+				member_no = #{memberNo} AND qna_category = #{qnaCategory}
+			</where>
+		</if>
 		ORDER BY create_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>

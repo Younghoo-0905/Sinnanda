@@ -28,7 +28,7 @@ public interface MemberMapper {
 	
 	// [유동진] 내가 작성한 QnA 목록 조회
 		/* 매개변수 : 페이징을 위한 "qnaCategory, beginRow, rowPerPage" */
-	List<Member> selectMyQnaListQnaCategory(Map<String, Object> map);
+	List<Qna> selectMyQnaListQnaCategory(Map<String, Object> map);
 	
 	// [유동진] 내가 작성한 QnA의 총 갯수 조회
 	int selectMyQnaTotalCount(String qnaCategory);
