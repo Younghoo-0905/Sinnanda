@@ -10,7 +10,7 @@ import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Qna;
 import com.b2.Sinnanda.vo.Room;
 @Mapper
-public interface AccomMapper {
+public interface SearchAccomMapper {
 	//[이원희] 숙소이름 검색
 	Accom selectAccomList(Accom accom);
 	List<Accom> selectAccomListByName(Map<String, Object> map);

@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.b2.Sinnanda.mapper.AccomMapper;
+import com.b2.Sinnanda.mapper.SearchAccomMapper;
 import com.b2.Sinnanda.vo.Accom;
 import com.b2.Sinnanda.vo.Qna;
 import com.b2.Sinnanda.vo.Room;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class SearchAccomService {
-	@Autowired AccomMapper accomMapper;
+	@Autowired SearchAccomMapper accomMapper;
 	Accom getAccom = new Accom();
 	
 	public Accom getAccomList(Accom accom) {
