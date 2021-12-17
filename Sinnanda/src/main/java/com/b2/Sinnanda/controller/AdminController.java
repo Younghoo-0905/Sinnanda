@@ -32,32 +32,32 @@ public class AdminController {
 		private final int ROW_PER_PAGE = 10;
 	
 	//[윤경환] 관리자 회원가입
-	@GetMapping("/insertAdminForm")
+	@GetMapping("/admin/insertAdminForm")
 	public String getInsertAdmin() {
 		
-		return "insertAdminForm";
+		return "admin/insertAdminForm";
 	}
-	@PostMapping("insertAdminForm")
+	@PostMapping("admin/insertAdminForm")
 	public String postInsertAdmin(Admin admin) {
 		log.debug("admin<-----"+admin);
 		adminService.addAdmin(admin);
 		
-		return "redirect:/adminList?currentPage="+1;
+		return "redirect:/admin/adminList?currentPage="+1;
 	}
 	
 	//[윤경환] 관리자 페이지
-	@GetMapping("/adminPage")
+	@GetMapping("/admin/adminPage")
 	public String getAdminPage(int adminNo, Model model) {
 		log.debug("adminNo>---------------"+adminNo); 
 		Admin admin =  adminService.getAdminOne(adminNo); 
 		
 		model.addAttribute(admin);
 		
-		return "adminPage";
+		return "admin/adminPage";
 	}
 	
 	//[윤경환] 관리자 상세 조회
-	@GetMapping("/adminOne")
+	@GetMapping("/admin/adminOne")
 	public String getAdminOne(int adminNo, Model model) {
 		log.debug("adminID+++++++++++++"+adminNo);
 		
@@ -66,10 +66,10 @@ public class AdminController {
 		
 		model.addAttribute(admin);
 		
-		return "adminOne";	
+		return "admin/adminOne";	
 	}
 	//[윤경환] 관리자 수정 전
-	@GetMapping("/modifyAdminOne")
+	@GetMapping("/admin/modifyAdminOne")
 	public String getmodifyAdminOne(int adminNo, Model model) {
 		log.debug("adminID+++++++++++++"+adminNo);
 		
@@ -78,10 +78,10 @@ public class AdminController {
 	
 		model.addAttribute(admin);
 		
-		return "modifyAdminOne";
+		return "admin/modifyAdminOne";
 		
 	}
-	@PostMapping("/modifyAdminOne")
+	@PostMapping("/admin/modifyAdminOne")
 	public String postmodifyAdminOne(String adminId, String adminPw, Model model) {
 		log.debug("admin<-----"+adminId);
 		log.debug("admin<-----"+adminPw);
@@ -92,11 +92,11 @@ public class AdminController {
 			
 		model.addAttribute(admin);
 	
-		return "modifyAdminForm";
+		return "admin/modifyAdminForm";
 		
 	}
 	//[윤경환] 관리자 수정 후
-	@PostMapping("/modifyAdminForm")
+	@PostMapping("/admin/modifyAdminForm")
 	public String postmodifyAdminForm(Admin admin) {
 		log.debug("admin<---------"+admin);
 		
@@ -104,11 +104,11 @@ public class AdminController {
 		adminService.getModifyAdminForm(admin);
 		log.debug("admin.getAdminName()+++++++++++"+admin.getAdminName());
 		log.debug("admin.getAdminNo()+++++++++++"+admin.getAdminNo());
-		return "redirect:/adminPage?adminNo="+admin.getAdminNo();
+		return "redirect:/admin/adminPage?adminNo="+admin.getAdminNo();
 		
 	}
 	//[윤경환] 관리자 리스트
-	@GetMapping("/adminList")
+	@GetMapping("/admin/adminList")
 	public String getAdminList(HttpServletRequest request, Model model,
 			@RequestParam(defaultValue = "1") int currentPage,
 			@RequestParam(defaultValue = "전체 관리자") String adminPosition) {
@@ -147,11 +147,11 @@ public class AdminController {
 		
 		
 		
-		return "adminList";
+		return "admin/adminList";
 		
 	}
 	//[윤경환] 총관리자가 다른 관리자 수정 
-	@GetMapping("/modifyAdminList")
+	@GetMapping("/admin/modifyAdminList")
 	public String getmodifyAdminList(int adminNo, Model model) {
 		log.debug("adminNo++++++"+adminNo);
 		Admin admin = adminService.getSelectAdminName(adminNo);
@@ -159,15 +159,15 @@ public class AdminController {
 		log.debug("admin+++++++++++"+admin);
 		model.addAttribute(admin);
 		
-		return "modifyAdminList";
+		return "admin/modifyAdminList";
 	}
-	@PostMapping("/modifyAdminList")
+	@PostMapping("/admin/modifyAdminList")
 	public String postmodifyAdminList(Admin admin) {
 		log.debug("admin++++++++++"+admin);
 		
 		adminService.getmodifyAdminList(admin);
 		
-		return "redirect:/adminList?currentPage="+1;
+		return "redirect:/admin/adminList?currentPage="+1;
 		
 	}
 	

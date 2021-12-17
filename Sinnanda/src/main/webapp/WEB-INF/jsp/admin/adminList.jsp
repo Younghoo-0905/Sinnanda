@@ -13,24 +13,24 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="../css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="../css/animate.css">
     
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../css/magnific-popup.css">
 
-    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="../css/aos.css">
 
-    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="../css/ionicons.min.css">
 
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="../css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="../css/jquery.timepicker.css">
 
     
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/flaticon.css">
+    <link rel="stylesheet" href="../css/icomoon.css">
+    <link rel="stylesheet" href="../css/style.css">
     
 	<title>신난다 관리자 리스트</title>
 </head>
@@ -47,6 +47,7 @@
 			<div class="collapse navbar-collapse" id="ftco-nav">
 			<ul class="navbar-nav ml-auto">
 			
+			
 			</ul>
 				<ul class="navbar-nav mj-auto">
 
@@ -55,12 +56,12 @@
 						<c:if test="${loginUser.userLevel == 3}">
 							<li class="nav-item member">
 							<a class="nav-link">
-									<img src="/images/jun_test/adminImg.png" width="20px" height="20px">
+									<img src="../images/jun_test/adminImg.png" width="20px" height="20px">
 									${loginUser.admin.adminName}&nbsp;관리자
 								</a>
 							</li>
 						</c:if>
-						<li class="nav-item member"><a href="logout" class="nav-link">로그아웃</a></li>		
+						<li class="nav-item member"><a href="../logout" class="nav-link">로그아웃</a></li>		
 					</c:if>
 				</ul>
 			</div>
@@ -69,7 +70,7 @@
 	<!-- [이승준] 상단 내비바 - END -->
 	
 	<!-- [이승준] 상단 이미지 배너 - START -->
-	<div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
+	<div class="hero-wrap js-fullheight" style="background-image: url('../images/bg_1.jpg');">
 		<div class="container">
 			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
 				<div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
@@ -89,12 +90,12 @@
 			<div class="container2">
 				<select id="adminPosition" name="adminPosition" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
 					<option value="">선택</option>
-					<option value="/adminList?adminPosition=전체 관리자">전체관리자</option>
-					<option value="/adminList?adminPosition=운영 관리자">운영 관리자</option>
-					<option value="/adminList?adminPosition=회원 관리자">회원 관리자</option>
-					<option value="/adminList?adminPosition=숙소 관리자">숙소 관리자</option>
-					<option value="/adminList?adminPosition=재무 관리자">재무 관리자</option>
-					<option value="/adminList?adminPosition=총 관리자">총 관리자</option>
+					<option value="adminList?adminPosition=전체 관리자">전체관리자</option>
+					<option value="adminList?adminPosition=운영 관리자">운영 관리자</option>
+					<option value="adminList?adminPosition=회원 관리자">회원 관리자</option>
+					<option value="adminList?adminPosition=숙소 관리자">숙소 관리자</option>
+					<option value="adminList?adminPosition=재무 관리자">재무 관리자</option>
+					<option value="adminList?adminPosition=총 관리자">총 관리자</option>
 				</select>
 			</div>
 			<table class="table table-board" style="width: 100%;">
@@ -111,7 +112,7 @@
 					<tr>
 						<td style="text-align:center">${admin.adminNo}</td>
 						<td>
-							<a href="/adminOne?adminNo=${admin.adminNo}">${admin.adminId}</a>
+							<a href="admin/adminOne?adminNo=${admin.adminNo}">${admin.adminId}</a>
 						</td>
 						<td style="text-align:center">${admin.adminLevel}</td>
 						<td style="text-align:center">${admin.adminPosition}</td>
@@ -119,7 +120,7 @@
 						<c:choose>
 							<c:when test="${admin.adminLevel != 5}"> 
 								<td style="text-align:center">
-									<a href="/modifyAdminList?adminNo=${admin.adminNo}">수정</a>
+									<a href="admin/modifyAdminList?adminNo=${admin.adminNo}">수정</a>
 								</td>
 							</c:when>
 							<c:when test="${admin.adminLevel == 5}">
@@ -159,7 +160,7 @@
 											<li class="active"><span>${i}</span></li>
 										</c:when>
 					    				<c:otherwise>
-											<li><a href="/adminList?currentPage=${i}&adminPosition=${adminPosition}">${i}</a></li>	
+											<li><a href="adminList?currentPage=${i}&adminPosition=${adminPosition}">${i}</a></li>	
 										</c:otherwise>		
 									</c:choose>
 									<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->

@@ -65,7 +65,7 @@
           
      	
          <c:when test = "${loginUser != null && loginUser.admin.memberLevel == 3}">
-            <li class="nav-item"><a href="adminPage?adminNo=${loginUser.admin.adminNo}" class="nav-link">마이페이지</a></li>
+            <li class="nav-item"><a href="/admin/adminPage?adminNo=${loginUser.admin.adminNo}" class="nav-link">마이페이지</a></li>
           	<li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>
           </c:when>
         
