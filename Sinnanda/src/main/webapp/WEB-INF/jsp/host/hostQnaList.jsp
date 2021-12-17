@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="/css/flaticon.css">
     <link rel="stylesheet" href="/css/icomoon.css">
     <link rel="stylesheet" href="/css/style.css">
+    
     <!-- [이승준] 사업자용 페이지 -->
 	<title>회원 문의사항 목록</title>
 </head>

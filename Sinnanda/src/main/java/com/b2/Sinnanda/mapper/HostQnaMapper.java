@@ -10,19 +10,27 @@ import com.b2.Sinnanda.vo.HostQna;
 @Mapper
 public interface HostQnaMapper {
 	
+// 관리자 기능
+	// [이승준] 답변없는 Host QnA 목록 조회
+	// ㄴ매개변수(map) : hostQnaCategory, currentPage, rowPerPage
+	List<HostQna> selectNoCommentsHostQnaList(Map<String, Object> map);
+	
+	// [이승준] 답변없는 Host QnA 개수 조회
+	// ㄴ매개변수(map) : hostQnaCategory
+	int selectNoCommentsHostQnaTotalCount(Map<String, Object> map);
+	
+// 사업자 기능
+	
+// 공통 기능
+	
 	// [이승준] Host QnA 상세 조회
 	HostQna selectHostQnaOne(int hostQnaNo);
 	
 	// [이승준] Host QnA 목록 조회
-		/* 매개변수 : 페이징을 위한 "hostQnaCategory, beginRow, rowPerPage" */
+	// ㄴ매개변수(map) : userLevel, hostNo, hostQnaCategory, currentPage, rowPerPage
 	List<HostQna> selectHostQnaListByHostQnaCategory(Map<String, Object> map);
 	
-	// [이승준] hostNo을 기준으로 Host QnA의 총 갯수 조회
-	int selectHostQnaTotalCountByHost(String hostQnaCategory);
-	
-	// [이승준] Host QnA의 총 갯수 조회
-	int selectHostQnaTotalCount(String hostQnaCategory);
-	
-	// [이승준] Host QnA 개수 테스트
-	int selectHostQnaTotalCountAll(int userLevel,int hostNo , String hostQnaCategory);
+	// [이승준] Host QnA 개수 조회
+	// ㄴ매개변수(map) : userLevel, hostNo, hostQnaCategory
+	int selectHostQnaTotalCount(Map<String, Object> map);
 }

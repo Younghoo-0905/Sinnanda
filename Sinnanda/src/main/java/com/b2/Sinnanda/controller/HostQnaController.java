@@ -26,11 +26,19 @@ public class HostQnaController {
 	// [이승준] QnA 목록 페이징용 상수
 	private final int ROW_PER_PAGE = 10;
 	
-	/* [이승준] 관리자용 컨트롤러 */
+// 관리자 기능
+	@GetMapping("/admin/hostQnaList")
+	public String hostQnaListForAdmin(HttpServletRequest request, Model model,
+			@RequestParam(defaultValue = "1") int currentPage, 
+			@RequestParam(required = false) String hostQnaCategory) {
+		
+		return "host/hostQnaList";
+	}
+	
+// 사업자 기능
 	
 	
-	
-	/* [이승준] 사업자용 컨트롤러 */
+// 공통 기능
 	
 	// [이승준] Host QnA 상세 조회
 	@GetMapping("/host/hostQnaOne")
@@ -60,10 +68,10 @@ public class HostQnaController {
 	
 	// [이승준] Host QnA 목록 조회
 	@GetMapping("/host/hostQnaList")
-	public String hostQnaList(HttpServletRequest request, Model model,
+	public String hostQnaListForHost(HttpServletRequest request, Model model,
 			@RequestParam(defaultValue = "1") int currentPage, 
 			@RequestParam(required = false) String hostQnaCategory) {
-		log.debug("[Debug] \"START\" HostQnaController.hostQnaList() | Get");
+		log.debug("[Debug] \"START\" HostQnaController.hostQnaListForHost() | Get");
 		log.debug(" ├[param] currentPage : "+currentPage);
 		
 		//출력을 시작하는 행 구하기 수식
@@ -80,8 +88,8 @@ public class HostQnaController {
 			return "redirect:/index";
 		}
 		
-		// QnA 목록 조회
-		Map<String, Object> map = hostQnaService.getHostQnaListByHostQnaCategory(loginUser.getHost().getHostNo(), hostQnaCategory, currentPage, ROW_PER_PAGE);
+		// [이승준] Host QnA 목록 조회(userLevel, hostNo, hostQnaCategory, currentPage, ROW_PER_PAGE)
+		Map<String, Object> map = hostQnaService.getHostQnaListByHostQnaCategory(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), hostQnaCategory, currentPage, ROW_PER_PAGE);
 		
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
