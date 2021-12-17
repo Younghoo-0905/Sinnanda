@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.b2.Sinnanda.vo.Admin;
+import com.b2.Sinnanda.vo.Member;
 
 @Mapper
 public interface AdminMapper {
@@ -36,6 +37,16 @@ public interface AdminMapper {
 	
 	//[윤경환] 관리자 아이디 중복 체크 
 	int checkAdminId(String adminId);
+	
+	
+	//[윤경환] 맴버 리스트 조회 
+	 List<Member> selectMemberList(Map<String, Object> map);
+
+	 // [윤경화] 관리자 총 수 
+	int selectMemberTotalCount();
+	
+	//[윤경환] 관리자 활성화
+	int modifyMemberAc(int memberNo);
 	
 
 }

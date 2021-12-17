@@ -30,8 +30,8 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="admin/adminPage?adminNo=${loginUser.admin.adminNo}"><img src="../images/logo.svg" class="mr-2" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="admin/adminPage?adminNo=${loginUser.admin.adminNo}"><img src="../images/logo-mini.svg" alt="logo"/></a>
+        <a class="navbar-brand brand-logo mr-5" href="adminPage?adminNo=${loginUser.admin.adminNo}"><img src="../images/logo.svg" class="mr-2" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="adminPage?adminNo=${loginUser.admin.adminNo}"><img src="../images/logo-mini.svg" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -378,13 +378,20 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item">
                  <a class="nav-link" href="adminOne?adminNo=${loginUser.admin.adminNo}">마이 페이지 </a>
+                 <!-- 관리자가 회원이나 호스트 리스트 관리(세부적으로 관리는 나중에) -->
+                 <li class="nav-item">
+                 <a class="nav-link" href="/admin/memberList?adminNo=${loginUser.admin.adminNo}">회원 리스트 </a>
+                 <li class="nav-item">
+                 <a class="nav-link" href="hostList?adminNo=${loginUser.admin.adminNo}">호스트 리스트</a>
                  
                  <!-- 관리자 레벨이 5이어야 다른 관리자 수정 가능  -->
                  <c:if test="${admin.adminPositionNo == 1}">
                     <li class="nav-item">
                 		<a class="nav-link" href="adminList">관리자 리스트</a>
                 	</li>
-               	</c:if>	
+               	</c:if>
+             
+               	
                  </li>
               </ul>
             </div>
@@ -1028,37 +1035,6 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <p class="card-title">Advanced Table</p>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="table-responsive">
-                        <table id="example" class="display expandable-table" style="width:100%">
-                          <thead>
-                            <tr>
-                              <th>Quote#</th>
-                              <th>Product</th>
-                              <th>Business type</th>
-                              <th>Policy holder</th>
-                              <th>Premium</th>
-                              <th>Status</th>
-                              <th>Updated at</th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                      </table>
-                      </div>
-                    </div>
-                  </div>
-                  </div>
-                </div>
-
-                
-              </div>
-            </div>
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->

@@ -181,5 +181,55 @@ public class AdminController {
 			return checkResult;
 		}
 	
+		//[윤경환] 맵버 리스트 구현
+		@GetMapping("/admin/memberList")
+		public String getMemberList(HttpServletRequest request, Model model,
+				@RequestParam(defaultValue = "1") int currentPage,
+				@RequestParam(defaultValue = "0") int memberActive) {
+			
+			log.debug("currntPage++++++++++"+currentPage);
+			
+			int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1);
+			
+			Map<String, Object> map = adminService.getMemberList(memberActive, currentPage, ROW_PER_PAGE);
+			
+
+			// 로그인 세션 조회
+			HttpSession session = request.getSession();
+			User loginUser = (User) session.getAttribute("loginUser");
+			// 로그인 세션 디버깅
+			if(loginUser != null) {
+				log.debug(" ├[param] loginUser : "+loginUser.toString());
+			} else {
+				log.debug(" ├[param] loginUser : Null");
+			}
+			
+
+			/* 모델 추가 */
+			model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+			model.addAttribute("beginRow", beginRow);
+			model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
+			model.addAttribute("memberActive", memberActive);	// 선택된 Admin 포지션
+			model.addAttribute("memberList", map.get("memberList"));	// admin 리스트 
+			model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
+			model.addAttribute("currentPage", currentPage);	// 현재 페이지
+			
+			//	10개의 page 번호를 출력하기 위한 변수
+			int pageNo = ((beginRow / 100) * 10 + 1);
+			log.debug(" ├[param] pageNo : " + "pageNo");
+			
+			
+			model.addAttribute("pageNo", pageNo);
+			return "admin/memberList";
+		}
+		//[윤경환] 관리자 활성화 
+		@GetMapping("/admin/modifyMemberAc")
+		@ResponseBody
+		public int getModifyMemberAc(int memberNo) {
+			int modifyMemberAc = adminService.getModifyMemberAc(memberNo);;
+			log.debug("modifyMemberAc+++++++++"+modifyMemberAc);
+			return modifyMemberAc;
+			
+		}
 	
 }

@@ -126,7 +126,7 @@
   				success: function(checkResult) {  					
   					if(checkResult  == "0") {	//		ID가 중복되지 않은 경우 (가입가능)
   						
-  						$('.idOk').css("display", "inline-block");
+  						$('.idOk').css("`display", "inline-block");
   						$('.idUsed').css("display", "none");
   				
   						checkedId = true;

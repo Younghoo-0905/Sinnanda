@@ -12,6 +12,7 @@ public class Member {
 	String memberTel;
 	String memberEmail;
 	String memberCertifycode;
+	int memberActive;
 	int memberLevel;
 	String createDate;
 	String updateDate;

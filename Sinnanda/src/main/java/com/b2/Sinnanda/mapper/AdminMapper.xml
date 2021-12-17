@@ -167,6 +167,63 @@
 				WHERE admin_id = #{adminId}) u
 	
 	</select>
+	<resultMap type="com.b2.Sinnanda.vo.Member" id="MemberListMap">
+		<id column="member_no" property="memberNo"></id>
+		<id column="member_id" property="memberId"></id>
+		<id column="member_pw" property="memberPw"></id>
+		<id column="member_name" property="memberName"></id>
+		<id column="member_age" property="memberAge"></id>
+		<id column="member_tel" property="memberTel"></id>
+		<id column="member_email" property="memberEmail"></id>
+		<id column="member_active" property="memberActive"></id>
+		<id column="update_date" property="updateDate"></id>
 	
+	</resultMap>
+	
+	
+	
+	<!--[윤경환]  맴버 리스트 구현-->
+		<select id="selectMemberList" parameterType="Map" resultMap="MemberListMap">
+			SELECT 
+				member_no,
+				member_id,
+				member_pw,
+				member_name,
+				member_age,
+				member_tel,
+				member_email,
+				member_active,
+				update_date
+			FROM member
+			 <where>
+				 	<if test ="memberActive != null">
+				 		member_active = #{memberActive}
+				 	</if>
+				 </where>
+			ORDER by update_date DESC 
+			LIMIT #{beginRow}, #{rowPerPage}
+			
+		
+		</select>
+	<!--[윤경환] 맴버 전체 수  -->
+	<select id="selectMemberTotalCount" resultType="int">
+		 
+ 		SELECT
+ 			 COUNT(*)
+ 			FROM member
+	
+	</select>
+	
+	
+	<!-- [윤경환] admin 비활성화되어 있는거 다시 활성화 -->
+	<update id="">
+		
+		UPDATE member SET 
+			member_active = '1',
+			update_date = NOW()
+		WHERE member_no = #{memberNo}
+		
+	
+	</update>
 	
 </mapper>

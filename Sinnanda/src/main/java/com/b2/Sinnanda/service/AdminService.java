@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.b2.Sinnanda.mapper.AdminMapper;
 import com.b2.Sinnanda.vo.Admin;
+import com.b2.Sinnanda.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -98,6 +99,40 @@ public class AdminService {
 		
 	}
 	
+	//[윤경환] 맴버 리스트 
+	public Map<String, Object> getMemberList(int memberActive, int currentPage, int rowPerPage){
+		
+		Map<String, Object> paraMap = new HashMap<>();
+		int beginRow = (currentPage-1) * rowPerPage;
+		
+		paraMap.put("memberActive", memberActive);
+		paraMap.put("beginRow", beginRow);
+		paraMap.put("rowPerPage", rowPerPage);
+		
+		List<Member> memberList =  adminMapper.selectMemberList(paraMap);
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		int lastPage = 0;
+		int totalCount = adminMapper.selectMemberTotalCount();
+		
+		
+		lastPage = totalCount / rowPerPage;
+		
+		if(totalCount % rowPerPage !=0) {
+			lastPage += 1;
+		}
+		
+		returnMap.put("memberList",memberList);
+		returnMap.put("lastPage", lastPage);
+		
+		return returnMap;
+		
+	}
 	
+	public int getModifyMemberAc(int memberNo) {
+		log.debug("memberNo+++++++++++++++"+memberNo);
+		return adminMapper.modifyMemberAc(memberNo);
+	}
 
 }
