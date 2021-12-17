@@ -66,8 +66,13 @@ public class AccomController {
 	}
 	
 	@GetMapping("searchOne")
-	public String getSearchOne(Accom accom, Model model) {
-		log.debug(accom.getAccomName()+"<------------------get값");
+	public String getSearchOne(int accomNo, Model model) {
+		log.debug(accomNo+"<------------------get값");
+		
+		Map<String, Object> map = searchAccomService.getAccomOne(accomNo);
+		
+		model.addAttribute("accom",map.get("accom"));
+		
 		return "searchOne";
 	}
 }

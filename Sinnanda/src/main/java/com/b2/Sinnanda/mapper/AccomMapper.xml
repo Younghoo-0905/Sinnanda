@@ -51,7 +51,7 @@
 	</select>
 	
 	<!-- [이원희] 숙소 One Map -->
-	<resultMap type="com.b2.Sinnanda.vo.Accom" id="RoomMap">
+	<resultMap type="com.b2.Sinnanda.vo.Room" id="RoomMap">
 		<id column="room_no" property="roomNo"/>
 		<result column="accom_no" property="accomNo"/>
 		<result column="room_name" property="roomName"/>
@@ -67,7 +67,7 @@
 	</resultMap>
 	
 	<!-- [이원희] 숙소 정보조회-->
-	<!-- 
+	
 	<select id="selectAccomOne" parameterType="Integer" resultMap ="AccomListMap">
 	SELECT accom_no, 
 			   host_no, 
@@ -80,7 +80,6 @@
 			   update_date 
 			   FROM accom WHERE accom_no = #{accomNo}
 	</select>
-	 -->
 	<!-- [이원희] 숙소 객실 리스트 조회
 	
 	<select id="selectAccomOne" parameterType="Integer" resultMap="RoomMap">

@@ -19,7 +19,7 @@ public interface AccomMapper {
 	//[이원희] 숙소별 별점 값
 	List<Double> selectAccomRank(Map<String, Object> map);
 	//[이원희] 해당 숙소 정보
-	Map<String, Object> selectAccomOne(Integer AccomNo);
+	Accom selectAccomOne(Integer accomNo);
 	//[이원희] 해당 숙소 객실 리스트
 	List<Room>selectAccomOneByRoom(Integer AccomNo);
 }

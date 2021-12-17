@@ -160,7 +160,7 @@
 		    		<c:forEach items="${accomList}" var="ac" varStatus="status">
 						<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
-		    					<a href="searchOne?accomName=${ac.accomName}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-1.jpg);">
+		    					<a href="searchOne?accomNo=${ac.accomNo}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-1.jpg);">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     							<span class="icon-search2"></span>
     						
@@ -171,7 +171,7 @@
 		    							<div class="one">
 		    								<!--[이원희] 숙소 이름 -->
 		    								<div>
-				    							<a href="searchOne?accomName=${ac.accomName}">${ac.accomName}</a>
+				    							<a href="searchOne?accomNo=${ac.accomNo}">${ac.accomName}</a>
 		    								</div>
 				    						<!--[이원희] 별 개수  -->
 				    						<div style="CLEAR: both; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: url(icon_star2.gif) 0px 0px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 90px; PADDING-TOP: 0px; HEIGHT: 18px;">

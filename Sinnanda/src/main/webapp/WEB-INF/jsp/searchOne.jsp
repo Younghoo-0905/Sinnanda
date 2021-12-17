@@ -168,7 +168,8 @@
           		</div>
           		<div class="col-md-12 hotel-single mt-4 mb-5 ftco-animate">
           			<span>Our Best hotels &amp; Rooms</span>
-          			<h2>Luxury Hotel in Paris</h2>
+          			<!--[이원희] 숙소이름 -->
+          			<h2>${accom.accomName}</h2>
           			<p class="rate mb-5">
           				<span class="loc"><a href="#"><i class="icon-map"></i> 291 South 21th Street, Suite 721 New York NY 10016</a></span>
           				<span class="star">

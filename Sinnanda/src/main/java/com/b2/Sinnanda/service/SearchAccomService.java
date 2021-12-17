@@ -73,11 +73,16 @@ public class SearchAccomService {
 		
 		return returnMap;
 	}
-	/*
+	
 	// [이원희]숙소 정보 불러오기
-	public List<Map<String, Object>> getAccomOne(int accomNo){
-		Map<String, Object> AccomMap = accomMapper.selectAccomOne(accomNo); // 숙소정보
-		log.debug(" ├[param] returnMap : "+returnMap);
+	public Map<String, Object> getAccomOne(int accomNo){
+		Accom accom = accomMapper.selectAccomOne(accomNo); // 숙소정보
+		log.debug(" ├[param] accom : "+accom);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		returnMap.put("accom", accom);
+		
 		return returnMap;
-	}*/
+	}
 }
