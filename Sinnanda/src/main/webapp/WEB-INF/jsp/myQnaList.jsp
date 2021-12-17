@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
     
-	<title>회원 문의사항 목록</title>
+	<title>[유동진] 내가 작성한 QnA 목록 조회</title>
 </head>
 <body>
 <script>
@@ -52,7 +52,7 @@
 	});
 
 </script>
-	<!-- [이승준] 상단 내비바 - START -->
+	<!-- 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
 			<a class="navbar-brand" href="index">신난다</a>
@@ -140,7 +140,7 @@
 					<tr>
 						<td style="text-align:center">${qna.qnaNo}</td>
 						<td>
-							<a href="/qnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
+							<a href="/myQnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
 							<c:if test="${qna.qnaSecret == '비밀문의'}">
 								<img src="/images/qna/lockImg.png" width="20px" height="20px">
 							</c:if>

@@ -47,6 +47,7 @@ public class MemberService {
 	// [유동진] 내가 작성한 QnA 목록 조회
 	public Map<String, Object> getMyQnaListByQnaCategory(int memberNo, String qnaCategory, int currentPage, int rowPerPage){
 		log.debug("[Debug] \"START\" MemberService.getMyQnaList()");
+		log.debug(" ├[param] memberNo : "+memberNo);
 		log.debug(" ├[param] qnaCategory : "+qnaCategory);
 		log.debug(" ├[param] currentPage : "+currentPage);
 		log.debug(" ├[param] rowPerPage : "+rowPerPage);
@@ -55,13 +56,14 @@ public class MemberService {
 		Map<String, Object> paraMap = new HashMap<>();
 		int beginRow = (currentPage-1) * rowPerPage;
 		
+		paraMap.put("memberNo", memberNo);
 		paraMap.put("qnaCategory", qnaCategory);
 		paraMap.put("beginRow", beginRow);
 		paraMap.put("rowPerPage", rowPerPage);
 		
 		// 2. qna 리스트 조회
-		List<Qna> qnaList = memberMapper.selectMyQnaListQnaCategory(paraMap);
-		
+		List<Qna> myQnaList = memberMapper.selectMyQnaListQnaCategory(paraMap);
+		log.debug(" ├[param] myQnaList : "+myQnaList.toString());
 		// 3. 리턴 값 가공 (return : qna & lastPage)
 		Map<String, Object> returnMap = new HashMap<>();
 		
@@ -75,7 +77,7 @@ public class MemberService {
 		}
 		
 		log.debug(" ├[param] lastPage : "+lastPage);
-		returnMap.put("qnaList", qnaList);
+		returnMap.put("myQnaList", myQnaList);
 		returnMap.put("lastPage", lastPage);
 		
 		return returnMap;

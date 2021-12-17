@@ -125,7 +125,7 @@ public class MemberController {
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
 		model.addAttribute("qnaCategory", map.get("qnaCategory"));	// 선택된 QnA 카테고리
-		model.addAttribute("MyQnaList", map.get("MyQnaList"));	// QnA 목록 정보
+		model.addAttribute("myQnaList", map.get("myQnaList"));	// QnA 목록 정보
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
 		

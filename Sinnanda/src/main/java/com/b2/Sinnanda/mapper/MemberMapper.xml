@@ -77,23 +77,28 @@
 	<!-- [유동진] 내가 작성한 QnA 목록 조회 -->
 	<select id="selectMyQnaListQnaCategory" parameterType="Map" resultMap="MyQnaListMap">
 		SELECT 
-			q.qna_no, 
-			q.member_no, 
-			q.qna_category,
-			q.qna_title, 
-			q.qna_secret, 
-			q.create_date, 
-			m.member_name
-		FROM qna q
-		LEFT JOIN member m
-			ON q.member_no = m.member_no
-		<if test="qnaCategory != null">
-			<where>
-				member_no = #{memberNo} AND qna_category = #{qnaCategory}
-			</where>
-		</if>
-		ORDER BY create_date DESC
-		LIMIT #{beginRow}, #{rowPerPage}
+         q.qna_no, 
+         q.member_no, 
+         q.qna_category,
+         q.qna_title, 
+         q.qna_secret, 
+         q.create_date, 
+         m.member_name
+      FROM qna q
+      LEFT JOIN member m
+         ON q.member_no = m.member_no
+      <if test="qnaCategory != null">
+         <where>
+            q.member_no = #{memberNo} AND qna_category = #{qnaCategory}
+         </where>
+      </if>
+      <if test="qnaCategory == null">
+         <where>
+            q.member_no = #{memberNo}
+         </where>
+      </if>
+      ORDER BY create_date DESC
+      LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 		<!-- [유동진] QnA 갯수 조회 -->
