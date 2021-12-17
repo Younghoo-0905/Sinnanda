@@ -207,7 +207,7 @@ public class QnaController {
 		log.debug(" ├[param] currentPage : "+currentPage);
 		
 		//	출력을 시작하는 행 구하기 수식
-		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1); 
+		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE;
 
 		// QnA 목록 조회
 		Map<String, Object> map = qnaService.getQnaListByQnaCategory(qnaCategory, beginRow, ROW_PER_PAGE);

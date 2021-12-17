@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 //	[김영후] 유저 권한 별 필터링 작업 21.12.14
 
 @Slf4j
-@WebFilter(urlPatterns = "/member/*")
+@WebFilter(urlPatterns = {"/member/*", "/addQna"})
 public class MemberFilter implements Filter {
 	
 	@Override

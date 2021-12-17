@@ -11,7 +11,7 @@ import com.b2.Sinnanda.vo.User;
 public interface LoginMapper {
 	
 	// [이승준] 모든 테이블 조회 로그인
-	public User selectLoginCheckAll(User user);
+	public String selectLoginCheckAll(User user);
 	
 	// [이승준] 사업자 로그인 정보 조회
 	public Host selectHostLogin(Host host);

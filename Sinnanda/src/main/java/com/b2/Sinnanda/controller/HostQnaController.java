@@ -30,9 +30,43 @@ public class HostQnaController {
 	@GetMapping("/admin/hostQnaList")
 	public String hostQnaListForAdmin(HttpServletRequest request, Model model,
 			@RequestParam(defaultValue = "1") int currentPage, 
-			@RequestParam(required = false) String hostQnaCategory) {
+			@RequestParam(defaultValue = "전체") String hostQnaCategory) {
+		log.debug("[Debug] \"START\" HostQnaController.hostQnaListForHost() | Get");
+		log.debug(" ├[param] currentPage : "+currentPage);
+		log.debug(" ├[param] hostQnaCategory : "+hostQnaCategory);
 		
-		return "host/hostQnaList";
+		// 1. 출력을 시작하는 행 구하기 수식
+		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1); 
+		
+		// 2. 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 2-1. 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+			return "redirect:/index";
+		}
+		
+		// 3. 답변이 없는 Host QnA 목록 조회(userLevel, hostQnaCategory, currentPage, ROW_PER_PAGE)
+		Map<String, Object> map = hostQnaService.getNoCommentsHostQnaList(loginUser.getUserLevel(), hostQnaCategory, currentPage, ROW_PER_PAGE);
+		
+		// 4. 10개의 page 번호를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		log.debug(" ├[param] pageNo : " + pageNo);
+		
+		// 4. 모델 추가
+		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+		model.addAttribute("hostQnaCategory", hostQnaCategory);	// 선택된 QnA 카테고리
+		model.addAttribute("hostQnaList", map.get("hostQnaList"));	// QnA 목록 정보
+		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
+		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
+		model.addAttribute("currentPage", currentPage);	// 현재 페이지
+		model.addAttribute("pageNo", pageNo);	// 페이지 번호를 출력하기 위한 변수
+		
+		return "admin/hostQnaList";
 	}
 	
 // 사업자 기능
@@ -70,17 +104,18 @@ public class HostQnaController {
 	@GetMapping("/host/hostQnaList")
 	public String hostQnaListForHost(HttpServletRequest request, Model model,
 			@RequestParam(defaultValue = "1") int currentPage, 
-			@RequestParam(required = false) String hostQnaCategory) {
+			@RequestParam(defaultValue = "전체") String hostQnaCategory) {
 		log.debug("[Debug] \"START\" HostQnaController.hostQnaListForHost() | Get");
 		log.debug(" ├[param] currentPage : "+currentPage);
+		log.debug(" ├[param] hostQnaCategory : "+hostQnaCategory);
 		
-		//출력을 시작하는 행 구하기 수식
+		// 1. 출력을 시작하는 행 구하기 수식
 		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1); 
 		
-		// 로그인 세션 조회
+		// 2. 로그인 세션 조회
 		HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
-		// 로그인 세션 디버깅
+		// 2-1. 로그인 세션 디버깅
 		if(loginUser != null) {
 			log.debug(" ├[param] loginUser : "+loginUser.toString());
 		} else {
@@ -88,22 +123,22 @@ public class HostQnaController {
 			return "redirect:/index";
 		}
 		
-		// [이승준] Host QnA 목록 조회(userLevel, hostNo, hostQnaCategory, currentPage, ROW_PER_PAGE)
+		// 3. Host QnA 목록 조회(userLevel, hostNo, hostQnaCategory, currentPage, ROW_PER_PAGE)
 		Map<String, Object> map = hostQnaService.getHostQnaListByHostQnaCategory(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), hostQnaCategory, currentPage, ROW_PER_PAGE);
 		
-		/* 모델 추가 */
+		// 4. 10개의 page 번호를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		log.debug(" ├[param] pageNo : " + pageNo);
+		
+		// 4. 모델 추가
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
-		model.addAttribute("hostQnaCategory", map.get("hostQnaCategory"));	// 선택된 QnA 카테고리
+		model.addAttribute("hostQnaCategory", hostQnaCategory);	// 선택된 QnA 카테고리
 		model.addAttribute("hostQnaList", map.get("hostQnaList"));	// QnA 목록 정보
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
-		
-		//10개의 page 번호를 출력하기 위한 변수
-		int pageNo = ((beginRow / 100) * 10 + 1);
-		log.debug(" ├[param] pageNo : " + "pageNo");
-		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("pageNo", pageNo);	// 페이지 번호를 출력하기 위한 변수
 		
 		return "host/hostQnaList";
 	}

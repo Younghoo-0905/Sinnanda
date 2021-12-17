@@ -41,6 +41,10 @@ public class LoginController {
 		log.debug(" ├[param] user : "+user.toString());
 		
 		loginUser = loginService.getLoginCheckAll(user);
+		if(loginUser == null) {
+			return "redirect:/login";
+		}
+		
 		session.setAttribute("loginUser", loginUser);
 		
 		//	[김영후] 이메일 인증여부 확인

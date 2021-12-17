@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.LoginMapper">
 	
-	<!-- [이승준] 로그인 회원 유형 조회 -->
-	<select id="selectLoginCheckAll" parameterType="com.b2.Sinnanda.vo.User" resultType="com.b2.Sinnanda.vo.User">
-		SELECT member_id userId, member_pw userPw, member_level userLevel FROM member WHERE member_id = #{userId}
+	<!-- [이승준] 로그인 회원 유형 조회 (반환 값이 String인 이유, 조회 실패 시 null 반환되기 때문)-->
+	<select id="selectLoginCheckAll" parameterType="com.b2.Sinnanda.vo.User" resultType="String">
+		SELECT member_level userLevel FROM member WHERE member_id = #{userId} AND member_pw = #{userPw}
 		UNION
-		SELECT admin_id userId, admin_pw userPw, member_level userLevel FROM admin WHERE admin_id = #{userId}
+		SELECT member_level userLevel FROM host WHERE host_id = #{userId} AND host_pw = #{userPw}
 		UNION
-		SELECT host_id userId, host_pw userPw, member_level userLevel FROM host WHERE host_id = #{userId}
+		SELECT member_level userLevel FROM admin WHERE admin_id = #{userId} AND admin_pw = #{userPw}
 	</select>
 	
 	<!-- [이승준] 회원 로그인 정보 조회 -->
@@ -23,7 +23,7 @@
 			   member_level memberLevel, 
 			   create_date createDate, 
 			   update_date updateDate 
-		FROM member WHERE member_id= #{memberId} AND member_pw= #{memberPw}
+		FROM member WHERE member_id = #{memberId} AND member_pw = #{memberPw}
 	</select>
 	
 	<!-- [이승준] 사업자 로그인 정보 조회 -->

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,48 +9,31 @@
 	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	    
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-
-    <link rel="stylesheet" href="css/aos.css">
-
-    <link rel="stylesheet" href="css/ionicons.min.css">
-
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
-
-    
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
-    
-	<title>회원 문의사항 목록</title>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
+	
+	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="css/animate.css">
+	
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	
+	<link rel="stylesheet" href="css/aos.css">
+	
+	<link rel="stylesheet" href="css/ionicons.min.css">
+	
+	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="css/jquery.timepicker.css">
+	
+	
+	<link rel="stylesheet" href="css/flaticon.css">
+	<link rel="stylesheet" href="css/icomoon.css">
+	<link rel="stylesheet" href="css/style.css">
+	
+<title>회원 문의사항 추가</title>
 </head>
 <body>
-<script>
-
-	$(document).ready(function(){
-
-		$('#btn1').click(function(){
-
-			var offset = $('#div1').offset(); //선택한 태그의 위치를 반환
-
-                //animate()메서드를 이용해서 선택한 태그의 스크롤 위치를 지정해서 0.4초 동안 부드럽게 해당 위치로 이동함 
-
-	        $('html').animate({scrollTop : offset.top}, 400);
-
-		});
-
-	});
-
-</script>
 	<!-- [이승준] 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
@@ -110,98 +92,50 @@
 			</div>
 		</div>
 	</div>
-    <!-- [이승준] 상단 이미지 배너 - END -->
+	<!-- [이승준] 상단 이미지 배너 - END -->
     
-    <!-- [이승준] 본문 QnA 목록 부분 - START -->
+    <!-- [이승준] 회원 QnA 입력폼 -->
     <section class="ftco-section testimony-section bg-light">
-	    <div class="container">
-	    	<span class="subheading">회원 문의사항</span>
-			<h1><strong>고객문의</strong></h1>
-			<div class="container2">
-				<select id="qnaCategory" name="qnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
-					<option value="">선택</option>
-					<option value="/qnaList?qnaCategory=전체">전체문의</option>
-					<option value="/qnaList?qnaCategory=기타문의">기타문의</option>
-					<option value="/qnaList?qnaCategory=결제문의">결제문의</option>
-					<option value="/qnaList?qnaCategory=이용문의">이용문의</option>
-					<option value="/qnaList?qnaCategory=예약문의">예약문의</option>
-					<option value="/qnaList?qnaCategory=숙소문의">숙소문의</option>
-				</select>
-			</div>
-			<table class="table table-board" style="width: 100%;">
-				<tr style="text-align:center">
-					<th width="5%">번호</th>
-					<th width="40%">제목</th>
-					<th width="10%">문의유형</th>
-					<th width="10%">작성자</th>
-					<th width="10%">작성일</th>
-				</tr>
-				<c:forEach items="${qnaList}" var="qna">
+		<div class="container">
+			<span class="subheading">Q&A > 문의사항 추가</span>
+			<h1><strong>문의사항 작성</strong></h1>
+			
+			<form id="addQnaForm" action="addQna" method="post">
+				<input id="memberNo" name="memberNo" type="hidden" value="${loginUser.member.memberNo}">
+				<table class="table table-board" style="width: 100%;">
 					<tr>
-						<td style="text-align:center">${qna.qnaNo}</td>
-						<td>
-							<a href="/qnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
-							<c:if test="${qna.qnaSecret == '비밀문의'}">
-								<img src="/images/qna/lockImg.png" width="20px" height="20px">
-							</c:if>
-						</td>
-						<td style="text-align:center">${qna.qnaCategory}</td>
-						<td style="text-align:center">${qna.memberName}</td>
-						<td style="text-align:center">
-							<fmt:parseDate value="${qna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-							<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
+						<th style="width:10%;">제목</th>
+						<td style="text-align:left;">
+							<input id="qnaTitle" name="qnaTitle" type="text" style="width: 90%;">
 						</td>
 					</tr>
-				</c:forEach>
-			</table>
-			<a class="btn btn-primary" href="addQna" style="float: right; margin-top: auto;">문의사항 작성</a>
-			
-			
-			<!-- Paging -->			
-			<div class="row mt-5">
-		    	<div class="col text-center">
-		            <div class="block-27">
-						<ul>
-							<!-- '이전' 버튼 -->
-							<c:if test="${beginRow > (ROW_PER_PAGE * 10)}">
-								<li><a href="qnaList?currentPage=${pageNo-1}&qnaCategory=${qnaCategory}">&lt;</a></li>
-							</c:if>
-							
-							<!-- Page 번호 -->
-							<c:set var="doneLoop" value="false"></c:set>
-							<c:forEach var="i" begin="${pageNo}" end="${pageNo + 9}">
-							
-								<!-- Page 숫자 10개 출력 -->
-								<c:if test="${not doneLoop}">
-									<c:choose>
-										<c:when test="${currentPage == i}">				
-											<li class="active"><span>${i}</span></li>
-										</c:when>
-					    				<c:otherwise>
-											<li><a href="/qnaList?currentPage=${i}&qnaCategory=${qnaCategory}">${i}</a></li>	
-										</c:otherwise>		
-									</c:choose>
-									<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
-									<c:if test="${i == lastPage}">
-										<c:set var="doneLoop" value="true"></c:set>
-									</c:if>
-								</c:if>
-							</c:forEach>
-							
-							<!-- '다음' 버튼 -->
-							<c:if test="${currentPage + 10 <= lastPage}">
-								<li><a href="qnaList?currentPage=${pageNo+10}&qnaCategory=${qnaCategory}">&gt;</a></li>
-							</c:if>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<!-- Paging -->
-
+					<tr>
+						<th>비밀글 여부</th>
+						<td>
+							<input id="qnaSecret" name="qnaSecret" type="checkbox">
+						</td>
+					</tr>
+					<tr>
+						<th>문의유형</th>
+						<td style="width:40%;">
+							<select id="qnaCategory" name="qnaCategory">
+								<option value="기타문의">기타문의</option>
+								<option value="결제문의">결제문의</option>
+								<option value="이용문의">이용문의</option>
+								<option value="예약문의">예약문의</option>
+								<option value="숙소문의">숙소문의</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th>문의 내용</th>
+						<td><textarea id="qnaContent" name="qnaContent" cols="100%" rows="5"></textarea></td>
+					</tr>
+				</table>
+				<button id="" class="btn btn-primary" type="submit">문의 추가</button>
+			</form>
 		</div>
 	</section>
-	<!-- [이승준] 본문 QnA 목록 부분 - END -->
-	
 	<!-- [이승준] 하단 Footer - SATRT -->
 	<footer class="ftco-footer ftco-bg-dark ftco-section">
 		<div class="container">

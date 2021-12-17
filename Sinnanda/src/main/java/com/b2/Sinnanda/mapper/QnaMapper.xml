@@ -44,7 +44,6 @@
 	<!-- [이승준] QnA 삽입 -->
 	<insert id="insertQna" parameterType="com.b2.Sinnanda.vo.Qna">
 		INSERT INTO qna(
-			qna_no, 
 			member_no, 
 			qna_category, 
 			qna_title, 
@@ -53,7 +52,6 @@
 			create_date, 
 			update_date
 		) VALUES (
-			#{qnaNo}, 
 			#{memberNo}, 
 			#{qnaCategory}, 
 			#{qnaTitle}, 
@@ -122,6 +120,10 @@
 		<result column="qna_secret" property="qnaSecret"/>
 		<result column="create_date" property="createDate"/>
 		<result column="member_name" property="memberName"/>
+		
+		<collection property="qnaComments" ofType="com.b2.Sinnanda.vo.QnaComment">
+			<result column="admin_no" property="adminNo"/>
+		</collection>
 	</resultMap>
 
 	<!-- [이승준] QnA 목록 조회 -->
@@ -133,10 +135,11 @@
 			q.qna_title, 
 			q.qna_secret, 
 			q.create_date, 
-			m.member_name
+			m.member_name, 
+			qc.admin_no
 		FROM qna q
-		LEFT JOIN member m
-			ON q.member_no = m.member_no
+		LEFT JOIN member m ON q.member_no = m.member_no
+		LEFT JOIN qna_comment qc ON q.qna_no = qc.qna_no
 		<if test="qnaCategory != null">
 			<where>
 				qna_category = #{qnaCategory}
