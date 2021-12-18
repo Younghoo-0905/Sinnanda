@@ -34,7 +34,30 @@
 	
 	<title>문의사항 작성 페이지</title>
 </head>
-<body>
+<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery 실행 -->
+<body onload="toBoardScroll()">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery -->
+	<script>
+		function toBoardScroll(){
+			var offset = $("#startBoard").offset();
+			$('html, body').animate({scrollTop: offset.top}, 200);
+		}
+		
+		var qnaComments = "${qna.qnaComments}";
+		$(document).ready(function(){
+			if(qnaComments != ""){
+				$('input').prop('readonly', true);
+				$('textarea').prop('readonly', true);
+				$('#qnaSecret').attr('disabled', true);
+				$('select').prop('disabled', true);
+				$('button').prop('disabled', true);
+				alert('답변이 작성된 글은 수정이 불가능합니다.');
+			}
+		});
+		
+	</script>
+	
 	<!-- [이승준] 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
@@ -96,10 +119,10 @@
 	<!-- [이승준] 상단 이미지 배너 - END -->
 	
 	<!-- [이승준] 회원 QnA 수정 폼 -->
-	<section class="ftco-section testimony-section bg-light">
+	<section id="startBoard" class="ftco-section testimony-section bg-light">
 		<div class="container">
-			<span class="subheading">Q&A > 문의사항 수정</span>
-			<h1><strong>문의사항 수정</strong></h1>
+			<span class="subheading"><a href="qnaList">회원 Q&A</a> > 문의수정</span>
+			<h1><strong>회원문의 수정</strong></h1>
 			
 			<form id="addQnaForm" action="addQna" method="post">
 				<input id="qnaNo" name="qnaNo" type="hidden" value="${qna.qnaNo}">

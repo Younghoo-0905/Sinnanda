@@ -35,7 +35,17 @@
     <!-- [이승준] 사업자용 페이지 -->
 	<title>회원 문의사항 목록</title>
 </head>
-<body>
+<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery 실행 -->
+<body onload="toBoardScroll()">
+
+	<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery -->
+	<script>
+		function toBoardScroll(){
+			var offset = $("#startBoard").offset();
+			$('html, body').animate({scrollTop: offset.top}, 200);
+		}
+	</script>
+	
 	<!-- [이승준] 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
@@ -97,7 +107,7 @@
     <!-- [이승준] 상단 이미지 배너 - END -->
     
     <!-- [이승준] 본문 QnA 목록 부분 - START -->
-    <section class="ftco-section testimony-section bg-light">
+    <section id="startBoard" class="ftco-section testimony-section bg-light">
 	    <div class="container">
 	    	<span class="subheading">사업자 Q&A</span>
 			<h1><strong>사업자 문의</strong></h1>

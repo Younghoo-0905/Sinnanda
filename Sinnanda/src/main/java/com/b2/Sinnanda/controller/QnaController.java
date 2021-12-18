@@ -133,8 +133,13 @@ public class QnaController {
 		// 로그인 세션 디버깅
 		if(loginUser != null) {
 			log.debug(" ├[param] loginUser : "+loginUser.toString());
+			// 오직 멤버만 작성 가능
+			if(loginUser.getUserLevel() != 1) {
+				return "redirect:/qnaList";
+			}
 		} else {
 			log.debug(" ├[param] loginUser : Null");
+			return "redirect:/qnaList";
 		}
 		
 		/* 모델 추가 */

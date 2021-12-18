@@ -31,27 +31,19 @@
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/icomoon.css">
 	<link rel="stylesheet" href="css/style.css">
-    
 	<title>회원 문의사항 목록</title>
 </head>
-<body>
-<script>
+<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery 실행 -->
+<body onload="toBoardScroll()">
 
-	$(document).ready(function(){
-
-		$('#btn1').click(function(){
-
-			var offset = $('#div1').offset(); //선택한 태그의 위치를 반환
-
-                //animate()메서드를 이용해서 선택한 태그의 스크롤 위치를 지정해서 0.4초 동안 부드럽게 해당 위치로 이동함 
-
-	        $('html').animate({scrollTop : offset.top}, 400);
-
-		});
-
-	});
-
-</script>
+	<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery -->
+	<script>
+		function toBoardScroll(){
+			var offset = $("#startBoard").offset();
+			$('html, body').animate({scrollTop: offset.top}, 200);
+		}
+	</script>
+	
 	<!-- [이승준] 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
@@ -113,10 +105,10 @@
 	<!-- [이승준] 상단 이미지 배너 - END -->
     
 	<!-- [이승준] 본문 QnA 목록 부분 - START -->
-	<section class="ftco-section testimony-section bg-light">
+	<section id="startBoard" class="ftco-section testimony-section bg-light">
 		<div class="container">
-			<span class="subheading">회원 문의사항</span>
-			<h1><strong>고객문의</strong></h1>
+			<span class="subheading">회원 Q&A</span>
+			<h1><strong>회원문의</strong></h1>
 			<div class="container2">
 				<select id="qnaCategory" name="qnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
 					<option value="">선택</option>
@@ -166,7 +158,7 @@
 		            <div class="block-27">
 						<ul>
 							<!-- '이전' 버튼 -->
-							<c:if test="${beginRow > (ROW_PER_PAGE * 10)}">
+							<c:if test="${beginRow >= (ROW_PER_PAGE * 10)}">
 								<li><a href="qnaList?currentPage=${pageNo-1}&qnaCategory=${qnaCategory}">&lt;</a></li>
 							</c:if>
 							
@@ -177,7 +169,7 @@
 								<!-- Page 숫자 10개 출력 -->
 								<c:if test="${not doneLoop}">
 									<c:choose>
-										<c:when test="${currentPage == i}">				
+										<c:when test="${currentPage == i}">
 											<li class="active"><span>${i}</span></li>
 										</c:when>
 					    				<c:otherwise>
