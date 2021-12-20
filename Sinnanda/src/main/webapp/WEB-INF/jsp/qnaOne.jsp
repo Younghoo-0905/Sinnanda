@@ -39,6 +39,7 @@
 
 	<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery -->
 	<script>
+		// [이승준] 게시판폼, 게시판으로 자동 스크롤
 		function toBoardScroll(){
 			var offset = $("#startBoard").offset();
 			$('html, body').animate({scrollTop: offset.top}, 200);
@@ -71,14 +72,14 @@
 					<!--memberId가 있을떄  -->
 					<c:if test = "${loginUser != null}">
 						<c:if test="${loginUser.userLevel == 1}">
-							<li class="nav-item member"><a href="myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
+							<li class="nav-item member"><a href="/member/myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
 						</c:if>
 						<c:if test="${loginUser.userLevel == 2}">
-							<li class="nav-item member"><a href="myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
+							<li class="nav-item member"><a href="/host/myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
 						</c:if>
 						<c:if test="${loginUser.userLevel == 3}">
 							<li class="nav-item member">
-							<a href="myPage?memberNo=${loginUser.admin.adminNo}" class="nav-link">
+							<a href="/admin/myPage?adminNo=${loginUser.admin.adminNo}" class="nav-link">
 									<img src="/images/jun_test/adminImg.png" width="20px" height="20px">
 									${loginUser.admin.adminName}&nbsp;관리자
 								</a>

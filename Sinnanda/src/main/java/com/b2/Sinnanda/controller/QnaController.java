@@ -102,13 +102,28 @@ public class QnaController {
 	
 	// [이승준] QnA 수정
 	@GetMapping("/modifyQna")
-	public String modifyQna(Model model, int qnaNo) {
+	public String modifyQna(HttpServletRequest request, Model model, int qnaNo) {
 		log.debug("[Debug] \"START\" QnaController.modifyQna() | Get");
 		log.debug(" ├[param] qnaNo : "+qnaNo);
 		
 		// 수정 전 기존 값 출력
 		Qna qna = qnaService.getQnaOne(qnaNo);
 		model.addAttribute(qna);
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+			// 오직 게시글을 작성한 회원만 접근 가능
+			if(loginUser.getUserLevel() != 1 && loginUser.getMember().getMemberNo() == qna.getMemberNo()) {
+				return "redirect:/qnaList";
+			}
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+			return "redirect:/qnaList";
+		}
 		
 		return "modifyQna";
 	}

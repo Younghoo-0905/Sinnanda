@@ -39,11 +39,13 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery -->
 	<script>
+		// [이승준] 게시판폼, 게시판으로 자동 스크롤
 		function toBoardScroll(){
 			var offset = $("#startBoard").offset();
 			$('html, body').animate({scrollTop: offset.top}, 200);
 		}
 		
+		// [이승준] 답변이 있는 게시글의 수정을 막아주는 JQuery
 		var qnaComments = "${qna.qnaComments}";
 		$(document).ready(function(){
 			if(qnaComments != ""){
@@ -56,6 +58,21 @@
 			}
 		});
 		
+		// [이승준] Qna 내용 입력 여부 확인
+		function formCheck(){
+			// 제목
+			if($("#qnaTitle").val() == ""){
+				alert("제목을 입력해주세요.");
+				$("#qnaTitle").focus();
+				return false;
+			}
+			// 내용
+			if($("#qnaContent").val() == ""){
+				alert("내용을 입력해주세요.");
+				$("#qnaContent").focus();
+				return false;
+			}
+		}
 	</script>
 	
 	<!-- [이승준] 상단 내비바 - START -->
@@ -84,14 +101,14 @@
 					<!--memberId가 있을떄  -->
 					<c:if test = "${loginUser != null}">
 						<c:if test="${loginUser.userLevel == 1}">
-							<li class="nav-item member"><a href="myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
+							<li class="nav-item member"><a href="/member/myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
 						</c:if>
 						<c:if test="${loginUser.userLevel == 2}">
-							<li class="nav-item member"><a href="myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
+							<li class="nav-item member"><a href="/host/myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
 						</c:if>
 						<c:if test="${loginUser.userLevel == 3}">
 							<li class="nav-item member">
-							<a href="myPage?memberNo=${loginUser.admin.adminNo}" class="nav-link">
+							<a href="/admin/myPage?adminNo=${loginUser.admin.adminNo}" class="nav-link">
 									<img src="/images/jun_test/adminImg.png" width="20px" height="20px">
 									${loginUser.admin.adminName}&nbsp;관리자
 								</a>
@@ -124,7 +141,7 @@
 			<span class="subheading"><a href="qnaList">회원 Q&A</a> > 문의수정</span>
 			<h1><strong>회원문의 수정</strong></h1>
 			
-			<form id="addQnaForm" action="addQna" method="post">
+			<form onsubmit="return formCheck()" id="modifyQnaForm" action="modifyQna" method="post">
 				<input id="qnaNo" name="qnaNo" type="hidden" value="${qna.qnaNo}">
 				<input id="memberNo" name="memberNo" type="hidden" value="${qna.memberNo}">
 				
@@ -152,18 +169,6 @@
 						</td>
 						<th>카테고리</th>
 						<td>${qna.qnaCategory}</td>
-					</tr>
-					<tr>
-						<th>문의유형</th>
-						<td style="width:40%;">
-							<select id="qnaCategory" name="qnaCategory">
-								<option value="기타문의">기타문의</option>
-								<option value="결제문의">결제문의</option>
-								<option value="이용문의">이용문의</option>
-								<option value="예약문의">예약문의</option>
-								<option value="숙소문의">숙소문의</option>
-							</select>
-						</td>
 					</tr>
 					<tr>
 						<th>문의 내용</th>
