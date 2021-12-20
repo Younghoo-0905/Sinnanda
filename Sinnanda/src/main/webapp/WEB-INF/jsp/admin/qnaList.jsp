@@ -10,58 +10,88 @@
 	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	    
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
-
-    <link rel="stylesheet" href="../css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="../css/animate.css">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
+	
+	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="css/animate.css">
+	
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	
+	<link rel="stylesheet" href="css/aos.css">
+	
+	<link rel="stylesheet" href="css/ionicons.min.css">
+	
+	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="css/jquery.timepicker.css">
+	
+	
+	<link rel="stylesheet" href="css/flaticon.css">
+	<link rel="stylesheet" href="css/icomoon.css">
+	<link rel="stylesheet" href="css/style.css">
     
-    <link rel="stylesheet" href="../css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="../css/magnific-popup.css">
-
-    <link rel="stylesheet" href="../css/aos.css">
-
-    <link rel="stylesheet" href="../css/ionicons.min.css">
-
-    <link rel="stylesheet" href="../css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="../css/jquery.timepicker.css">
-
-    
-    <link rel="stylesheet" href="../css/flaticon.css">
-    <link rel="stylesheet" href="../css/icomoon.css">
-    <link rel="stylesheet" href="../css/style.css">
-    
-	<title>신난다 관리자 리스트</title>
+	<title>회원 문의사항 목록</title>
 </head>
 <body>
+<script>
+
+	$(document).ready(function(){
+
+		$('#btn1').click(function(){
+
+			var offset = $('#div1').offset(); //선택한 태그의 위치를 반환
+
+                //animate()메서드를 이용해서 선택한 태그의 스크롤 위치를 지정해서 0.4초 동안 부드럽게 해당 위치로 이동함 
+
+	        $('html').animate({scrollTop : offset.top}, 400);
+
+		});
+
+	});
+
+</script>
 	<!-- [이승준] 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="adminPage?adminNo=${loginUser.admin.adminNo }">신난다</a>
+			<a class="navbar-brand" href="index">신난다</a>
 			
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
 			</button>
 			
 			<div class="collapse navbar-collapse" id="ftco-nav">
-			<ul class="navbar-nav ml-auto">
-			
-			
-			</ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a href="/qnaList" class="nav-link">Q&A</a></li>
+					<li class="nav-item cta"><a href="/noticeList" class="nav-link">공지사항</a></li>
+					<li class="nav-item cta"><a href="/noticeList" class="nav-link">신난다 소개</a></li>
+					
+				</ul>
 				<ul class="navbar-nav mj-auto">
-
+					<!--memberId가 없을때--> 
+					<c:if test ="${loginUser == null}">
+						<li class="nav-item member"><a href="login" class="nav-link">로그인</a></li>
+						<li class="nav-item member"><a href="insertMemberForm" class="nav-link">회원가입</a></li>
+					</c:if>
+					
 					<!--memberId가 있을떄  -->
 					<c:if test = "${loginUser != null}">
+						<c:if test="${loginUser.userLevel == 1}">
+							<li class="nav-item member"><a href="myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
+						</c:if>
+						<c:if test="${loginUser.userLevel == 2}">
+							<li class="nav-item member"><a href="myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
+						</c:if>
 						<c:if test="${loginUser.userLevel == 3}">
 							<li class="nav-item member">
-							<a class="nav-link">
-									<img src="../images/jun_test/adminImg.png" width="20px" height="20px">
+							<a href="myPage?memberNo=${loginUser.admin.adminNo}" class="nav-link">
+									<img src="/images/jun_test/adminImg.png" width="20px" height="20px">
 									${loginUser.admin.adminName}&nbsp;관리자
 								</a>
 							</li>
 						</c:if>
-						<li class="nav-item member"><a href="../logout" class="nav-link">로그아웃</a></li>		
+						<li class="nav-item member"><a href="logout" class="nav-link">로그아웃</a></li>		
 					</c:if>
 				</ul>
 			</div>
@@ -70,75 +100,66 @@
 	<!-- [이승준] 상단 내비바 - END -->
 	
 	<!-- [이승준] 상단 이미지 배너 - START -->
-	<div class="hero-wrap js-fullheight" style="background-image: url('../images/bg_1.jpg');">
+	<div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
 		<div class="container">
 			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
 				<div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-					<h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>관리자정보<br></strong> </h1>
-					<p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"></p>
+					<h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>고객지원<br></strong> 최상의 서비스를 위해</h1>
+					<p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">궁금하신게 있으면 무엇이든 물어봐주세요.</p>
 				</div>
 			</div>
 		</div>
 	</div>
-    <!-- [이승준] 상단 이미지 배너 - END -->
+	<!-- [이승준] 상단 이미지 배너 - END -->
     
-    <!-- [이승준] 본문 QnA 목록 부분 - START -->
-    <section class="ftco-section testimony-section bg-light">
-	    <div class="container">
-
-			<h1><strong>관리자 리스트</strong></h1>
+	<!-- [이승준] 본문 QnA 목록 부분 - START -->
+	<section class="ftco-section testimony-section bg-light">
+		<div class="container">
+			<span class="subheading">회원 문의사항</span>
+			<h1><strong>고객문의</strong></h1>
 			<div class="container2">
-				<select id="adminPosition" name="adminPosition" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
+				<select id="qnaCategory" name="qnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
 					<option value="">선택</option>
-					<option value="adminList?adminPosition=전체 관리자">전체관리자</option>
-					<option value="adminList?adminPosition=운영 관리자">운영 관리자</option>
-					<option value="adminList?adminPosition=회원 관리자">회원 관리자</option>
-					<option value="adminList?adminPosition=숙소 관리자">숙소 관리자</option>
-					<option value="adminList?adminPosition=재무 관리자">재무 관리자</option>
-					<option value="adminList?adminPosition=총 관리자">총 관리자</option>
+					<option value="/qnaList?qnaCategory=전체">전체문의</option>
+					<option value="/qnaList?qnaCategory=기타문의">기타문의</option>
+					<option value="/qnaList?qnaCategory=결제문의">결제문의</option>
+					<option value="/qnaList?qnaCategory=이용문의">이용문의</option>
+					<option value="/qnaList?qnaCategory=예약문의">예약문의</option>
+					<option value="/qnaList?qnaCategory=숙소문의">숙소문의</option>
 				</select>
 			</div>
 			<table class="table table-board" style="width: 100%;">
 				<tr style="text-align:center">
 					<th width="5%">번호</th>
-					<th width="10%">아이디</th>
-					<th width="10%">관리자 레벨</th>
-					<th width="10%">관리자 직급</th>
-					<th width="10%">관리자 이름</th>
-					<th width="10%">등급 수정</th>
-					<th width="15%" >수정일</th>
+					<th width="40%">제목</th>
+					<th width="10%">문의유형</th>
+					<th width="10%">작성자</th>
+					<th width="10%">작성일</th>
 				</tr>
-				<c:forEach items="${adminList}" var="admin">
+				<c:forEach items="${qnaList}" var="qna">
 					<tr>
-						<td style="text-align:center">${admin.adminNo}</td>
+						<td style="text-align:center">${qna.qnaNo}</td>
 						<td>
-							<a href="adminOne?adminNo=${admin.adminNo}">${admin.adminId}</a>
+							<c:if test="${qna.qnaComments.adminNo != null}">
+								<span style="color: #CD5C5C; font-weight: bold;">[답변 완료]</span>
+							</c:if>
+							<a href="/qnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
+							<c:if test="${qna.qnaSecret == '비밀문의'}">
+								<img src="/images/qna/lockImg.png" width="20px" height="20px">
+							</c:if>
 						</td>
-						<td style="text-align:center">${admin.adminLevel}</td>
-						<td style="text-align:center">${admin.adminPosition}</td>
-						<td style="text-align:center">${admin.adminName}</td>
-						<c:choose>
-							<c:when test="${admin.adminLevel != 5}"> 
-								<td style="text-align:center">
-									<a href="modifyAdminList?adminNo=${admin.adminNo}" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">수정</a>
-								</td>
-							</c:when>
-							<c:when test="${admin.adminLevel == 5}">
-								<td style="text-align:center">
-									<input type ="hidden" readonly>
-								</td>
-							</c:when>
-						</c:choose>
+						<td style="text-align:center">${qna.qnaCategory}</td>
+						<td style="text-align:center">${qna.memberName}</td>
 						<td style="text-align:center">
-							<fmt:parseDate value="${admin.updateDate}" var="updateDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-							<fmt:formatDate value="${updateDate}" pattern="yy/MM/dd HH:mm"/>
+							<fmt:parseDate value="${qna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+							<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
 						</td>
 					</tr>
 				</c:forEach>
 			</table>
-			<a class="btn btn-primary" href="insertAdminForm" style="float: right; margin-top: auto;">관리자 추가</a>
+			<a class="btn btn-primary" href="addQna" style="float: right; margin-top: auto;">문의사항 작성</a>
 			
-			<!-- [윤경환] 본문 - 내용 - 페이징 부분 -->
+			
 			<!-- Paging -->			
 			<div class="row mt-5">
 		    	<div class="col text-center">
@@ -146,7 +167,7 @@
 						<ul>
 							<!-- '이전' 버튼 -->
 							<c:if test="${beginRow > (ROW_PER_PAGE * 10)}">
-								<li><a href="adminList?currentPage=${pageNo-1}&adminPosition=${adminPosition}">&lt;</a></li>
+								<li><a href="qnaList?currentPage=${pageNo-1}&qnaCategory=${qnaCategory}">&lt;</a></li>
 							</c:if>
 							
 							<!-- Page 번호 -->
@@ -160,7 +181,7 @@
 											<li class="active"><span>${i}</span></li>
 										</c:when>
 					    				<c:otherwise>
-											<li><a href="adminList?currentPage=${i}&adminPosition=${adminPosition}">${i}</a></li>	
+											<li><a href="/qnaList?currentPage=${i}&qnaCategory=${qnaCategory}">${i}</a></li>	
 										</c:otherwise>		
 									</c:choose>
 									<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
@@ -172,13 +193,14 @@
 							
 							<!-- '다음' 버튼 -->
 							<c:if test="${currentPage + 10 <= lastPage}">
-								<li><a href="adminList?currentPage=${pageNo+10}&adminPosition=${adminPosition}">&gt;</a></li>
+								<li><a href="qnaList?currentPage=${pageNo+10}&qnaCategory=${qnaCategory}">&gt;</a></li>
 							</c:if>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<!-- Paging -->
+
 		</div>
 	</section>
 	<!-- [이승준] 본문 QnA 목록 부분 - END -->

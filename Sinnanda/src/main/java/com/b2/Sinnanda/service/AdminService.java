@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.b2.Sinnanda.mapper.AdminMapper;
 import com.b2.Sinnanda.vo.Admin;
+import com.b2.Sinnanda.vo.Host;
 import com.b2.Sinnanda.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -133,6 +134,37 @@ public class AdminService {
 	public int getModifyMemberAc(int memberNo) {
 		log.debug("memberNo+++++++++++++++"+memberNo);
 		return adminMapper.modifyMemberAc(memberNo);
+	}
+	
+	//[윤경환] 호스트 리스트 
+	public Map<String, Object> getHostList(int hostActive, int currentPage, int rowPerPage){
+		
+		Map<String, Object> paraMap = new HashMap<>();
+		int beginRow = (currentPage-1) * rowPerPage;
+		
+		paraMap.put("hostActive", hostActive);
+		paraMap.put("beginRow", beginRow);
+		paraMap.put("rowPerPage", rowPerPage);
+		
+		List<Host> hostList =  adminMapper.selectHostList(paraMap);
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		int lastPage = 0;
+		int totalCount = adminMapper.selectHostTotalCount();
+		
+		
+		lastPage = totalCount / rowPerPage;
+		
+		if(totalCount % rowPerPage !=0) {
+			lastPage += 1;
+		}
+		
+		returnMap.put("hostList",hostList);
+		returnMap.put("lastPage", lastPage);
+		
+		return returnMap;
+		
 	}
 
 }

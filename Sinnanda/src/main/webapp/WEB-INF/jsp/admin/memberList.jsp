@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="../css/animate.css">
     
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
@@ -35,7 +35,7 @@
 	<title>회원 리스트</title>
 </head>
 <body>
-	<!-- [이승준] 상단 내비바 - START -->
+	<!-- [윤경환] 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
 			<a class="navbar-brand" href="adminPage?adminNo=${loginUser.admin.adminNo}">신난다</a>
@@ -67,9 +67,9 @@
 			</div>
 		</div>
 	</nav>
-	<!-- [이승준] 상단 내비바 - END -->
+	<!-- [윤경환] 상단 내비바 - END -->
 	
-	<!-- [이승준] 상단 이미지 배너 - START -->
+	<!-- [윤경환] 상단 이미지 배너 - START -->
 	<div class="hero-wrap js-fullheight" style="background-image: url('../images/bg_1.jpg');">
 		<div class="container">
 			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
@@ -80,9 +80,9 @@
 			</div>
 		</div>
 	</div>
-    <!-- [이승준] 상단 이미지 배너 - END -->
+    <!-- [윤경환] 상단 이미지 배너 - END -->
     
-    <!-- [이승준] 본문 QnA 목록 부분 - START -->
+    <!-- [윤경환] 맴버 본문목록 부분 - START -->
     <section class="ftco-section testimony-section bg-light">
 	    <div class="container">
 
@@ -118,13 +118,14 @@
 						<td style="text-align:center">${member.memberAge}</td>
 						<td style="text-align:center">${member.memberTel}</td>
 						<td style="text-align:center">${member.memberEmail}</td>
+						
 						<c:choose>
 							<c:when test="${member.memberActive == 0}"> 
-								
+							
 								<td style="text-align:center">
-									<button type="button" class="btn btn-primary" style="float: right; margin-top: auto;"  onclick="return chk_form()">활성화 전환</button>
+									 <a href="/admin/modifyMemberAc?memberNo=${member.memberNo}" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" >활성화</a>
 								</td>
-								
+							
 							</c:when>
 							<c:when test="${member.memberActive == 1}">
 								<td style="text-align:center">
@@ -132,6 +133,7 @@
 								</td>
 							</c:when>
 						</c:choose>
+						
 						<td style="text-align:center">
 							<fmt:parseDate value="${member.updateDate}" var="updateDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
 							<fmt:formatDate value="${updateDate}" pattern="yy/MM/dd HH:mm"/>
@@ -184,9 +186,9 @@
 			<!-- Paging -->
 		</div>
 	</section>
-	<!-- [이승준] 본문 QnA 목록 부분 - END -->
+	<!-- [윤경환] 본문 맵버 목록 부분 - END -->
 	
-	<!-- [이승준] 하단 Footer - SATRT -->
+	<!-- [윤경환] 하단 Footer - SATRT -->
 	<footer class="ftco-footer ftco-bg-dark ftco-section">
 		<div class="container">
 			<div class="row mb-5">
@@ -248,9 +250,9 @@
 			</div>
 		</div>
 	</footer>
-	<!-- [이승준] 하단 Footer - END -->
+	<!-- [윤경환] 하단 Footer - END -->
 	
-	<!-- [이승준] js 소스코드 -->
+	<!-- [윤경환] js 소스코드 -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -269,16 +271,7 @@
 	<script src="direngine-master/js/google-map.js"></script>
 	<script src="direngine-master/js/main.js"></script>
 	
-	<!--버튼을 누르면 활성화 시킬지 물어본후 확인 누르면 확인   -->
-	<script>
 
-	function chk_form() {
-  		alert("활성화 시키겠습니까?");
-  		
-	
-	}	
-		
-}
-	</script>
+
 </body>
 </html>

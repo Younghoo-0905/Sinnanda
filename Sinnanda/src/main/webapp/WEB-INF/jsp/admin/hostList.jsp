@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="../css/animate.css">
     
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
@@ -32,13 +32,13 @@
     <link rel="stylesheet" href="../css/icomoon.css">
     <link rel="stylesheet" href="../css/style.css">
     
-	<title>신난다 관리자 리스트</title>
+	<title>회원 리스트</title>
 </head>
 <body>
-	<!-- [이승준] 상단 내비바 - START -->
+	<!-- [윤경환] 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="adminPage?adminNo=${loginUser.admin.adminNo }">신난다</a>
+			<a class="navbar-brand" href="adminPage?adminNo=${loginUser.admin.adminNo}">신난다</a>
 			
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
@@ -67,76 +67,81 @@
 			</div>
 		</div>
 	</nav>
-	<!-- [이승준] 상단 내비바 - END -->
+	<!-- [윤경환] 상단 내비바 - END -->
 	
-	<!-- [이승준] 상단 이미지 배너 - START -->
+	<!-- [윤경환] 상단 이미지 배너 - START -->
 	<div class="hero-wrap js-fullheight" style="background-image: url('../images/bg_1.jpg');">
 		<div class="container">
 			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
 				<div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-					<h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>관리자정보<br></strong> </h1>
+					<h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>회원 정보<br></strong> </h1>
 					<p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"></p>
 				</div>
 			</div>
 		</div>
 	</div>
-    <!-- [이승준] 상단 이미지 배너 - END -->
+    <!-- [윤경환] 상단 이미지 배너 - END -->
     
-    <!-- [이승준] 본문 QnA 목록 부분 - START -->
+    <!-- [윤경환] 맴버 본문목록 부분 - START -->
     <section class="ftco-section testimony-section bg-light">
 	    <div class="container">
 
-			<h1><strong>관리자 리스트</strong></h1>
+			<h1><strong>호스트 리스트</strong></h1>
 			<div class="container2">
-				<select id="adminPosition" name="adminPosition" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
+				<select id="hostActive" name="hostActive" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
 					<option value="">선택</option>
-					<option value="adminList?adminPosition=전체 관리자">전체관리자</option>
-					<option value="adminList?adminPosition=운영 관리자">운영 관리자</option>
-					<option value="adminList?adminPosition=회원 관리자">회원 관리자</option>
-					<option value="adminList?adminPosition=숙소 관리자">숙소 관리자</option>
-					<option value="adminList?adminPosition=재무 관리자">재무 관리자</option>
-					<option value="adminList?adminPosition=총 관리자">총 관리자</option>
+					<option value="hostList?hostActive=1">활성</option>
+					<option value="hostList?hostActive=0">비활성</option>
 				</select>
 			</div>
+			
 			<table class="table table-board" style="width: 100%;">
 				<tr style="text-align:center">
 					<th width="5%">번호</th>
 					<th width="10%">아이디</th>
-					<th width="10%">관리자 레벨</th>
-					<th width="10%">관리자 직급</th>
-					<th width="10%">관리자 이름</th>
-					<th width="10%">등급 수정</th>
-					<th width="15%" >수정일</th>
+					<th width="10%">비번</th>
+					<th width="10%">호스트 이름</th>
+					<th width="10%">회원 번호</th>
+					<th width="10%">활성 여부</th>
+					<th width="20">숙소 정보</th>
+					<th width="15%">수정일</th>
 				</tr>
-				<c:forEach items="${adminList}" var="admin">
+				<c:forEach items="${hostList}" var="host">
 					<tr>
-						<td style="text-align:center">${admin.adminNo}</td>
-						<td>
-							<a href="adminOne?adminNo=${admin.adminNo}">${admin.adminId}</a>
-						</td>
-						<td style="text-align:center">${admin.adminLevel}</td>
-						<td style="text-align:center">${admin.adminPosition}</td>
-						<td style="text-align:center">${admin.adminName}</td>
+						<td style="text-align:center">${host.hostNo}</td>
+						<td style="text-align:center">${host.hostId}</td>
+						<td style="text-align:center">${host.hostPw}</td>
+						<td style="text-align:center">${host.hostName}</td>
+						<td style="text-align:center">${host.hostTel}</td>
+						
 						<c:choose>
-							<c:when test="${admin.adminLevel != 5}"> 
+							<c:when test="${host.hostActive == 0}"> 
+							
 								<td style="text-align:center">
-									<a href="modifyAdminList?adminNo=${admin.adminNo}" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">수정</a>
+									 <a href="/admin/modifyHostAc?hostNo=${host.hostNo}" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" >활성화</a>
 								</td>
+							
 							</c:when>
-							<c:when test="${admin.adminLevel == 5}">
+							<c:when test="${host.hostActive == 1}">
 								<td style="text-align:center">
 									<input type ="hidden" readonly>
 								</td>
 							</c:when>
 						</c:choose>
+							<!-- 호스트가 가지고 있는 숙소 정보  -->
+								<td style="text-align:center">
+									 <a href="#" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" >숙소 정보</a>
+								</td>
+						
+						
 						<td style="text-align:center">
-							<fmt:parseDate value="${admin.updateDate}" var="updateDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+							<fmt:parseDate value="${host.updateDate}" var="updateDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
 							<fmt:formatDate value="${updateDate}" pattern="yy/MM/dd HH:mm"/>
 						</td>
 					</tr>
 				</c:forEach>
 			</table>
-			<a class="btn btn-primary" href="insertAdminForm" style="float: right; margin-top: auto;">관리자 추가</a>
+			
 			
 			<!-- [윤경환] 본문 - 내용 - 페이징 부분 -->
 			<!-- Paging -->			
@@ -146,7 +151,7 @@
 						<ul>
 							<!-- '이전' 버튼 -->
 							<c:if test="${beginRow > (ROW_PER_PAGE * 10)}">
-								<li><a href="adminList?currentPage=${pageNo-1}&adminPosition=${adminPosition}">&lt;</a></li>
+								<li><a href="hostList?currentPage=${pageNo-1}&hostActive=${hostActive}">&lt;</a></li>
 							</c:if>
 							
 							<!-- Page 번호 -->
@@ -160,7 +165,7 @@
 											<li class="active"><span>${i}</span></li>
 										</c:when>
 					    				<c:otherwise>
-											<li><a href="adminList?currentPage=${i}&adminPosition=${adminPosition}">${i}</a></li>	
+											<li><a href="hostList?currentPage=${i}&hostActive=${hostActive}">${i}</a></li>	
 										</c:otherwise>		
 									</c:choose>
 									<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
@@ -172,7 +177,7 @@
 							
 							<!-- '다음' 버튼 -->
 							<c:if test="${currentPage + 10 <= lastPage}">
-								<li><a href="adminList?currentPage=${pageNo+10}&adminPosition=${adminPosition}">&gt;</a></li>
+								<li><a href="hostList?currentPage=${pageNo+10}&hostActivev=${hostActive}">&gt;</a></li>
 							</c:if>
 						</ul>
 					</div>
@@ -181,9 +186,9 @@
 			<!-- Paging -->
 		</div>
 	</section>
-	<!-- [이승준] 본문 QnA 목록 부분 - END -->
+	<!-- [윤경환] 본문 맵버 목록 부분 - END -->
 	
-	<!-- [이승준] 하단 Footer - SATRT -->
+	<!-- [윤경환] 하단 Footer - SATRT -->
 	<footer class="ftco-footer ftco-bg-dark ftco-section">
 		<div class="container">
 			<div class="row mb-5">
@@ -245,9 +250,9 @@
 			</div>
 		</div>
 	</footer>
-	<!-- [이승준] 하단 Footer - END -->
+	<!-- [윤경환] 하단 Footer - END -->
 	
-	<!-- [이승준] js 소스코드 -->
+	<!-- [윤경환] js 소스코드 -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -265,5 +270,8 @@
 	<script src="js/scrollax.min.js"></script>
 	<script src="direngine-master/js/google-map.js"></script>
 	<script src="direngine-master/js/main.js"></script>
+	
+
+
 </body>
 </html>

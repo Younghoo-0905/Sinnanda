@@ -370,7 +370,7 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="icon-head menu-icon"></i>
-              <span class="menu-title">User Pages</span>
+              <span class="menu-title">[인원 관리]</span>
               <i class="menu-arrow"></i>
             </a>
             <!-- 마이 페이지 -->
@@ -382,7 +382,7 @@
                  <li class="nav-item">
                  <a class="nav-link" href="/admin/memberList?adminNo=${loginUser.admin.adminNo}">회원 리스트 </a>
                  <li class="nav-item">
-                 <a class="nav-link" href="hostList?adminNo=${loginUser.admin.adminNo}">호스트 리스트</a>
+                 <a class="nav-link" href="/admin/hostList?adminNo=${loginUser.admin.adminNo}">호스트 리스트</a>
                  
                  <!-- 관리자 레벨이 5이어야 다른 관리자 수정 가능  -->
                  <c:if test="${admin.adminPositionNo == 1}">

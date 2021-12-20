@@ -210,20 +210,55 @@
 		 
  		SELECT
  			 COUNT(*)
- 			FROM member
-	
+ 		FROM member
 	</select>
 	
 	
 	<!-- [윤경환] admin 비활성화되어 있는거 다시 활성화 -->
-	<update id="">
+	<update id="modifyMemberAc" parameterType="com.b2.Sinnanda.vo.Admin">
 		
 		UPDATE member SET 
 			member_active = '1',
 			update_date = NOW()
 		WHERE member_no = #{memberNo}
-		
-	
 	</update>
+	
+	<resultMap type="com.b2.Sinnanda.vo.Host" id="HostListMap">
+		<id column="host_no" property="hostNo"></id>
+		<id column="host_id" property="hostId"></id>
+		<id column="host_pw" property="hostPw"></id>
+		<id column="host_name" property="hostName"></id>
+		<id column="host_tel" property="hostTel"></id>
+		<id column="host_active" property="hostActive"></id>
+		<id column="update_date" property="updateDate"></id>
+	</resultMap>
+	
+	<!--[윤경환] 호스트 리스트  -->
+	<select id="selectHostList" parameterType="Map" resultMap="HostListMap">
+		SELECT  
+			host_no,
+			host_id,
+			host_pw,
+			host_name,
+			host_tel,
+			host_active,
+			update_date
+		FROM host
+		ORDER by update_date DESC 
+			<where>
+				<if test ="hostActive !=null">
+					host_active = #{hostActive}
+				</if>
+			</where>
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	
+	<!--[윤경환] 맴버 전체 수  -->
+	<select id="selectHostTotalCount" resultType="int">
+ 		SELECT
+ 			 COUNT(*)
+ 		FROM host
+	</select>
 	
 </mapper>

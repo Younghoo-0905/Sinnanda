@@ -8,6 +8,7 @@
 </head>
 <body>
 	<h1>현재 비밀번호 확인</h1>
+	${loginUser.member.memberPw}
 	<form id="nowMemberPw" method ="post" action ="checkMemberPw">
 		<div>비밀번호 확인 </div>
 		<div><input type ="hidden" name ="memberNo" value="${loginUser.member.memberNo}"></div>
