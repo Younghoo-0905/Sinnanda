@@ -34,7 +34,12 @@ public class MemberService {
 		memberMapper.updateMember(member);
 	}
 	
-	//[유동진] 회원 비밀번호 변경전 현재 비밀번호 확인 
+	// [유동진] 회원 비밀번호 변경전 현재 비밀번호 확인
+	public Member getNowMemberPw(int memberNo) {
+		return memberMapper.selectNowMemberPw(memberNo);
+	}
+	
+	// [유동진] 회원의 현재 비밀번호 불러오기 
 	public Member getCheckMemberPw(String memberPw) {	
 		return memberMapper.selectMemberPw(memberPw);
 	}
@@ -42,6 +47,14 @@ public class MemberService {
 	// [유동진] 비밀번호 변경
 	public void modifyMemberPw(Member member) {
 		memberMapper.updateMemberPw(member);
+	}
+	
+	// [유동진] My QnA 상세 조회
+	public Qna getMyQnaOne(int qnaNo) {
+		log.debug("[Debug] \"START\" MemberService.getMyQnaOne()");
+		log.debug(" ├[param] qnaNo : "+qnaNo);
+		
+		return memberMapper.selectMyQnaOne(qnaNo);
 	}
 	
 	// [유동진] 내가 작성한 QnA 목록 조회

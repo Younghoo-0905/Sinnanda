@@ -35,7 +35,7 @@
 			<a href = "">보유쿠폰 확인</a>
 			<a href = "/myReview">작성한 리뷰 보기</a>
 			<a href = "/myQnaList">작성한 QnA 보기</a>
-			<a href = "">탈퇴하기</a>
+			<a href = "/memberOutForm">탈퇴하기</a>
 		</div>
 		<a href="index">홈으로</a>
 	</form>

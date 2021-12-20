@@ -46,12 +46,20 @@
 		<id column="member_pw" property="memberPw"></id>
 	</resultMap>
 	
+	<!-- [유동진] 회원 현재 비밀번호 확인 -->
+   	<select id="selectNowMemberPw"  parameterType="int" resultType="com.b2.Sinnanda.vo.Member">
+       	SELECT 
+			member_pw memberPw
+           	FROM member 
+        WHERE member_no = #{memberNo}
+   </select>
+	
 	<!-- [유동진] 회원 비밀번호 가져오기 -->
 	<select id="selectMemberPw"  parameterType="Map" resultMap="selectMemberPwMap">
-			SELECT 
-				member_pw
-				FROM member 
-			WHERE member_no = #{memberNo}
+		SELECT
+			member_pw
+			FROM member 
+		WHERE member_no = #{memberNo}
 	</select>
 	
 	<!-- [유동진] 회원 비밀번호 변경 -->
@@ -62,6 +70,52 @@
 	    	update_date = NOW()
 	    WHERE member_no = #{memberNo}
 	</update>
+	
+	<!-- [유동진] My QnA One Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Qna" id="MyQnaOneMap">
+		<id column="qna_no" property="qnaNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="qna_category" property="qnaCategory"/>
+		<result column="qna_title" property="qnaTitle"/>
+		<result column="qna_content" property="qnaContent"/>
+		<result column="qna_secret" property="qnaSecret"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="member_name" property="memberName"/>
+		<result column="admin_name" property="adminName"/>
+		
+		<collection property="qnaComments" ofType="com.b2.Sinnanda.vo.QnaComment">
+			<result column="admin_no" property="adminNo"/>
+			<result column="qna_comment_content" property="qnaCommentContent"/>
+			<result column="comment_date" property="commentDate"/>
+		</collection>
+	</resultMap>
+	
+	<!-- [유동진] My QnA 상세 조회 -->
+	<select id="selectMyQnaOne"  parameterType="Map" resultMap="MyQnaOneMap">
+		SELECT 
+			q.qna_no, 
+			q.member_no, 
+			m.member_name, 
+			q.qna_category, 
+			q.qna_title, 
+			q.qna_content, 
+			q.qna_secret, 
+			q.create_date, 
+			q.update_date, 
+			c.admin_no, 
+			a.admin_name, 
+			c.qna_comment_content, 
+			c.comment_date
+		FROM qna q 
+		LEFT JOIN qna_comment c 
+			ON q.qna_no = c.qna_no
+		LEFT JOIN member m
+			ON q.member_no = m.member_no
+		LEFT JOIN admin a 
+			ON c.admin_no = a.admin_no
+		WHERE q.qna_no = #{qnaNo}
+	</select>
 	
 	<!-- [유동진] QnA List Map -->
 	<resultMap type="com.b2.Sinnanda.vo.Qna" id="MyQnaListMap">

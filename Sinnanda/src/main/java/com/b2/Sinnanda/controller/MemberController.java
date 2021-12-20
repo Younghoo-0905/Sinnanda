@@ -18,6 +18,7 @@ import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
+import com.b2.Sinnanda.vo.Qna;
 import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
@@ -65,33 +66,40 @@ public class MemberController {
 	}
 	
 	// [유동진] 비밀번호 변경
-	@GetMapping("/checkMemberPw")
-	public String checkMemberPw(HttpServletRequest request, Model model) {
-		// 로그인 세션 조회
-		HttpSession session = request.getSession();
-		User loginUser = (User)session.getAttribute("loginUser");
-		// 로그인 세션 디버깅
-		if(loginUser != null) {
-			log.debug(" ├[param] loginUser : "+loginUser.toString());
-		} else {
-			log.debug(" ├[param] loginUser : Null");
-		}
-		
-		model.addAttribute(loginUser);
-		return "checkMemberPw";
-	}
+	   @GetMapping("/checkMemberPw")
+	   public String checkMemberPw(HttpServletRequest request, Model model) {
+	      // 로그인 세션 조회
+	      HttpSession session = request.getSession();
+	      User loginUser = (User)session.getAttribute("loginUser");
+	      // 로그인 세션 디버깅
+	      if(loginUser != null) {
+	         log.debug(" ├[param] loginUser : "+loginUser.toString());
+	      } else {
+	         log.debug(" ├[param] loginUser : Null");
+	      }
+	      
+	      Member member = new Member();
+	      member = memberService.getNowMemberPw(loginUser.getMember().getMemberNo());
+	      log.debug(" ├[param] getMemberNo : "+ loginUser.getMember().getMemberNo());
+	      log.debug(" ├[param] member : "+ member.toString());
+	      
+	      
+	      model.addAttribute(member);
+	      model.addAttribute(loginUser);
+	      return "checkMemberPw";
+	   }
 	@PostMapping("/checkMemberPw")
 	public String postcheckMemberPw(String memberPw) {
 		log.debug("memberPw ->->->->->->-> " + memberPw);
 		
 		memberService.getCheckMemberPw(memberPw);
-
-		return "modifyMemberPw";		
+		return "modifyMemberPw";
 	}
 	@PostMapping("/modifyMemberPw")
 	public String modifyMemberPw(HttpSession session, Member member) {
 
 		memberService.modifyMemberPw(member);
+		// 비밀번호 변경완료시 자동으로 로그아웃
 		session.invalidate();
 		log.debug("★★★★★★★★★★★★★ 회원비밀번호 변경 성공!!! 다시 로그인 해주세요!!!!");
 		return "redirect:/index";
@@ -131,6 +139,51 @@ public class MemberController {
 		
 		return "myQnaList";
 	}
+	
+	// [유동진] My QnA 상세 조회
+		@GetMapping("/myQnaOne")
+		public String myQnaOne(HttpServletRequest request, Model model, int qnaNo) {
+			log.debug("[Debug] \"START\" memberController.myQnaOne() | Get");
+			log.debug(" ├[param] qnaNo : "+qnaNo);
+			
+			// QnA 상세 조회
+			Qna qna = memberService.getMyQnaOne(qnaNo);
+			
+			// 로그인 세션 조회
+			HttpSession session = request.getSession();
+			User loginUser = (User)session.getAttribute("loginUser");
+			// 로그인 세션 디버깅
+			if(loginUser != null) {
+				log.debug(" ├[param] loginUser : "+loginUser.toString());
+			} else {
+				log.debug(" ├[param] loginUser : Null");
+			}
+			
+			// *비밀문의인 경우, 접근제한 필요(작성자 본인 or 관리자)
+			if(qna.getQnaSecret().equals("비밀문의")) {
+				// 1. 비회원 or 사업자인 경우 -> qnaList
+				if((loginUser == null) || (loginUser.getUserLevel() == 2)) {
+					log.info(" ├[info] myQnaOne 접근 불가 : 비회원 or 사업자");
+					return "redirect:/myQnaList";
+				}
+				log.debug(" ├[param] 작성자 memberNo : "+qna.getMemberNo());
+				log.debug(" ├[param] 접근자 Level : "+loginUser.getUserLevel());
+				
+				// 2. 멤버인 경우, 작성자 No + 세션 No = 일치 X -> qnaList
+				if(loginUser.getUserLevel() == 1) {
+					log.debug(" ├[param] 세션 memberNo : "+loginUser.getMember().getMemberNo());
+					if(qna.getMemberNo() != loginUser.getMember().getMemberNo()) {
+						return "redirect:/myQnaList";
+					}
+				}
+				log.info(" ├[info] myQnaOne 접근 허용");
+			}
+			// 모델 추가
+			model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+			model.addAttribute(qna);	// 선택된 QnA 상세 정보
+			
+			return "myQnaOne";
+		}
 
 	//	[김영후] 회원 가입
 	@GetMapping("/insertMember")

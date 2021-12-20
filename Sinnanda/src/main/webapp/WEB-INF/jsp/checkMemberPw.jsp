@@ -8,12 +8,11 @@
 </head>
 <body>
 	<h1>현재 비밀번호 확인</h1>
-	${loginUser.member.memberPw}
 	<form id="nowMemberPw" method ="post" action ="checkMemberPw">
 		<div>비밀번호 확인 </div>
 		<div><input type ="hidden" name ="memberNo" value="${loginUser.member.memberNo}"></div>
 		<div><input type ="password" name ="memberPw" id ="memberPw" placeholder ="비밀번호를 입력하세요"></div>
-	<button onclick="return chk_form()">확인</button>
+	<button onclick="return chk_form()" type = "button">확인</button>
 	<a href="myPage?memberNo=${loginUser.member.memberNo}">마이페이지</a>
 	</form>
 	
@@ -23,7 +22,7 @@
 		if(document.getElementById("memberPw").value==''){
 			alert("비밀번호를 입력해주세요.");
 			return false;
-		}if(${loginUser.member.memberPw} != document.getElementById("memberPw").value){
+		}if("${member.memberPw}" != document.getElementById("memberPw").value){
 			alert("비밀번호가 일치하지 않습니다! 다시 입력해주세요.");
 			return false;
 		}
