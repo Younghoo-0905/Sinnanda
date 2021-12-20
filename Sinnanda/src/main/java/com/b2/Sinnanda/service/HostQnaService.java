@@ -84,7 +84,13 @@ public class HostQnaService {
 	
 // 공통 기능
 	
-	
+	/* [이승준] QnA 수정 */
+	public void modifyHostQna(HostQna hostQna) {
+		log.debug("[Debug] \"START\" HostQnaService.modifyHostQna()");
+		log.debug(" ├[param] hostQna : "+hostQna.toString());
+		
+		hostQnaMapper.updateHostQna(hostQna);
+	}
 	
 	/* [이승준] Host QnA 상세 조회 */
 	public HostQna getHostQnaOne(int hostQnaNo) {

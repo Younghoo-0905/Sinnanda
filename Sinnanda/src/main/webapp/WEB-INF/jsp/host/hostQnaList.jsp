@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="/css/style.css">
     
     <!-- [이승준] 사업자용 페이지 -->
-	<title>회원 문의사항 목록</title>
+	<title>사업자 문의사항 목록</title>
 </head>
 <!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery 실행 -->
 <body onload="toBoardScroll()">
@@ -49,7 +49,7 @@
 	<!-- [이승준] 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index">신난다</a>
+			<a class="navbar-brand" href="/index">신난다</a>
 			
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
@@ -57,7 +57,7 @@
 			
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item cta"><a href="/qnaList" class="nav-link">Q&A</a></li>
+					<li class="nav-item cta"><a href="/qnaList" class="nav-link">사업자 Q&A</a></li>
 					<li class="nav-item cta"><a href="/noticeList" class="nav-link">공지사항</a></li>
 					<li class="nav-item cta"><a href="/noticeList" class="nav-link">신난다 소개</a></li>
 					
@@ -160,7 +160,7 @@
 		            <div class="block-27">
 						<ul>
 							<!-- '이전' 버튼 -->
-							<c:if test="${beginRow > (ROW_PER_PAGE * 10)}">
+							<c:if test="${beginRow >= (ROW_PER_PAGE * 10)}">
 								<li><a href="host/hostQnaList?currentPage=${pageNo-1}&hostQnaCategory=${hostQnaCategory}">&lt;</a></li>
 							</c:if>
 							

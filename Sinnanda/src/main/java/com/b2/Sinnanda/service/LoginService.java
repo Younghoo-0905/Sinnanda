@@ -46,10 +46,11 @@ public class LoginService {
 			
 			// 2-1-3. Pw null로 변경
 			member.setMemberPw(null);
-			log.debug(" ├[param] member : "+member.toString());
 			
 			// 2-1-4. 리턴 값 가공
 			loginUser.setMember(member);
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+			
 		// 2-2. 사업자인 경우
 		} else if(loginUser.getUserLevel() == 2) {
 			log.info(" ├[info] 사업자 로그인");
@@ -64,10 +65,10 @@ public class LoginService {
 			
 			// 2-1-3. Pw null로 변경
 			host.setHostPw(null);
-			log.debug(" ├[param] host : "+host.toString());
 			
 			// 2-1-4. 리턴 값 가공
 			loginUser.setHost(host);
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
 			
 		// 2-3. 관리자인 경우
 		} else if(loginUser.getUserLevel() == 3) {
@@ -83,10 +84,10 @@ public class LoginService {
 			
 			// 2-3-3. Pw null로 변경
 			admin.setAdminPw(null);
-			log.debug(" ├[param] admin : "+admin.toString());
 			
 			// 2-1-4. 리턴 값 가공
 			loginUser.setAdmin(admin);
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
 		}
 		
 		return loginUser;

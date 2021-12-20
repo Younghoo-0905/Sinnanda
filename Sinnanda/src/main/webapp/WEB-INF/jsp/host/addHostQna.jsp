@@ -33,11 +33,44 @@
 	
 <title>회원 문의사항 추가</title>
 </head>
-<body>
+<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery 실행 -->
+<body onload="toBoardScroll()">
+
+	<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery -->
+	<script>
+		// [이승준] 게시판폼, 게시판으로 자동 스크롤
+		function toBoardScroll(){
+			var offset = $("#startBoard").offset();
+			$('html, body').animate({scrollTop: offset.top}, 200);
+		}
+		
+		// [이승준] Qna 내용 입력 여부 확인
+		function formCheck(){
+			// 제목
+			if($("#hostQnaTitle").val() == ""){
+				alert("제목을 입력해주세요.");
+				$("#hostQnaTitle").focus();
+				return false;
+			}
+			// 카테고리
+			if($("#hostQnaCategory").val() == ""){
+				alert("카테고리를 선택해주세요.");
+				$("#hostQnaCategory").focus();
+				return false;
+			}
+			// 내용
+			if($("#hostQnaContent").val() == ""){
+				alert("내용을 입력해주세요.");
+				$("#hostQnaContent").focus();
+				return false;
+			}
+		}
+	</script>
+	
 	<!-- [이승준] 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index">신난다</a>
+			<a class="navbar-brand" href="/index">신난다</a>
 			
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
@@ -95,12 +128,12 @@
 	<!-- [이승준] 상단 이미지 배너 - END -->
     
     <!-- [이승준] 회원 QnA 입력폼 -->
-    <section class="ftco-section testimony-section bg-light">
+    <section id="startBoard" class="ftco-section testimony-section bg-light">
 		<div class="container">
-			<span class="subheading">사업자 Q&A > 문의사항 추가</span>
-			<h1><strong>사업자 문의사항 작성</strong></h1>
+			<span class="subheading"><a href="/host/hostQnaList">사업자 Q&A</a> > 문의사항 추가</span>
+			<h1><strong>사업자문의 작성</strong></h1>
 			
-			<form id="addHostQnaForm" action="addHostQna" method="post">
+			<form onsubmit="return formCheck()" id="addHostQnaForm" action="addHostQna" method="post">
 				<input id="hostNo" name="hostNo" type="hidden" value="${loginUser.host.hostNo}">
 				<table class="table table-board" style="width: 100%;">
 					<tr>
@@ -113,6 +146,7 @@
 						<th>문의유형</th>
 						<td style="width:40%;">
 							<select id="hostQnaCategory" name="hostQnaCategory">
+								<option value="">선택</option>
 								<option value="기타 문의">기타 문의</option>
 								<option value="이용 문의">이용 문의</option>
 								<option value="시스템 문의">시스템 문의</option>

@@ -66,6 +66,16 @@
 	
 <!-- 사업자 쿼리 -->
 	
+	<!-- [이승준] Host QnA 수정 -->
+	<update id="updateHostQna" parameterType="com.b2.Sinnanda.vo.HostQna">
+		UPDATE host_qna 
+		SET host_qna_title = #{hostQnaTitle}, 
+			host_qna_content = #{hostQnaContent}, 
+			host_qna_upload_file = #{hostQnaUploadFile}, 
+			update_date = NOW()
+		WHERE host_qna_no = #{hostQnaNo} AND host_no = #{hostNo}
+	</update>
+	
 	<!-- [이승준] Host QnA 삽입 -->
 	<insert id="insertHostQna" parameterType="com.b2.Sinnanda.vo.HostQna">
 		INSERT INTO host_qna(

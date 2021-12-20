@@ -25,17 +25,17 @@ public class LoginController {
 	
 	User loginUser = new User();
 	
-	@GetMapping("insertMemberForm") //[이원희]회원가입 페이지 이동 21.12.10
+	@GetMapping("/insertMemberForm") //[이원희]회원가입 페이지 이동 21.12.10
 	public String showInsertForm() {
 		return "insertMemberForm";
 	}
 	
 	// [이승준] 로그인
-	@GetMapping("login") // [이원희]로그인 페이지 이동 21.12.10
+	@GetMapping("/login") // [이원희]로그인 페이지 이동 21.12.10
 	public String showLogin() {
 		return "login";
 	}
-	@PostMapping("login")
+	@PostMapping("/login")
 	public String actionLogin(User user, HttpServletRequest request) { // [이원희]로그인 액션 후 인덱스 페이지 이동 21.12.10
 		HttpSession session = request.getSession();
 		log.debug(" ├[param] user : "+user.toString());
@@ -55,14 +55,14 @@ public class LoginController {
 				return "certifyEmailForm";
 			}
 		}		
-		return "index";	
+		return "redirect:/index";	
 	}
 	
-	@GetMapping("logout") //[이원희]로그아웃 21.12.10
+	@GetMapping("/logout") //[이원희]로그아웃 21.12.10
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		return "index";
+		return "redirect:/index";
 	}
 	
 	/*

@@ -10,29 +10,29 @@
 	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	    
-	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/css/aos.css">
+
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
 	
-	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-	
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="css/magnific-popup.css">
-	
-	<link rel="stylesheet" href="css/aos.css">
-	
-	<link rel="stylesheet" href="css/ionicons.min.css">
-	
-	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-	<link rel="stylesheet" href="css/jquery.timepicker.css">
-	
-	
-	<link rel="stylesheet" href="css/flaticon.css">
-	<link rel="stylesheet" href="css/icomoon.css">
-	<link rel="stylesheet" href="css/style.css">
-	
-	<title>회원 문의사항 수정</title>
+<title>사업자 문의사항 수정</title>
 </head>
 <!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery 실행 -->
 <body onload="toBoardScroll()">
@@ -46,12 +46,12 @@
 		}
 		
 		// [이승준] 답변이 있는 게시글의 수정을 막아주는 JQuery
-		var qnaComments = "${qna.qnaComments}";
+		var hostQnaComments = "${hostQna.hostQnaComments}";
 		$(document).ready(function(){
-			if(qnaComments != ""){
+			if(hostQnaComments != ""){
 				$('input').prop('readonly', true);
 				$('textarea').prop('readonly', true);
-				$('#qnaSecret').attr('disabled', true);
+				$('#hostQnaUploadFile').attr('disabled', true);
 				$('select').prop('disabled', true);
 				$('button').prop('disabled', true);
 				alert('답변이 작성된 글은 수정이 불가능합니다.');
@@ -61,15 +61,21 @@
 		// [이승준] Qna 내용 입력 여부 확인
 		function formCheck(){
 			// 제목
-			if($("#qnaTitle").val() == ""){
+			if($("#hostQnaTitle").val() == ""){
 				alert("제목을 입력해주세요.");
-				$("#qnaTitle").focus();
+				$("#hostQnaTitle").focus();
+				return false;
+			}
+			// 카테고리
+			if($("#hostQnaCategory").val() == ""){
+				alert("카테고리를 선택해주세요.");
+				$("#hostQnaCategory").focus();
 				return false;
 			}
 			// 내용
-			if($("#qnaContent").val() == ""){
+			if($("#hostQnaContent").val() == ""){
 				alert("내용을 입력해주세요.");
-				$("#qnaContent").focus();
+				$("#hostQnaContent").focus();
 				return false;
 			}
 		}
@@ -86,7 +92,7 @@
 			
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a href="/qnaList" class="nav-link">Q&A</a></li>
+					<li class="nav-item cta"><a href="/qnaList" class="nav-link">Q&A</a></li>
 					<li class="nav-item cta"><a href="/noticeList" class="nav-link">공지사항</a></li>
 					<li class="nav-item cta"><a href="/noticeList" class="nav-link">신난다 소개</a></li>
 					
@@ -101,14 +107,14 @@
 					<!--memberId가 있을떄  -->
 					<c:if test = "${loginUser != null}">
 						<c:if test="${loginUser.userLevel == 1}">
-							<li class="nav-item member"><a href="/member/myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
+							<li class="nav-item member"><a href="myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
 						</c:if>
 						<c:if test="${loginUser.userLevel == 2}">
-							<li class="nav-item member"><a href="/host/myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
+							<li class="nav-item member"><a href="myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
 						</c:if>
 						<c:if test="${loginUser.userLevel == 3}">
 							<li class="nav-item member">
-							<a href="/admin/myPage?adminNo=${loginUser.admin.adminNo}" class="nav-link">
+							<a href="myPage?memberNo=${loginUser.admin.adminNo}" class="nav-link">
 									<img src="/images/jun_test/adminImg.png" width="20px" height="20px">
 									${loginUser.admin.adminName}&nbsp;관리자
 								</a>
@@ -123,7 +129,7 @@
 	<!-- [이승준] 상단 내비바 - END -->
 	
 	<!-- [이승준] 상단 이미지 배너 - START -->
-	<div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
+	<div class="hero-wrap js-fullheight" style="background-image: url('/images/bg_1.jpg');">
 		<div class="container">
 			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
 				<div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
@@ -134,46 +140,45 @@
 		</div>
 	</div>
 	<!-- [이승준] 상단 이미지 배너 - END -->
-	
-	<!-- [이승준] 회원 QnA 수정 폼 -->
-	<section id="startBoard" class="ftco-section testimony-section bg-light">
+    
+    <!-- [이승준] 회원 QnA 입력폼 -->
+    <section id="startBoard" class="ftco-section testimony-section bg-light">
 		<div class="container">
-			<span class="subheading"><a href="qnaList">회원 Q&A</a> > 문의수정</span>
-			<h1><strong>회원문의 수정</strong></h1>
+			<span class="subheading"><a href="/host/hostQnaList">사업자 Q&A</a> > 문의사항 수정</span>
+			<h1><strong>사업자문의 수정</strong></h1>
 			
-			<form onsubmit="return formCheck()" id="modifyQnaForm" action="modifyQna" method="post">
-				<input id="qnaNo" name="qnaNo" type="hidden" value="${qna.qnaNo}">
-				<input id="memberNo" name="memberNo" type="hidden" value="${qna.memberNo}">
+			<form onsubmit="return formCheck()" id="modifyHostQnaForm" action="modifyHostQna" method="post">
+				<input id="hostQnaNo" name="hostQnaNo" type="hidden" value="${hostQna.hostQnaNo}">
+				<input id="hostNo" name="hostNo" type="hidden" value="${loginUser.host.hostNo}">
 				
 				<table class="table table-board" style="width: 100%;">
 					<tr>
 						<th style="width:10%;">제목</th>
 						<td style="text-align:left;">
-							<input id="qnaTitle" name="qnaTitle" type="text" value="${qna.qnaTitle}" style="width: 90%;">
+							<input id="hostQnaTitle" name="hostQnaTitle" type="text" value="${hostQna.hostQnaTitle}" style="width: 90%;">
 						</td>
+					</tr>
+					<tr>
+						<th>문의유형</th>
+						<td style="width:40%;">
+							<input id="hostQnaCategory" name="hostQnaCategory" type="text" value="${hostQna.hostQnaCategory}" readonly>
+						</td>
+					</tr>
+					<tr>
+						<th>문의 내용</th>
+						<td><textarea id="hostQnaContent" name="hostQnaContent" cols="100%" rows="5">${hostQna.hostQnaContent}</textarea></td>
+					</tr>
+					<tr>
 						<th>작성일</th>
 						<td>
-							<fmt:parseDate value="${qna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+							<fmt:parseDate value="${hostQna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
 							<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
 						</td>
 					</tr>
 					<tr>
-						<th>비밀글 여부</th>
+						<th>파일 업로드</th>
 						<td>
-							<c:if test="${qna.qnaSecret == '일반문의'}">
-								<input id="qnaSecret" name="qnaSecret" type="checkbox">
-							</c:if>
-							<c:if test="${qna.qnaSecret == '비밀문의'}">
-								<input id="qnaSecret" name="qnaSecret" type="checkbox" checked="checked">
-							</c:if>
-						</td>
-						<th>카테고리</th>
-						<td>${qna.qnaCategory}</td>
-					</tr>
-					<tr>
-						<th>문의 내용</th>
-						<td>
-							<textarea id="qnaContent" name="qnaContent" cols="100%" rows="5">${qna.qnaContent}</textarea>
+							<input id="hostQnaUploadFile" name="hostQnaUploadFile" type="file" value="${hostQna.hostQnaUploadFile}">
 						</td>
 					</tr>
 				</table>
@@ -248,21 +253,21 @@
 	
 	<!-- [이승준] js 소스코드 -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.easing.1.3.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.stellar.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/aos.js"></script>
-	<script src="js/jquery.animateNumber.min.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/jquery.timepicker.min.js"></script>
-	<script src="js/scrollax.min.js"></script>
-	<script src="direngine-master/js/google-map.js"></script>
-	<script src="direngine-master/js/main.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="/js/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.easing.1.3.js"></script>
+	<script src="/js/jquery.waypoints.min.js"></script>
+	<script src="/js/jquery.stellar.min.js"></script>
+	<script src="/js/owl.carousel.min.js"></script>
+	<script src="/js/jquery.magnific-popup.min.js"></script>
+	<script src="/js/aos.js"></script>
+	<script src="/js/jquery.animateNumber.min.js"></script>
+	<script src="/js/bootstrap-datepicker.js"></script>
+	<script src="/js/jquery.timepicker.min.js"></script>
+	<script src="/js/scrollax.min.js"></script>
+	<script src="/direngine-master/js/google-map.js"></script>
+	<script src="/direngine-master/js/main.js"></script>
 </body>
 </html>

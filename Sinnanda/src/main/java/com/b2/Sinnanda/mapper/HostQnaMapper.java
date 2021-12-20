@@ -22,6 +22,10 @@ public interface HostQnaMapper {
 	
 // 사업자 기능
 	
+	// [이승준] Host QnA 수정
+	void updateHostQna(HostQna hostQna);
+	
+	// [이승준] Host QnA 삽입
 	void insertHostQna(HostQna HostQna);
 	
 // 공통 기능

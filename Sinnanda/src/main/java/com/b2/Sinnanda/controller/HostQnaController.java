@@ -73,6 +73,43 @@ public class HostQnaController {
 	
 // 사업자 기능
 	
+	// [이승준] QnA 수정
+	@GetMapping("/host/modifyHostQna")
+	public String modifyHostQna(HttpServletRequest request, Model model, int hostQnaNo) {
+		log.debug("[Debug] \"START\" HostQnaController.modifyHostQna() | Get");
+		log.debug(" ├[param] hostQnaNo : "+hostQnaNo);
+		
+		// 수정 전 기존 값 조회
+		HostQna hostQna = hostQnaService.getHostQnaOne(hostQnaNo);
+		model.addAttribute(hostQna);
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+			// 오직 글을 작성한 사업자만 접근 가능
+			if((loginUser.getUserLevel() != 2) && (loginUser.getHost().getHostNo() != hostQna.getHostNo())) {
+				return "redirect:/host/hostQnaList";
+			}
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+			return "redirect:/host/hostQnaList";
+		}
+		
+		return "host/modifyHostQna";
+	}
+	@PostMapping("/host/modifyHostQna")
+	public String modifyQna(HostQna hostQna) {
+		log.debug("[Debug] \"START\" HostQnaController.modifyHostQna() | Post");
+		log.debug(" ├[param] hostQna : "+hostQna.toString());
+		
+		hostQnaService.modifyHostQna(hostQna);
+		
+		return "redirect:/host/hostQnaOne?hostQnaNo="+hostQna.getHostQnaNo();
+	}
+	
 	// [이승준] QnA 삽입
 	@GetMapping("/host/addHostQna")
 	public String addHostQna(HttpServletRequest request, Model model) {

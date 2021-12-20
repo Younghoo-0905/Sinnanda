@@ -36,9 +36,20 @@
     
 	<title>회원 문의사항 목록</title>
 </head>
-<body>
+<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery 실행 -->
+<body onload="toBoardScroll()">
+
+	<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery -->
+	<script>
+		// [이승준] 게시판폼, 게시판으로 자동 스크롤
+		function toBoardScroll(){
+			var offset = $("#startBoard").offset();
+			$('html, body').animate({scrollTop: offset.top}, 200);
+		}
+	</script>
+	
 	<!-- [이승준] 본문 QnA 목록 부분 - START -->
-    <section class="ftco-section testimony-section bg-light">
+    <section id="startBoard" class="ftco-section testimony-section bg-light">
 	    <div class="container">
 	    	<span class="subheading">사업자 Q&A</span>
 			<h1><strong>답변되지 않은 Host Q&A</strong></h1>

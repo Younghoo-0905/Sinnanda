@@ -106,7 +106,7 @@ public class QnaController {
 		log.debug("[Debug] \"START\" QnaController.modifyQna() | Get");
 		log.debug(" ├[param] qnaNo : "+qnaNo);
 		
-		// 수정 전 기존 값 출력
+		// 수정 전 기존 값 조회
 		Qna qna = qnaService.getQnaOne(qnaNo);
 		model.addAttribute(qna);
 		
