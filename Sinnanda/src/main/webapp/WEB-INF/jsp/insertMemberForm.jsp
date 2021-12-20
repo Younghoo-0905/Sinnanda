@@ -6,7 +6,7 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Skydash Admin</title>
+	<title>Sinnanda 회원가입</title>
 	<!-- plugins:css -->
 	<link rel="stylesheet" href="../../vendors/feather/feather.css">
 	<link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
@@ -114,24 +114,26 @@
   		
   		$('#memberId').focusout(function() {
   			let memberId = $('#memberId').val();
-  			$.ajax({
-  				type: 'get', 
-  				url: '/chkId?memberId=' + memberId, 
-  				success: function(checkResult) {  					
-  					if(checkResult == "1") {	//	ID가 중복된 경우 (가입불가)
-  						//	중복된 ID 표시
-  						$('.idOk').css("display", "none");
-  						$('.idUsed').css("display", "inline-block");
-  						checkedId = false;
-  					}		
-  					if(checkResult != "1") {	//	ID가 중복되지 않은 경우 (가입가능)
-  						//	사용 가능한 ID 표시
-  						$('.idOk').css("display", "inline-block");
-  						$('.idUsed').css("display", "none");
-  						checkedId = true;
-  					}
-  				}
-			})
+  			if(memberId != '') {
+	  			$.ajax({
+	  				type: 'get', 
+	  				url: '/chkId?memberId=' + memberId, 
+	  				success: function(checkResult) {  					
+	  					if(checkResult == "1") {	//	ID가 중복된 경우 (가입불가)
+	  						//	중복된 ID 표시
+	  						$('.idOk').css("display", "none");
+	  						$('.idUsed').css("display", "inline-block");
+	  						checkedId = false;
+	  					}		
+	  					if(checkResult != "1") {	//	ID가 중복되지 않은 경우 (가입가능)
+	  						//	사용 가능한 ID 표시
+	  						$('.idOk').css("display", "inline-block");
+	  						$('.idUsed').css("display", "none");
+	  						checkedId = true;
+	  					}
+	  				}
+				})
+  			}
   		})
   		
 		function check_form() {

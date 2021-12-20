@@ -53,7 +53,7 @@ public class NoticeController {
 		Notice Notice = noticeService.getNoticeOne(noticeNo);
 		model.addAttribute(Notice);
 		
-		return "modifyNotice";
+		return "admin/modifyNotice";
 	}
 	@PostMapping("/admin/modifyNotice")
 	public String modifyNotice(Notice notice) {
@@ -70,7 +70,7 @@ public class NoticeController {
 	public String addNotice() {
 		log.debug("[Debug] \"START\" noticeController.addNotice() | Get");
 		
-		return "addNotice";
+		return "admin/addNotice";
 	}
 	@PostMapping("/admin/addNotice")
 	public String addNotice(Notice notice, HttpServletRequest req) {

@@ -6,7 +6,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Skydash Admin</title>
+  <title>Sinnanda 이메일 인증</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../../vendors/feather/feather.css">
   <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
@@ -34,10 +34,10 @@
               <h6 class="font-weight-light">Sign in to continue.</h6>
               <form class="pt-3" id="certifyForm" action="/certifyMember" method="post">
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="memberId" id="memberId" value="${loginMember.getMemberId()}" readonly="readonly">
+                  <input type="text" class="form-control form-control-lg" name="memberId" id="memberId" value="${loginUser.member.memberId}" readonly="readonly">
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="memberEmail" id="memberEmail" value="${loginMember.getMemberEmail()}" readonly="readonly">
+                  <input type="text" class="form-control form-control-lg" name="memberEmail" id="memberEmail" value="${loginUser.member.memberEmail}" readonly="readonly">
                 </div>
                 <div class="form-group">
                   <input type="password" class="form-control form-control-lg" name="memberCertifycode" id="memberCertifycode" placeholder="인증 코드 입력">

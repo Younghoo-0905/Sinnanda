@@ -34,7 +34,17 @@
 
 	<title>공지사항 목록 페이지</title>
 </head>
-<body>
+<body onload="toBoardScroll()">
+
+	<!-- 페이지 접근 시, 본문으로 이동해주는 JQuery -->
+	<script>
+		// [이승준] 게시판폼, 게시판으로 자동 스크롤
+		function toBoardScroll(){
+			var offset = $("#startBoard").offset();
+			$('html, body').animate({scrollTop: offset.top}, 200);
+		}
+	</script>
+	
 	<!-- 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
@@ -96,7 +106,7 @@
     <!-- 상단 이미지 배너 - END -->
 	
 	<!-- [김영후] 공지사항 목록 출력 -->
-	<section class="ftco-section testimony-section bg-light">
+	<section id="startBoard" class="ftco-section testimony-section bg-light">
 		<div class="container">
 			<h1><strong>공지사항</strong></h1>
 			<!-- 공지사항 카테고리별로 출력 -->

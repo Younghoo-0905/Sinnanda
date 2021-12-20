@@ -32,9 +32,19 @@
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
 
-<title>공지사항 상세 페이지</title>
+<title>공지사항 상세조회</title>
 </head>
-<body>
+<body onload="toBoardScroll()">
+
+	<!-- 페이지 접근 시, 본문으로 이동해주는 JQuery -->
+	<script>
+		// 게시판폼, 게시판으로 자동 스크롤
+		function toBoardScroll(){
+			var offset = $("#startBoard").offset();
+			$('html, body').animate({scrollTop: offset.top}, 200);
+		}
+	</script>
+	
 	<!-- 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
@@ -96,35 +106,41 @@
     <!-- 상단 이미지 배너 - END -->
     
     <!-- [김영후] 공지 상세보기 -->
-	<section class="ftco-section testimony-section bg-light">
+	<section id="startBoard" class="ftco-section testimony-section bg-light">
 		 <div class="container">
 			<h1><strong>공지 상세보기</strong></h1>
-			
-			<!-- 본인의 게시글일 경우 수정, 삭제 -->
-			<c:if test="${loginUser.admin.adminNo == notice.adminNo}">
-				<a href="/admin/modifyNotice?noticeNo=${notice.noticeNo}">공지 수정</a>
-				<a href="/admin/removeNotice?noticeNo=${notice.noticeNo}">공지 삭제</a>
-			</c:if>
-			
+						
 			<table class="table table-board" style="width: 100%;">
 				<tr>
-					<td width="20%">제목</td>
-					<td>${notice.noticeTitle}</td>
+					<th style="width: 100px; font-size: 20px; text-align:center;">제목</th>
+					<td style="font-size: 20px;">${notice.noticeTitle}</td>
+					<th style="width: 100px; padding-top: 20px; text-align:center;">공지유형</th>
+					<td style="padding-top: 20px;">${notice.noticeCategory}</td>
 				</tr>
 				<tr>
-					<td width="20%">작성일</td>
-					<td>${notice.updateDate}</td>			
+					<th style="text-align:center;">작성자</th>
+					<td style="width: 60%;">${notice.adminName}</td>
+					<th style="width: 100px; text-align:center;">작성일</th>
+					<td>
+						<fmt:parseDate value="${notice.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+						<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
+					</td>	
 				</tr>
 				<tr>
-					<td width="20%">작성자</td>
-					<td>${notice.adminName}</td>
-				</tr>
-				<tr>
-					<td width="20%">내용</td>
+					<th style="padding-top: 150px;padding-bottom: 150px;" width="10%">내용</th>
 					<td>${notice.noticeContent}</td>
 				</tr>
 			</table>
-		</div>
+			
+			<!-- 본인의 게시글일 경우 수정, 삭제 -->
+			<c:if test="${loginUser.admin.adminNo == notice.adminNo}">
+				<div>
+					<a class="btn btn-primary" href="/noticeList" style="float: left; margin-top: auto;">목록</a>				
+					<a class="btn btn-primary" href="/admin/removeNotice?noticeNo=${notice.noticeNo}" style="float: right; margin-top: auto;">공지 삭제</a>
+					<a class="btn btn-primary" href="/admin/modifyNotice?noticeNo=${notice.noticeNo}" style="float: right; margin-top: auto;">공지 수정</a>
+				</div>
+			</c:if>		
+		</div>			
 	</section>
 	<!-- [김영후] 공지 상세보기 END -->	
 	

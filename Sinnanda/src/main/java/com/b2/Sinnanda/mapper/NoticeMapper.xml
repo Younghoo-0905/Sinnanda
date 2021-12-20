@@ -13,6 +13,7 @@
 	<update id="updateNotice" parameterType="com.b2.Sinnanda.vo.Notice">
 		UPDATE notice 
 		SET notice_title = #{noticeTitle}, 
+			notice_category = #{noticeCategory}, 
 			notice_content = #{noticeContent}, 
 			notice_pin = #{noticePin}, 
 			update_date = NOW()
@@ -50,6 +51,7 @@
 		<result column="notice_category" property="noticeCategory"/>
 		<result column="notice_title" property="noticeTitle"/>
 		<result column="notice_content" property="noticeContent"/>
+		<result column="notice_pin" property="noticePin"/>
 		<result column="create_date" property="createDate"/>
 		<result column="update_date" property="updateDate"/>
 		<result column="admin_name" property="adminName"/>
@@ -62,6 +64,7 @@
 			n.notice_category, 
 			n.notice_title, 
 			n.notice_content, 
+			n.notice_pin, 
 			n.create_date, 
 			n.update_date, 
 			a.admin_name 
