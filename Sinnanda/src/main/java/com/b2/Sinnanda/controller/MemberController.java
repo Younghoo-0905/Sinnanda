@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.service.CertifyEmailService;
 import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.vo.Admin;
@@ -28,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	@Autowired MemberService memberService;
 	@Autowired CertifyEmailService certifyEmailService;
+	@Autowired DL dl;
 	
 	// [유동진] 마이페이지
 	@GetMapping("myPage")
@@ -141,50 +143,82 @@ public class MemberController {
 	}
 	
 	// [유동진] My QnA 상세 조회
-		@GetMapping("/myQnaOne")
-		public String myQnaOne(HttpServletRequest request, Model model, int qnaNo) {
-			log.debug("[Debug] \"START\" memberController.myQnaOne() | Get");
-			log.debug(" ├[param] qnaNo : "+qnaNo);
-			
-			// QnA 상세 조회
-			Qna qna = memberService.getMyQnaOne(qnaNo);
-			
-			// 로그인 세션 조회
-			HttpSession session = request.getSession();
-			User loginUser = (User)session.getAttribute("loginUser");
-			// 로그인 세션 디버깅
-			if(loginUser != null) {
-				log.debug(" ├[param] loginUser : "+loginUser.toString());
-			} else {
-				log.debug(" ├[param] loginUser : Null");
+	@GetMapping("/myQnaOne")
+	public String myQnaOne(HttpServletRequest request, Model model, int qnaNo) {
+		log.debug("[Debug] \"START\" memberController.myQnaOne() | Get");
+		log.debug(" ├[param] qnaNo : "+qnaNo);
+		
+		// QnA 상세 조회
+		Qna qna = memberService.getMyQnaOne(qnaNo);
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			log.debug(" ├[param] loginUser : "+loginUser.toString());
+		} else {
+			log.debug(" ├[param] loginUser : Null");
+		}
+		
+		// *비밀문의인 경우, 접근제한 필요(작성자 본인 or 관리자)
+		if(qna.getQnaSecret().equals("비밀문의")) {
+			// 1. 비회원 or 사업자인 경우 -> qnaList
+			if((loginUser == null) || (loginUser.getUserLevel() == 2)) {
+				log.info(" ├[info] myQnaOne 접근 불가 : 비회원 or 사업자");
+				return "redirect:/myQnaList";
 			}
+			log.debug(" ├[param] 작성자 memberNo : "+qna.getMemberNo());
+			log.debug(" ├[param] 접근자 Level : "+loginUser.getUserLevel());
 			
-			// *비밀문의인 경우, 접근제한 필요(작성자 본인 or 관리자)
-			if(qna.getQnaSecret().equals("비밀문의")) {
-				// 1. 비회원 or 사업자인 경우 -> qnaList
-				if((loginUser == null) || (loginUser.getUserLevel() == 2)) {
-					log.info(" ├[info] myQnaOne 접근 불가 : 비회원 or 사업자");
+			// 2. 멤버인 경우, 작성자 No + 세션 No = 일치 X -> qnaList
+			if(loginUser.getUserLevel() == 1) {
+				log.debug(" ├[param] 세션 memberNo : "+loginUser.getMember().getMemberNo());
+				if(qna.getMemberNo() != loginUser.getMember().getMemberNo()) {
 					return "redirect:/myQnaList";
 				}
-				log.debug(" ├[param] 작성자 memberNo : "+qna.getMemberNo());
-				log.debug(" ├[param] 접근자 Level : "+loginUser.getUserLevel());
-				
-				// 2. 멤버인 경우, 작성자 No + 세션 No = 일치 X -> qnaList
-				if(loginUser.getUserLevel() == 1) {
-					log.debug(" ├[param] 세션 memberNo : "+loginUser.getMember().getMemberNo());
-					if(qna.getMemberNo() != loginUser.getMember().getMemberNo()) {
-						return "redirect:/myQnaList";
-					}
-				}
-				log.info(" ├[info] myQnaOne 접근 허용");
 			}
-			// 모델 추가
-			model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
-			model.addAttribute(qna);	// 선택된 QnA 상세 정보
-			
-			return "myQnaOne";
+			log.info(" ├[info] myQnaOne 접근 허용");
 		}
-
+		// 모델 추가
+		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+		model.addAttribute(qna);	// 선택된 QnA 상세 정보
+		
+		return "myQnaOne";
+	}
+	
+	// [유동진] 내가 작성한 리뷰 목록 조회
+	@GetMapping("/myReviewList")
+	public String myReviewList(HttpServletRequest request, Model model,
+			@RequestParam(defaultValue = "1") int currentPage,
+			@RequestParam(required = false) String reviewRecommend) {		
+		dl.p("MemberController", "myReviewList()", "나의 리뷰 목록 시작");
+		dl.p("MemberController", "myReviewList()", "currentPage : " + currentPage);
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			dl.p("MemberController", "myReviewList", "loginUser : "+loginUser.toString());
+		} else {
+			dl.p("MemberController", "myReviewList", "loginUser : Null");
+			return "redirect:/index";
+		}
+		
+		// review 목록 조회
+		Map<String, Object> map = memberService.getMyReviewListByReviewRecommend(loginUser.getMember().getMemberNo(), reviewRecommend, currentPage, ROW_PER_PAGE);
+		
+		/* 모델 추가 */
+		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+		model.addAttribute("reviewRecommend", map.get("reviewRecommend"));	// 선택된 reviewRecommend
+		model.addAttribute("myReviewList", map.get("myReviewList"));	// QnA 목록 정보
+		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
+		model.addAttribute("currentPage", currentPage);	// 현재 페이지
+		
+		return "myReviewList";
+	}
+	
 	//	[김영후] 회원 가입
 	@GetMapping("/insertMember")
 	public String getInsertMember() {

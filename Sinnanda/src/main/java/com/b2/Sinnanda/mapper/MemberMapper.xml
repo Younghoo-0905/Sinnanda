@@ -155,7 +155,7 @@
       LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
-		<!-- [유동진] QnA 갯수 조회 -->
+	<!-- [유동진] QnA 갯수 조회 -->
 	<select id="selectMyQnaTotalCount" parameterType="String" resultType="int">
 		SELECT 
 			COUNT(*) 
@@ -163,6 +163,48 @@
 		<if test="qnaCategory != null">
 			<where>
 				qna_category = #{qnaCategory}
+			</where>
+		</if>
+	</select>
+	
+	<!-- [유동진] 리뷰 List Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Review" id="MyReviewListMap">
+		<id column="review_no" property="reviewNo"/>
+		<result column="review_content" property="reviewContent"/>
+		<result column="create_date" property="createDate"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="member_name" property="memberName"/>
+		<result column="room_name" property="roomName"/>
+		<result column="accom_name" property="accomName"/>
+	</resultMap>
+	
+	<!-- [유동진] 내가 작성한 리뷰 목록 조회 -->
+	<select id="selectMyReviewListReviewRecommend" parameterType="Map" resultMap="MyReviewListMap">
+		SELECT 
+			m.member_no, 
+			m.member_name, 
+			ac.accom_name, 
+			r.room_name, 
+			rev.review_content, 
+			rev.create_date
+		FROM member m 
+		JOIN reserve re ON re.member_no = m.member_no
+		JOIN payment p ON re.reserve_no = p.reserve_no 
+		JOIN review rev ON rev.payment_no = p.payment_no
+		JOIN room r ON r.room_no = re.room_no
+		JOIN accom ac ON r.accom_no = ac.accom_no
+		WHERE m.member_no = #{memberNo}
+		ORDER BY rev.create_date DESC
+	</select>
+	
+	<!-- [유동진] 리뷰 갯수 조회 -->
+	<select id="selectMyReviewTotalCount" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM review
+		<if test="reviewRecommend != null">
+			<where>
+				review_recommend = #{reviewRecommend}
 			</where>
 		</if>
 	</select>

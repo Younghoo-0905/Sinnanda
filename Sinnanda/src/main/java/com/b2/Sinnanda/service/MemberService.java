@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.mapper.MemberMapper;
 import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
 import com.b2.Sinnanda.vo.Qna;
+import com.b2.Sinnanda.vo.Review;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 	
 	@Autowired MemberMapper memberMapper;
+	@Autowired DL dl;
 	
 	// [유동진] 마이페이지
 	public Member myPage(int memberNo) {
@@ -96,6 +99,45 @@ public class MemberService {
 		return returnMap;
 	}
 	
+	// [유동진] 내가 작성한 리뷰 목록 조회
+	public Map<String, Object> getMyReviewListByReviewRecommend(int memberNo, String reviewRecommend, int currentPage, int rowPerPage){
+		dl.p("MemberService", "getMyReviewList()", "나의 리뷰 목록");
+		dl.p("MemberService", "getMyReviewList()", "memberNo : "+memberNo);
+		dl.p("MemberService", "getMyReviewList()", "qnaCategory : "+reviewRecommend);
+		dl.p("MemberService", "getMyReviewList()", "currentPage : "+currentPage);
+		dl.p("MemberService", "getMyReviewList()", "rowPerPage : "+rowPerPage);
+		
+		// 1. 매개변수 가공 (paraMap <-- reviewRecommend, currentPage, rowPerPage)
+		Map<String, Object> paraMap = new HashMap<>();
+		int beginRow = (currentPage-1) * rowPerPage;
+		
+		paraMap.put("memberNo", memberNo);
+		paraMap.put("reviewRecommend", reviewRecommend);
+		paraMap.put("beginRow", beginRow);
+		paraMap.put("rowPerPage", rowPerPage);
+		
+		// 2. review 리스트 조회
+		List<Review> myReviewList = memberMapper.selectMyReviewListReviewRecommend(paraMap);
+		dl.p("MemberService", "getMyReviewList()", "myReviewList : "+myReviewList.toString());
+		// 3. 리턴 값 가공 (return : review & lastPage)
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		int lastPage = 0;
+		int totalCount = memberMapper.selectMyReviewTotalCount(reviewRecommend);
+		dl.p("MemberService", "getMyReviewList()", "totalCount : "+totalCount);
+		
+		lastPage = totalCount / rowPerPage;
+		if(totalCount % rowPerPage !=0) {
+			lastPage += 1;
+		}
+		
+		dl.p("MemberService", "getMyReviewList()", "lastPage : "+lastPage);
+		returnMap.put("myReviewList", myReviewList);
+		returnMap.put("lastPage", lastPage);
+		
+		return returnMap;
+	}
+
 	//	[김영후] 회원 이메일 인증
 	public int certifyMember(Member member) {
 		int result = memberMapper.certifyMember(member);

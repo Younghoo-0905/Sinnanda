@@ -10,6 +10,7 @@ import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
 import com.b2.Sinnanda.vo.Qna;
+import com.b2.Sinnanda.vo.Review;
 
 
 @Mapper
@@ -38,6 +39,13 @@ public interface MemberMapper {
 	
 	// [유동진] 내가 작성한 QnA의 총 갯수 조회
 	int selectMyQnaTotalCount(String qnaCategory);
+	
+	// [유동진] 내가 작성한 리뷰 목록 조회
+		/* 매개변수 : 페이징을 위한 "reviewRecommend", "beginRow, rowPerPage" */
+	List<Review> selectMyReviewListReviewRecommend(Map<String, Object> map);
+	
+	// [유동진] 내가 작성한 리뷰의 총 갯수 조회
+	int selectMyReviewTotalCount(String recommend);
 	
 	//	[김영후] 회원 가입
 	int insertMember(Member member);
