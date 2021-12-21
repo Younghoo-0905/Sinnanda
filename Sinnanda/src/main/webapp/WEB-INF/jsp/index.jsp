@@ -7,156 +7,122 @@
 
 <title>신난다</title>
  <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
-
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/animate.css">
-    
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/magnific-popup.css">
-
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/aos.css">
-
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/ionicons.min.css">
-
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/jquery.timepicker.css">
-
-    
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/flaticon.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/icomoon.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/direngine-master/css/style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	    
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
+	
+	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="css/animate.css">
+	
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	
+	<link rel="stylesheet" href="css/aos.css">
+	
+	<link rel="stylesheet" href="css/ionicons.min.css">
+	
+	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="css/jquery.timepicker.css">
+	
+	
+	<link rel="stylesheet" href="css/flaticon.css">
+	<link rel="stylesheet" href="css/icomoon.css">
+	<link rel="stylesheet" href="css/style.css">
  </head>
 <body>
-   
-  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-    <div class="container">
-      <a class="navbar-brand" href="index">신난다</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="oi oi-menu"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="ftco-nav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a href="/index" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="/qnaList" class="nav-link">Qna</a></li>
-          <li class="nav-item"><a href="/noticeList" class="nav-link">공지사항</a></li>
-          <li class="nav-item"><a href="" class="nav-link"> 쿠폰함</a></li>
-          
-        <c:choose> 
-        <c:when test ="${loginUser == null}">
-        	  <li class="nav-item"><a href="login" class="nav-link">로그인</a></li>
-     	     <li class="nav-item"><a href="insertMemberForm" class="nav-link">회원가입</a></li>
-      	</c:when>
-     
-         <c:when test = "${loginUser != null && loginUser.userLevel  == 1}">
-     	     <li class="nav-item"><a href="myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">마이페이지</a></li>
-        	  <li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>
-          </c:when>
-          
-          <c:when test = "${loginUser != null && loginUser.userLevel  == 2}">
-          	<li class="nav-item"><a href="myPage?memberNo=${loginUser.host.hostNo}" class="nav-link">마이페이지</a></li>
-          	<li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>
-          </c:when>
-          
-     	
-         <c:when test = "${loginUser != null && loginUser.userLevel == 3}">
-            <li class="nav-item"><a href="/admin/adminPage" class="nav-link">마이페이지</a></li>
-          	<li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>
-          </c:when>
-        
-        </c:choose>
-        
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-<div class="hero-wrap js-fullheight" style="background-image: url('<%=request.getContextPath()%>/direngine-master/images/bg_1.jpg');">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
-          <div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>여행이 신난다.<br></strong> 신나는 도시를 골라봐</h1>
-            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">원하는 도시와 날짜를 골라봐</p>
-            <div class="block-17 my-4">
-              <form action="/searchAccomList" method="post" class="d-block d-flex" id="searchForm">
-                <div class="fields d-block d-flex">
-                
-                 <div class="select-wrap one-third">
-                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>    
-                    <select name="" id="" class="form-control">
-                
-                    <!-- 지역 선택 -->
-                      <option value="">서울</option>
-                      <option value="">경기도</option>
-                      <option value="">부산광역시</option>
-                      <option value="">대구광역시</option>
-                      <option value="">인천광역시</option>
-                       <option value="">대전광역시</option>
-                      <option value="">광주광역시</option>
-                      <option value="">울산광역시</option>
-                      <option value="">세종특별자치시</option>
-                      <option value="">강원도</option>
-                       <option value="">충청북도</option>
-                      <option value="">충청남도</option>
-                      <option value="">전라북도</option>
-                      <option value="">전라남도</option>
-                      <option value="">경상북도</option>
-                      <option value="">경상남도</option>
-                      <option value="">제주도</option>
-                    </select>
-                  </div>
-                  
-                   <div class="select-wrap one-third">
-                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                    <select name="" id="" class="form-control" placeholder="Keyword search" hidden="hidden">
-                    <!-- 도시 선택 ??-->
-                      <option value=""></option>
-                      <option value=""></option>
-                      <option value=""></option>
-                      <option value=""></option>
-                      <option value=""></option>
-                    </select>
-                  </div>
-                   <!-- 캘린더 -->
-                   
-                   <!--[이원희]index페이지 검색바 입력칸 21.12.10 -->
-                   <input type="text" name="accomName" class="form-control" placeholder="Destination, City">
-                   
-                   <!--인원수 -->
-                   <div class="select-wrap one-third">
-                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                    <select name="" id="" class="form-control">
-                      <option value="">한명이요</option>
-                      <option value="">두명이요</option>
-                      <option value="">세명이요</option>
-                      <option value="">네명이요</option>
-                      
-                    </select>
-                  </div>
-                </div>
-                
-                <button type="submit" class="search-submit btn btn-primary">Search</button>
-              </form>
-            </div>
-             <!-- 모텔인지 호텔이인지 카테고리 -->
-            <p>어느 숙소로 하실 건가요?</p>
-            <p class="browse d-md-flex">
-            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-hotel"></i>모델</a></span>
-            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-hotel"></i>호텔</a></span> 
-            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-meeting-point"></i>리조트</a></span> 
-            	<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-shopping-bag"></i></a></span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
+   <!-- [이승준] 상단 내비바 - START -->
+	<%@ include file="/WEB-INF/partials/navbar.jsp" %>
+	<!-- [이승준] 상단 내비바 - END -->
+	
+	<!-- [이승준] 상단 이미지, 검색바 부분 START -->
+	<div class="hero-wrap js-fullheight" style="background-image: url('/direngine-master/images/bg_1.jpg');">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+				<div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+					<h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>여행이 신난다.<br></strong> 신나는 도시를 골라봐</h1>
+					<p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">원하는 도시와 날짜를 골라봐</p>
+					<div class="block-17 my-4">
+						<form action="searchList" method="post" class="d-block d-flex" id="searchForm">
+						<div class="fields d-block d-flex">
+							<div class="select-wrap one-third">
+								<div class="icon">
+									<span class="ion-ios-arrow-down"></span>
+								</div>
+								<select name="" id="" class="form-control">
+									<!-- 지역 선택 -->
+									<option value="">서울</option>
+									<option value="">경기도</option>
+									<option value="">부산광역시</option>
+									<option value="">대구광역시</option>
+									<option value="">인천광역시</option>
+									<option value="">대전광역시</option>
+									<option value="">광주광역시</option>
+									<option value="">울산광역시</option>
+									<option value="">세종특별자치시</option>
+									<option value="">강원도</option>
+									<option value="">충청북도</option>
+									<option value="">충청남도</option>
+									<option value="">전라북도</option>
+									<option value="">전라남도</option>
+									<option value="">경상북도</option>
+									<option value="">경상남도</option>
+									<option value="">제주도</option>
+								</select>
+							</div>
+						
+						<div class="select-wrap one-third">
+							<div class="icon"><span class="ion-ios-arrow-down">
+								</span>
+							</div>
+							<select name="" id="" class="form-control" placeholder="Keyword search" hidden="hidden">
+							<!-- 도시 선택 ??-->
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							<option value=""></option>
+							</select>
+						</div>
+						<!-- 캘린더 -->
+						
+						<!--[이원희]index페이지 검색바 입력칸 21.12.10 -->
+						<input type="text" name="accomName" class="form-control" placeholder="Destination, City">
+						
+						<!--인원수 -->
+						<div class="select-wrap one-third">
+						<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+						<select name="" id="" class="form-control">
+						<option value="">한명이요</option>
+						<option value="">두명이요</option>
+						<option value="">세명이요</option>
+						<option value="">네명이요</option>
+						
+						</select>
+						</div>
+						</div>
+						
+						<button type="submit" class="search-submit btn btn-primary">Search</button>
+						</form>
+					</div>
+					 <!-- 모텔인지 호텔이인지 카테고리 -->
+					<p>어느 숙소로 하실 건가요?</p>
+					<p class="browse d-md-flex">
+					<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-hotel"></i>모델</a></span>
+					<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-hotel"></i>호텔</a></span> 
+					<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-meeting-point"></i>리조트</a></span> 
+					<span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-shopping-bag"></i></a></span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- [이승준] 상단 이미지, 검색바 부분 END -->
+	
     <section class="ftco-section services-section bg-light">
       <div class="container">
         <div class="row d-flex">
@@ -992,92 +958,31 @@
       </div>
     </section>
 
-    <footer class="ftco-footer ftco-bg-dark ftco-section">
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-md">
-            <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">신난다</h2>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md">
-            <div class="ftco-footer-widget mb-4 ml-md-5">
-              <h2 class="ftco-heading-2">Information</h2>
-              <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">About</a></li>
-                <li><a href="#" class="py-2 d-block">Service</a></li>
-                <li><a href="#" class="py-2 d-block">Terms and Conditions</a></li>
-                <li><a href="#" class="py-2 d-block">Become a partner</a></li>
-                <li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li>
-                <li><a href="#" class="py-2 d-block">Privacy and Policy</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md">
-             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">Customer Support</h2>
-              <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">FAQ</a></li>
-                <li><a href="#" class="py-2 d-block">Payment Option</a></li>
-                <li><a href="#" class="py-2 d-block">Booking Tips</a></li>
-                <li><a href="#" class="py-2 d-block">How it works</a></li>
-                <li><a href="#" class="py-2 d-block">Contact Us</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md">
-            <div class="ftco-footer-widget mb-4">
-            	<h2 class="ftco-heading-2">Have a Questions?</h2>
-            	<div class="block-23 mb-3">
-	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
-	              </ul>
-	            </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 text-center">
+	<!-- [이승준] 하단 Footer - SATRT -->
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
+	<!-- [이승준] 하단 Footer - END -->
+	
+	<!-- loader -->
+	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
-            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-          </div>
-        </div>
-      </div>
-    </footer>
-    
-  	 
-  	 
-  	  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
-
-  <script src="<%=request.getContextPath()%>/direngine-master/js/jquery.min.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/popper.min.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/bootstrap.min.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/jquery.easing.1.3.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/jquery.waypoints.min.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/jquery.stellar.min.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/owl.carousel.min.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/jquery.magnific-popup.min.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/aos.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/jquery.animateNumber.min.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/bootstrap-datepicker.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/jquery.timepicker.min.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/google-map.js"></script>
-  <script src="<%=request.getContextPath()%>/direngine-master/js/main.js"></script>
+	<!-- [이승준] js 소스코드 -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.easing.1.3.js"></script>
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/jquery.stellar.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/aos.js"></script>
+	<script src="js/jquery.animateNumber.min.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/jquery.timepicker.min.js"></script>
+	<script src="js/scrollax.min.js"></script>
+	<script src="direngine-master/js/google-map.js"></script>
+	<script src="direngine-master/js/main.js"></script>
     
 </body>
 </html>

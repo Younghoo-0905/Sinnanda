@@ -65,8 +65,8 @@
 				<ul class="navbar-nav mj-auto">
 					<!--memberId가 없을때--> 
 					<c:if test ="${loginUser == null}">
-						<li class="nav-item member"><a href="login" class="nav-link">로그인</a></li>
-						<li class="nav-item member"><a href="insertMemberForm" class="nav-link">회원가입</a></li>
+						<li class="nav-item member"><a href="/login" class="nav-link">로그인</a></li>
+						<li class="nav-item member"><a href="/insertMemberForm" class="nav-link">회원가입</a></li>
 					</c:if>
 					
 					<!--memberId가 있을떄  -->
