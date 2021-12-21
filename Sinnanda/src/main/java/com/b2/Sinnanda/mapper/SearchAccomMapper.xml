@@ -95,5 +95,21 @@
 		LEFT JOIN accom a ON r.accom_no = a.accom_no
 		WHERE a.accom_no = #{accomNo}
 	</select>
+	
+	<!-- [이원희] 객실 정보 조회 -->
+	
+	<select id="selectRoomOne" parameterType="Integer" resultMap="RoomMap">
+		SELECT r.room_no, 
+			   r.room_name, 
+			   r.room_main_img,
+			   r.room_description,
+               r.room_person, 
+  			   r.room_price, 
+			   r.room_check_in, 
+			   r.room_check_out, 
+	   	       r.room_use
+		FROM room r 
+		WHERE r.room_no = #{roomNo}
+	</select>
 	 
 </mapper>

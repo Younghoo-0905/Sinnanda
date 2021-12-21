@@ -33,26 +33,51 @@
   </head>
   <body>
     
+   <!--[이원희] nav start -->
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">dirEngine.</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="oi oi-menu"></span> Menu
-      </button>
-
-      <div class="collapse navbar-collapse" id="ftco-nav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-          <li class="nav-item"><a href="tour.html" class="nav-link">Tour</a></li>
-          <li class="nav-item active"><a href="hotel.html" class="nav-link">Hotels</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-          <li class="nav-item cta"><a href="contact.html" class="nav-link"><span>Add listing</span></a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+		<div class="container">
+			<a class="navbar-brand" href="index">신난다</a>
+			
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="oi oi-menu"></span> Menu
+			</button>
+			
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a href="/qnaList" class="nav-link">Q&A</a></li>
+					<li class="nav-item cta"><a href="/noticeList" class="nav-link">공지사항</a></li>
+					<li class="nav-item cta"><a href="/noticeList" class="nav-link">신난다 소개</a></li>
+					
+				</ul>
+				<ul class="navbar-nav mj-auto">
+					<!--memberId가 없을때--> 
+					<c:if test ="${loginUser == null}">
+						<li class="nav-item member"><a href="login" class="nav-link">로그인</a></li>
+						<li class="nav-item member"><a href="insertMemberForm" class="nav-link">회원가입</a></li>
+					</c:if>
+					
+					<!--memberId가 있을떄  -->
+					<c:if test = "${loginUser != null}">
+						<c:if test="${loginUser.userLevel == 1}">
+							<li class="nav-item member"><a href="/member/myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
+						</c:if>
+						<c:if test="${loginUser.userLevel == 2}">
+							<li class="nav-item member"><a href="/host/myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
+						</c:if>
+						<c:if test="${loginUser.userLevel == 3}">
+							<li class="nav-item member">
+							<a href="/admin/myPage?adminNo=${loginUser.admin.adminNo}" class="nav-link">
+									<img src="/images/jun_test/adminImg.png" width="20px" height="20px">
+									${loginUser.admin.adminName}&nbsp;관리자
+								</a>
+							</li>
+						</c:if>
+						<li class="nav-item member"><a href="logout" class="nav-link">로그아웃</a></li>		
+					</c:if>
+				</ul>
+			</div>
+		</div>
+	</nav>
     <!-- END nav -->
     
     <!-- [이원희] 뷰 배경사진-->
@@ -62,8 +87,8 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
-            <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="index.html">Home</a></span> <span class="mr-2"><a href="hotel.html">Hotel</a></span> <span>Hotel Single</span></p>
-            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Hotels Details</h1>
+            <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="/index">Home</a></span> <span class="mr-2"><a href="/searchAccomList">숙소</a></span> <span>숙소 정보</span></p>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">숙소 정보</h1>
           </div>
         </div>
       </div>
@@ -76,17 +101,18 @@
         <div class="row">
         	<div class="col-lg-3 sidebar">
         		<div class="sidebar-wrap bg-light ftco-animate">
-        			<h3 class="heading mb-4">Find City</h3>
-        			<form action="#">
+        			 <!-- [이원희] 검색리스트뷰 검색바-->
+        			<h3 class="heading mb-4">숙소 상세검색</h3>
+        			 <form action="searchList" method="post" class="d-block d-flex" id="searchForm">
         				<div class="fields">
 		              <div class="form-group">
-		                <input type="text" class="form-control" placeholder="Destination, City">
+		                <input type="text" name="accomName" class="form-control" placeholder="숙소아름">
 		              </div>
 		              <div class="form-group">
 		                <div class="select-wrap one-third">
 	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
 	                    <select name="" id="" class="form-control" placeholder="Keyword search">
-	                      <option value="">Select Location</option>
+	                      <option value="">지역</option>
 	                      <option value="">San Francisco USA</option>
 	                      <option value="">Berlin Germany</option>
 	                      <option value="">Lodon United Kingdom</option>
@@ -95,28 +121,35 @@
 	                  </div>
 		              </div>
 		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="Date from">
+		                <input type="text" id="checkin_date" class="form-control" placeholder="체크인 날짜">
 		              </div>
 		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="Date to">
+		                <input type="text" id="checkin_date" class="form-control" placeholder="체크아웃 날짜">
 		              </div>
-		              <div class="form-group">
+					<div class="form-group">
+		              	
 		              	<div class="range-slider">
-		              		<span>
-										    <input type="number" value="25000" min="0" max="120000"/>	-
-										    <input type="number" value="50000" min="0" max="120000"/>
-										  </span>
-										  <input value="1000" min="0" max="120000" step="500" type="range"/>
-										  <input value="50000" min="0" max="120000" step="500" type="range"/>
-										  </svg>
-										</div>
-		              </div>
-		              <div class="form-group">
-		                <input type="submit" value="Search" class="btn btn-primary py-3 px-5">
+		              		<div>요금 범위(1박당)</div>
+		              		
+							<input value="10000" min="0" max="10000000" step="500" type="range"/>
+							<input value="5000000" min="5000000" max="10000000" step="500" type="range"/>
+								
+						</div>
+						
+						<span>
+						
+							<input type="number" value="10000" min="0" max="10000000"/>-
+							<input type="number" value="5000000" min="5000000" max="10000000"/>
+						
+						</span>
+					</div>
+		              <div class="form-group">                                                             
+		                <button type="submit" class="search-submit btn btn-primary">검색</button>
 		              </div>
 		            </div>
 	            </form>
         		</div>
+        		<!-- 검색바 끝 -->
         		<div class="sidebar-wrap bg-light ftco-animate">
         			<h3 class="heading mb-4">Star Rating</h3>
         			<form method="post" class="star-rating">
@@ -220,11 +253,11 @@
 		          				<c:forEach items="${roomList}" var="rl">
 		          					<div class="col-md-4">
 						    			<div class="destination">
-						    				<a href="hotel-single.html" class="img img-2" style="background-image: url(images/room-4.jpg);"></a>
+						    				<a href="searchRoomOne?roomNo=${rl.roomNo}" class="img img-2" style="background-image: url(images/room-4.jpg);"></a>
 						    				<div class="text p-3">
 						    					<div class="d-flex">
 						    						<div class="one">
-								    					<h3><a href="hotel-single.html">${rl.roomName}</a></h3>
+								    					<h3><a href="searchRoomOne?roomNo=${rl.roomNo}">${rl.roomName}</a></h3>
 								    					<p class="rate">
 								    						<span>객실 인원 : ${rl.roomPerson}명</span>
 								    					</p>

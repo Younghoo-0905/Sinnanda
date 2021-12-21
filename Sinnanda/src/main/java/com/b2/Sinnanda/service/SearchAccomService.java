@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.mapper.SearchAccomMapper;
 import com.b2.Sinnanda.vo.Accom;
 import com.b2.Sinnanda.vo.Qna;
@@ -18,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class SearchAccomService {
 	@Autowired SearchAccomMapper accomMapper;
+	@Autowired DL dl;
 	Accom getAccom = new Accom();
 	
 	public Accom getAccomList(Accom accom) {
@@ -89,5 +91,15 @@ public class SearchAccomService {
 		returnMap.put("roomList", roomList);
 		
 		return returnMap;
+	}
+	
+	//[이원희]객실 정보 불러오기
+	public Room getRoomOne(int roomNo){
+		
+		Room room = accomMapper.selectRoomOne(roomNo);// 객실 정보
+		dl.p("SearchAccomService", "getRoomOne(int roomNo)", room); //디버깅
+		return room;
+		
+		
 	}
 }

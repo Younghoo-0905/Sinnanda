@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.b2.Sinnanda.commons.DL;
@@ -26,7 +27,7 @@ public class SearchAccomController {
 	private final int ROW_PER_PAGE = 12;
 	
 	//[이원희]검색 후 리스트 이동 21.12.10
-	@GetMapping("searchList")
+	@GetMapping("/searchAccomList")
 	public String getSerchList(Accom accom, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage) {
 		
@@ -45,10 +46,10 @@ public class SearchAccomController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 			
-		return"searchList";
+		return"/searchAccomList";
 	}
 	
-	@PostMapping("searchList")
+	@PostMapping("/searchAccomList")
 	public String postSerchList(Accom accom, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage) {
 		
@@ -65,17 +66,29 @@ public class SearchAccomController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		
-		return"searchList";
+		return"/searchAccomList";
 	}
 	
-	@GetMapping("searchOne")
+	@RequestMapping("/searchAccomOne") // [이원희] 숙소정보
 	public String getSearchOne(int accomNo, Model model) {
-		log.debug(accomNo+"<------------------get값");
+		
+		dl.p("AccomController", "accomNo", accomNo);
 		
 		Map<String, Object> map = searchAccomService.getAccomOne(accomNo);
 		model.addAttribute("accom",map.get("accom"));
 		model.addAttribute("roomList", map.get("roomList"));
 		
-		return "searchOne";
+		return "/searchAccomOne";
+	}
+	
+	@RequestMapping("/searchRoomOne")
+	public String getSearchRoomOne(int roomNo, Model model) {
+		dl.p("AccomController", "roomNo", roomNo);
+		
+		Room room = searchAccomService.getRoomOne(roomNo);
+		dl.p("AccomController", "room", room);
+		model.addAttribute("room",room);
+		
+		return "/searchRoomOne";
 	}
 }

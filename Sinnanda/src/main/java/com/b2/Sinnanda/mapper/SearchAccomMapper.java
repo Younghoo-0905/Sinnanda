@@ -22,4 +22,6 @@ public interface SearchAccomMapper {
 	Accom selectAccomOne(Integer accomNo);
 	//[이원희] 해당 숙소 객실 리스트
 	List<Room>selectAccomOneByRoom(Integer AccomNo);
+	//[이원희] 해당 객실 정보
+	Room selectRoomOne(Integer roomNo);
 }

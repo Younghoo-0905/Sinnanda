@@ -84,7 +84,7 @@
             <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>여행이 신난다.<br></strong> 신나는 도시를 골라봐</h1>
             <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">원하는 도시와 날짜를 골라봐</p>
             <div class="block-17 my-4">
-              <form action="searchList" method="post" class="d-block d-flex" id="searchForm">
+              <form action="/searchAccomList" method="post" class="d-block d-flex" id="searchForm">
                 <div class="fields d-block d-flex">
                 
                  <div class="select-wrap one-third">
