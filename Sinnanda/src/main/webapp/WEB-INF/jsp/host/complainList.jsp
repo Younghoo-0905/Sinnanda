@@ -18,10 +18,10 @@
 		</tr>
 		<c:forEach var="c" items="${complainList}">
 			<tr>
-				<td>${c.complainMember}</td>
+				<td>${c.memberName}</td>
 				<td>${c.complainCategory}</td>
-				<td>${c.complainTitle}</td>
-				<td>${c.CreateDate}</td>
+				<td><a href="/host/complainOne?complainNo=${c.complainNo}">${c.complainTitle}</a></td>
+				<td>${c.createDate}</td>
 			</tr>
 		</c:forEach>
 	</table>

@@ -20,9 +20,9 @@
 				<td>탈퇴 사유</td>
 				<td>
 					<select id="outReason" name="outReason">
-						<option value="1">서비스 불만족</option>
-						<option value="2">숙소가 다양하지 않음</option>
-						<option value="3">관리자가 맘에 안듬</option>
+						<option value="기타" selected>기타</option>
+						<option value="서비스 불친절">서비스 불친절</option>
+						<option value="서비스 이용 불편">서비스 이용 불편</option>
 					</select>
 				</td>
 			</tr>								

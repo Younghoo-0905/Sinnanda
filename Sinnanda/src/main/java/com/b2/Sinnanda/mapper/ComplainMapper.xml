@@ -70,6 +70,8 @@
 		<result column="create_date" property="createDate"/>
 		<result column="update_date" property="updateDate"/>
 		<result column="member_name" property="memberName"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="room_name" property="roomName"/>
 		
 		<collection property="complainComment" ofType="com.b2.Sinnanda.vo.ComplainComment">
 			<result column="complain_no" property="complainNo"/>
@@ -88,10 +90,12 @@
 			c.complain_content, 
 			c.create_date, 
 			c.update_date, 
-			m.member_name
-			h.host_name
-			cc.complain_comment_content
-			cc.comment_date
+			m.member_name, 
+			a.accom_name, 
+			ro.room_name, 
+			cc.complain_comment_content, 
+			cc.comment_date, 
+			h.host_name 
 		FROM complain c
 		LEFT JOIN complain_comment cc
 			ON c.complain_no = cc.complain_no
@@ -107,9 +111,9 @@
 			ON a.host_no = h.host_no		
 		LEFT JOIN member m
 			ON re.member_no = m.member_no			
+		WHERE c.complain_no = #{complainNo}
 		ORDER BY create_date DESC
 		
-		WHERE c.complain_no = #{complainNo}
 	</select>	
 
 	<!-- [김영후] Complain 목록조회 Map -->
@@ -120,7 +124,9 @@
 		<result column="complain_title" property="complainTitle"/>
 		<result column="create_date" property="createDate"/>
 		<result column="update_date" property="updateDate"/>
-		<result column="member_name" property="member_name"/>
+		<result column="member_name" property="memberName"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="room_name" property="roomName"/>
 	</resultMap>
 
 	<!-- [김영후] Complain 목록조회 -->
@@ -132,12 +138,18 @@
 			c.complain_title, 
 			c.create_date, 
 			c.update_date, 
-			m.member_name
+			m.member_name, 
+			a.accom_name, 
+			ro.room_name 
 		FROM complain c
 		LEFT JOIN payment p 
 			ON c.payment_no = p.payment_no 
 		LEFT JOIN reserve r
 			ON p.reserve_no = r.reserve_no
+		LEFT JOIN room ro
+			ON ro.room_no = r.room_no
+		LEFT JOIN accom a
+			ON a.accom_no = ro.accom_no
 		LEFT JOIN member m
 			ON r.member_no = m.member_no			
 		ORDER BY create_date DESC
