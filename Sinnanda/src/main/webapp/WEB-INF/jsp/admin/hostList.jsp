@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="../css/icomoon.css">
     <link rel="stylesheet" href="../css/style.css">
     
-	<title>회원 리스트</title>
+	<title>사업자 리스트</title>
 </head>
 <body>
 	<!-- [윤경환] 상단 내비바 - START -->
@@ -86,7 +86,7 @@
     <section class="ftco-section testimony-section bg-light">
 	    <div class="container">
 
-			<h1><strong>호스트 리스트</strong></h1>
+			<h1><strong>사업자 리스트</strong></h1>
 			<div class="container2">
 				<select id="hostActive" name="hostActive" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
 					<option value="">선택</option>

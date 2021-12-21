@@ -54,6 +54,11 @@ public interface AdminMapper {
 	
 	//[윤경환] 호스트 총수 
 	int selectHostTotalCount();
- 	
+	
+	
+	//[윤경환] 관리자 정산 차트 
+ 	Map<String, Object> IncomeAdminYear(int year);
+	
+	
 
 }

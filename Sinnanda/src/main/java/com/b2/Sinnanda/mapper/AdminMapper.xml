@@ -244,12 +244,12 @@
 			host_active,
 			update_date
 		FROM host
-		ORDER by update_date DESC 
 			<where>
 				<if test ="hostActive !=null">
 					host_active = #{hostActive}
 				</if>
 			</where>
+		ORDER by update_date DESC 
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
@@ -261,4 +261,27 @@
  		FROM host
 	</select>
 	
+	
+	<!-- [윤경환] 날짜에 따라 정산 
+	
+	<select id ="IncomeAdminYear" parameterType="int" resultMap="java.util.Map">
+		SELECT 
+			SUM(CASE WHEN MONTH(p.update_date) =1 THEN a.payout_commission END) january,
+			SUM(CASE WHEN MONTH(p.update_date) =2 THEN a.payout_commission END) february,
+			SUM(CASE WHEN MONTH(p.update_date) =3 THEN a.payout_commission END) march,
+			SUM(CASE WHEN MONTH(p.update_date) =4 THEN a.payout_commission END) april,
+			SUM(CASE WHEN MONTH(p.update_date) =5 THEN a.payout_commission END) may,
+			SUM(CASE WHEN MONTH(p.update_date) =6 THEN a.payout_commission END) june,
+			SUM(CASE WHEN MONTH(p.update_date) =7 THEN a.payout_commission END) july,
+			SUM(CASE WHEN MONTH(p.update_date) =8 THEN a.payout_commission END) august,
+			SUM(CASE WHEN MONTH(p.update_date) =9 THEN a.payout_commission END) september,
+			SUM(CASE WHEN MONTH(p.update_date) =10 THEN a.payout_commission END) october,
+			SUM(CASE WHEN MONTH(p.update_date) =11 THEN a.payout_commission END) november,
+			SUM(CASE WHEN MONTH(p.update_date) =12 THEN a.payout_commission END) december
+		FROM admin_sales as a
+		INNER JOIN payment AS p
+		ON a.payment_no = p.payment_no
+		WHERE YEAR(p.update_date)=#{year}
+	</select>
+	-->
 </mapper>

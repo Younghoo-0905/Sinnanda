@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.b2.Sinnanda.mapper.AdminMapper;
 import com.b2.Sinnanda.service.AdminService;
+import com.b2.Sinnanda.service.HostQnaService;
 import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.User;
@@ -24,10 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+
 public class AdminController {
 	@Autowired AdminService adminService;
-	
-	
+	@Autowired HostQnaService hostQnaService;
+	@Autowired AdminMapper adminMapper;
 	// [윤경환] Admin 목록 페이징용 상수
 		private final int ROW_PER_PAGE = 10;
 	
@@ -47,17 +51,20 @@ public class AdminController {
 	
 	//[윤경환] 관리자 페이지
 	@GetMapping("/admin/adminPage")
-	public String getAdminPage(HttpServletRequest request, Model model) {
+	public String getAdminPage(HttpServletRequest request, Model model, 
+			@RequestParam(defaultValue = "전체") String hostQnaCategory,
+			@RequestParam(defaultValue = "1") int currentPage) {
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
 		
 		//이슈 로그인된값이 같지 않으면 index 페이지로 리턴
-		
-		
+		Map<String, Object> map = hostQnaService.getNoCommentsHostQnaList(loginUser.getUserLevel(), hostQnaCategory, currentPage, ROW_PER_PAGE);
+	
 		Admin admin =  adminService.getAdminOne(loginUser.getAdmin().getAdminNo()); 
 		
 		model.addAttribute(admin);
+		model.addAttribute("hostQnaList", map.get("hostQnaList"));	// QnA 목록 정보
 		
 		return "admin/adminPage";
 	}
@@ -280,5 +287,14 @@ public class AdminController {
 			model.addAttribute("pageNo", pageNo);
 			return "/admin/hostList";
 		}
-	
+		
+		/*
+		//[윤경환] 정산 차트 
+		@GetMapping("/admin/incomeChart")
+		public Map<String, Object> getIncomeChart(@RequestParam(name ="year") int year) {
+			Map<String, Object> map = adminMapper.IncomeAdminYear(year);
+			return map;
+			
+		}
+		*/
 }

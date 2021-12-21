@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -24,6 +25,35 @@
   <link rel="stylesheet" href="../skydash/css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../skydash/images/favicon.png" />
+
+
+<style>
+	
+	.hei{
+      width:100%;
+	  margin:15px 0;
+	  background-color:#ffffff;
+}
+	 th {
+	font-weight:bold;
+	background-color:#87CEFA;
+	border-width:1px
+}
+	th,td {
+	font-size:0.95em;
+	text-align:center;
+	padding:4px;
+	
+}
+	tr{
+	border: 1px solid #ffffff;
+}
+	td{
+		border: 1px solid #E0FFFF;
+		border-width:1p
+	}
+</style>
+
 </head>
 <body>
   <div class="container-scroller">
@@ -300,49 +330,91 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="adminOne?adminNo=${loginUser.admin.adminNo}">
               <i class="icon-grid menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
+              <span class="menu-title">관리자 정보</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="icon-layout menu-icon"></i>
-              <span class="menu-title">UI Elements</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-              </ul>
-            </div>
-          </li>
+  
+ 
+    
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-              <i class="icon-columns menu-icon"></i>
-              <span class="menu-title">Form elements</span>
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">커뮤니티 관리</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
+                <li class="nav-item"><a class="nav-link" href="/qnaList">Qna</a></li>
+              </ul>
+            </div>
+             <div class="collapse" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="hostQnaList">사업자 Qna</a></li>
               </ul>
             </div>
           </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">회원 관리</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <!-- 마이 페이지 -->
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                 <a class="nav-link" href="adminOne?adminNo=${loginUser.admin.adminNo}">마이 페이지 </a>
+                 <!-- 관리자가 회원이나 호스트 리스트 관리(세부적으로 관리는 나중에) -->
+                 <li class="nav-item">
+                 <a class="nav-link" href="/admin/memberList?adminNo=${loginUser.admin.adminNo}">회원 리스트 </a>
+                 <li class="nav-item">
+                 <a class="nav-link" href="/admin/hostList?adminNo=${loginUser.admin.adminNo}">사업자 리스트</a>
+                 
+                 <!-- 관리자 레벨이 5이어야 다른 관리자 수정 가능  -->
+                 <c:if test="${admin.adminPositionNo == 1}">
+                    <li class="nav-item">
+                		<a class="nav-link" href="adminList">관리자 리스트</a>
+                	</li>
+               	</c:if>
+                 </li>
+              </ul>
+            </div>
+          </li>
+          
+          
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
               <i class="icon-bar-graph menu-icon"></i>
-              <span class="menu-title">Charts</span>
+              <span class="menu-title">통계</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="charts">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/admin/incomeChart">정산</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="charts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">회원 관련 통계</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="charts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">사업자 관련 통계</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="charts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">숙소 관련 통계</a></li>
               </ul>
             </div>
           </li>
+          
+          
+          
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
               <i class="icon-grid-2 menu-icon"></i>
@@ -367,35 +439,8 @@
               </ul>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="icon-head menu-icon"></i>
-              <span class="menu-title">[인원 관리]</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <!-- 마이 페이지 -->
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                 <a class="nav-link" href="adminOne?adminNo=${loginUser.admin.adminNo}">마이 페이지 </a>
-                 <!-- 관리자가 회원이나 호스트 리스트 관리(세부적으로 관리는 나중에) -->
-                 <li class="nav-item">
-                 <a class="nav-link" href="/admin/memberList?adminNo=${loginUser.admin.adminNo}">회원 리스트 </a>
-                 <li class="nav-item">
-                 <a class="nav-link" href="/admin/hostList?adminNo=${loginUser.admin.adminNo}">호스트 리스트</a>
-                 
-                 <!-- 관리자 레벨이 5이어야 다른 관리자 수정 가능  -->
-                 <c:if test="${admin.adminPositionNo == 1}">
-                    <li class="nav-item">
-                		<a class="nav-link" href="adminList">관리자 리스트</a>
-                	</li>
-               	</c:if>
-             
-               	
-                 </li>
-              </ul>
-            </div>
-          </li>
+        
+          
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
               <i class="icon-ban menu-icon"></i>
@@ -409,12 +454,6 @@
               </ul>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/documentation/documentation.html">
-              <i class="icon-paper menu-icon"></i>
-              <span class="menu-title">Documentation</span>
-            </a>
-          </li>
         </ul>
       </nav>
       <!-- partial -->
@@ -425,9 +464,10 @@
               <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                    <!-- 관리자 관련된것은 나중에 수정 필요 -->
-                  <h3 class="font-weight-bold">${admin.adminName}</h3>
-                  <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6>
+                  <h3 class="font-weight-bold">${admin.adminName} 님 환영합니다!</h3>
                 </div>
+                
+                
                 <div class="col-12 col-xl-4">
                  <div class="justify-content-end d-flex">
                   <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
@@ -446,68 +486,35 @@
               </div>
             </div>
           </div>
+          <h6 style="text-align:center;  font-weight: bold;">답변되지 않은 Qna</h6>
+          <!--[운경환] 답변되지 않은 최신 QNA 답변 보기  -->
           <div class="row">
-            <div class="col-md-6 grid-margin stretch-card">
-              <div class="card tale-bg">
-                <div class="card-people mt-auto">
-                  <img src="../images/dashboard/people.svg" alt="people">
-                  <div class="weather-info">
-                    <div class="d-flex">
-                      <div>
-                        <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup></h2>
-                      </div>
-                      <div class="ml-2">
-                        <h4 class="location font-weight-normal">Bangalore</h4>
-                        <h6 class="font-weight-normal">India</h6>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 grid-margin transparent">
-              <div class="row">
-                <div class="col-md-6 mb-4 stretch-card transparent">
-                  <div class="card card-tale">
-                    <div class="card-body">
-                      <p class="mb-4">Today’s Bookings</p>
-                      <p class="fs-30 mb-2">4006</p>
-                      <p>10.00% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 mb-4 stretch-card transparent">
-                  <div class="card card-dark-blue">
-                    <div class="card-body">
-                      <p class="mb-4">Total Bookings</p>
-                      <p class="fs-30 mb-2">61344</p>
-                      <p>22.00% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                  <div class="card card-light-blue">
-                    <div class="card-body">
-                      <p class="mb-4">Number of Meetings</p>
-                      <p class="fs-30 mb-2">34040</p>
-                      <p>2.00% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 stretch-card transparent">
-                  <div class="card card-light-danger">
-                    <div class="card-body">
-                      <p class="mb-4">Number of Clients</p>
-                      <p class="fs-30 mb-2">47033</p>
-                      <p>0.22% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <table class="hei">
+            <tr style="text-align:center">
+					<th width="5%">번호</th>
+					<th width="40%">제목</th>
+					<th width="10%">문의유형</th>
+					<th width="10%">작성자</th>
+					<th width="10%">작성일</th>
+				</tr>
+				<c:forEach items="${hostQnaList}" var="hostQna">
+					<tr>
+						<td style="text-align:center">${hostQna.hostQnaNo}</td>
+						<td>
+							<a href="/admin/hostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
+						</td>
+						<td style="text-align:center">${hostQna.hostQnaCategory}</td>
+						<td style="text-align:center">${hostQna.hostName}</td>
+						<td style="text-align:center">
+							<fmt:parseDate value="${hostQna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+							<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
+						</td>
+					</tr>
+				</c:forEach>
+				</table>
           </div>
+          
+          
           <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card">

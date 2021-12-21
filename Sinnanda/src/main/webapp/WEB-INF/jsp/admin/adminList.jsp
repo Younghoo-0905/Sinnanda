@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="../css/icomoon.css">
     <link rel="stylesheet" href="../css/style.css">
     
-	<title>신난다 관리자 리스트</title>
+	<title>관리자 리스트</title>
 </head>
 <body>
 	<!-- [이승준] 상단 내비바 - START -->

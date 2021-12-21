@@ -91,8 +91,9 @@
 					</tr>
 				</c:forEach>
 			</table>
-			<a class="btn btn-primary" href="addQna" style="float: right; margin-top: auto;">문의사항 작성</a>
-			
+			<c:if test="${loginUser.userLevel !=3}">
+				<a class="btn btn-primary" href="addQna" style="float: right; margin-top: auto;">문의사항 작성</a>
+			</c:if>
 			<!-- Paging -->			
 			<div class="row mt-5">
 		    	<div class="col text-center">
