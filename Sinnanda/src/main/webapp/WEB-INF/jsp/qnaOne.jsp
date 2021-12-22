@@ -42,7 +42,7 @@
 		// [이승준] 게시판폼, 게시판으로 자동 스크롤
 		function toBoardScroll(){
 			var offset = $("#startBoard").offset();
-			$('html, body').animate({scrollTop: offset.top}, 200);
+			$('html, body').animate({scrollTop: offset.top}, 500);
 		}
 	</script>
 	

@@ -42,7 +42,7 @@
 		// [이승준] 게시판폼, 게시판으로 자동 스크롤
 		function toBoardScroll(){
 			var offset = $("#startBoard").offset();
-			$('html, body').animate({scrollTop: offset.top}, 200);
+			$('html, body').animate({scrollTop: offset.top}, 500);
 		}
 		
 		// [이승준] 답변이 있는 게시글의 수정을 막아주는 JQuery

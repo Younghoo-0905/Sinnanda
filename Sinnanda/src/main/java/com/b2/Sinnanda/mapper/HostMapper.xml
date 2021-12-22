@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.HostMapper">
-	
+
+	<!-- [이승준] Host 상세 조회 -->
+	<select id="selectHostOne" parameterType="int">
+		SELECT 
+			host_no hostNo, 
+			host_id hostId, 
+			host_name hostName, 
+			host_tel hostTel, 
+			host_active hostActive, 
+			member_level memberLevel, 
+			create_date createDate, 
+			update_date updateDate
+		FROM host
+		WHERE host_no = #{hostNo}
+	</select>
 </mapper>
