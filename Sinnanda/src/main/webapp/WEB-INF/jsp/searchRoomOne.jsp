@@ -33,51 +33,8 @@
   </head>
   <body>
     
-  <!--[이원희] nav start -->
-  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-		<div class="container">
-			<a class="navbar-brand" href="index">신난다</a>
-			
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="oi oi-menu"></span> Menu
-			</button>
-			
-			<div class="collapse navbar-collapse" id="ftco-nav">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a href="/qnaList" class="nav-link">Q&A</a></li>
-					<li class="nav-item cta"><a href="/noticeList" class="nav-link">공지사항</a></li>
-					<li class="nav-item cta"><a href="/noticeList" class="nav-link">신난다 소개</a></li>
-					
-				</ul>
-				<ul class="navbar-nav mj-auto">
-					<!--memberId가 없을때--> 
-					<c:if test ="${loginUser == null}">
-						<li class="nav-item member"><a href="login" class="nav-link">로그인</a></li>
-						<li class="nav-item member"><a href="insertMemberForm" class="nav-link">회원가입</a></li>
-					</c:if>
-					
-					<!--memberId가 있을떄  -->
-					<c:if test = "${loginUser != null}">
-						<c:if test="${loginUser.userLevel == 1}">
-							<li class="nav-item member"><a href="/member/myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
-						</c:if>
-						<c:if test="${loginUser.userLevel == 2}">
-							<li class="nav-item member"><a href="/host/myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
-						</c:if>
-						<c:if test="${loginUser.userLevel == 3}">
-							<li class="nav-item member">
-							<a href="/admin/myPage?adminNo=${loginUser.admin.adminNo}" class="nav-link">
-									<img src="/images/jun_test/adminImg.png" width="20px" height="20px">
-									${loginUser.admin.adminName}&nbsp;관리자
-								</a>
-							</li>
-						</c:if>
-						<li class="nav-item member"><a href="logout" class="nav-link">로그아웃</a></li>		
-					</c:if>
-				</ul>
-			</div>
-		</div>
-	</nav>
+ <!--[이원희] nav start -->
+  <%@ include file="/WEB-INF/partials/navbar.jsp" %>
     <!-- END nav -->
     
     <!-- [이원희] 뷰 배경사진-->

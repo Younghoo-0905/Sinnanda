@@ -192,7 +192,7 @@
 		    		<c:forEach items="${accomList}" var="ac" varStatus="status">
 						<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
-		    					<a href="searchAccomOne?accomNo=${ac.accomNo}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-1.jpg);">
+		    					<a href="searchAccomOne?accomNo=${ac.accomNo}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/${ac.accomImg});">
 		    						<div class="icon d-flex justify-content-center align-items-center">
     							<span class="icon-search2"></span>
     						
@@ -245,7 +245,7 @@
 		              			<li><a>&lt;</a></li>
 		              		</c:when>
 		              		<c:otherwise>
-		              			<li><a href="searchList?accomName=${accomName}&currentPage=${currentPage-1}">&lt;</a></li>
+		              			<li><a href="searchAccomList?accomName=${accomName}&currentPage=${currentPage-1}">&lt;</a></li>
 		              		</c:otherwise>
 		              	</c:choose>
 		              	<c:forEach var="page" begin = "1" end="${lastPage}" step="1">
@@ -254,7 +254,7 @@
 		              			 <li class="active"><span>${page}</span></li>
 		              		</c:when>
 		              		<c:otherwise>
-		              			<li><a href="searchList?accomName=${accomName}&currentPage=${page}">${page}</a></li>
+		              			<li><a href="searchAccomList?accomName=${accomName}&currentPage=${page}">${page}</a></li>
 		              		</c:otherwise>
 		              	</c:choose>
 		              	</c:forEach>
@@ -263,7 +263,7 @@
 		              			<li><a>&gt;</a></li>
 		              		</c:when>
 		              		<c:otherwise>
-		              			<li><a href="searchList?accomName=${accomName}&currentPage=${currentPage+1}">&gt;</a></li>
+		              			<li><a href="searchAccomList?accomName=${accomName}&currentPage=${currentPage+1}">&gt;</a></li>
 		              		</c:otherwise>
 		              	</c:choose>
 		               
