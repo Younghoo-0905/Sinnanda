@@ -12,8 +12,8 @@ public class Review {
 	String reviewRecommend;
 	String createDate;
 	String updateDate;
-	private int memberNo;
-	private String memberName;
-	private String accomName;
-	private String roomName;
+	int memberNo;
+	String memberName;
+	String accomName;
+	String roomName;
 }

@@ -79,7 +79,7 @@ public class MemberService {
 		
 		// 2. qna 리스트 조회
 		List<Qna> myQnaList = memberMapper.selectMyQnaListQnaCategory(paraMap);
-		log.debug(" ├[param] myQnaList : "+myQnaList.toString());
+		dl.p("MemberService", "getMyQnaListByQnaCategory()", "myQnaList : "+myQnaList.toString());
 		// 3. 리턴 값 가공 (return : qna & lastPage)
 		Map<String, Object> returnMap = new HashMap<>();
 		
@@ -101,11 +101,11 @@ public class MemberService {
 	
 	// [유동진] 내가 작성한 리뷰 목록 조회
 	public Map<String, Object> getMyReviewListByReviewRecommend(int memberNo, String reviewRecommend, int currentPage, int rowPerPage){
-		dl.p("MemberService", "getMyReviewList()", "나의 리뷰 목록");
-		dl.p("MemberService", "getMyReviewList()", "memberNo : "+memberNo);
-		dl.p("MemberService", "getMyReviewList()", "qnaCategory : "+reviewRecommend);
-		dl.p("MemberService", "getMyReviewList()", "currentPage : "+currentPage);
-		dl.p("MemberService", "getMyReviewList()", "rowPerPage : "+rowPerPage);
+		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "나의 리뷰 목록");
+		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "memberNo : "+memberNo);
+		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "reviewRecommend : "+reviewRecommend);
+		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "currentPage : "+currentPage);
+		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "rowPerPage : "+rowPerPage);
 		
 		// 1. 매개변수 가공 (paraMap <-- reviewRecommend, currentPage, rowPerPage)
 		Map<String, Object> paraMap = new HashMap<>();
@@ -118,20 +118,20 @@ public class MemberService {
 		
 		// 2. review 리스트 조회
 		List<Review> myReviewList = memberMapper.selectMyReviewListReviewRecommend(paraMap);
-		dl.p("MemberService", "getMyReviewList()", "myReviewList : "+myReviewList.toString());
+		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "myReviewList : "+myReviewList.toString());
 		// 3. 리턴 값 가공 (return : review & lastPage)
 		Map<String, Object> returnMap = new HashMap<>();
 		
 		int lastPage = 0;
 		int totalCount = memberMapper.selectMyReviewTotalCount(reviewRecommend);
-		dl.p("MemberService", "getMyReviewList()", "totalCount : "+totalCount);
+		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "totalCount : "+totalCount);
 		
 		lastPage = totalCount / rowPerPage;
 		if(totalCount % rowPerPage !=0) {
 			lastPage += 1;
 		}
 		
-		dl.p("MemberService", "getMyReviewList()", "lastPage : "+lastPage);
+		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "lastPage : "+lastPage);
 		returnMap.put("myReviewList", myReviewList);
 		returnMap.put("lastPage", lastPage);
 		

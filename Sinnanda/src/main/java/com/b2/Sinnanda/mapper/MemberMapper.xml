@@ -171,6 +171,8 @@
 	<resultMap type="com.b2.Sinnanda.vo.Review" id="MyReviewListMap">
 		<id column="review_no" property="reviewNo"/>
 		<result column="review_content" property="reviewContent"/>
+		<result column="review_Rank" property="reviewRank"/>
+		<result column="review_recommend" property="reviewRecommend"/>
 		<result column="create_date" property="createDate"/>
 		<result column="member_no" property="memberNo"/>
 		<result column="member_name" property="memberName"/>
@@ -185,7 +187,9 @@
 			m.member_name, 
 			ac.accom_name, 
 			r.room_name, 
-			rev.review_content, 
+			rev.review_content,
+			rev.review_rank,
+			rev.review_recommend,
 			rev.create_date
 		FROM member m 
 		JOIN reserve re ON re.member_no = m.member_no
@@ -193,8 +197,18 @@
 		JOIN review rev ON rev.payment_no = p.payment_no
 		JOIN room r ON r.room_no = re.room_no
 		JOIN accom ac ON r.accom_no = ac.accom_no
-		WHERE m.member_no = #{memberNo}
+		<if test="reviewRecommend != null">
+			<where>
+				m.member_no = #{memberNo} AND rev.review_recommend = #{reviewRecommend}
+			</where>
+		</if>
+		<if test="reviewRecommend == null">
+         <where>
+            m.member_no = #{memberNo}
+         </where>
+      </if>
 		ORDER BY rev.create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	<!-- [유동진] 리뷰 갯수 조회 -->

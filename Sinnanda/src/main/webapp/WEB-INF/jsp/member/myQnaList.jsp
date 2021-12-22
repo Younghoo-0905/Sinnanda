@@ -55,7 +55,7 @@
 	<!-- 상단 내비바 - START -->
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index">신난다</a>
+			<a class="navbar-brand" href="/index">신난다</a>
 			
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
@@ -78,7 +78,7 @@
 					<!--memberId가 있을떄  -->
 					<c:if test = "${loginUser != null}">
 						<c:if test="${loginUser.userLevel == 1}">
-							<li class="nav-item member"><a href="myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
+							<li class="nav-item member"><a href="/member/myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
 						</c:if>
 						<c:if test="${loginUser.userLevel == 2}">
 							<li class="nav-item member"><a href="myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
@@ -120,12 +120,12 @@
 			<div class="container2">
 				<select id="qnaCategory" name="qnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
 					<option value="">선택</option>
-					<option value="/qnaList?qnaCategory=전체">전체문의</option>
-					<option value="/qnaList?qnaCategory=기타문의">기타문의</option>
-					<option value="/qnaList?qnaCategory=결제문의">결제문의</option>
-					<option value="/qnaList?qnaCategory=이용문의">이용문의</option>
-					<option value="/qnaList?qnaCategory=예약문의">예약문의</option>
-					<option value="/qnaList?qnaCategory=숙소문의">숙소문의</option>
+					<option value="/member/myQnaList?qnaCategory=전체">전체문의</option>
+					<option value="/member/myQnaList?qnaCategory=기타문의">기타문의</option>
+					<option value="/member/myQnaList?qnaCategory=결제문의">결제문의</option>
+					<option value="/member/myQnaList?qnaCategory=이용문의">이용문의</option>
+					<option value="/member/myQnaList?qnaCategory=예약문의">예약문의</option>
+					<option value="/member/myQnaList?qnaCategory=숙소문의">숙소문의</option>
 				</select>
 			</div>
 			<table class="table table-board" style="width: 100%;">
@@ -140,7 +140,7 @@
 					<tr>
 						<td style="text-align:center">${qna.qnaNo}</td>
 						<td>
-							<a href="/myQnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
+							<a href="/member/myQnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
 							<c:if test="${qna.qnaSecret == '비밀문의'}">
 								<img src="/images/qna/lockImg.png" width="20px" height="20px">
 							</c:if>
@@ -164,7 +164,7 @@
 						<ul>
 							<!-- '이전' 버튼 -->
 							<c:if test="${beginRow > (ROW_PER_PAGE * 10)}">
-								<li><a href="myQnaList?currentPage=${pageNo-1}&qnaCategory=${qnaCategory}">&lt;</a></li>
+								<li><a href="/member/myQnaList?currentPage=${pageNo-1}&qnaCategory=${qnaCategory}">&lt;</a></li>
 							</c:if>
 							
 							<!-- Page 번호 -->
@@ -178,7 +178,7 @@
 											<li class="active"><span>${i}</span></li>
 										</c:when>
 					    				<c:otherwise>
-											<li><a href="/myQnaList?currentPage=${i}&qnaCategory=${qnaCategory}">${i}</a></li>	
+											<li><a href="/member/myQnaList?currentPage=${i}&qnaCategory=${qnaCategory}">${i}</a></li>	
 										</c:otherwise>		
 									</c:choose>
 									<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
@@ -190,7 +190,7 @@
 							
 							<!-- '다음' 버튼 -->
 							<c:if test="${currentPage + 10 <= lastPage}">
-								<li><a href="myQnaList?currentPage=${pageNo+10}&qnaCategory=${qnaCategory}">&gt;</a></li>
+								<li><a href="/member/myQnaList?currentPage=${pageNo+10}&qnaCategory=${qnaCategory}">&gt;</a></li>
 							</c:if>
 						</ul>
 					</div>

@@ -34,7 +34,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index">신난다</a>
+			<a class="navbar-brand" href="/index">신난다</a>
 			
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
@@ -115,10 +115,10 @@
 	</table>
 	
 		<div>
-			<a class="navbar-brand brand-logo mr-5" href = "/modifyMember">회원정보 수정</a>
+			<a class="navbar-brand brand-logo mr-5" href = "/member/modifyMember">회원정보 수정</a>
 		</div>
 		<div>
-			<a class="navbar-brand brand-logo mr-5" href = "/checkMemberPw">회원 비밀번호 변경</a>
+			<a class="navbar-brand brand-logo mr-5" href = "/member/checkMemberPw">회원 비밀번호 변경</a>
 		</div>
 		<div>		
 			<a class="navbar-brand brand-logo mr-5" href = "">예약내역 확인</a>
@@ -127,13 +127,13 @@
 			<a class="navbar-brand brand-logo mr-5" href = "">보유쿠폰 확인</a>
 		</div>
 		<div>		
-			<a class="navbar-brand brand-logo mr-5" href = "/myReviewList">작성한 리뷰 보기</a>
+			<a class="navbar-brand brand-logo mr-5" href = "/member/myReviewList">작성한 리뷰 보기</a>
 		</div>
 		<div>		
-			<a class="navbar-brand brand-logo mr-5" href = "/myQnaList">작성한 QnA 보기</a>
+			<a class="navbar-brand brand-logo mr-5" href = "/member/myQnaList">작성한 QnA 보기</a>
 		</div>	
 		<div>		
-			<a class="navbar-brand brand-logo mr-5" href = "/memberOutForm">탈퇴하기</a>
+			<a class="navbar-brand brand-logo mr-5" href = "/member/memberOutForm">탈퇴하기</a>
 		</div>
 	</form>
 	</div>

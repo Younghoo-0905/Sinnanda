@@ -32,7 +32,7 @@ public class MemberController {
 	@Autowired DL dl;
 	
 	// [유동진] 마이페이지
-	@GetMapping("myPage")
+	@GetMapping("/member/myPage")
 	public String myPage(Model model, int memberNo) {
       // memberNo을 이용해서 member의 데이터들을 조회하고, member 객체에 삽입
       Member member = memberService.myPage(memberNo);
@@ -40,11 +40,11 @@ public class MemberController {
       
       // member 객체의 데이터를 전달
       model.addAttribute(member);
-      return "myPage";
+      return "/member/myPage";
 	}
 		
 	// [유동진] 회원 정보 수정(프로필)
-	@GetMapping("/modifyMember")
+	@GetMapping("/member/modifyMember")
 	public String modifyMember(HttpServletRequest request, Model model) {
 		// 로그인 세션 조회
 		HttpSession session = request.getSession();
@@ -57,18 +57,18 @@ public class MemberController {
 		}
 		
 		model.addAttribute(loginUser);
-		return "modifyMember";
+		return "/member/modifyMember";
 	}
-	@PostMapping("/modifyMember")
+	@PostMapping("/member/modifyMember")
 	public String modifyMember(Member member) {
 		log.debug("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥MemberController : modifyMember -> " + member.toString());
 		memberService.modifyMember(member);
 		log.debug("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥MemberController : 회원정보수정 성공!");
-		return "redirect:/myPage?memberNo="+member.getMemberNo();
+		return "redirect:/member/myPage?memberNo="+member.getMemberNo();
 	}
 	
 	// [유동진] 비밀번호 변경
-	   @GetMapping("/checkMemberPw")
+	   @GetMapping("/member/checkMemberPw")
 	   public String checkMemberPw(HttpServletRequest request, Model model) {
 	      // 로그인 세션 조회
 	      HttpSession session = request.getSession();
@@ -88,16 +88,16 @@ public class MemberController {
 	      
 	      model.addAttribute(member);
 	      model.addAttribute(loginUser);
-	      return "checkMemberPw";
+	      return "member/checkMemberPw";
 	   }
-	@PostMapping("/checkMemberPw")
+	@PostMapping("/member/checkMemberPw")
 	public String postcheckMemberPw(String memberPw) {
 		log.debug("memberPw ->->->->->->-> " + memberPw);
 		
 		memberService.getCheckMemberPw(memberPw);
-		return "modifyMemberPw";
+		return "/member/modifyMemberPw";
 	}
-	@PostMapping("/modifyMemberPw")
+	@PostMapping("/member/modifyMemberPw")
 	public String modifyMemberPw(HttpSession session, Member member) {
 
 		memberService.modifyMemberPw(member);
@@ -111,7 +111,7 @@ public class MemberController {
 	private final int ROW_PER_PAGE = 10;
 	
 	// [유동진] 내가 작성한 QnA 목록 조회
-	@GetMapping("/myQnaList")
+	@GetMapping("/member/myQnaList")
 	public String myQnaList(HttpServletRequest request, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
 			@RequestParam(required = false) String qnaCategory) {
@@ -138,12 +138,11 @@ public class MemberController {
 		model.addAttribute("myQnaList", map.get("myQnaList"));	// QnA 목록 정보
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
-		
-		return "myQnaList";
+		return "/member/myQnaList";
 	}
 	
 	// [유동진] My QnA 상세 조회
-	@GetMapping("/myQnaOne")
+	@GetMapping("/member/myQnaOne")
 	public String myQnaOne(HttpServletRequest request, Model model, int qnaNo) {
 		log.debug("[Debug] \"START\" memberController.myQnaOne() | Get");
 		log.debug(" ├[param] qnaNo : "+qnaNo);
@@ -166,7 +165,7 @@ public class MemberController {
 			// 1. 비회원 or 사업자인 경우 -> qnaList
 			if((loginUser == null) || (loginUser.getUserLevel() == 2)) {
 				log.info(" ├[info] myQnaOne 접근 불가 : 비회원 or 사업자");
-				return "redirect:/myQnaList";
+				return "redirect:/member/myQnaList";
 			}
 			log.debug(" ├[param] 작성자 memberNo : "+qna.getMemberNo());
 			log.debug(" ├[param] 접근자 Level : "+loginUser.getUserLevel());
@@ -175,7 +174,7 @@ public class MemberController {
 			if(loginUser.getUserLevel() == 1) {
 				log.debug(" ├[param] 세션 memberNo : "+loginUser.getMember().getMemberNo());
 				if(qna.getMemberNo() != loginUser.getMember().getMemberNo()) {
-					return "redirect:/myQnaList";
+					return "redirect:/member/myQnaList";
 				}
 			}
 			log.info(" ├[info] myQnaOne 접근 허용");
@@ -184,11 +183,11 @@ public class MemberController {
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
 		model.addAttribute(qna);	// 선택된 QnA 상세 정보
 		
-		return "myQnaOne";
+		return "/member/myQnaOne";
 	}
 	
 	// [유동진] 내가 작성한 리뷰 목록 조회
-	@GetMapping("/myReviewList")
+	@GetMapping("/member/myReviewList")
 	public String myReviewList(HttpServletRequest request, Model model,
 			@RequestParam(defaultValue = "1") int currentPage,
 			@RequestParam(required = false) String reviewRecommend) {		
@@ -212,11 +211,11 @@ public class MemberController {
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
 		model.addAttribute("reviewRecommend", map.get("reviewRecommend"));	// 선택된 reviewRecommend
-		model.addAttribute("myReviewList", map.get("myReviewList"));	// QnA 목록 정보
+		model.addAttribute("myReviewList", map.get("myReviewList"));	// 리뷰 목록 정보
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
-		
-		return "myReviewList";
+
+		return "/member/myReviewList";
 	}
 	
 	//	[김영후] 회원 가입
