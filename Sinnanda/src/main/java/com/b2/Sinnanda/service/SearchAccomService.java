@@ -46,6 +46,7 @@ public class SearchAccomService {
 		
 		paraMap.put("accomName", accomName.getAccomName());
 		paraMap.put("accomCategoryName", accomName.getAccomCategoryName());
+		paraMap.put("person", person);
 		paraMap.put("beginRow", beginRow);
 		paraMap.put("rowPerPage", rowPerPage);
 		
