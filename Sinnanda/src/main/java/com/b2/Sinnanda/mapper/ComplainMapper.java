@@ -30,6 +30,9 @@ public interface ComplainMapper {
 	//	Complain 상세조회
 	Complain selectComplainOne(int complainNo);
 	
+	//	NotCommented Complain 목록조회
+	List<Complain> selectNotCommentedComplainList(int hostNo);
+	
 	//	Complain 목록조회
 	List<Complain> selectComplainList(Map<String, Object> map);
 }

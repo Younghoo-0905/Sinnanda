@@ -8,7 +8,7 @@
 <title>컴플레인 목록</title>
 </head>
 <body>
-	<h1>( 대충 사업자 정보 ) 컴플레인 리스트</h1>
+	<h1>( 대충 사업자 정보 ) 답변못한 컴플레인 리스트</h1>
 	<table border="1">
 		<tr>
 			<td>작성자</td>
@@ -16,6 +16,11 @@
 			<td>complain Title</td>
 			<td>작성일</td>
 		</tr>
+		<c:if test="${empty complainList}">
+			<tr>
+				<td colspan="4">없음</td>
+			</tr>
+		</c:if>
 		<c:forEach var="c" items="${complainList}">
 			<tr>
 				<td>${c.memberName}</td>

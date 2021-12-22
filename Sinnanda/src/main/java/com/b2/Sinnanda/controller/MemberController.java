@@ -221,7 +221,7 @@ public class MemberController {
 	//	[김영후] 회원 가입
 	@GetMapping("/insertMember")
 	public String getInsertMember() {
-		return "insertMemberForm";
+		return "/insertMemberForm";
 	}
 	@PostMapping("/insertMember")
 	public String postInsertMember(Member member) {

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +17,10 @@
 	<link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
 	<!-- endinject -->
 	<link rel="shortcut icon" href="../../images/favicon.png" />
+	<!-- 지도 API 관련 태그 -->
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=882ef0b6751c864ad60f045a82f613ae&libraries=services"></script>	
+	<!-- 지도 API 관련 태그 -->
 	<style>
 		.idOk
 		{
@@ -29,7 +32,7 @@
 			color: red; 
 			display: none;
 		}
-	</style>
+	</style>	
 </head>
 
 <body>
@@ -44,6 +47,7 @@
               </div>
               <h4>New here?</h4>
               <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
+          <!-- 회원 가입 폼 -->
               <form class="pt-3" method="post" action="insertMember" id="insertMemberForm">
                 <div class="form-group text-center">
                   <input type="text" class="form-control form-control-lg" name="memberId" id="memberId" placeholder="UserID">
@@ -67,7 +71,12 @@
                 </div>
                 <div class="form-group">
                   <input type="email" class="form-control form-control-lg" name="memberEmail" id="memberEmail" placeholder="Email">
+                </div>                
+                <div class="form-group">
+	                <input type="text" class="form-control form-control-lg" name="addressDetail" id="address" placeholder="Search address" onclick="execDaumPostcode()">
+					<div id="map" style="width:length;height:300px;margin-top:10px;display:none"></div>
                 </div>
+            <!-- 회원 가입 값 입력 END -->
                 <div class="mb-4">
                   <div class="form-check">
                     <label class="form-check-label text-muted">
@@ -107,6 +116,54 @@
   
   <!-- [김영후] 유효성 검사 -->
   	<script>
+		    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+		        mapOption = {
+		            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+		            level: 5 // 지도의 확대 레벨
+		        };
+		
+		    //지도를 미리 생성
+		    var map = new daum.maps.Map(mapContainer, mapOption);
+		    //주소-좌표 변환 객체를 생성
+		    var geocoder = new daum.maps.services.Geocoder();
+		    //마커를 미리 생성
+		    var marker = new daum.maps.Marker({
+		        position: new daum.maps.LatLng(37.537187, 127.005476),
+		        map: map
+		    });
+		
+		
+		    function execDaumPostcode() {
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		                var addr = data.address; // 최종 주소 변수
+		
+		                // 주소 정보를 해당 필드에 넣는다.
+		                document.getElementById("address").value = addr;
+		                // 주소로 상세 정보를 검색
+		                geocoder.addressSearch(data.address, function(results, status) {
+		                    // 정상적으로 검색이 완료됐으면
+		                    if (status === daum.maps.services.Status.OK) {
+		
+		                        var result = results[0]; //첫번째 결과의 값을 활용
+		
+		                        // 해당 주소에 대한 좌표를 받아서
+		                        var coords = new daum.maps.LatLng(result.y, result.x);
+		                        // 지도를 보여준다.
+		                        mapContainer.style.display = "block";
+		                        map.relayout();
+		                        // 지도 중심을 변경한다.
+		                        map.setCenter(coords);
+		                        // 마커를 결과값으로 받은 위치로 옮긴다.
+		                        marker.setPosition(coords)
+		                    }
+		                });
+		            }
+		        }).open();
+		    }
+		 
+  	
+  	
   		//	ID칸 focusout 이벤트 -> DB에서 ID 중복검사 후 표시
   		
   		//	중복검사 여부 표시

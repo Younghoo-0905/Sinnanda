@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.mapper.ComplainMapper;
 import com.b2.Sinnanda.vo.Complain;
+import com.b2.Sinnanda.vo.ComplainComment;
 
 @Transactional
 @Service
@@ -19,6 +20,13 @@ public class ComplainService {	//	[김영후]
 	private ComplainMapper complainMapper;
 	@Autowired
 	DL dl;
+	
+	//	ComplainComment 등록
+	public void addComplainComment(ComplainComment complainComment) {
+		dl.p("ComplainService", "addComplainComment", complainComment);
+		
+		complainMapper.insertComplainComment(complainComment);
+	}
 	
 	//	Complain 등록
 	public void addComplain(Complain complain) {
@@ -34,6 +42,14 @@ public class ComplainService {	//	[김영후]
 		Complain complain = complainMapper.selectComplainOne(complainNo);
 		
 		return complain;
+	}
+	
+	//	NotCommentedComplainList 출력
+	public List<Complain> getNotCommentedComplainList(int hostNo) {
+		dl.p("ComplainService", "getNotCommentedComplainList", hostNo);		
+
+		List<Complain> complainList = complainMapper.selectNotCommentedComplainList(hostNo);
+		return complainList;
 	}
 	
 	//	ComplainList 출력

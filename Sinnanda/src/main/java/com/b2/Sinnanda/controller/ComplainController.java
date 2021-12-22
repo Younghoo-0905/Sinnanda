@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.service.ComplainService;
 import com.b2.Sinnanda.vo.Complain;
+import com.b2.Sinnanda.vo.ComplainComment;
 import com.b2.Sinnanda.vo.User;
 
 @Controller
@@ -27,11 +28,20 @@ public class ComplainController {	//	[김영후]
 	//	페이징용 상수
 	private final int ROW_PER_PAGE = 10;
 	
+	//	addComplainComment 요청
+	@PostMapping("/host/addComplainComment")
+	public String addComplainComment(ComplainComment complainComment) {
+		dl.p("ComplainController", "addComplainComment", complainComment);		
+		complainService.addComplainComment(complainComment);
+		
+		return "redirect:/host/complainOne?complainNo=" + complainComment.getComplainNo();
+	}
+	
 	//	addComplain 요청
 	@GetMapping("/member/addComplain")
 	public String addComplain(Model model, int paymentNo) {
 		dl.p("ComplainController", "addComplain", paymentNo);		
-		model.addAttribute(paymentNo);
+		model.addAttribute("paymentNo", paymentNo);
 		
 		return "addComplain";
 	}
@@ -49,9 +59,24 @@ public class ComplainController {	//	[김영후]
 		dl.p("ComplainController", "complainList", complainNo);
 		
 		Complain complain = complainService.getComplainOne(complainNo);
-		model.addAttribute(complain);
+		model.addAttribute("complain", complain);
 		
 		return "/host/complainOne";
+	}
+	
+	//	ComplainList 요청 (아직 답변이 없는 ComplainList)
+	@GetMapping("/host/notCommentedComplainList")
+	public String complainList(HttpSession session, Model model) {
+
+		User loginUser = (User)session.getAttribute("loginUser");
+		//	세션 내 사업자 정보 디버깅
+		dl.p("ComplainController", "complainList", loginUser);
+		
+		List<Complain> complainList = complainService.getNotCommentedComplainList(loginUser.getHost().getHostNo());
+		
+		model.addAttribute("complainList", complainList);
+		
+		return "/host/notCommentedComplainList";
 	}
 	
 	//	ComplainList 요청

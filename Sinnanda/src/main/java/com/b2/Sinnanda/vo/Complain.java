@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Complain {
 	private int complainNo;
-	private Integer paymentNo;
+	private int paymentNo;
 	private String complainCategory;
 	private String complainTitle;
 	private String complainContent;
