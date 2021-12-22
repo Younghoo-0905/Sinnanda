@@ -8,6 +8,8 @@ public class Accom {
 	int hostNo;
 	int adminNo;
 	int commissionNo;
+	int accomCategoryNo;
+	String accomCategoryName;
 	String accomName;
 	String accomImg;
 	String accomDescription;

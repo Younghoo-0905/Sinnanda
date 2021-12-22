@@ -8,6 +8,8 @@
 		<result column="host_no" property="hostNo"/>
 		<result column="admin_no" property="adminNo"/>
 		<result column="commission_no" property="commissionNo"/>
+		<result column="accom_category_no" property="accomCategoryNo"/>
+		<result column="accom_category_name" property="accomCategoryName"/>
 		<result column="accom_name" property="accomName"/>
 		<result column="accom_img" property="accomImg"/>
 		<result column="accom_description" property="accomDescription"/>
@@ -17,6 +19,24 @@
 
 	<!-- [이원희] 숙소 목록 조회 -->
 	<select id="selectAccomListByName" parameterType="Map" resultMap="AccomListMap">
+		SELECT a.accom_no, 
+			   a.host_no, 
+			   a.admin_no,
+			   a.commission_no,
+			   a.accom_category_no, 
+			   ac.accom_category_name, 
+			   a.accom_name, 
+			   a.accom_img, 
+			   a.accom_description, 
+			   a.create_date, 
+			   a.update_date 
+			   FROM accom a JOIN accom_category ac ON a.accom_category_no = ac.accom_category_no WHERE a.accom_name LIKE CONCAT('%',#{accomName},'%') 
+			   AND ac.accom_category_name= #{accomCategoryName}
+			   ORDER BY create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+		
+		<!-- 
+		
 		SELECT accom_no, 
 			   host_no, 
 			   admin_no, 
@@ -28,13 +48,15 @@
 			   update_date 
 			   FROM accom WHERE accom_name LIKE CONCAT('%',#{accomName},'%') ORDER BY create_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
+		 -->
 	</select>
 	
 	<!-- [이원희] 검색 대상 숙소 갯수 조회-->
-	<select id="selectAccomTotalCount" parameterType="String" resultType="int">
+	<select id="selectAccomTotalCount" parameterType="Map" resultType="int">
 		SELECT 
 			COUNT(*) 
-		FROM accom WHERE accom_name LIKE CONCAT('%',#{accomName},'%')
+		FROM accom a JOIN accom_category ac ON a.accom_category_no = ac.accom_category_no WHERE a.accom_name LIKE CONCAT('%',#{accomName},'%')
+		AND ac.accom_category_name= #{accomCategoryName}
 	</select>
 	
 	<!-- [이원희] 검색 대상 숙소 별점 조회 -->

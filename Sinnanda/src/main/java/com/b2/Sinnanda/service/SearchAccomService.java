@@ -34,7 +34,7 @@ public class SearchAccomService {
 	
 	/* [이원희] 숙소 목록 조회 by accomName */
 	
-	public Map<String, Object> getAccomListByName(Accom accomName, int currentPage, int rowPerPage){
+	public Map<String, Object> getAccomListByName(Accom accomName, int person, int currentPage, int rowPerPage){
 		log.debug("[Debug] \"START\" SearchAccomService.getAccomListByName()");
 		log.debug(" ├[param] accomName : "+accomName);
 		log.debug(" ├[param] currentPage : "+currentPage);
@@ -45,6 +45,7 @@ public class SearchAccomService {
 		int beginRow = (currentPage-1) * rowPerPage;
 		
 		paraMap.put("accomName", accomName.getAccomName());
+		paraMap.put("accomCategoryName", accomName.getAccomCategoryName());
 		paraMap.put("beginRow", beginRow);
 		paraMap.put("rowPerPage", rowPerPage);
 		
@@ -55,7 +56,7 @@ public class SearchAccomService {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		int lastPage = 0;
-		int totalCount = accomMapper.selectAccomTotalCount(accomName.getAccomName());
+		int totalCount = accomMapper.selectAccomTotalCount(paraMap);
 		log.debug(" ├[param] totalCount : "+totalCount);
 		
 		lastPage = totalCount / rowPerPage;

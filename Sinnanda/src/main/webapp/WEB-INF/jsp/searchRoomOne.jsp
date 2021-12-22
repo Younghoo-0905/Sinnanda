@@ -62,7 +62,7 @@
           		<div class="col-md-12 ftco-animate">
           			<div class="single-slider owl-carousel">
           				<div class="item">
-          					<div class="hotel-img" style="background-image: url(images/hotel-2.jpg);"></div>
+          					<div class="hotel-img" style="background-image: url(images/${room.roomMainImg});"></div>
           				</div>
           				<div class="item">
           					<div class="hotel-img" style="background-image: url(images/hotel-3.jpg);"></div>

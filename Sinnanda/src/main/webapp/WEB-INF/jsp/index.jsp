@@ -53,7 +53,7 @@
 								<div class="icon">
 									<span class="ion-ios-arrow-down"></span>
 								</div>
-								<select name="" id="" class="form-control">
+								<select name="" id="" class="form-control" style="width: 170px;">
 									<!-- 지역 선택 -->
 									<option value="">서울</option>
 									<option value="">경기도</option>
@@ -79,34 +79,40 @@
 							<div class="icon"><span class="ion-ios-arrow-down">
 								</span>
 							</div>
-							<select name="" id="" class="form-control" placeholder="Keyword search" hidden="hidden">
-							<!-- 도시 선택 ??-->
-							<option value=""></option>
-							<option value=""></option>
-							<option value=""></option>
-							<option value=""></option>
-							<option value=""></option>
+							<select name="accomCategoryName" id="accomCategoryName" class="form-control" style="width: 170px;">
+							<!-- [이원희] 숙소 유형-->
+							<option value="호텔">호텔</option>
+							<option value="모텔">모텔</option>
+							<option value="펜션">펜션</option>
+							<option value="풀빌라">풀빌라</option>
+							<option value="게스트하우스">게스트하우스</option>
 							</select>
 						</div>
 						<!-- 캘린더 -->
 						
 						<!--[이원희]index페이지 검색바 입력칸 21.12.10 -->
-						<input type="text" name="accomName" class="form-control" placeholder="Destination, City">
+						<input type="text" name="accomName" class="form-control" placeholder="숙소 이름" style="width: 700px;">
 						
-						<!--인원수 -->
+						<!--[이원희]인원수 -->
 						<div class="select-wrap one-third">
 						<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-						<select name="" id="" class="form-control">
-						<option value="">한명이요</option>
-						<option value="">두명이요</option>
-						<option value="">세명이요</option>
-						<option value="">네명이요</option>
-						
+						<select name="person" id="person" class="form-control">
+							<option value="1">1명</option>
+							<option value="2">2명</option>
+							<option value="3">3명</option>
+							<option value="4">4명</option>
+							<option value="5">5명</option>
+							<option value="6">6명</option>
+							<option value="7">7명</option>
+							<option value="8">8명</option>
+							<option value="9">9명</option>
+							<option value="10">10명</option>
 						</select>
-						</div>
-						</div>
-						
-						<button type="submit" class="search-submit btn btn-primary">Search</button>
+							</div>
+								
+							</div>
+							
+							<button type="submit" class="search-submit btn btn-primary">Search</button>
 						</form>
 					</div>
 					 <!-- 모텔인지 호텔이인지 카테고리 -->
