@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.b2.Sinnanda.vo.Admin;
+import com.b2.Sinnanda.vo.AdminSales;
 import com.b2.Sinnanda.vo.Host;
 import com.b2.Sinnanda.vo.Member;
 
@@ -57,7 +58,7 @@ public interface AdminMapper {
 	
 	
 	//[윤경환] 관리자 정산 차트 
- 	Map<String, Object> IncomeAdminYear(int year);
+ 	Map<String,Object> IncomeAdminYear(int year);
 	
 	
 

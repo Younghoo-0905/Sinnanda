@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.mapper.AdminMapper;
 import com.b2.Sinnanda.vo.Admin;
+import com.b2.Sinnanda.vo.AdminSales;
 import com.b2.Sinnanda.vo.Host;
 import com.b2.Sinnanda.vo.Member;
 
@@ -19,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class AdminService {
 	@Autowired AdminMapper adminMapper;
+	
+	@Autowired DL dl;
 	
 	//[윤경환] 관리자회원가입
 	public void addAdmin(Admin admin) {
@@ -166,5 +170,14 @@ public class AdminService {
 		return returnMap;
 		
 	}
+	
+	//[윤경환] 정산 차트 
+	public Map<String, Object> getIncomeChart(int year) {
+		Map<String, Object>  map = adminMapper.IncomeAdminYear(year);
+		return map;
+		
+	}
+	
+	
 
 }

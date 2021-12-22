@@ -1,5 +1,6 @@
 package com.b2.Sinnanda.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.mapper.AdminMapper;
 import com.b2.Sinnanda.service.AdminService;
 import com.b2.Sinnanda.service.HostQnaService;
 import com.b2.Sinnanda.vo.Admin;
+import com.b2.Sinnanda.vo.AdminSales;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.User;
 
@@ -32,6 +35,10 @@ public class AdminController {
 	@Autowired AdminService adminService;
 	@Autowired HostQnaService hostQnaService;
 	@Autowired AdminMapper adminMapper;
+	
+	@Autowired DL dl;
+	
+	
 	// [윤경환] Admin 목록 페이징용 상수
 		private final int ROW_PER_PAGE = 10;
 	
@@ -288,13 +295,17 @@ public class AdminController {
 			return "/admin/hostList";
 		}
 		
+		
 		/*
 		//[윤경환] 정산 차트 
 		@GetMapping("/admin/incomeChart")
-		public Map<String, Object> getIncomeChart(@RequestParam(name ="year") int year) {
-			Map<String, Object> map = adminMapper.IncomeAdminYear(year);
-			return map;
+		public  String getIncomeChart(@RequestParam(name ="year") int year) {
+			dl.p("AdminController","getIncomeChart", year);
+			
+			return "/admin/incomeChart";
 			
 		}
 		*/
+		
+		
 }

@@ -262,9 +262,11 @@
 	</select>
 	
 	
-	<!-- [윤경환] 날짜에 따라 정산 
 	
-	<select id ="IncomeAdminYear" parameterType="int" resultMap="java.util.Map">
+	
+	<!-- [윤경환] 날짜에 따라 정산 -->
+	
+	<select id ="IncomeAdminYear" parameterType="int" resultType="java.util.Map">
 		SELECT 
 			SUM(CASE WHEN MONTH(p.update_date) =1 THEN a.payout_commission END) january,
 			SUM(CASE WHEN MONTH(p.update_date) =2 THEN a.payout_commission END) february,
@@ -283,5 +285,5 @@
 		ON a.payment_no = p.payment_no
 		WHERE YEAR(p.update_date)=#{year}
 	</select>
-	-->
+	
 </mapper>
