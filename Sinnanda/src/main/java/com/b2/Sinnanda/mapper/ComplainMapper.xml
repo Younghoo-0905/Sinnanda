@@ -156,7 +156,7 @@
 		<where>
 			a.host_no = #{hostNo} 
 			AND 
-			cc.complain_comment_content = null
+			cc.complain_comment_content IS null
 		</where>
 		ORDER BY create_date DESC
 	</select>

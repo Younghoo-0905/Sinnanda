@@ -248,11 +248,11 @@ public class MemberController {
 	}
 	
 	//	[김영후] 회원 탈퇴
-	@GetMapping("/insertMemberOut")
+	@GetMapping("/member/insertMemberOut")
 	public String getInsertMemberOut() {
-		return "memberOutForm";
+		return "/member/memberOutForm";
 	}	
-	@PostMapping("/insertMemberOut")
+	@PostMapping("/member/insertMemberOut")
 	public String postInsertMemberOut(Member member, MemberOut memberOut) {
 		log.debug("탈퇴할 멤버 정보 :" + member);		
 		//	트랜잭션 처리 -> member 테이블 데이터 삭제 후 memberOut 테이블 데이터 삽입

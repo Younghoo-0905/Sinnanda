@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.b2.Sinnanda.mapper.ReviewMapper">
+
+	<!-- [김영후] (사업자 페이지) Review Comment 등록 -->
+	<insert id="insertReviewComment" parameterType="com.b2.Sinnanda.vo.ReviewComment">
+		INSERT INTO review_comment(
+			review_no,
+			review_comment_content, 
+			comment_date
+		) VALUES (
+			#{reviewNo}, 
+			#{reviewCommentContent},
+			NOW()
+		)	
+	</insert>
+
+	<!-- [김영후] (사업자 페이지) Comment 없는 Review 목록조회 Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Review" id="NotCommentedReviewListMap">
+		<id column="review_no" property="reviewNo"/>
+		<result column="payment_no" property="paymentNo"/>
+		<result column="review_content" property="reviewContent"/>
+		<result column="review_rank" property="reviewRank"/>
+		<result column="review_recommend" property="reviewRecommend"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="member_name" property="memberName"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="room_name" property="roomName"/>
+	</resultMap>
+	
+	<!-- [김영후] (사업자 페이지) Comment 없는 Review 목록조회 -->
+	<select id="selectNotCommentedReviewList" parameterType="Map" resultMap="NotCommentedReviewListMap">
+		SELECT 
+			r.review_no,
+			p.payment_no, 
+			r.review_content, 
+			r.review_rank, 
+			r.review_recommend, 
+			r.create_date, 
+			r.update_date, 
+			m.member_name, 
+			a.accom_name, 
+			ro.room_name
+		FROM review r
+		LEFT JOIN payment p 
+			ON r.payment_no = p.payment_no 
+		LEFT JOIN reserve re
+			ON p.reserve_no = re.reserve_no
+		LEFT JOIN room ro
+			ON ro.room_no = re.room_no
+		LEFT JOIN accom a
+			ON a.accom_no = ro.accom_no
+		LEFT JOIN member m
+			ON re.member_no = m.member_no	
+		LEFT JOIN host h
+			ON a.host_no = h.host_no	
+		LEFT JOIN review_comment rc
+			ON rc.review_no = r.review_no		
+		<where>
+			a.host_no = #{hostNo}
+			AND
+			rc.review_comment_content IS null
+		</where>
+		ORDER BY create_date DESC
+	</select>
+
+	<!-- [김영후] (사업자 페이지) Review 목록조회 Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Review" id="ReviewListMap">
+		<id column="review_no" property="reviewNo"/>
+		<result column="payment_no" property="paymentNo"/>
+		<result column="review_content" property="reviewContent"/>
+		<result column="review_rank" property="reviewRank"/>
+		<result column="review_recommend" property="reviewRecommend"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="member_name" property="memberName"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="room_name" property="roomName"/>
+		
+		<collection property="reviewComment" ofType="com.b2.Sinnanda.vo.ReviewComment">
+			<result column="review_no" property="reviewNo"/>
+			<result column="review_comment_content" property="reviewCommentContent"/>
+			<result column="comment_date" property="commentDate"/>
+			<result column="host_name" property="hostName"/>		
+		</collection>
+	</resultMap>
+
+	<!-- [김영후] (사업자 페이지) Review 목록조회 -->
+	<select id="selectReviewList" parameterType="Map" resultMap="ReviewListMap">
+		SELECT 
+			r.review_no,
+			p.payment_no, 
+			r.review_content, 
+			r.review_rank, 
+			r.review_recommend, 
+			r.create_date, 
+			r.update_date, 
+			m.member_name, 
+			a.accom_name, 
+			ro.room_name, 
+			rc.review_comment_content, 
+			rc.comment_date, 
+			h.host_name
+		FROM review r
+		LEFT JOIN payment p 
+			ON r.payment_no = p.payment_no 
+		LEFT JOIN reserve re
+			ON p.reserve_no = re.reserve_no
+		LEFT JOIN room ro
+			ON ro.room_no = re.room_no
+		LEFT JOIN accom a
+			ON a.accom_no = ro.accom_no
+		LEFT JOIN host h
+			ON a.host_no = h.host_no	
+		LEFT JOIN member m
+			ON re.member_no = m.member_no			
+		LEFT JOIN review_comment rc
+			ON rc.review_no = r.review_no
+		<where>
+			a.host_no = #{hostNo}
+		</where>
+		ORDER BY create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+</mapper>

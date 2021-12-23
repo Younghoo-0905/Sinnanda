@@ -49,6 +49,7 @@ public class ComplainService {	//	[김영후]
 		dl.p("ComplainService", "getNotCommentedComplainList", hostNo);		
 
 		List<Complain> complainList = complainMapper.selectNotCommentedComplainList(hostNo);
+		
 		return complainList;
 	}
 	
@@ -63,6 +64,7 @@ public class ComplainService {	//	[김영후]
 		map.put("rowPerPage", rowPerPage);
 		
 		List<Complain> complainList = complainMapper.selectComplainList(map);
+		
 		return complainList;
 	}
 }

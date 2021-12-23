@@ -4,16 +4,15 @@ import lombok.Data;
 
 @Data
 public class Review {
-	//[이원희] 리뷰 테이블 vo
-	int reviewNo;
-	int paymentNo;
-	String reviewContent;
-	double reviewRank;
-	String reviewRecommend;
-	String createDate;
-	String updateDate;
-	int memberNo;
-	String memberName;
-	String accomName;
-	String roomName;
+	private int reviewNo;
+	private int paymentNo;
+	private String reviewContent;
+	private double reviewRank;
+	private String reviewRecommend;
+	private String createDate;
+	private String updateDate;
+	private ReviewComment reviewComment;
+	private String memberName;
+	private String accomName;
+	private String roomName;
 }

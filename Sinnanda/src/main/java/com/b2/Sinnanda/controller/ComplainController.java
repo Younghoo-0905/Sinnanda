@@ -43,14 +43,16 @@ public class ComplainController {	//	[김영후]
 		dl.p("ComplainController", "addComplain", paymentNo);		
 		model.addAttribute("paymentNo", paymentNo);
 		
-		return "addComplain";
+		return "/member/addComplain";
 	}
 	@PostMapping("/member/addComplain")
-	public String addComplain(Complain complain){
+	public String addComplain(HttpSession session, Complain complain){
 		dl.p("ComplainController", "addComplain", complain);
+		
+		User loginUser = (User)session.getAttribute("loginUser");
 		complainService.addComplain(complain);
 		
-		return "";
+		return "/member/myPage?memberNo=" + loginUser.getMember().getMemberNo();
 	}
 	
 	//	ComplainOne 요청
@@ -81,10 +83,9 @@ public class ComplainController {	//	[김영후]
 	
 	//	ComplainList 요청
 	@GetMapping("/host/complainList")
-	public String complainList(HttpServletRequest request, Model model, 
+	public String complainList(HttpSession session, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage) {
 
-		HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
 		//	세션 내 사업자 정보 디버깅
 		dl.p("ComplainController", "complainList", loginUser);
