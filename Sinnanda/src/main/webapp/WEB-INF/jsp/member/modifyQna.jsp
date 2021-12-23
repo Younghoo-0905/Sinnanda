@@ -89,7 +89,7 @@
 			<span class="subheading"><a href="qnaList">회원 Q&A</a> > 문의수정</span>
 			<h1><strong>회원문의 수정</strong></h1>
 			
-			<form onsubmit="return formCheck()" id="modifyQnaForm" action="modifyQna" method="post">
+			<form onsubmit="return formCheck()" id="modifyQnaForm" action="/member/modifyQna" method="post">
 				<input id="qnaNo" name="qnaNo" type="hidden" value="${qna.qnaNo}">
 				<input id="memberNo" name="memberNo" type="hidden" value="${qna.memberNo}">
 				

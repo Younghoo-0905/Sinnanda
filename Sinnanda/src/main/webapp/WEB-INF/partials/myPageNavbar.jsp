@@ -25,7 +25,7 @@
 					<!-- 사용자별 이미지 -->
 					<c:if test = "${loginUser != null}">
 						<c:if test="${loginUser.userLevel == 1}">
-							<img src="/images/faces/defaultMemberImg.png" alt="profile"/>
+							<img src="/images/memberImg/memberIcon.png" width="20px" height="20px" alt="profile"/>
 							${loginUser.member.memberName}&nbsp;회원님
 						</c:if>
 						<c:if test="${loginUser.userLevel == 2}">
@@ -45,7 +45,7 @@
 						<c:if test="${loginUser.userLevel == 1}">
 							<a class="dropdown-item" href ="/member/myPage?memberNo=${loginUser.member.memberNo}">
 								<i class="ti-settings text-primary">마이페이지로 이동</i>
-								마이페이지
+								
 							</a>
 						</c:if>
 						<c:if test="${loginUser.userLevel == 2}">

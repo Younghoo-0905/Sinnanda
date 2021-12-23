@@ -36,7 +36,7 @@
 	        member_age = #{memberAge},
 	        member_tel = #{memberTel},
 	        member_email = #{memberEmail},
-	        update_date = NOW()
+	        update_date = #{updateDate}
 	    WHERE member_no = #{memberNo}
 	</update>
 	
@@ -186,7 +186,8 @@
 			m.member_no, 
 			m.member_name, 
 			ac.accom_name, 
-			r.room_name, 
+			r.room_name,
+			rev.review_no,
 			rev.review_content,
 			rev.review_rank,
 			rev.review_recommend,

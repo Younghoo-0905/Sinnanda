@@ -101,7 +101,7 @@ public class QnaController {
 	}
 	
 	// [이승준] QnA 수정
-	@GetMapping("/modifyQna")
+	@GetMapping("/member/modifyQna")
 	public String modifyQna(HttpServletRequest request, Model model, int qnaNo) {
 		log.debug("[Debug] \"START\" QnaController.modifyQna() | Get");
 		log.debug(" ├[param] qnaNo : "+qnaNo);
@@ -125,9 +125,9 @@ public class QnaController {
 			return "redirect:/qnaList";
 		}
 		
-		return "modifyQna";
+		return "/member/modifyQna";
 	}
-	@PostMapping("/modifyQna")
+	@PostMapping("/member/modifyQna")
 	public String modifyQna(Qna qna) {
 		log.debug("[Debug] \"START\" QnaController.modifyQna() | Post");
 		log.debug(" ├[param] qna : "+qna.toString());
@@ -138,7 +138,7 @@ public class QnaController {
 	}
 	
 	// [이승준] QnA 삽입
-	@GetMapping("/addQna")
+	@GetMapping("/member/addQna")
 	public String addQna(HttpServletRequest request, Model model) {
 		log.debug("[Debug] \"START\" QnaController.addQna() | Get");
 		
@@ -160,9 +160,9 @@ public class QnaController {
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
 		
-		return "addQna";
+		return "/member/addQna";
 	}
-	@PostMapping("/addQna")
+	@PostMapping("/member/addQna")
 	public String addQna(Qna qna) {
 		log.debug("[Debug] \"START\" QnaController.addQna() | Post");
 		log.debug(" ├[param] qna : "+qna.toString());
