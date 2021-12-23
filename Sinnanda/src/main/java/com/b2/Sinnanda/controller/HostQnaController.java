@@ -74,8 +74,8 @@ public class HostQnaController {
 // 사업자 기능
 	
 	// [이승준] QnA 수정
-	@GetMapping("/host/modifyHostQna")
-	public String modifyHostQna(HttpServletRequest request, Model model, int hostQnaNo) {
+	@GetMapping("/host/modifyMyHostQna")
+	public String modifyMyHostQna(HttpServletRequest request, Model model, int hostQnaNo) {
 		log.debug("[Debug] \"START\" HostQnaController.modifyHostQna() | Get");
 		log.debug(" ├[param] hostQnaNo : "+hostQnaNo);
 		
@@ -98,16 +98,16 @@ public class HostQnaController {
 			return "redirect:/host/hostQnaList";
 		}
 		
-		return "host/modifyHostQna";
+		return "host/modifyMyHostQna";
 	}
-	@PostMapping("/host/modifyHostQna")
+	@PostMapping("/host/modifyMyHostQna")
 	public String modifyQna(HostQna hostQna) {
-		log.debug("[Debug] \"START\" HostQnaController.modifyHostQna() | Post");
+		log.debug("[Debug] \"START\" HostQnaController.modifyMyHostQna() | Post");
 		log.debug(" ├[param] hostQna : "+hostQna.toString());
 		
 		hostQnaService.modifyHostQna(hostQna);
 		
-		return "redirect:/host/hostQnaOne?hostQnaNo="+hostQna.getHostQnaNo();
+		return "redirect:/host/myHostQnaOne?hostQnaNo="+hostQna.getHostQnaNo();
 	}
 	
 	// [이승준] QnA 삽입
@@ -137,13 +137,13 @@ public class HostQnaController {
 		
 		hostQnaService.addHostQna(hostQna);
 		
-		return "redirect:/host/hostQnaOne?hostQnaNo="+hostQna.getHostQnaNo();
+		return "redirect:/host/myHostQnaOne?hostQnaNo="+hostQna.getHostQnaNo();
 	}
 	
 // 공통 기능
 	
 	// [이승준] Host QnA 상세 조회
-	@GetMapping("/host/hostQnaOne")
+	@GetMapping("/host/myHostQnaOne")
 	public String hostQnaOne(HttpServletRequest request, Model model, int hostQnaNo) {
 		log.debug("[Debug] \"START\" HostQnaController.hostQnaOne() | Get");
 		log.debug(" ├[param] hostQnaNo : "+hostQnaNo);
@@ -165,11 +165,11 @@ public class HostQnaController {
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
 		model.addAttribute("hostQna", hostQna);	// 선택된 QnA 상세 정보 */
 		
-		return "host/hostQnaOne";
+		return "host/myHostQnaOne";
 	}
 	
 	// [이승준] Host QnA 목록 조회
-	@GetMapping("/host/hostQnaList")
+	@GetMapping("/host/myHostQnaList")
 	public String hostQnaListForHost(HttpServletRequest request, Model model,
 			@RequestParam(defaultValue = "1") int currentPage, 
 			@RequestParam(defaultValue = "전체") String hostQnaCategory) {
@@ -208,6 +208,6 @@ public class HostQnaController {
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
 		model.addAttribute("pageNo", pageNo);	// 페이지 번호를 출력하기 위한 변수
 		
-		return "host/hostQnaList";
+		return "host/myHostQnaList";
 	}
 }
