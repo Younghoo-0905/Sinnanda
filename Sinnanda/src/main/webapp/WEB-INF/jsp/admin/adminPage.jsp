@@ -393,12 +393,12 @@
             </a>
             <div class="collapse" id="charts">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/admin/incomeChart?year=2021">정산</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/admin/incomeChart">정산</a></li>
               </ul>
             </div>
             <div class="collapse" id="charts">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">회원 관련 통계</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/admin/totalMemberYear">회원 관련 통계</a></li>
               </ul>
             </div>
             <div class="collapse" id="charts">
@@ -486,33 +486,42 @@
               </div>
             </div>
           </div>
-          <h6 style="text-align:center;  font-weight: bold;">답변되지 않은 Qna</h6>
-          <!--[운경환] 답변되지 않은 최신 QNA 답변 보기  -->
+          
           <div class="row">
-          <table class="hei">
-            <tr style="text-align:center">
-					<th width="5%">번호</th>
-					<th width="40%">제목</th>
-					<th width="10%">문의유형</th>
-					<th width="10%">작성자</th>
-					<th width="10%">작성일</th>
-				</tr>
-				<c:forEach items="${hostQnaList}" var="hostQna">
-					<tr>
-						<td style="text-align:center">${hostQna.hostQnaNo}</td>
-						<td>
-							<a href="/admin/hostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
-						</td>
-						<td style="text-align:center">${hostQna.hostQnaCategory}</td>
-						<td style="text-align:center">${hostQna.hostName}</td>
-						<td style="text-align:center">
-							<fmt:parseDate value="${hostQna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-							<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
-						</td>
-					</tr>
-				</c:forEach>
-				</table>
-          </div>
+          <div class="col-md-12 grid-margin stretch-card">
+            
+			<div class="card position-relative">
+			 <h3 style="text-align:center;  font-weight: bold;">QNA</h3>
+				<div class="card-body">
+          <!--[운경환] 답변되지 않은 최신 QNA 답변 보기  -->
+         
+			          <table class="hei">
+			            <tr style="text-align:center">
+								<th width="5%">번호</th>
+								<th width="40%">제목</th>
+								<th width="10%">문의유형</th>
+								<th width="10%">작성자</th>
+								<th width="10%">작성일</th>
+							</tr>
+							<c:forEach items="${hostQnaList}" var="hostQna">
+								<tr>
+									<td style="text-align:center">${hostQna.hostQnaNo}</td>
+									<td>
+										<a href="/admin/hostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
+									</td>
+									<td style="text-align:center">${hostQna.hostQnaCategory}</td>
+									<td style="text-align:center">${hostQna.hostName}</td>
+									<td style="text-align:center">
+										<fmt:parseDate value="${hostQna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+										<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
+									</td>
+								</tr>
+							</c:forEach>
+							</table>
+						</div>
+					</div>
+				</div>
+     	     </div>
           
           
           <div class="row">

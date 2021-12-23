@@ -59,7 +59,12 @@ public interface AdminMapper {
 	
 	//[윤경환] 관리자 정산 차트 
  	Map<String,Object> IncomeAdminYear(int year);
-	
+ 	
+ 	//[윤경환] 회원 년도에 따라 회원가입 한 맴버 
+ 	Map<String,Object> TotalMemberYear(int year);
+ 	
+ 	//[윤경환] 탈퇴한 회원수 
+ 	Map<String,Object> DeleteMemberYear(int year);
 	
 
 }
