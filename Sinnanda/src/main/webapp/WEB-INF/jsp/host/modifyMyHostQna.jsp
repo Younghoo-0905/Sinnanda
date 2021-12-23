@@ -30,11 +30,23 @@
 	<title>사업자 QnA 페이지</title>
 </head>
 
-<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery 실행 -->
 <body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- [이승준] 페이지 접근 시, 본문으로 이동해주는 JQuery -->
-	<script>		
+	<script>
+		// [이승준] 답변이 있는 게시글의 수정을 막아주는 JQuery
+		var hostQnaComments = "${hostQna.hostQnaComments}";
+		$(document).ready(function(){
+			if(hostQnaComments != ""){
+				$('input').prop('readonly', true);
+				$('textarea').prop('disabled', true);
+				$('#hostQnaUploadFile').attr('disabled', true);
+				$('select').prop('disabled', true);
+				$('button').prop('disabled', true);
+				alert('답변이 작성된 글은 수정이 불가능합니다.');
+			}
+		});
+		
 		// [이승준] Qna 내용 입력 여부 확인
 		function formCheck(){
 			// 제목
@@ -57,7 +69,6 @@
 			}
 		}
 	</script>
-	
 	
 	<div class="container-scroller">
 	
@@ -82,48 +93,50 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading">
-										<a href="/host/myHostQnaList">사업자 Q&A</a> > 문의사항 작성</span>
-									<h1 style="margin-top: 10px;"><strong>사업자문의 작성</strong></h1>
+										<a href="/host/myHostQnaList">사업자 Q&A</a> > 
+										<a href="/host/myHostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">상세보기</a> > 
+										문의사항 수정
 									
-									<div class="container">										
-										<form onsubmit="return formCheck()" id="addHostQnaForm" action="addHostQna" method="post">
+									</span>
+									<h1 style="margin-top: 10px;"><strong>사업자문의 수정</strong></h1>
+									
+									<div class="container">
+										<form onsubmit="return formCheck()" id="modifyHostQnaForm" action="modifyMyHostQna" method="post">
+											<input id="hostQnaNo" name="hostQnaNo" type="hidden" value="${hostQna.hostQnaNo}">
+											<input id="hostNo" name="hostNo" type="hidden" value="${loginUser.host.hostNo}">
+											
 											<div style="margin: 10px; text-align:right;">
-												<button id="" class="btn btn-primary" type="submit">문의 추가</button>
+												<button id="" class="btn btn-primary" type="submit">문의 수정</button>
 											</div>
 											
-											<input id="hostNo" name="hostNo" type="hidden" value="${loginUser.host.hostNo}">
 											<table class="table table-myPage" style="width: 100%;">
 												<tr>
 													<th style="width:5%;">제목</th>
 													<td style="text-align:left;">
-														<input id="hostQnaTitle" name="hostQnaTitle" type="text" style="width: 90%;">
+														<input id="hostQnaTitle" name="hostQnaTitle" type="text" value="${hostQna.hostQnaTitle}" style="width: 90%;">
 													</td>
 												</tr>
 												<tr>
 													<th>문의유형</th>
 													<td style="width:40%;">
-														<select id="hostQnaCategory" name="hostQnaCategory">
-															<option value="">선택</option>
-															<option value="기타 문의">기타 문의</option>
-															<option value="이용 문의">이용 문의</option>
-															<option value="시스템 문의">시스템 문의</option>
-															<option value="숙소 추가">숙소 추가</option>
-															<option value="숙소 수정">숙소 수정</option>
-															<option value="숙소 삭제">숙소 삭제</option>
-															<option value="객실 추가">객실 추가</option>
-															<option value="객실 수정">객실 수정</option>
-															<option value="객실 삭제">객실 삭제</option>
-														</select>
+														<input id="hostQnaCategory" name="hostQnaCategory" type="text" value="${hostQna.hostQnaCategory}" readonly>
 													</td>
 												</tr>
 												<tr>
 													<th>문의 내용</th>
-													<td><textarea id="hostQnaContent" name="hostQnaContent" cols="100%" rows="20"></textarea></td>
+													<td><textarea id="hostQnaContent" name="hostQnaContent" rows="20">${hostQna.hostQnaContent}</textarea></td>
+												</tr>
+												<tr>
+													<th>작성일</th>
+													<td>
+														<fmt:parseDate value="${hostQna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
+													</td>
 												</tr>
 												<tr>
 													<th>파일 업로드</th>
 													<td>
-														<input id="hostQnaUploadFile" name="hostQnaUploadFile" type="file">
+														<input id="hostQnaUploadFile" name="hostQnaUploadFile" type="file" value="${hostQna.hostQnaUploadFile}">
 													</td>
 												</tr>
 											</table>
