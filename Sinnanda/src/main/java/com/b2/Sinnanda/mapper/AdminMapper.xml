@@ -286,4 +286,45 @@
 		WHERE YEAR(p.update_date)=#{year}
 	</select>
 	
+	
+	<!-- [윤경환] 회원가입 한 회원 수-->
+	<select id="TotalMemberYear" parameterType="int" resultType="java.util.Map">			
+		SELECT 
+			COUNT(CASE WHEN MONTH(create_date) =1  THEN member_id END) AS january,
+			COUNT(CASE WHEN MONTH(create_date) =2  THEN member_id END) AS february,
+			COUNT(CASE WHEN MONTH(create_date) =3  THEN member_id END) AS march,
+			COUNT(CASE WHEN MONTH(create_date) =4  THEN member_id END) AS april,
+			COUNT(CASE WHEN MONTH(create_date) =5  THEN member_id END) AS may,
+			COUNT(CASE WHEN MONTH(create_date) =6  THEN member_id END) AS june,
+			COUNT(CASE WHEN MONTH(create_date) =7  THEN member_id END) AS july,
+			COUNT(CASE WHEN MONTH(create_date) =8  THEN member_id END) AS august,
+			COUNT(CASE WHEN MONTH(create_date) =9  THEN member_id END) AS september,
+			COUNT(CASE WHEN MONTH(create_date) =10  THEN member_id END) AS october,
+			COUNT(CASE WHEN MONTH(create_date) =11 THEN member_id END) AS november,
+			COUNT(CASE WHEN MONTH(create_date) =12  THEN member_id END) AS december	
+			FROM member 
+		WHERE YEAR(create_date) = #{year}
+	</select>
+	
+	
+	<!--[윤경환]  탈퇴한 회원 수 -->
+	<select id="DeleteMemberYear" parameterType="int" resultType="java.util.Map">
+		SELECT 
+			COUNT(CASE WHEN MONTH(out_date) =1  THEN member_id END) AS january,
+			COUNT(CASE WHEN MONTH(out_date) =2  THEN member_id END) AS february,
+			COUNT(CASE WHEN MONTH(out_date) =3  THEN member_id END) AS march,
+			COUNT(CASE WHEN MONTH(out_date) =4  THEN member_id END) AS april,
+			COUNT(CASE WHEN MONTH(out_date) =5  THEN member_id END) AS may,
+			COUNT(CASE WHEN MONTH(out_date) =6  THEN member_id END) AS june,
+			COUNT(CASE WHEN MONTH(out_date) =7  THEN member_id END) AS july,
+			COUNT(CASE WHEN MONTH(out_date)= 8  THEN member_id END) AS august,
+			COUNT(CASE WHEN MONTH(out_date) =9  THEN member_id END) AS september,
+			COUNT(CASE WHEN MONTH(out_date) =10  THEN member_id END) AS october,
+			COUNT(CASE WHEN MONTH(out_date) =11 THEN member_id END) AS november,
+			COUNT(CASE WHEN MONTH(out_date) =12  THEN member_id END) AS december
+		FROM member_out 
+		WHERE YEAR(out_date) = #{year}
+	</select>
+	
+	
 </mapper>

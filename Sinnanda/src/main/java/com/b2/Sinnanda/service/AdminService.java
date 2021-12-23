@@ -178,6 +178,23 @@ public class AdminService {
 		
 	}
 	
+	//[윤경환] 년도에 따라 회원가입 한 수 
+	public Map <String, Object> getTotalMemberYear(int year){
+		Map<String, Object>  paraMap = new HashMap<>();
+		paraMap.put("map1", adminMapper.TotalMemberYear(year));
+		paraMap.put("map2", adminMapper.DeleteMemberYear(year));
+		
+		dl.p("AdminService", "getTotalMemberYear", paraMap);
+		
+				
+		return paraMap;
+	}
+	
+	//[윤경환] 년도에 따라 탈퇴한 맴버수 
+		public Map <String, Object> getDetelMemberYear(int year){
+			Map<String, Object>  map = adminMapper.DeleteMemberYear(year);
+			return map;
+		}
 	
 
 }
