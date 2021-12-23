@@ -12,9 +12,9 @@
 			</a>
 			<div class="collapse" id="member-info">
 				<ul class="nav flex-column sub-menu">
-					<li class="nav-item"> <a class="nav-link" href="/member/">PW 수정</a></li>
-					<li class="nav-item"> <a class="nav-link" href="/member/">정보 수정</a></li>
-					<li class="nav-item"> <a class="nav-link" href="/member/">회원탈퇴</a></li>
+					<li class="nav-item"> <a class="nav-link" href="/member/checkMemberPw">PW 수정</a></li>
+					<li class="nav-item"> <a class="nav-link" href="/member/modifyMember">정보 수정</a></li>
+					<li class="nav-item"> <a class="nav-link" href="/member/memberOutForm">회원탈퇴</a></li>
 				</ul>
 			</div>
 		</li>
@@ -41,8 +41,8 @@
 			</a>
 			<div class="collapse" id=member-community>
 				<ul class="nav flex-column sub-menu">
-					<li class="nav-item"> <a class="nav-link" href="/member/">작성한 QnA</a></li>
-					<li class="nav-item"> <a class="nav-link" href="/member/">작성한 리뷰</a></li>
+					<li class="nav-item"> <a class="nav-link" href="/member/myQnaList">작성한 QnA</a></li>
+					<li class="nav-item"> <a class="nav-link" href="/member/myReviewList">작성한 리뷰</a></li>
 					<li class="nav-item"> <a class="nav-link" href="/member/">작성한 컴플레인</a></li>
 				</ul>
 			</div>

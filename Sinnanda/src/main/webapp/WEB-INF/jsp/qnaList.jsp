@@ -98,7 +98,7 @@
 					</tr>
 				</c:forEach>
 			</table>
-			<a class="btn btn-primary" href="addQna" style="float: right; margin-top: auto;">문의사항 작성</a>
+			<a class="btn btn-primary" href="/member/addQna" style="float: right; margin-top: auto;">문의사항 작성</a>
 			
 			
 			<!-- Paging -->			

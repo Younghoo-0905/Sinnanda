@@ -63,7 +63,7 @@
 			<!-- 글작성자의 수정, 삭제 버튼 -->
 			<div style="text-align:right;">
 				<c:if test="${qna.memberNo == loginUser.member.memberNo}">
-					<a class="btn btn-primary" href="modifyQna?qnaNo=${qna.qnaNo}">문의 수정</a>
+					<a class="btn btn-primary" href="/member/modifyQna?qnaNo=${qna.qnaNo}">문의 수정</a>
 					<a class="btn btn-primary" href="removeQna?qnaNo=${qna.qnaNo}">문의 삭제</a>
 				</c:if>
 			</div>
