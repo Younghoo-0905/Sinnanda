@@ -66,5 +66,6 @@ public interface AdminMapper {
  	//[윤경환] 탈퇴한 회원수 
  	Map<String,Object> DeleteMemberYear(int year);
 	
-
+ 	//[윤경환] 회원가입한 사업자 차트 
+ 	Map<String,Object> TotalHostYear(int year);
 }

@@ -35,18 +35,18 @@
 <body>
   	<div class="container-scroller">
 	
-		<!-- [이승준] 호스트 페이지 상단 내비바 - START -->
+		<!-- [이승준] 관리자 페이지 상단 내비바 - START -->
 		 <%@ include file="/WEB-INF/partials/myPageNavbar.jsp" %> 
-		<!-- [이승준] 호스트 페이지 상단 내비바 - END -->
+		<!-- [이승준] 관리자페이지 상단 내비바 - END -->
 	
-	    <!-- [이승준] 호스트 페이지 본문 - START -->
+	    <!-- [이승준] 관리자페이지 본문 - START -->
 		<div class="container-fluid page-body-wrapper">
 		
-			<!-- [이승준] 호스트 페이지 좌측 사이드바 - START -->
+			<!-- [이승준] 관리자 페이지 좌측 사이드바 - START -->
 			<%@ include file="/WEB-INF/partials/adminPageSidebar.jsp" %>
-			<!-- [이승준] 호스트 페이지 좌측 사이드바 - END -->
+			<!-- [이승준] 관리자페이지 좌측 사이드바 - END -->
 			
-			<!-- [이승준] 호스트 페이지 본문 - END -->
+			<!-- [이승준] 관리자 페이지 본문 - END -->
 		      <!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper">
@@ -78,48 +78,33 @@
       
       $.ajax({
          type:'get',
-         url:'/admin/getTotalMemberYear?year=' + year,
+         url:'/admin/getTotalHostYear?year=' + year,
          success:function(json){
             console.log(json);
             
             
             //[윤경환] 회원가입을 한 회원수 
             let myData = [];
-            myData.push(json.map1.january);
-            myData.push(json.map1.february);
-            myData.push(json.map1.march);
-            myData.push(json.map1.april);
-            myData.push(json.map1.may);
-            myData.push(json.map1.june);
-            myData.push(json.map1.july);
-            myData.push(json.map1.august);
-            myData.push(json.map1.september);
-            myData.push(json.map1.october);
-            myData.push(json.map1.november);
-            myData.push(json.map1.december);
+            myData.push(json.january);
+            myData.push(json.february);
+            myData.push(json.march);
+            myData.push(json.april);
+            myData.push(json.may);
+            myData.push(json.june);
+            myData.push(json.july);
+            myData.push(json.august);
+            myData.push(json.september);
+            myData.push(json.october);
+            myData.push(json.november);
+            myData.push(json.december);
             
             
-          //[윤경환] 탈퇴을 한 회원수  
-            let myData2 = [];
-            myData2.push(json.map2.january);
-            myData2.push(json.map2.february);
-            myData2.push(json.map2.march);
-            myData2.push(json.map2.april);
-            myData2.push(json.map2.may);
-            myData2.push(json.map2.june);
-            myData2.push(json.map2.july);
-            myData2.push(json.map2.august);
-            myData2.push(json.map2.september);
-            myData2.push(json.map2.october);
-            myData2.push(json.map2.november);
-            myData2.push(json.map2.december);
+          
             
             
-          	//가입한 총 회원 
+          	//가입한 총 사업자 
 			let result = myData.reduce((accumulator,currentNumber)=> accumulator + currentNumber);
-			//탈퇴한 총 회원 수 
-          	let result2 = myData2.reduce((accumulator,currentNumber)=> accumulator + currentNumber);
-          	
+		
           	
             // chart.js
             myChart = new Chart(ctx, {
@@ -127,7 +112,7 @@
                 data: {
                     labels: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
                     datasets: [{
-                        label: '회원가입 수',
+                        label: '사업자 등록 수',
                         data: myData,
                         backgroundColor: [
                         	 'rgba(54, 162, 235, 0.2)'
@@ -138,28 +123,14 @@
                           
                         ],
                         borderWidth: 1
-                    },{
-                    	 label: '탈퇴한 회원 수 ',
-                         data: myData2, 
-                         backgroundColor: [
-                             'rgba(255, 99, 132, 0.2)'
-                             
-                         ],
-                         borderColor: [
-                             'rgba(255, 99, 132, 1)'
-                           
-                         ],
-                         borderWidth: 1
-                    	
                     }
-                    
                     ]
                 },
                 options: {
                 	 plugins: {
                          title: {
                              display: true,
-                             text: ['# 회원가입 수 :'+result+'명','' ,'# 탈퇴한 회원 수 :' + result2+'명']
+                             text: '# 사업자 등록 수 :'+result+'명'
                              
                          }
                 		

@@ -365,8 +365,7 @@
             <!-- 마이 페이지 -->
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                 <a class="nav-link" href="adminOne?adminNo=${loginUser.admin.adminNo}">마이 페이지 </a>
+                
                  <!-- 관리자가 회원이나 호스트 리스트 관리(세부적으로 관리는 나중에) -->
                  <li class="nav-item">
                  <a class="nav-link" href="/admin/memberList?adminNo=${loginUser.admin.adminNo}">회원 리스트 </a>
@@ -403,7 +402,7 @@
             </div>
             <div class="collapse" id="charts">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">사업자 관련 통계</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/admin/totalHostYear">사업자 관련 통계</a></li>
               </ul>
             </div>
             <div class="collapse" id="charts">

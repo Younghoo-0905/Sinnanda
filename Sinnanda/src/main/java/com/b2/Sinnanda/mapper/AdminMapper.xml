@@ -327,4 +327,25 @@
 	</select>
 	
 	
+	<!-- [윤경환] 사업자 뢰원가입 수  -->
+	<select id="TotalHostYear" parameterType="int" resultType="java.util.Map">
+		SELECT 
+			COUNT(CASE WHEN MONTH(create_date) =1  THEN host_no END) AS january,
+			COUNT(CASE WHEN MONTH(create_date) =2  THEN host_no  END) AS february,
+			COUNT(CASE WHEN MONTH(create_date) =3  THEN host_no  END) AS march,
+			COUNT(CASE WHEN MONTH(create_date) =4  THEN host_no  END) AS april,
+			COUNT(CASE WHEN MONTH(create_date) =5  THEN host_no  END) AS may,
+			COUNT(CASE WHEN MONTH(create_date) =6  THEN host_no  END) AS june,
+			COUNT(CASE WHEN MONTH(create_date) =7  THEN host_no  END) AS july,
+			COUNT(CASE WHEN MONTH(create_date) =8  THEN host_no  END) AS august,
+			COUNT(CASE WHEN MONTH(create_date) =9  THEN host_no  END) AS september,
+			COUNT(CASE WHEN MONTH(create_date) =10 THEN host_no  END) AS october,
+			COUNT(CASE WHEN MONTH(create_date) =11 THEN host_no END) AS november,
+			COUNT(CASE WHEN MONTH(create_date) =12 THEN host_no  END) AS december
+		FROM host 
+		WHERE YEAR(create_date) = #{year}
+
+		
+	
+	</select>
 </mapper>

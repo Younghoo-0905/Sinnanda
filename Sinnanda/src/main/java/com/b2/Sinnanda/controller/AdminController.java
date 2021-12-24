@@ -310,4 +310,11 @@ public class AdminController {
     	  return "/admin/totalMemberYear";
       }
       
+      //[윤경환] 년도에 따라 회원강비한 회원수
+      @GetMapping("/admin/totalHostYear")
+      public String getTotalHostYear() {
+    	  return "/admin/totalHostYear";
+      }
+      
+      
 }

@@ -190,11 +190,11 @@ public class AdminService {
 		return paraMap;
 	}
 	
-	//[윤경환] 년도에 따라 탈퇴한 맴버수 
-		public Map <String, Object> getDetelMemberYear(int year){
-			Map<String, Object>  map = adminMapper.DeleteMemberYear(year);
-			return map;
-		}
+	//[윤경환] 년도에 따라 회원가입 한 사업주 수 
 	
+	public Map <String, Object> getTotalHostYear(int year){
+		Map<String, Object>  map = adminMapper.TotalHostYear(year);
+		return map;
+	}
 
 }

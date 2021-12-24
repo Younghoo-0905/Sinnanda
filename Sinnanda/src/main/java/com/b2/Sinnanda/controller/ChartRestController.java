@@ -37,4 +37,14 @@ public class ChartRestController {
 			return map;
         	 
          }
+         
+      //[윤경환] 년도에 따라 사업자가 회원가입 한 수 
+         @GetMapping("/admin/getTotalHostYear")
+         public Map<String,Object> hostYear(@RequestParam(name="year") int year){
+        	 Map<String,Object> map = adminService.getTotalHostYear(year);
+        	 
+        	 dl.p("ChartRestController", "hostYear", map);			
+			return map;
+        	 
+         }
 }

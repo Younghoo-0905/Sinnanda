@@ -37,16 +37,17 @@
 <body>
  	<div class="container-scroller">
 	
-		<!-- [이승준] 호스트 페이지 상단 내비바 - START -->
+		<!-- [이승준] 마이 페이지 상단 내비바 - START -->
 		<%@ include file="/WEB-INF/partials/myPageNavbar.jsp" %>
-		<!-- [이승준] 호스트 페이지 상단 내비바 - END -->
+		<!-- [이승준] 마이 페이지 상단 내비바 - END -->
 	
-	    <!-- [이승준] 호스트 페이지 본문 - START -->
+	    <!-- [이승준] 마이 페이지 본문 - START -->
 		<div class="container-fluid page-body-wrapper">
 		
-			<!-- [이승준] 호스트 페이지 좌측 사이드바 - START -->
+			<!-- [이승준] 마이 페이지 좌측 사이드바 - START -->
 			<%@ include file="/WEB-INF/partials/adminPageSidebar.jsp" %>
-			<!-- [이승준] 호스트 페이지 좌측 사이드바 - END -->
+			<!-- [이승준] 마이 페이지 좌측 사이드바 - END -->
+			
 			
 			<!-- [이승준] 호스트 페이지 본문 - END -->
 		      <!-- partial -->
@@ -65,7 +66,7 @@
 		            <option value="2020">2020년</option>
 		         </select>
 		   
-		      <canvas id="myChart" width="100" height="60"></canvas>
+		      <canvas id="myChart" width="100" height="40"></canvas>
 		  
    <script type="text/javascript">
    let ctx = document.getElementById('myChart').getContext('2d');
@@ -111,11 +112,11 @@
                         label: '수입 ',
                         data: myData,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)'
+                        	 'rgba(54, 162, 235, 0.2)'
                             
                         ],
                         borderColor: [
-                            'rgba(255, 99, 132, 1)'
+                        	 'rgba(54, 162, 235, 1)'
                           
                         ],
                         borderWidth: 1
@@ -125,7 +126,7 @@
                 	 plugins: {
                          title: {
                              display: true,
-                             text: '정산 : '+result.toLocaleString() +' 원'
+                             text: '# 정산 : '+result.toLocaleString() +' 원'
                          }
                      },
                     scales: {
@@ -155,9 +156,10 @@
 						</div>
 							</div>
 				
-        
+  
+<script src="/js/dashboard.js"></script>
 
- 
+<script src="/vendors/js/vendor.bundle.base.js"></script>
  
  
 
