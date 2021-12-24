@@ -10,6 +10,7 @@ import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
 import com.b2.Sinnanda.vo.Qna;
+import com.b2.Sinnanda.vo.Reserve;
 import com.b2.Sinnanda.vo.Review;
 
 
@@ -46,6 +47,9 @@ public interface MemberMapper {
 	
 	// [유동진] 내가 작성한 리뷰의 총 갯수 조회
 	int selectMyReviewTotalCount(String recommend);
+	
+	// [유동진] 나의 예약내역 조회
+	List<Reserve> selectMyReserveList(Map<String, Object> map);
 	
 	//	[김영후] 회원 가입
 	int insertMember(Member member);

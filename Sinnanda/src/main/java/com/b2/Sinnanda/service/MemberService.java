@@ -137,6 +137,12 @@ public class MemberService {
 		
 		return returnMap;
 	}
+	
+	// [유동진] 회원 예약내역 조회
+	public Map<String, Object> getMyReserveList(int memberNo, String reviewRecommend) {
+		
+		return null;
+	}
 
 	//	[김영후] 회원 이메일 인증
 	public int certifyMember(Member member) {

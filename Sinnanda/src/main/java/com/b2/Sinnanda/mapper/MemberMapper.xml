@@ -224,6 +224,44 @@
 		</if>
 	</select>
 	
+	<!-- [유동진] 예약내역 Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Reserve" id="MyReserveListMap">
+		<id column="reserve_no" property="reserveNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="member_name" property="memberName"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="room_name" property="roomName"/>
+		<result column="payment_method" property="paymentMethod"/>
+		<result column="payment_price" property="paymentPrice"/>
+		<result column="reserve_use" property="reserveUse"/>
+		<result column="reserve_info" property="reserveInfo"/>
+		<result column="reserve_cancel_date" property="reserveCancelDate"/>
+		<result column="reserve_check_in" property="reserveCheckIn"/>
+		<result column="reserve_check_out" property="reserveCheckOut"/>
+	</resultMap>
+		
+	<!-- [유동진] 예약내역 조회 -->
+	<select id="selectMyReserveList" parameterType="Map" resultMap="MyReserveListMap">
+		SELECT 
+			re.reserve_no,
+			m.member_name,
+			ac.accom_name,
+			r.room_name,
+			p.payment_method,
+			p.payment_price,
+			re.reserve_use,
+			re.reserve_info,
+			re.reserve_cancel_date,
+			re.reserve_check_in,
+			re.reserve_check_out
+		FROM reserve re
+		JOIN payment p ON p.reserve_no = re.reserve_no
+		JOIN member m ON re.member_no = m.member_no
+		JOIN room r ON r.room_no = re.room_no
+		JOIN accom ac ON r.accom_no = ac.accom_no
+		WHERE m.member_no = #{memberNo};
+	</select>
+	
 	<!-- [김영후] 회원 가입 -->
 	<insert id="insertMember" parameterType="com.b2.Sinnanda.vo.Member">
 		INSERT INTO 
