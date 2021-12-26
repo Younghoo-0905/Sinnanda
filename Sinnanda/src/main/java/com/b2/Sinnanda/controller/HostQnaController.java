@@ -52,7 +52,7 @@ public class HostQnaController {
 		}
 		
 		// 3. 답변이 없는 Host QnA 목록 조회(userLevel, hostQnaCategory, currentPage, ROW_PER_PAGE)
-		Map<String, Object> map = hostQnaService.getNoCommentsHostQnaList(loginUser.getUserLevel(), hostQnaCategory, currentPage, ROW_PER_PAGE);
+		Map<String, Object> map = hostQnaService.getNoCommentsHostQnaListForAdmin(loginUser.getUserLevel(), hostQnaCategory, currentPage, ROW_PER_PAGE);
 		
 		// 4. 10개의 page 번호를 출력하기 위한 변수
 		int pageNo = ((beginRow / 100) * 10 + 1);

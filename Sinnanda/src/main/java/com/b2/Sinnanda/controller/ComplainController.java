@@ -1,6 +1,7 @@
 package com.b2.Sinnanda.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,12 +30,26 @@ public class ComplainController {	//	[김영후]
 	private final int ROW_PER_PAGE = 10;
 	
 	//	addComplainComment 요청
+	@GetMapping("/host/removeComplainComment")
+	public String removeComplainComment(int complainNo) {
+		dl.p("ComplainController", "addComplainComment() | Get", "시작");
+		dl.p("addComplainComment()", "complainNo", complainNo);
+		
+		complainService.removeComplainComment(complainNo);
+		
+		return "redirect:/host/myComplainOne?complainNo="+complainNo;
+	}
+	
+	
+	//	addComplainComment 요청
 	@PostMapping("/host/addComplainComment")
 	public String addComplainComment(ComplainComment complainComment) {
-		dl.p("ComplainController", "addComplainComment", complainComment);		
+		dl.p("ComplainController", "addComplainComment()", "시작");
+		dl.p("addComplainComment()", "complainComment", complainComment.toString());
+		
 		complainService.addComplainComment(complainComment);
 		
-		return "redirect:/host/complainOne?complainNo=" + complainComment.getComplainNo();
+		return "redirect:/host/myComplainOne?complainNo=" + complainComment.getComplainNo();
 	}
 	
 	//	addComplain 요청
@@ -56,17 +71,22 @@ public class ComplainController {	//	[김영후]
 	}
 	
 	//	ComplainOne 요청
-	@GetMapping("/host/complainOne")
-	public String complainOne(HttpServletRequest request, Model model, int complainNo) {
-		dl.p("ComplainController", "complainList", complainNo);
+	@GetMapping("/host/myComplainOne")
+	public String complainOne(HttpSession session, Model model, int complainNo) {
+		dl.p("ComplainController", "complainOne()", complainNo);
+		
+		User loginUser = (User)session.getAttribute("loginUser");
+		dl.p("complainOne()", "loginUser", loginUser.toString());
 		
 		Complain complain = complainService.getComplainOne(complainNo);
+		
+		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("complain", complain);
 		
-		return "/host/complainOne";
+		return "/host/myComplainOne";
 	}
 	
-	//	ComplainList 요청 (아직 답변이 없는 ComplainList)
+/*	//	ComplainList 요청 (아직 답변이 없는 ComplainList)
 	@GetMapping("/host/notCommentedComplainList")
 	public String complainList(HttpSession session, Model model) {
 
@@ -74,28 +94,48 @@ public class ComplainController {	//	[김영후]
 		//	세션 내 사업자 정보 디버깅
 		dl.p("ComplainController", "complainList", loginUser);
 		
-		List<Complain> complainList = complainService.getNotCommentedComplainList(loginUser.getHost().getHostNo());
+		//List<Complain> complainList = complainService.getNotCommentedComplainList(loginUser.getHost().getHostNo());
 		
-		model.addAttribute("complainList", complainList);
+		//model.addAttribute("complainList", complainList);
 		
 		return "/host/notCommentedComplainList";
-	}
+	}*/
 	
 	//	ComplainList 요청
-	@GetMapping("/host/complainList")
+	@GetMapping("/host/myComplainList")
 	public String complainList(HttpSession session, Model model, 
-			@RequestParam(defaultValue = "1") int currentPage) {
-
+			@RequestParam(defaultValue = "1") int currentPage, 
+			@RequestParam(defaultValue = "전체") String complainCategory) {
+		dl.p("ComplainController", "complainList() | Get", "시작");
+		
+		// 로그인 세션 조회
 		User loginUser = (User)session.getAttribute("loginUser");
-		//	세션 내 사업자 정보 디버깅
-		dl.p("ComplainController", "complainList", loginUser);
 		
-		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE;
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			dl.p("complainList()", "loginUser", loginUser.toString());
+		}
 		
-		List<Complain> complainList = complainService.getComplainList(loginUser.getHost().getHostNo(), beginRow, ROW_PER_PAGE);
+		// 출력을 시작하는 행 구하기 수식
+		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1); 
 		
-		model.addAttribute("complainList", complainList);
+		// complain 목록 조회
+		Map<String, Object> map = complainService.getComplainList(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), complainCategory, currentPage, ROW_PER_PAGE);
 		
-		return "/host/complainList";
+		// 4. 10개의 page 번호를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		dl.p("complainList()", "pageNo", pageNo);
+		
+		// 모델 추가
+		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("complainCategory", complainCategory);
+		model.addAttribute("complainList", map.get("complainList"));
+		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("pageNo", pageNo);
+		
+		return "/host/myComplainList";
 	}
 }

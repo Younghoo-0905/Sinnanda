@@ -11,8 +11,10 @@ public class Complain {
 	private String complainContent;
 	private String createDate;
 	private String updateDate;
-	private ComplainComment complainComment;
+	
 	private String memberName;
 	private String accomName;
 	private String roomName;
+	
+	private ComplainComment complainComment;
 }

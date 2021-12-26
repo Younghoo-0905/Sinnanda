@@ -21,7 +21,7 @@ public interface HostQnaMapper {
 	int selectNoCommentsHostQnaTotalCount(Map<String, Object> map);
 	
 // 사업자 기능
-	
+		
 	// [이승준] Host QnA 수정
 	void updateHostQna(HostQna hostQna);
 	

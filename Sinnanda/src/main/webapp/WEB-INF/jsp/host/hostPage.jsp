@@ -9,10 +9,8 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- plugins:css -->
-		<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/animate.css">
 	
+	<!-- plugins:css -->	
 	<link rel="stylesheet" href="/skydash/vendors/feather/feather.css">
 	<link rel="stylesheet" href="/skydash/vendors/ti-icons/css/themify-icons.css">
 	<link rel="stylesheet" href="/skydash/vendors/css/vendor.bundle.base.css">
@@ -52,11 +50,44 @@
 								<div class="card-body">
 									<h3 style="margin-top: 10px;"><strong>신규 컴플레인</strong></h3>
 									
-									<div class="container">
-										<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
-							    			<tr><th style="text-align:center; font-size: 20px;">내용 없음</th></tr>
-										</table>
+									<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+										<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${complainListTotalCount}</strong></span>
+										<a href="/host/myComplainList" style="float: right; ">목록 보기</a>
 									</div>
+									
+								    <div class="container">
+								    	<c:if test="${empty complainList}">
+								    		<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
+								    			<tr><th style="text-align:center; font-size: 20px;">내용 없음</th></tr>
+											</table>
+								    	</c:if>
+								    	
+								    	<c:if test="${!empty complainList}">
+								    		<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
+											<tr style="text-align:center">
+												<th width="5%">번호</th>
+												<th width="40%">제목</th>
+												<th width="10%">문의유형</th>
+												<th width="10%">작성자</th>
+												<th width="10%">작성일</th>
+											</tr>
+											<c:forEach items="${complainList}" var="complain">
+												<tr>
+													<td style="text-align:center">${complain.complainNo}</td>
+													<td>
+														<a href="/host/myComplainOne?complainNo=${complain.complainNo}">${complain.complainTitle}</a>
+													</td>
+													<td style="text-align:center">${complain.complainCategory}</td>
+													<td style="text-align:center">${complain.memberName}</td>
+													<td style="text-align:center">
+														<fmt:parseDate value="${complain.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
+													</td>
+												</tr>
+											</c:forEach>
+											</table>
+								    	</c:if>
+								    </div>
 								</div>
 							</div>
 						</div>
@@ -86,6 +117,11 @@
 								<div class="card-body">
 									<h3 style="margin-top: 10px;"><strong>답변이 대기 중인 사업자 Q&A</strong></h3>
 									
+									<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+										<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${hostQnaListTotalCount}</strong></span>
+										<a href="/host/myHostQnaList" style="float: right; ">목록 보기</a>
+									</div>
+									
 								    <div class="container">
 								    	<c:if test="${empty hostQnaList}">
 								    		<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
@@ -94,7 +130,7 @@
 								    	</c:if>
 								    	
 								    	<c:if test="${!empty hostQnaList}">
-								    		<table class="table table-myPage" style="width: 100%;">
+								    		<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 											<tr style="text-align:center">
 												<th width="5%">번호</th>
 												<th width="40%">제목</th>
@@ -106,9 +142,6 @@
 												<tr>
 													<td style="text-align:center">${hostQna.hostQnaNo}</td>
 													<td>
-														<c:if test="${hostQna.hostQnaComments.adminNo != null}">
-															<span style="color: #2828CD; font-weight: bold;">[답변 완료]</span>
-														</c:if>
 														<a href="/host/myHostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
 													</td>
 													<td style="text-align:center">${hostQna.hostQnaCategory}</td>
@@ -119,7 +152,7 @@
 													</td>
 												</tr>
 											</c:forEach>
-										</table>
+											</table>
 								    	</c:if>
 								    </div>
 								</div>
@@ -132,7 +165,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/footer.jsp" %>
+	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 

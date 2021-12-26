@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.b2.Sinnanda.commons.DL;
+import com.b2.Sinnanda.service.ComplainService;
 import com.b2.Sinnanda.service.HostQnaService;
 import com.b2.Sinnanda.service.HostService;
 import com.b2.Sinnanda.vo.User;
@@ -24,6 +25,8 @@ public class HostController {
 	private HostService hostService;
 	@Autowired
 	private HostQnaService hostQnaService;
+	@Autowired
+	private ComplainService complainService;
 	
 	// [이승준] HostPage 보기
 	@GetMapping("/host/hostPage")
@@ -40,13 +43,18 @@ public class HostController {
 			return "redirect:/index";
 		}
 		
-		// 답변이 없는 host QnA 조회
-		Map<String, Object> map = hostQnaService.getNoCommentsHostQnaList(loginUser.getUserLevel(), null, 1, 10);
-		
+		// 3. 답변이 없는 Host QnA 목록, 총 개수 조회
+		Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNoCommentsHostQnaListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 1, 10);
+		// 4. 답변이 없는 Complain 목록, 총 개수 조회
+		Map<String, Object> noCommentedComplainMap = complainService.getNotCommentedComplainListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 1, 10);
 		
 		/* 모델 설정 */
 		model.addAttribute("loginUser", loginUser);
-		model.addAttribute("hostQnaList", map.get("hostQnaList"));
+		model.addAttribute("hostQnaList", noCommentedHostQnaMap.get("hostQnaList"));
+		model.addAttribute("hostQnaListTotalCount", noCommentedHostQnaMap.get("totalCount"));
+		
+		model.addAttribute("complainList", noCommentedComplainMap.get("complainList"));
+		model.addAttribute("complainListTotalCount", noCommentedComplainMap.get("totalCount"));
 		
 		return "host/hostPage";
 	}
