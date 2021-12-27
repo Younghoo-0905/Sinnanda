@@ -131,7 +131,7 @@
 														</c:forEach>
 														
 														<!-- '다음' 버튼 -->
-														<c:if test="${currentPage + 10 <= lastPage}">
+														<c:if test="${lastPage >= pageNo + 10}">
 															<li><a href="hostQnaList?currentPage=${pageNo+10}&hostQnaCategory=${hostQnaCategory}">&gt;</a></li>
 														</c:if>
 													</ul>

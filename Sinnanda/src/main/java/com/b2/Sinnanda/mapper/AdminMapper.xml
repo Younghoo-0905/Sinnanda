@@ -82,7 +82,8 @@
 	<update id="modifyAdminForm" parameterType="com.b2.Sinnanda.vo.Admin">
 		UPDATE admin SET 
 			admin_pw = #{adminPw},
-			admin_name = #{adminName}
+			admin_name = #{adminName}, 
+			update_date = NOW()
 		WHERE admin_no = #{adminNo}
 	</update>	
 	
@@ -140,11 +141,18 @@
 	
 	<!--[윤경환] 관리자 총합 -->
 	
-	<select id="selectAdminTotalCount" resultType="int">
+	<select id="selectAdminTotalCount" parameterType="String" resultType="int">
 		 
  		SELECT
  			 COUNT(*)
- 			FROM admin
+		FROM admin a
+		LEFT JOIN admin_position ap
+			ON a.admin_position_no = ap.admin_position_no 
+		<if test ="adminPosition != null">
+			<where>
+				ap.admin_position = #{adminPosition}
+			</where>
+		</if>
 	
 	</select>
 	
@@ -199,18 +207,23 @@
 				 	<if test ="memberActive != null">
 				 		member_active = #{memberActive}
 				 	</if>
-				 </where>
+			 </where>
 			ORDER by update_date DESC 
 			LIMIT #{beginRow}, #{rowPerPage}
 			
 		
 		</select>
 	<!--[윤경환] 맴버 전체 수  -->
-	<select id="selectMemberTotalCount" resultType="int">
+	<select id="selectMemberTotalCount" parameterType="int" resultType="int">
 		 
  		SELECT
  			 COUNT(*)
  		FROM member
+		<if test ="memberActive != null">
+			<where>
+				member_active = #{memberActive}
+			</where>
+		</if>
 	</select>
 	
 	
@@ -265,11 +278,16 @@
 	</select>
 	
 	
-	<!--[윤경환] 맴버 전체 수  -->
-	<select id="selectHostTotalCount" resultType="int">
+	<!--[윤경환] 호스트 전체 수  -->
+	<select id="selectHostTotalCount" parameterType="int" resultType="int">
  		SELECT
  			 COUNT(*)
  		FROM host
+		<if test ="hostActive != null">
+			<where>
+				host_active = #{hostActive}
+			</where>
+		</if>
 	</select>
 	
 	

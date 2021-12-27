@@ -32,7 +32,7 @@ public interface AdminMapper {
 	List<Admin> selectAdminList(Map<String, Object> map);
 	
 	//[윤경화] 관리자 총 수 
-	int selectAdminTotalCount();
+	int selectAdminTotalCount(String adminPosition);
 	
 	//[윤경환] 관리자 등급 수정 	
 	int modifyAdminList(Admin admin);
@@ -44,10 +44,10 @@ public interface AdminMapper {
 	//[윤경환] 맴버 리스트 조회 
 	 List<Member> selectMemberList(Map<String, Object> map);
 
-	 // [윤경화] 관리자 총 수 
-	int selectMemberTotalCount();
+	 // [윤경화] 멤버 총 수 
+	int selectMemberTotalCount(int memberActive);
 	
-	//[윤경환] 관리자 활성화
+	//[윤경환] 멤버 활성화
 	int modifyMemberAc(int memberNo);
 	
 	
@@ -57,7 +57,7 @@ public interface AdminMapper {
 	List<Host> selectHostList(Map<String, Object> map);
 	
 	//[윤경환] 호스트 총수 
-	int selectHostTotalCount();
+	int selectHostTotalCount(int hostActive);
 	
 	
 	//[윤경환] 관리자 정산 차트 
@@ -74,4 +74,5 @@ public interface AdminMapper {
  	
  	//[윤경환] 날짜에 따른 숙소 종류 수 
  	Map<String,Object> TotalAccomYear(int year, String accomName);
+
 }

@@ -176,7 +176,7 @@
 							</c:forEach>
 							
 							<!-- '다음' 버튼 -->
-							<c:if test="${currentPage + 10 <= lastPage}">
+							<c:if test="${lastPage >= pageNo + 10}">
 								<li><a href="memberList?currentPage=${pageNo+10}&memberActive=${memberActive}">&gt;</a></li>
 							</c:if>
 						</ul>

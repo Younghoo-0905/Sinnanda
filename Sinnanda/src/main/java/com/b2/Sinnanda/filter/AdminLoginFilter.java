@@ -48,7 +48,7 @@ public class AdminLoginFilter implements Filter{
 			loginUser = (User)session.getAttribute("loginUser");
 			log.debug(" ├[param] user : "+loginUser.toString());	
 			//	UserLevel 검사
-			if(loginUser.getUserLevel() < 3) {
+			if(loginUser.getUserLevel() != 3) {
 				log.info(" ├[info] \"User 권한 부족, 로그인 페이지로 이동\" AdminFilter.doFilter()");
 				req.getRequestDispatcher("/login").forward(request, response);				
 			}

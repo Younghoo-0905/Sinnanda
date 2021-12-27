@@ -41,69 +41,16 @@
 		// [이승준] 게시판폼, 게시판으로 자동 스크롤
 		function toBoardScroll(){
 			var offset = $("#startBoard").offset();
-			$('html, body').animate({scrollTop: offset.top}, 200);
+			$('html, body').animate({scrollTop: offset.top}, 500);
 		}
 	</script>
-	
 	<!-- 상단 내비바 - START -->
-	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-		<div class="container">
-			<a class="navbar-brand" href="index">신난다</a>
-			
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="oi oi-menu"></span> Menu
-			</button>
-			
-			<div class="collapse navbar-collapse" id="ftco-nav">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item cta"><a href="/qnaList" class="nav-link">Q&A</a></li>
-					<li class="nav-item active"><a href="/noticeList" class="nav-link">공지사항</a></li>
-					<li class="nav-item cta"><a href="/noticeList" class="nav-link">신난다 소개</a></li>
-					
-				</ul>
-				<ul class="navbar-nav mj-auto">
-					<!--memberId가 없을때--> 
-					<c:if test ="${loginUser == null}">
-						<li class="nav-item member"><a href="login" class="nav-link">로그인</a></li>
-						<li class="nav-item member"><a href="insertMemberForm" class="nav-link">회원가입</a></li>
-					</c:if>
-					
-					<!--memberId가 있을떄  -->
-					<c:if test = "${loginUser != null}">
-						<c:if test="${loginUser.userLevel == 1}">
-							<li class="nav-item member"><a href="myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">${loginUser.member.memberName}</a></li>
-						</c:if>
-						<c:if test="${loginUser.userLevel == 2}">
-							<li class="nav-item member"><a href="myPage?hostNo=${loginUser.host.hostNo}" class="nav-link">${loginUser.host.hostName}</a></li>
-						</c:if>
-						<c:if test="${loginUser.userLevel == 3}">
-							<li class="nav-item member">
-							<a href="myPage?memberNo=${loginUser.admin.adminNo}" class="nav-link">
-									<img src="/images/jun_test/adminImg.png" width="20px" height="20px">
-									${loginUser.admin.adminName}&nbsp;관리자
-								</a>
-							</li>
-						</c:if>
-						<li class="nav-item member"><a href="logout" class="nav-link">로그아웃</a></li>		
-					</c:if>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<%@ include file="/WEB-INF/partials/navbar.jsp" %>
 	<!-- 상단 내비바 - END -->
 	
 	<!-- 상단 이미지 배너 - START -->
-	<div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
-		<div class="container">
-			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
-				<div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-					<h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><strong>공지<br></strong> 새로운 소식들</h1>
-					<p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">신난다 소식은 여기서 확인하세요</p>
-				</div>
-			</div>
-		</div>
-	</div>
-    <!-- 상단 이미지 배너 - END -->
+	<%@ include file="/WEB-INF/partials/noticeBackground.jsp" %>
+	<!-- 상단 이미지 배너 - END -->
 	
 	<!-- [김영후] 공지사항 목록 출력 -->
 	<section id="startBoard" class="ftco-section testimony-section bg-light">

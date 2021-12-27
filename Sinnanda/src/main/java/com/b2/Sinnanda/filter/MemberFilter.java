@@ -54,7 +54,7 @@ public class MemberFilter implements Filter {
 			loginUser = (User)session.getAttribute("loginUser");
 			dl.p("MemberFilter", "user", loginUser.toString());
 			//	UserLevel 검사
-			if(loginUser.getUserLevel() < 1) {
+			if(loginUser.getUserLevel() != 1) {
 				dl.p("MemberFilter", "doFilter()", "User 권한 부족, 로그인 페이지로 이동");
 				req.getRequestDispatcher("/login").forward(request, response);				
 			}

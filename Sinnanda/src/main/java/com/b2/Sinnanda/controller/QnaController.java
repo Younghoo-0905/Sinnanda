@@ -254,7 +254,7 @@ public class QnaController {
 		
 		//	10개의 page 번호를 출력하기 위한 변수
 		int pageNo = ((beginRow / 100) * 10 + 1);
-		log.debug(" ├[param] pageNo : " + "pageNo");
+		log.debug(" ├[param] pageNo : " + pageNo);
 		model.addAttribute("pageNo", pageNo);
 			
 		return "qnaList";

@@ -176,8 +176,8 @@
 							</c:forEach>
 							
 							<!-- '다음' 버튼 -->
-							<c:if test="${currentPage + 10 <= lastPage}">
-								<li><a href="hostList?currentPage=${pageNo+10}&hostActivev=${hostActive}">&gt;</a></li>
+							<c:if test="${lastPage >= pageNo + 10}">
+								<li><a href="hostList?currentPage=${pageNo+10}&hostActive=${hostActive}">&gt;</a></li>
 							</c:if>
 						</ul>
 					</div>

@@ -145,8 +145,8 @@
 		            <div class="block-27">
 						<ul>
 							<!-- '이전' 버튼 -->
-							<c:if test="${beginRow > (ROW_PER_PAGE * 10)}">
-								<li><a href="adminList?currentPage=${pageNo-1}&adminPosition=${adminPosition}">&lt;</a></li>
+							<c:if test="${beginRow > ROW_PER_PAGE}">
+								<li><a href="adminList?currentPage=${currentPage-1}&adminPosition=${adminPosition}">&lt;</a></li>
 							</c:if>
 							
 							<!-- Page 번호 -->
@@ -171,8 +171,8 @@
 							</c:forEach>
 							
 							<!-- '다음' 버튼 -->
-							<c:if test="${currentPage + 10 <= lastPage}">
-								<li><a href="adminList?currentPage=${pageNo+10}&adminPosition=${adminPosition}">&gt;</a></li>
+							<c:if test="${currentPage != lastPage}">
+								<li><a href="adminList?currentPage=${currentPage+1}&adminPosition=${adminPosition}">&gt;</a></li>
 							</c:if>
 						</ul>
 					</div>

@@ -205,7 +205,7 @@ public class AdminController {
          return checkResult;
       }
    
-      //[윤경환] 맵버 리스트 구현
+      //[윤경환] 멤버 리스트 구현
       @GetMapping("/admin/memberList")
       public String getMemberList(HttpServletRequest request, Model model,
             @RequestParam(defaultValue = "1") int currentPage,

@@ -78,7 +78,7 @@ public class AdminService {
 		Map<String, Object> returnMap = new HashMap<>();
 		
 		int lastPage = 0;
-		int totalCount = adminMapper.selectAdminTotalCount();
+		int totalCount = adminMapper.selectAdminTotalCount(adminPosition);
 		
 		
 		lastPage = totalCount / rowPerPage;
@@ -119,7 +119,7 @@ public class AdminService {
 		Map<String, Object> returnMap = new HashMap<>();
 		
 		int lastPage = 0;
-		int totalCount = adminMapper.selectMemberTotalCount();
+		int totalCount = adminMapper.selectMemberTotalCount(memberActive);
 		
 		
 		lastPage = totalCount / rowPerPage;
@@ -162,7 +162,7 @@ public class AdminService {
 		Map<String, Object> returnMap = new HashMap<>();
 		
 		int lastPage = 0;
-		int totalCount = adminMapper.selectHostTotalCount();
+		int totalCount = adminMapper.selectHostTotalCount(hostActive);
 		
 		
 		lastPage = totalCount / rowPerPage;
