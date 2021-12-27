@@ -37,7 +37,7 @@ public class ReviewController {
 		
 	}
 	
-	//	ReviewList 요청 ((사업자)아직 답변하지 않은 Review)
+	/*//	ReviewList 요청 ((사업자)아직 답변하지 않은 Review)
 	@GetMapping("/host/notCommentedReviewList")
 	public String reviewList(HttpSession session, Model model) {
 
@@ -45,13 +45,13 @@ public class ReviewController {
 		//	세션 내 사업자 정보 디버깅
 		dl.p("ComplainController", "complainList", loginUser);
 		
-		List<Review> reviewList = reviewService.getNotCommentedReviewList(loginUser.getHost().getHostNo());
+		List<Review> reviewList = reviewService.getNotCommentedReviewListForHost(loginUser.getHost().getHostNo());
 		
 		model.addAttribute("reviewList", reviewList);
 		
 		return "/host/notCommentedReviewList";
 		
-	}
+	}*/
 	
 	//	ReviewList 요청 (사업자 페이지)
 	@GetMapping("host/reviewList")

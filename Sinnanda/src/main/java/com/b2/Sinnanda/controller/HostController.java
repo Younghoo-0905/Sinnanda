@@ -13,6 +13,7 @@ import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.service.ComplainService;
 import com.b2.Sinnanda.service.HostQnaService;
 import com.b2.Sinnanda.service.HostService;
+import com.b2.Sinnanda.service.ReviewService;
 import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,8 @@ public class HostController {
 	private HostQnaService hostQnaService;
 	@Autowired
 	private ComplainService complainService;
+	@Autowired
+	private ReviewService reviewService;
 	
 	// [이승준] HostPage 보기
 	@GetMapping("/host/hostPage")
@@ -47,14 +50,19 @@ public class HostController {
 		Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNoCommentsHostQnaListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 1, 10);
 		// 4. 답변이 없는 Complain 목록, 총 개수 조회
 		Map<String, Object> noCommentedComplainMap = complainService.getNotCommentedComplainListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 1, 10);
-		
+		// 5. 답변이 없는 Review 목록, 총 개수 조회
+		Map<String, Object> noCommentedReviewMap = reviewService.getNotCommentedReviewListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), 1, 10);
 		/* 모델 설정 */
 		model.addAttribute("loginUser", loginUser);
+		
 		model.addAttribute("hostQnaList", noCommentedHostQnaMap.get("hostQnaList"));
 		model.addAttribute("hostQnaListTotalCount", noCommentedHostQnaMap.get("totalCount"));
 		
 		model.addAttribute("complainList", noCommentedComplainMap.get("complainList"));
 		model.addAttribute("complainListTotalCount", noCommentedComplainMap.get("totalCount"));
+		
+		model.addAttribute("reviewList", noCommentedReviewMap.get("reviewList"));
+		model.addAttribute("reviewListTotalCount", noCommentedReviewMap.get("totalCount"));
 		
 		return "host/hostPage";
 	}

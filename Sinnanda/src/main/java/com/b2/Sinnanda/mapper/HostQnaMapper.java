@@ -30,6 +30,12 @@ public interface HostQnaMapper {
 	
 // 공통 기능
 	
+	// [이승준] host Qna 답변 삭제
+	void deleteHostQnaComment(int hostQnaNo);
+	
+	// [이승준] host Qna 삭제
+	void deleteHostQna(int hostQnaNo);
+	
 	// [이승준] Host QnA 상세 조회
 	HostQna selectHostQnaOne(int hostQnaNo);
 	

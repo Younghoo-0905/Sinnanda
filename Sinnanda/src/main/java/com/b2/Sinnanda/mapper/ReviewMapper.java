@@ -14,9 +14,14 @@ public interface ReviewMapper {		//	[김영후]
 	//	Review Comment 등록
 	void insertReviewComment(ReviewComment reviewComment);
 	
-	//	Not Commented Review 목록조회 (사업자 페이지) 
-	List<Review> selectNotCommentedReviewList(int hostNo);
-	
 	//	Review 목록조회 (사업자 페이지)
 	List<Review> selectReviewList(Map<String, Object> map);
+	
+	//	Not Commented Review 목록조회 (사업자 페이지) 
+	// ㄴ매개변수 : 
+	List<Review> selectNotCommentedReviewList(Map<String, Object> map);
+	
+	// [이승준] 답변이 없는 컴플레인의 총 개수
+	// ㄴ매개변수(map) : userLevel, hostNo, complainCategory, currentPage, rowPerPage
+	int selectNotCommentedReviewTotalCount(Map<String, Object> map);
 }

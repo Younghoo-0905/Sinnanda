@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.service.HostQnaService;
 import com.b2.Sinnanda.vo.HostQna;
 import com.b2.Sinnanda.vo.Qna;
@@ -24,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 public class HostQnaController {
 	@Autowired
 	private HostQnaService hostQnaService;
+	@Autowired
+	private DL dl;
 	
 	// [이승준] QnA 목록 페이징용 상수
 	private final int ROW_PER_PAGE = 10;
@@ -141,6 +144,17 @@ public class HostQnaController {
 	}
 	
 // 공통 기능
+	
+	// [이승준] host Qna 삭제
+	@GetMapping("/host/removeMyHostQna")
+	public String removeMyHostQna(int hostQnaNo) {
+		dl.p("HostQnaController", "removeHostQna() | Get", "시작");
+		dl.p("removeHostQna()", "hostQnaNo", hostQnaNo);
+		
+		hostQnaService.removeHostQna(hostQnaNo);
+		
+		return "redirect:/host/hostPage";
+	}
 	
 	// [이승준] Host QnA 상세 조회
 	@GetMapping("/host/myHostQnaOne")

@@ -42,10 +42,10 @@ public interface ComplainMapper {
 	
 // 공통(사업자/관리자) 기능
 	//	NotCommented Complain 목록조회
-	// ㄴ매개변수(ma) : userLevel, hostNo, complainCategory, currentPage, rowPerPage
+	// ㄴ매개변수(map) : userLevel, hostNo, complainCategory, currentPage, rowPerPage
 	List<Complain> selectNotCommentedComplainList(Map<String, Object> map);
 	
 	// [이승준] 답변이 없는 컴플레인의 총 개수
-	// ㄴ매개변수(ma) : userLevel, hostNo, complainCategory, currentPage, rowPerPage
+	// ㄴ매개변수(map) : userLevel, hostNo, complainCategory, currentPage, rowPerPage
 	int selectNotCommentedComplainTotalCount(Map<String, Object> map);
 }

@@ -42,6 +42,20 @@
 
 <!-- 공통(사업자/관리자) 쿼리 -->
 	
+	<!-- [이승준] host QnA 삭제 -->
+	<delete id="deleteHostQnaComment" >
+		DELETE 
+		FROM host_qna_comment
+		WHERE host_qna_no = #{hostQnaNo}
+	</delete>
+	
+	<!-- [이승준] host QnA 삭제 -->
+	<delete id="deleteHostQna" >
+		DELETE 
+		FROM host_qna 
+		WHERE host_qna_no = #{hostQnaNo}
+	</delete>
+	
 	<!-- [이승준] 답변이 존제하지 않는 Host QnA의 목록 -->
 	<resultMap type="com.b2.Sinnanda.vo.HostQna" id="noCommentsHostQnaListMap">
 		<id column="host_qna_no" property="hostQnaNo"/>

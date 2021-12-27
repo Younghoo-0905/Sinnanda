@@ -43,27 +43,56 @@
 			a.accom_name, 
 			ro.room_name
 		FROM review r
-		LEFT JOIN payment p 
-			ON r.payment_no = p.payment_no 
-		LEFT JOIN reserve re
-			ON p.reserve_no = re.reserve_no
-		LEFT JOIN room ro
-			ON ro.room_no = re.room_no
-		LEFT JOIN accom a
-			ON a.accom_no = ro.accom_no
-		LEFT JOIN member m
-			ON re.member_no = m.member_no	
-		LEFT JOIN host h
-			ON a.host_no = h.host_no	
-		LEFT JOIN review_comment rc
-			ON rc.review_no = r.review_no		
-		<where>
-			a.host_no = #{hostNo}
-			AND
-			rc.review_comment_content IS null
-		</where>
+			LEFT JOIN payment p ON r.payment_no = p.payment_no 
+			LEFT JOIN reserve re ON p.reserve_no = re.reserve_no
+			LEFT JOIN room ro ON ro.room_no = re.room_no
+			LEFT JOIN accom a ON a.accom_no = ro.accom_no
+			LEFT JOIN member m ON re.member_no = m.member_no	
+			LEFT JOIN host h ON a.host_no = h.host_no	
+			LEFT JOIN review_comment rc ON rc.review_no = r.review_no	
+		<!-- [이승준] 사업자가 접근하는 경우 -->
+		<if test="userLevel == 2">
+			<where>
+				a.host_no = #{hostNo} AND rc.review_comment_content IS NULL
+			</where>
+		</if>
+		<!-- [이승준] 관리자가 접근하는 경우 -->
+		<if test="userLevel == 3">
+			<where>
+				rc.review_comment_content IS NULL
+			</where>
+		</if>
 		ORDER BY create_date DESC
 	</select>
+
+
+	<!-- [이승준] Comment 없는 Complain 총 개수 조회 -->
+	<select id="selectNotCommentedReviewTotalCount" parameterType="Map" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM review r
+			LEFT JOIN payment p ON r.payment_no = p.payment_no 
+			LEFT JOIN reserve re ON p.reserve_no = re.reserve_no
+			LEFT JOIN room ro ON ro.room_no = re.room_no
+			LEFT JOIN accom a ON a.accom_no = ro.accom_no
+			LEFT JOIN member m ON re.member_no = m.member_no	
+			LEFT JOIN host h ON a.host_no = h.host_no	
+			LEFT JOIN review_comment rc ON rc.review_no = r.review_no
+		<!-- [이승준] 사업자가 접근하는 경우 -->
+		<if test="userLevel == 2">
+			<where>
+				a.host_no = #{hostNo} AND rc.review_comment_content IS NULL
+			</where>
+		</if>
+		<!-- [이승준] 관리자가 접근하는 경우 -->
+		<if test="userLevel == 3">
+			<where>
+				rc.review_comment_content IS NULL
+			</where>
+		</if>
+	</select>
+
+
 
 	<!-- [김영후] (사업자 페이지) Review 목록조회 Map -->
 	<resultMap type="com.b2.Sinnanda.vo.Review" id="ReviewListMap">

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.mapper.HostQnaMapper;
 import com.b2.Sinnanda.vo.HostQna;
 import com.b2.Sinnanda.vo.Qna;
@@ -20,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 public class HostQnaService {
 	@Autowired
 	private HostQnaMapper hostQnaMapper;
+	@Autowired
+	private DL dl;
 	
 // 관리자 기능
 	public Map<String, Object> getNoCommentsHostQnaListForAdmin(int userLevel, String hostQnaCategory, int currentPage, int rowPerPage){
@@ -141,6 +144,32 @@ public class HostQnaService {
 	}
 	
 // 공통 기능
+	
+	// [이승준] host Qna 답변 삭제
+	public void removeHostQnaComment(int hostQnaNo) {
+		dl.p("HostQnaService", "removeHostQnaComment()", "시작");
+		dl.p("removeHostQnaComment()", "hostQnaNo", hostQnaNo);
+		
+		hostQnaMapper.deleteHostQnaComment(hostQnaNo);
+	}
+	
+	// [이승준] host Qna 삭제
+	public void removeHostQna(int hostQnaNo) {
+		dl.p("HostQnaService", "removeHostQna()", "시작");
+		dl.p("removeHostQna()", "hostQnaNo", hostQnaNo);
+		
+		// host Qna 조회
+		HostQna hostQna = hostQnaMapper.selectHostQnaOne(hostQnaNo);
+		
+		// host Qna에 답변이 있는 경우
+		if(hostQna.getHostQnaComments() != null) {
+			// host Qna 답변 삭제
+			hostQnaMapper.deleteHostQnaComment(hostQnaNo);
+		}
+		// host Qna 삭제
+		hostQnaMapper.deleteHostQna(hostQnaNo);
+	}
+	
 	
 	/* [이승준] QnA 수정 */
 	public void modifyHostQna(HostQna hostQna) {
