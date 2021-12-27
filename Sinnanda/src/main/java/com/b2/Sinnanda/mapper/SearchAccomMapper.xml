@@ -19,6 +19,8 @@
 
 	<!-- [이원희] 숙소 목록 조회 -->
 	<select id="selectAccomListByName" parameterType="Map" resultMap="AccomListMap">
+		<!-- 
+		
 		SELECT a.accom_no, 
 			   a.host_no, 
 			   a.admin_no,
@@ -34,21 +36,26 @@
 			   AND ac.accom_category_name= #{accomCategoryName}
 			   ORDER BY create_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
-		
-		<!-- 
-		
-		SELECT accom_no, 
-			   host_no, 
-			   admin_no, 
-			   commission_no, 
-			   accom_name, 
-			   accom_img, 
-			   accom_description, 
-			   create_date, 
-			   update_date 
-			   FROM accom WHERE accom_name LIKE CONCAT('%',#{accomName},'%') ORDER BY create_date DESC
-		LIMIT #{beginRow}, #{rowPerPage}
 		 -->
+		SELECT accom.accom_no, 
+			   accom.host_no, 
+			   accom.admin_no, 
+			   accom.commission_no,
+			   accom_category.accom_category_name,
+			   accom.accom_name,
+			   accom.accom_img,
+			   accom.accom_description, 
+			   accom.create_date, 
+			   accom.update_date 
+			   FROM accom join accom_category ON accom.accom_category_no = accom_category.accom_category_no 
+				WHERE accom_category_name IN 
+				<foreach collection="accomCategory1" item="value" index="idx" separator="," open="(" close=")">
+    				#{value}
+    			</foreach>
+				AND accom.accom_name LIKE CONCAT('%',#{accomName},'%')
+				ORDER BY accom.create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+		
 	</select>
 	
 	<!-- [이원희] 검색 대상 숙소 갯수 조회-->
@@ -56,7 +63,7 @@
 		SELECT 
 			COUNT(*) 
 		FROM accom a JOIN accom_category ac ON a.accom_category_no = ac.accom_category_no WHERE a.accom_name LIKE CONCAT('%',#{accomName},'%')
-		AND ac.accom_category_name= #{accomCategoryName}
+		<!--AND ac.accom_category_name= #{accomCategoryName} -->
 	</select>
 	
 	<!-- [이원희] 검색 대상 숙소 별점 조회 -->

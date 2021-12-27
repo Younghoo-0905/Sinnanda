@@ -52,73 +52,85 @@
       <div class="container">
         <div class="row">
         	<div class="col-lg-3 sidebar">
-        		
-        		
-        		<form action="searchAccomList" method="post" class="d-block d-flex" id="searchForm">
-        		
         		<div class="sidebar-wrap bg-light ftco-animate">
-        			
-		             <!-- [이원희] 검색리스트뷰 검색바-->
         			<h3 class="heading mb-4">숙소 유형</h3>
         			
-        			<c:forEach items="${accomCategory1}" var="ac1">
-        			
-        			<c:choose>
-
-						<c:when test="${ac1 eq '호텔'}">
-							<input type="checkbox" name="accomCategory1" value="호텔" checked onclick="getCheckboxValue()"/>호텔<br>
-						</c:when>
-					
-						<c:when test="${ac1 ne '호텔'}">
-							<input type="checkbox" name="accomCategory1" value="호텔" onclick="getCheckboxValue()"/>호텔<br>
-						</c:when>
-					
-					</c:choose>
-					<c:choose>
-						
-						<c:when test="${ac1 eq '모텔'}">
-							<input type="checkbox" name="accomCategory1" value="모텔" checked onclick="getCheckboxValue()"/>모텔<br>
-						</c:when>
-						
-						<c:when test="${ac1 ne '모텔'}">
-							<input type="checkbox" name="accomCategory1" value="모텔" onclick="getCheckboxValue()"/>모텔<br>
-						</c:when>
-					</c:choose>
-					
-					<c:choose>
-						<c:when test="${ac1 eq '펜션'}">
-							<input type="checkbox" name="accomCategory1" value="펜션" checked onclick="getCheckboxValue()"/>펜션<br>
-						</c:when>
-						
-						<c:when test="${ac1 ne '펜션'}">
-							<input type="checkbox" name="accomCategory1" value="펜션" onclick="getCheckboxValue()"/>펜션<br>
-						</c:when>
-					</c:choose>
-					<c:choose>	
-						<c:when test="${ac1 eq '풀빌라'}">
-							<input type="checkbox" name="accomCategory1" value="풀빌라" checked onclick="getCheckboxValue()"/>풀빌라<br>
-						</c:when>
-						
-						<c:when test="${ac1 ne '풀빌라'}">
-							<input type="checkbox" name="accomCategory1" value="풀빌라" onclick="getCheckboxValue()"/>풀빌라<br>
-						</c:when>
-					</c:choose>
-					<c:choose>	
-						<c:when test="${ac1 eq '게스트하우스'}">
-							<input type="checkbox" name="accomCategory1" value="호텔" checked onclick="getCheckboxValue()"/>게스트하우스<br>
-						</c:when>
-						
-						<c:when test="${ac1 ne '게스트하우스'}">
-							<input type="checkbox" name="accomCategory1" value="게스트하우스" onclick="getCheckboxValue()"/>게스트하우스<br>
-						</c:when>
-					
-					</c:choose>
-					</c:forEach>
-        			<br>
         			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-        			
+					<c:if test="${accomCategoryName eq '호텔'}">
+						<input type="checkbox" name="accomCategory" value="호텔" checked onclick="getCheckboxValue()"/>호텔<br>
+						<input type="checkbox" name="accomCategory" value="모텔" onclick="getCheckboxValue()"/>모텔<br>
+						<input type="checkbox" name="accomCategory" value="펜션" onclick="getCheckboxValue()"/>펜션<br>
+						<input type="checkbox" name="accomCategory" value="풀빌라" onclick="getCheckboxValue()"/>풀빌라<br>
+						<input type="checkbox" name="accomCategory" value="게스트하우스" onclick="getCheckboxValue()"/>게스트하우스<br>
+					</c:if>
+					
+					<c:if test="${accomCategoryName eq '모텔'}">
+						<input type="checkbox" name="accomCategory" value="호텔" onclick="getCheckboxValue()"/>호텔<br>
+						<input type="checkbox" name="accomCategory" value="모텔" checked onclick="getCheckboxValue()"/>모텔<br>
+						<input type="checkbox" name="accomCategory" value="펜션" onclick="getCheckboxValue()"/>펜션<br>
+						<input type="checkbox" name="accomCategory" value="풀빌라" onclick="getCheckboxValue()"/>풀빌라<br>
+						<input type="checkbox" name="accomCategory" value="게스트하우스" onclick="getCheckboxValue()"/>게스트하우스<br>
+					</c:if>
+					
+					<c:if test="${accomCategoryName eq '펜션'}">
+						<input type="checkbox" name="accomCategory" value="호텔" onclick="getCheckboxValue()"/>호텔<br>
+						<input type="checkbox" name="accomCategory" value="모텔" onclick="getCheckboxValue()"/>모텔<br>
+						<input type="checkbox" name="accomCategory" value="펜션" checked onclick="getCheckboxValue()"/>펜션<br>
+						<input type="checkbox" name="accomCategory" value="풀빌라" onclick="getCheckboxValue()"/>풀빌라<br>
+						<input type="checkbox" name="accomCategory" value="게스트하우스" onclick="getCheckboxValue()"/>게스트하우스<br>
+					</c:if>
+					
+					<c:if test="${accomCategoryName eq '풀빌라'}">
+						<input type="checkbox" name="accomCategory" value="호텔" onclick="getCheckboxValue()"/>호텔<br>
+						<input type="checkbox" name="accomCategory" value="모텔" onclick="getCheckboxValue()"/>모텔<br>
+						<input type="checkbox" name="accomCategory" value="펜션" onclick="getCheckboxValue()"/>펜션<br>
+						<input type="checkbox" name="accomCategory" value="풀빌라" checked onclick="getCheckboxValue()"/>풀빌라<br>
+						<input type="checkbox" name="accomCategory" value="게스트하우스" onclick="getCheckboxValue()"/>게스트하우스<br>
+					</c:if>
+					
+					<c:if test="${accomCategoryName eq '게스트하우스'}">
+						<input type="checkbox" name="accomCategory" value="호텔" onclick="getCheckboxValue()"/>호텔<br>
+						<input type="checkbox" name="accomCategory" value="모텔" onclick="getCheckboxValue()"/>모텔<br>
+						<input type="checkbox" name="accomCategory" value="펜션" onclick="getCheckboxValue()"/>펜션<br>
+						<input type="checkbox" name="accomCategory" value="풀빌라" onclick="getCheckboxValue()"/>풀빌라<br>
+						<input type="checkbox" name="accomCategory" value="게스트하우스" checked onclick="getCheckboxValue()"/>게스트하우스<br>
+					</c:if>
+					
+					<script type="text/javascript" language=javascript>
+						function getCheckboxValue()  {
+							  // 선택된 목록 가져오기
+							  const query = 'input[name="accomCategory"]:checked';
+							  const selectedEls = 
+							      document.querySelectorAll(query);
+							  
+							  // 선택된 목록에서 value 찾기
+							  let result = '';
+							  selectedEls.forEach((el) => {
+								  result += el.value + ' ';
+							  });
+							  
+							  // 출력
+							  document.getElementById('result').innerText
+							    = result;
+							}
+						
+						$(document).ready(function(){
+						    $('input[name="accomCategory"]').change(function(){
+						        if($('input[name="accomCategory"]').is(":checked")){
+						            alert("체크박스 체크했음!");
+						        }else{
+						            alert("체크박스 체크 해제!");
+						        }
+						    });
+						});
+						
+					</script>
+					
+					<div id="result"></div>
+					
+		             <!-- [이원희] 검색리스트뷰 검색바-->
         			<h3 class="heading mb-4">숙소 상세검색</h3>
-        			 
+        			 <form action="searchList" method="post" class="d-block d-flex" id="searchForm">
         				<div class="fields">
 		              <div class="form-group">
 		                <input type="text" name="accomName" class="form-control" placeholder="숙소아름">
@@ -209,6 +221,7 @@
 			    </c:when>
 			    <c:otherwise>
 		    		<c:forEach items="${accomList}" var="ac" varStatus="status">
+						<c:if test="${ac.accomCategoryName eq '모텔'}">
 						<div class="col-md-4 ftco-animate">
 		    				<div class="destination">
 		    					<a href="searchAccomOne?accomNo=${ac.accomNo}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/${ac.accomImg});">
@@ -250,6 +263,7 @@
 		    					</div>
 		    				</div>
 		    			</div>
+		    			</c:if>
 					</c:forEach>	
 		    	</c:otherwise>
 		    </c:choose>
