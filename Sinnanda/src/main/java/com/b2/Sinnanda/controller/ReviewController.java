@@ -34,10 +34,20 @@ public class ReviewController {
 		dl.p("ReviewController", "addReviewComment", reviewComment);
 		reviewService.addReviewComment(reviewComment);
 		
-		return "redirect:/host/notCommentedReviewList";
+		return "redirect:/host/myReviewOne?reviewNo="+reviewComment.getReviewNo();
 		
 	}
-
+	
+	@GetMapping("/host/removeReviewComment")
+	public String removeReviewComment(int reviewNo) {
+		dl.p("ReviewController", "removeReviewComment() | Get", "시작");
+		dl.p("removeReviewComment()", "reviewNo", reviewNo);
+		
+		reviewService.removeReviewComment(reviewNo);
+		
+		return "redirect:/host/myReviewOne?reviewNo="+reviewNo;
+	}
+	
 	@GetMapping("/host/myReviewOne")
 	public String getMyReviewOne(HttpSession session, Model model, int reviewNo) {
 		dl.p("ReviewController", "getMyReviewOne() | Get", "시작");

@@ -31,6 +31,18 @@
 </head>
 
 <body>
+	<script>
+		// [이승준] 리뷰 답변 입력 여부 확인
+		function formCheck(){
+			// 내용
+			if($("#complainCommentContent").val() == ""){
+				alert("답변 내용을 입력해주세요.");
+				$("#complainCommentContent").focus();
+				return false;
+			}
+		}
+	</script>
+	
 	<div class="container-scroller">
 	
 		<!-- [이승준] 호스트 페이지 상단 내비바 - START -->
@@ -59,28 +71,37 @@
 									
 									<h1 style="margin-top: 10px;"><strong>객실의 리뷰 상세보기</strong></h1>
 									
-								    <div class="container">
+								    <div class="container" style="margin-top: 50px;">
 										<table class="table table-myPage" style="width: 100%;">
 											<tr>
 												<th>리뷰 번호</th>
 												<td>${review.reviewNo}</td>
-												<th>리뷰 내용</th>
-												<td>${review.}</td>
-												<th>별점</th>
-												<td>${review.}</td>
-												<th>추천</th>
-												<td>${review.}</td>
 												<th>작성자</th>
-												<td>${review.}</td>
-												<th>작성일</th>
-												<td>${review.}</td>
+												<td>${review.memberName}</td>
+											</tr>
+											<tr>
+												<th>별점</th>
+												<td>${review.reviewRank}</td>
+												<th>추천</th>
+												<td>${review.reviewRecommend}</td>
+											</tr>
+											<tr>
+												<th>리뷰 내용</th>
+												<td colspan="5">
+													<textarea cols="50" rows="10"  disabled>${review.reviewContent}</textarea>
+												</td>
+											</tr>
+											<tr>
 												<th>예약 번호</th>
-												<td>${review.}</td>
+												<td><a href="/host/hostReserveOne?reserveNo=${review.reserveNo}">${review.reserveNo}</a></td>
 												<th>결제 번호</th>
-												<td>${review.}</td>
-												
-												<th>답변 내용</th>
-												<td></td>
+												<td>${review.paymentNo}</td>
+											</tr>
+											<tr>
+												<th>작성일</th>
+												<td>${review.createDate}</td>
+												<th>수정일</th>
+												<td>${review.updateDate}</td>
 											</tr>
 										</table>
 										
@@ -91,13 +112,13 @@
 										<h2><strong>사업자 답변</strong></h2>
 										
 										<!-- [이승준] 비회원 or 회원, 답변이 없을 때 -->
-										<c:if test="${complain.complainComment.complainCommentContent == null}">
-											<form onsubmit="return formCheck()" action="addComplainComment" method="post">
-												<input name="complainNo" value="${complain.complainNo}" type="hidden">
+										<c:if test="${review.reviewComment.reviewCommentContent == null}">
+											<form onsubmit="return formCheck()" action="addReviewComment" method="post">
+												<input name="reviewNo" value="${review.reviewNo}" type="hidden">
 												<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 													<tr>
-														<th style="width: 8%; text-align:center;">내용</th>
-														<td><textarea id="complainCommentContent" name="complainCommentContent" cols="100%" rows="5"></textarea></td>
+														<th style="width: 30%; text-align:center;">내용</th>
+														<td><textarea id="reviewCommentContent" name="reviewCommentContent" cols="100%" rows="5"></textarea></td>
 														<td><button class="btn btn-primary" type="submit">답변하기</button></td>
 													</tr>
 												</table>
@@ -105,7 +126,7 @@
 										</c:if>
 										
 										<!-- [이승준] 답변이 있을 때 -->
-										<c:if test="${complain.complainComment.complainCommentContent != null}">
+										<c:if test="${review.reviewComment.reviewCommentContent != null}">
 											<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 												<tr>
 													<th style="text-align:center;">답변 내용</th>
@@ -114,13 +135,13 @@
 												</tr>
 												<tr>
 													<td>
-														<textarea cols="50" rows="3"  disabled>${complain.complainComment.complainCommentContent}</textarea>
+														<textarea cols="50" rows="3"  disabled>${review.reviewComment.reviewCommentContent}</textarea>
 													</td>
 													<td style="text-align:center;">
-														<fmt:parseDate value="${complain.complainComment.commentDate}" var="commentDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<fmt:parseDate value="${review.reviewComment.commentDate}" var="commentDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
 														<fmt:formatDate value="${commentDate}" pattern="yy/MM/dd HH:mm"/>
 													</td>
-													<td><a href="removeComplainComment?complainNo=${complain.complainNo}" class="btn btn-primary">삭제</a></td>
+													<td><a href="/host/removeReviewComment?reviewNo=${review.reviewNo}" class="btn btn-primary">삭제</a></td>
 												</tr>
 											</table>
 										</c:if>

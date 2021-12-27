@@ -14,7 +14,14 @@
 			NOW()
 		)	
 	</insert>
-
+	
+	<!-- [이승준] Review 답변 삭제 -->
+	<delete id="deleteReviewComment" parameterType="int">
+		DELETE 
+		FROM review_comment
+		WHERE review_no = #{reviewNo}
+	</delete>
+	
 	<!-- [이승준] Review 상세 조회 Map -->
 	<resultMap type="com.b2.Sinnanda.vo.Review" id="ReviewOneMap">
 		<id column="review_no" property="reviewNo"/>

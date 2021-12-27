@@ -88,7 +88,8 @@
 											<tr>
 												<th style="text-align:center;">내용</th>
 												<td colspan="3">
-												<textarea cols="50" rows="20"  disabled>${complain.complainContent}</textarea></td>
+													<textarea cols="50" rows="20"  disabled>${complain.complainContent}</textarea>
+												</td>
 											</tr>
 										</table>
 										

@@ -74,17 +74,23 @@
 														<a href="/host/myReviewOne?reviewNo=${review.reviewNo}">${review.reviewNo}</a>
 													</td>
 													<td>
-														<!-- 리뷰 내용 일부 표시 -->
-														<c:choose>
-															<%-- 리뷰 내용이 20자가 넘을 경우 --%>
-															<c:when test="${fn:length(review.reviewContent) > 20}">
-																<%-- 20자까지만 출력 후 '...' 표시 --%>
-																<c:out value="${fn:substring(review.reviewContent, 0, 20)}"/>...
-															</c:when>
-														 	<c:otherwise>
-										            			<c:out value="${review.reviewContent}"/>
-										          			 </c:otherwise>
-														</c:choose>
+														<a href="/host/myReviewOne?reviewNo=${review.reviewNo}">
+															<!-- 리뷰 답변 여부 -->
+															<c:if test="${review.reviewComment.reviewCommentContent != null}">
+																<span style="color: #2828CD; font-weight: bold;">[답변 완료]</span>
+															</c:if>
+															<!-- 리뷰 내용 일부 표시 -->
+															<c:choose>
+																<%-- 리뷰 내용이 20자가 넘을 경우 --%>
+																<c:when test="${fn:length(review.reviewContent) > 20}">
+																	<%-- 20자까지만 출력 후 '...' 표시 --%>
+																	<c:out value="${fn:substring(review.reviewContent, 0, 20)}"/>...
+																</c:when>
+															 	<c:otherwise>
+											            			<c:out value="${review.reviewContent}"/>
+											          			 </c:otherwise>
+															</c:choose>
+														</a>
 													</td>
 													<td style="text-align:center">${review.reviewRank}</td>
 													<td style="text-align:center">${review.reviewRecommend}</td>

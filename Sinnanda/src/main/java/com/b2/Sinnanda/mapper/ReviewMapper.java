@@ -14,6 +14,8 @@ public interface ReviewMapper {		//	[김영후]
 	//	Review Comment 등록
 	void insertReviewComment(ReviewComment reviewComment);
 	
+	void deleteReviewComment(int reviewNo);
+	
 	// Review 상세 조회
 	Review selectReviewOne(int reviewNo);
 	

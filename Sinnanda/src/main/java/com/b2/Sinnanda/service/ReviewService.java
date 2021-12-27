@@ -24,13 +24,23 @@ public class ReviewService {		//	[김영후]
 	
 	//	Review Comment 등록
 	public void addReviewComment(ReviewComment reviewComment) {
-		dl.p("ReviewService", "getReviewList", reviewComment);
+		dl.p("ReviewService", "addReviewComment()", "시작");
+		dl.p("addReviewComment()", "reviewComment", reviewComment);
 		
 		reviewMapper.insertReviewComment(reviewComment);
 	}
 	
+	// [이승준] 리뷰 답변 삭제
+	public void removeReviewComment(int reviewNo) {
+		dl.p("ReviewService", "removeReviewComment()", "시작");
+		dl.p("removeReviewComment()", "reviewNo", reviewNo);
+		
+		reviewMapper.deleteReviewComment(reviewNo);
+	}
+	
+	// [이승준] 리뷰 상세 조회
 	public Review getReviewOne(int reviewNo) {
-		dl.p("ComplainService", "getReviewOne()", "시작");
+		dl.p("ReviewService", "getReviewOne()", "시작");
 		dl.p("getReviewOne()", "reviewNo", reviewNo);
 		
 		Review review = reviewMapper.selectReviewOne(reviewNo);
@@ -41,7 +51,7 @@ public class ReviewService {		//	[김영후]
 	/* [이승준] 호스트 페이지(메인) - 답변이 없는 Complain 목록 조회 */
 	// ㄴ리턴 값 : complainList, totalCount, lastPage
 	public Map<String, Object> getNotCommentedReviewListForHost(int userLevel, int hostNo, int currentPage, int rowPerPage) {
-		dl.p("ComplainService", "getNotCommentedReviewListForHost()", "시작");
+		dl.p("ReviewService", "getNotCommentedReviewListForHost()", "시작");
 		dl.p("getNotCommentedReviewListForHost()", "userLevel", userLevel);
 		dl.p("getNotCommentedReviewListForHost()", "hostNo", hostNo);
 		dl.p("getNotCommentedReviewListForHost()", "currentPage", currentPage);
