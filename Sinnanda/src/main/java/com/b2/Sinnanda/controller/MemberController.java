@@ -20,6 +20,7 @@ import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
 import com.b2.Sinnanda.vo.Qna;
+import com.b2.Sinnanda.vo.Reserve;
 import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
@@ -217,6 +218,71 @@ public class MemberController {
 
 		return "/member/myReviewList";
 	}
+	
+	// [유동진] 회원 예약내역 조회
+	@GetMapping("/member/myReserveList")
+	public String myReserveList(HttpServletRequest request, Model model, 
+		@RequestParam(defaultValue = "1") int currentPage, 
+		@RequestParam(required = false) String reserveUse) {
+		dl.p("MemberController", "myReserveList()", "예약내역 조회");
+		dl.p("MemberController", "myReserveList()", "currentPage : " + currentPage);
+	
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			dl.p("MemberController", "myReviewList", "loginUser : "+loginUser.toString());
+		} else {
+			dl.p("MemberController", "myReviewList", "loginUser : Null");
+			return "redirect:/index";
+		}
+		
+		// review 목록 조회
+		Map<String, Object> map = memberService.getMyReserveList(loginUser.getMember().getMemberNo(), reserveUse, currentPage, ROW_PER_PAGE);
+		
+		/* 모델 추가 */
+		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+		model.addAttribute("reserveUse", map.get("reserveUse"));	// 선택된 reviewRecommend
+		model.addAttribute("myReserveList", map.get("myReserveList"));	// 리뷰 목록 정보
+		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
+		model.addAttribute("currentPage", currentPage);	// 현재 페이지
+
+		return "/member/myReserveList";
+	}
+	
+	// [유동진] 예약내역 상세조회
+	@GetMapping("/member/myReserveOne")
+	public String myReserveOne(HttpServletRequest request, Model model, int reserveNo) {
+		dl.p("memberController","myReserveOne()", "예약내역 상세조회");
+		dl.p("memberController ","myReserveOne()","reserveNo : " + reserveNo);
+		
+		// 예약내역 상세 조회
+		Reserve reserve = memberService.getMyReserveOne(reserveNo);
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			dl.p("memberController","myReserveOne()", "loginUser : "+loginUser.toString());
+		} else {
+			dl.p("memberController","myReserveOne()", "loginUser : Null");
+		}
+		
+		// 멤버인 경우, 작성자 No + 세션 No = 일치 X -> myReserveList
+		if(loginUser.getUserLevel() == 1) {
+			dl.p("memberController","myReserveOne()","memberNo : "+loginUser.getMember().getMemberNo());
+		}
+		dl.p("memberController","myReserveOne()", "myReserveOne 접근 허용");
+	
+	// 모델 추가
+	model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+	model.addAttribute(reserve);	// 선택된 Reserve 상세 정보
+	
+	return "/member/myReserveOne";
+	}
+
 	
 	//	[김영후] 회원 가입
 	@GetMapping("/insertMember")

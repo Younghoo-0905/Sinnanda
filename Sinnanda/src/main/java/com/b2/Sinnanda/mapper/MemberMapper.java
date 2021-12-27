@@ -51,6 +51,12 @@ public interface MemberMapper {
 	// [유동진] 나의 예약내역 조회
 	List<Reserve> selectMyReserveList(Map<String, Object> map);
 	
+	// [유동진] 예약내역 총 갯수 조회
+	int selectMyReserveTotalCount(String reserveUse);
+	
+	// [유동진] 예약내역 상세 조회
+	Reserve selectMyReserveOne(int reserveNo);
+	
 	//	[김영후] 회원 가입
 	int insertMember(Member member);
 	

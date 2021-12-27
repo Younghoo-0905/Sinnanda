@@ -15,6 +15,7 @@ import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
 import com.b2.Sinnanda.vo.Qna;
+import com.b2.Sinnanda.vo.Reserve;
 import com.b2.Sinnanda.vo.Review;
 
 import lombok.extern.slf4j.Slf4j;
@@ -139,9 +140,50 @@ public class MemberService {
 	}
 	
 	// [유동진] 회원 예약내역 조회
-	public Map<String, Object> getMyReserveList(int memberNo, String reviewRecommend) {
+	public Map<String, Object> getMyReserveList(int memberNo, String reserveUse, int currentPage, int rowPerPage) {
+		dl.p("MemberService", "getMyReserveList()", "예약내역 조회");
+		dl.p("MemberService", "getMyReserveList()", "memberNo : "+memberNo);
+		dl.p("MemberService", "getMyReserveList()", "reserveUse : "+reserveUse);
+		dl.p("MemberService", "getMyReserveList()", "currentPage : "+currentPage);
+		dl.p("MemberService", "getMyReserveList()", "rowPerPage : "+rowPerPage);
 		
-		return null;
+		// 1. 매개변수 가공 (paraMap <-- qnaCategory, currentPage, rowPerPage)
+		Map<String, Object> paraMap = new HashMap<>();
+		int beginRow = (currentPage-1) * rowPerPage;
+		
+		paraMap.put("memberNo", memberNo);
+		paraMap.put("reserveUse", reserveUse);
+		paraMap.put("beginRow", beginRow);
+		paraMap.put("rowPerPage", rowPerPage);
+		
+		// 2. 예약내역 조회
+		List<Reserve> myReserveList = memberMapper.selectMyReserveList(paraMap);
+		dl.p("MemberService", "getMyReserveList()", "myReserveList : "+myReserveList.toString());
+		// 3. 리턴 값 가공 (return : reserve & lastPage)
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		int lastPage = 0;
+		int totalCount = memberMapper.selectMyReserveTotalCount(reserveUse);
+		dl.p("MemberService", "getMyReserveList()", "totalCount : "+totalCount);
+		
+		lastPage = totalCount / rowPerPage;
+		if(totalCount % rowPerPage !=0) {
+			lastPage += 1;
+		}
+		
+		dl.p("MemberService", "getMyReserveList()", "lastPage : "+lastPage);
+		returnMap.put("myReserveList", myReserveList);
+		returnMap.put("lastPage", lastPage);
+		
+		return returnMap;
+	}
+	
+	// [유동진] 예약내역 상세 조회
+	public Reserve getMyReserveOne(int reserveNo) {
+		dl.p("MemberService", "getMyReserveOne()", "예약내역 상세보기");
+		dl.p("MemberService", "getMyReserveOne()", "reserveNo : "+reserveNo);
+		
+		return memberMapper.selectMyReserveOne(reserveNo);
 	}
 
 	//	[김영후] 회원 이메일 인증

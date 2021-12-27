@@ -79,6 +79,7 @@
 			</tr>
 		</table>
 		<button type = "submit" class="btn btn-primary">수정완료</button>
+		<a href="/member/myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">수정취소</a>
 	</form>
 								</div>
 							</div>

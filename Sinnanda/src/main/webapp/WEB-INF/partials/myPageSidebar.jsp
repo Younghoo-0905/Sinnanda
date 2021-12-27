@@ -20,7 +20,7 @@
 		</li>
 		
 		<li class="nav-item">
-			<a class="nav-link" href="/member/">
+			<a class="nav-link" href="/member/myReserveList">
 				<i class="icon-grid menu-icon"></i>
 				<span class="menu-title">예약 내역</span>
 			</a>

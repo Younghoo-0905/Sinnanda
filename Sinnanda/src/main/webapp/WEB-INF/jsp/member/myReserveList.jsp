@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -48,27 +49,35 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>아아</h2>
+						<h2>${loginUser.member.memberName}님의 예약내역</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<!--  -->
+									
+									<table class="table table-hover" style="width: 100%;">
+										<tr>
+											<th>예약번호</th>
+											<th>숙소이름</th>
+											<th>이용여부</th>
+											<th>가격</th>
+											<th>예약내역 상세보기</th>
+										</tr>
+									<c:forEach items="${myReserveList}" var="reserve">
+										<tr>
+											<td>${reserve.reserveNo}</td>
+											<td>${reserve.accomName}</td>
+											<td>${reserve.reserveUse}</td>
+											<td><fmt:formatNumber value="${reserve.paymentPrice }" pattern="#,###" />원</td>
+											<td><a href="/member/myReserveOne?reserveNo=${reserve.reserveNo}">상세보기</a></td>
+										</tr>
+									</c:forEach>	
+									
+									</table>
+									
 								</div>
 							</div>
 						</div>
 					</div>
-					
-					<div class="row">
-						<h2>아아</h2>
-						<div class="col-md-12 grid-margin stretch-card">
-							<div class="card position-relative">
-								<div class="card-body">
-									<!--  -->
-								</div>
-							</div>
-						</div>
-					</div>
-					
 				</div>
 			</div>
 		</div>
