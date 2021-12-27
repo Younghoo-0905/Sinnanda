@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
  <head>
@@ -60,60 +61,48 @@
         			
 		             <!-- [이원희] 검색리스트뷰 검색바-->
         			<h3 class="heading mb-4">숙소 유형</h3>
-        			
-        			<c:forEach items="${accomCategory1}" var="ac1">
-        			
-        			<c:choose>
-
-						<c:when test="${ac1 eq '호텔'}">
-							<input type="checkbox" name="accomCategory1" value="호텔" checked onclick="getCheckboxValue()"/>호텔<br>
-						</c:when>
-					
-						<c:when test="${ac1 ne '호텔'}">
-							<input type="checkbox" name="accomCategory1" value="호텔" onclick="getCheckboxValue()"/>호텔<br>
-						</c:when>
-					
-					</c:choose>
-					<c:choose>
+						<c:choose>
+							<c:when test="${fn:contains(accomCategory1, '호텔')}">
+								<input type="checkbox" name="accomCategory1" value="호텔" checked onclick="getCheckboxValue()"/>호텔<br>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" name="accomCategory1" value="호텔" onclick="getCheckboxValue()"/>호텔<br>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:contains(accomCategory1, '모텔')}">
+								<input type="checkbox" name="accomCategory1" value="모텔" checked onclick="getCheckboxValue()"/>모텔<br>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" name="accomCategory1" value="모텔" onclick="getCheckboxValue()"/>모텔<br>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:contains(accomCategory1, '펜션')}">
+								<input type="checkbox" name="accomCategory1" value="펜션" checked onclick="getCheckboxValue()"/>펜션<br>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" name="accomCategory1" value="펜션" onclick="getCheckboxValue()"/>펜션<br>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:contains(accomCategory1, '풀빌라')}">
+								<input type="checkbox" name="accomCategory1" value="풀빌라" checked onclick="getCheckboxValue()"/>풀빌라<br>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" name="accomCategory1" value="풀빌라" onclick="getCheckboxValue()"/>풀빌라<br>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:contains(accomCategory1, '게스트하우스')}">
+								<input type="checkbox" name="accomCategory1" value="게스트하우스" checked onclick="getCheckboxValue()"/>게스트하우스<br>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" name="accomCategory1" value="게스트하우스" onclick="getCheckboxValue()"/>게스트하우스<br>
+							</c:otherwise>
+						</c:choose>
 						
-						<c:when test="${ac1 eq '모텔'}">
-							<input type="checkbox" name="accomCategory1" value="모텔" checked onclick="getCheckboxValue()"/>모텔<br>
-						</c:when>
 						
-						<c:when test="${ac1 ne '모텔'}">
-							<input type="checkbox" name="accomCategory1" value="모텔" onclick="getCheckboxValue()"/>모텔<br>
-						</c:when>
-					</c:choose>
-					
-					<c:choose>
-						<c:when test="${ac1 eq '펜션'}">
-							<input type="checkbox" name="accomCategory1" value="펜션" checked onclick="getCheckboxValue()"/>펜션<br>
-						</c:when>
-						
-						<c:when test="${ac1 ne '펜션'}">
-							<input type="checkbox" name="accomCategory1" value="펜션" onclick="getCheckboxValue()"/>펜션<br>
-						</c:when>
-					</c:choose>
-					<c:choose>	
-						<c:when test="${ac1 eq '풀빌라'}">
-							<input type="checkbox" name="accomCategory1" value="풀빌라" checked onclick="getCheckboxValue()"/>풀빌라<br>
-						</c:when>
-						
-						<c:when test="${ac1 ne '풀빌라'}">
-							<input type="checkbox" name="accomCategory1" value="풀빌라" onclick="getCheckboxValue()"/>풀빌라<br>
-						</c:when>
-					</c:choose>
-					<c:choose>	
-						<c:when test="${ac1 eq '게스트하우스'}">
-							<input type="checkbox" name="accomCategory1" value="호텔" checked onclick="getCheckboxValue()"/>게스트하우스<br>
-						</c:when>
-						
-						<c:when test="${ac1 ne '게스트하우스'}">
-							<input type="checkbox" name="accomCategory1" value="게스트하우스" onclick="getCheckboxValue()"/>게스트하우스<br>
-						</c:when>
-					
-					</c:choose>
-					</c:forEach>
         			<br>
         			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
         			
