@@ -51,7 +51,11 @@
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<span class="subheading" style="margin-left: 10px;">사업자 Q&A</span>
+									<span class="subheading" style="margin-left: 10px;">
+										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										사업자 문의 목록
+									</span>
+									
 									<h1 style="margin-top: 10px;"><strong>사업자 문의</strong></h1>
 									
 								    <div class="container">

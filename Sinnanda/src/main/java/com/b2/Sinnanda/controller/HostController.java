@@ -33,36 +33,40 @@ public class HostController {
 	
 	// [이승준] HostPage 보기
 	@GetMapping("/host/hostPage")
-	public String hostPage(HttpSession session, Model model) {
-		dl.p("HostService", "hostPage()", "[시작]");
+	public String hostPage(HttpSession session, Model model, int hostNo) {
+		dl.p("HostService", "hostPage() | Get", "[시작]");
+		dl.p("hostPage()", "hostNo", hostNo);
 		
 		// 2. 로그인 세션 조회
 		User loginUser = (User)session.getAttribute("loginUser");
 		// 2-1. 로그인 세션 디버깅
-		if(loginUser != null) {
-			dl.p("hostPage", "loginUser", loginUser.toString());
-		} else {
-			dl.p("hostPage", "loginUser", "Null");
+		dl.p("hostPage", "loginUser", loginUser.toString());
+		
+		// 방어코드
+		if(loginUser.getHost().getHostNo() != hostNo) {
 			return "redirect:/index";
 		}
 		
 		// 3. 답변이 없는 Host QnA 목록, 총 개수 조회
-		Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNoCommentsHostQnaListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 1, 10);
-		// 4. 답변이 없는 Complain 목록, 총 개수 조회
-		Map<String, Object> noCommentedComplainMap = complainService.getNotCommentedComplainListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 1, 10);
-		// 5. 답변이 없는 Review 목록, 총 개수 조회
-		Map<String, Object> noCommentedReviewMap = reviewService.getNotCommentedReviewListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), 1, 10);
+		Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNoCommentsHostQnaListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 0, 10);
+		
+		// 4. 답변이 없는 Review 목록, 총 개수 조회
+		Map<String, Object> noCommentedReviewMap = reviewService.getNotCommentedReviewListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), 0, 10);
+		
+		// 5. 답변이 없는 Complain 목록, 총 개수 조회
+		Map<String, Object> noCommentedComplainMap = complainService.getNotCommentedComplainListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 0, 10);
+		
 		/* 모델 설정 */
 		model.addAttribute("loginUser", loginUser);
 		
 		model.addAttribute("hostQnaList", noCommentedHostQnaMap.get("hostQnaList"));
 		model.addAttribute("hostQnaListTotalCount", noCommentedHostQnaMap.get("totalCount"));
 		
-		model.addAttribute("complainList", noCommentedComplainMap.get("complainList"));
-		model.addAttribute("complainListTotalCount", noCommentedComplainMap.get("totalCount"));
-		
 		model.addAttribute("reviewList", noCommentedReviewMap.get("reviewList"));
 		model.addAttribute("reviewListTotalCount", noCommentedReviewMap.get("totalCount"));
+		
+		model.addAttribute("complainList", noCommentedComplainMap.get("complainList"));
+		model.addAttribute("complainListTotalCount", noCommentedComplainMap.get("totalCount"));
 		
 		return "host/hostPage";
 	}

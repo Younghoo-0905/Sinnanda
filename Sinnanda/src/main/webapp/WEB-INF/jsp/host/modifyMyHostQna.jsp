@@ -93,10 +93,10 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading">
-										<a href="/host/myHostQnaList">사업자 Q&A</a> > 
+										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="/host/myHostQnaList">사업자 문의 목록</a> > 
 										<a href="/host/myHostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">상세보기</a> > 
-										문의사항 수정
-									
+										문의 수정
 									</span>
 									<h1 style="margin-top: 10px;"><strong>사업자문의 수정</strong></h1>
 									

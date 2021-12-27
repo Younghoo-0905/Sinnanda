@@ -72,7 +72,7 @@ public class ComplainController {	//	[김영후]
 	
 	//	ComplainOne 요청
 	@GetMapping("/host/myComplainOne")
-	public String complainOne(HttpSession session, Model model, int complainNo) {
+	public String getComplainOne(HttpSession session, Model model, int complainNo) {
 		dl.p("ComplainController", "complainOne()", complainNo);
 		
 		User loginUser = (User)session.getAttribute("loginUser");
@@ -103,24 +103,20 @@ public class ComplainController {	//	[김영후]
 	
 	//	ComplainList 요청
 	@GetMapping("/host/myComplainList")
-	public String complainList(HttpSession session, Model model, 
+	public String getComplainList(HttpSession session, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
 			@RequestParam(defaultValue = "전체") String complainCategory) {
 		dl.p("ComplainController", "complainList() | Get", "시작");
 		
 		// 로그인 세션 조회
 		User loginUser = (User)session.getAttribute("loginUser");
-		
-		// 로그인 세션 디버깅
-		if(loginUser != null) {
-			dl.p("complainList()", "loginUser", loginUser.toString());
-		}
+		dl.p("complainList()", "loginUser", loginUser.toString());
 		
 		// 출력을 시작하는 행 구하기 수식
-		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1); 
+		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE;
 		
 		// complain 목록 조회
-		Map<String, Object> map = complainService.getComplainList(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), complainCategory, currentPage, ROW_PER_PAGE);
+		Map<String, Object> map = complainService.getComplainList(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), complainCategory, beginRow, ROW_PER_PAGE);
 		
 		// 4. 10개의 page 번호를 출력하기 위한 변수
 		int pageNo = ((beginRow / 100) * 10 + 1);

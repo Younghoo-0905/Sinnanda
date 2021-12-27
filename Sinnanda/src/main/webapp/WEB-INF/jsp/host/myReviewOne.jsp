@@ -27,11 +27,10 @@
 	<link rel="stylesheet" href="/skydash/css/vertical-layout-light/style.css">
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title>사업자 QnA 페이지</title>
+	<title>리뷰 페이지</title>
 </head>
 
 <body>
-	
 	<div class="container-scroller">
 	
 		<!-- [이승준] 호스트 페이지 상단 내비바 - START -->
@@ -47,52 +46,41 @@
 			
 			<div class="main-panel">
 				<div class="content-wrapper">
+					<!-- 내용1 -->
 					<div class="row" style="height: 100%;">
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<span class="subheading">
+									<span class="subheading" style="margin-left: 10px;">
 										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
-										<a href="/host/myHostQnaList">사업자 문의 목록</a> > 
-										상세보기
+										<a href="/host/myReviewList">리뷰 목록</a> > 
+										상세 보기
 									</span>
 									
-									<h1 style="margin-top: 10px;"><strong>사업자문의 상세보기</strong></h1>
+									<h1 style="margin-top: 10px;"><strong>객실의 리뷰 상세보기</strong></h1>
 									
-									<!-- 사업자 문의 부분 -->
-									<div class="container">
-										<div style="margin: 10px; text-align:right;">
-											<a href="modifyMyHostQna?hostQnaNo=${hostQna.hostQnaNo}" class="btn btn-primary">문의 수정</a>
-											<a href="removeMyHostQna?hostQnaNo=${hostQna.hostQnaNo}" class="btn btn-primary">문의 삭제</a>
-										</div>
-					    			
+								    <div class="container">
 										<table class="table table-myPage" style="width: 100%;">
 											<tr>
-												<th style="width: 5%; font-size: 20px; text-align:center;">제목</th>
-												<td colspan="3" style="font-size: 20px;">${hostQna.hostQnaTitle}</td>
-											</tr>
-											<tr>
-												<th style="text-align:center;">작성자</th>
-												<td style="width: 70%;">${hostQna.hostName}</td>
-												<th style="width: 50px; text-align:center;">작성일</th>
-												<td>
-													<fmt:parseDate value="${hostQna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-													<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
-												</td>
-											</tr>
-											<tr>
-												<th style="text-align:center;">내용</th>
-												<td colspan="3">
-												<textarea cols="50" rows="20"  disabled>${hostQna.hostQnaContent}</textarea></td>
-											</tr>
-											<tr>
-												<th style="text-align:center;">파일</th>
-												<td colspan="3" style="color: gray;">
-													<c:if test="${empty hostQna.hostQnaUploadFile}">
-														파일 없음
-													</c:if>
-													${hostQna.hostQnaUploadFile}
-												</td>
+												<th>리뷰 번호</th>
+												<td>${review.reviewNo}</td>
+												<th>리뷰 내용</th>
+												<td>${review.}</td>
+												<th>별점</th>
+												<td>${review.}</td>
+												<th>추천</th>
+												<td>${review.}</td>
+												<th>작성자</th>
+												<td>${review.}</td>
+												<th>작성일</th>
+												<td>${review.}</td>
+												<th>예약 번호</th>
+												<td>${review.}</td>
+												<th>결제 번호</th>
+												<td>${review.}</td>
+												
+												<th>답변 내용</th>
+												<td></td>
 											</tr>
 										</table>
 										
@@ -100,32 +88,42 @@
 										<hr class="myPage-line">
 										
 										<!-- 답변 부분 -->
-										<h2><strong>관리자 답변</strong></h2>
+										<h2><strong>사업자 답변</strong></h2>
 										
-										<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
-											<!-- [이승준] 비회원 or 회원, 답변이 없을 때 -->
-											<c:if test="${hostQna.hostQnaComments == null}">
-												<th style="text-align:center; font-size: 30px;">답변 대기 중</th>
-											</c:if>
-											
-											<!-- [이승준] 공통, 답변이 있을 때 -->
-											<c:if test="${hostQna.hostQnaComments != null}">
+										<!-- [이승준] 비회원 or 회원, 답변이 없을 때 -->
+										<c:if test="${complain.complainComment.complainCommentContent == null}">
+											<form onsubmit="return formCheck()" action="addComplainComment" method="post">
+												<input name="complainNo" value="${complain.complainNo}" type="hidden">
+												<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 													<tr>
-														<th style="width: 100px; text-align:center;">답변자</th>
-														<th style="text-align:center;">답변 내용</th>
-														<th style="width: 150px; text-align:center;">작성일</th>
+														<th style="width: 8%; text-align:center;">내용</th>
+														<td><textarea id="complainCommentContent" name="complainCommentContent" cols="100%" rows="5"></textarea></td>
+														<td><button class="btn btn-primary" type="submit">답변하기</button></td>
 													</tr>
-													<tr>
-														<td style="text-align:center;">${hostQna.adminName}</td>
-														<td>
-														<textarea cols="50" rows="3"  disabled>${hostQna.hostQnaComments.hostQnaCommentContent}</textarea></td>
-														<td style="text-align:center;">
-															<fmt:parseDate value="${hostQna.hostQnaComments.commentDate}" var="commentDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-															<fmt:formatDate value="${commentDate}" pattern="yy/MM/dd HH:mm"/>
-														</td>
-													</tr>
-											</c:if>
-										</table>
+												</table>
+											</form>
+										</c:if>
+										
+										<!-- [이승준] 답변이 있을 때 -->
+										<c:if test="${complain.complainComment.complainCommentContent != null}">
+											<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
+												<tr>
+													<th style="text-align:center;">답변 내용</th>
+													<th style="width: 150px; text-align:center;">작성일</th>
+													<th style="width: 10%; text-align:center;">삭제</th>
+												</tr>
+												<tr>
+													<td>
+														<textarea cols="50" rows="3"  disabled>${complain.complainComment.complainCommentContent}</textarea>
+													</td>
+													<td style="text-align:center;">
+														<fmt:parseDate value="${complain.complainComment.commentDate}" var="commentDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<fmt:formatDate value="${commentDate}" pattern="yy/MM/dd HH:mm"/>
+													</td>
+													<td><a href="removeComplainComment?complainNo=${complain.complainNo}" class="btn btn-primary">삭제</a></td>
+												</tr>
+											</table>
+										</c:if>
 									</div>
 								</div>
 							</div>

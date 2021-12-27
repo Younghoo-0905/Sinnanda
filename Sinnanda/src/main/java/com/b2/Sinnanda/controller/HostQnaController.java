@@ -55,7 +55,7 @@ public class HostQnaController {
 		}
 		
 		// 3. 답변이 없는 Host QnA 목록 조회(userLevel, hostQnaCategory, currentPage, ROW_PER_PAGE)
-		Map<String, Object> map = hostQnaService.getNoCommentsHostQnaListForAdmin(loginUser.getUserLevel(), hostQnaCategory, currentPage, ROW_PER_PAGE);
+		Map<String, Object> map = hostQnaService.getNoCommentsHostQnaListForAdmin(loginUser.getUserLevel(), hostQnaCategory, beginRow, ROW_PER_PAGE);
 		
 		// 4. 10개의 page 번호를 출력하기 위한 변수
 		int pageNo = ((beginRow / 100) * 10 + 1);
@@ -192,7 +192,7 @@ public class HostQnaController {
 		log.debug(" ├[param] hostQnaCategory : "+hostQnaCategory);
 		
 		// 1. 출력을 시작하는 행 구하기 수식
-		int beginRow = (currentPage * ROW_PER_PAGE) - (ROW_PER_PAGE - 1); 
+		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE; 
 		
 		// 2. 로그인 세션 조회
 		HttpSession session = request.getSession();
@@ -206,7 +206,7 @@ public class HostQnaController {
 		}
 		
 		// 3. Host QnA 목록 조회(userLevel, hostNo, hostQnaCategory, currentPage, ROW_PER_PAGE)
-		Map<String, Object> map = hostQnaService.getHostQnaListByHostQnaCategory(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), hostQnaCategory, currentPage, ROW_PER_PAGE);
+		Map<String, Object> map = hostQnaService.getHostQnaListByHostQnaCategory(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), hostQnaCategory, beginRow, ROW_PER_PAGE);
 		
 		// 4. 10개의 page 번호를 출력하기 위한 변수
 		int pageNo = ((beginRow / 100) * 10 + 1);

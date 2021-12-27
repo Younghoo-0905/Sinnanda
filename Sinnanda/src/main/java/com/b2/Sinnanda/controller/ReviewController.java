@@ -1,6 +1,7 @@
 package com.b2.Sinnanda.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,40 +37,53 @@ public class ReviewController {
 		return "redirect:/host/notCommentedReviewList";
 		
 	}
-	
-	/*//	ReviewList 요청 ((사업자)아직 답변하지 않은 Review)
-	@GetMapping("/host/notCommentedReviewList")
-	public String reviewList(HttpSession session, Model model) {
 
+	@GetMapping("/host/myReviewOne")
+	public String getMyReviewOne(HttpSession session, Model model, int reviewNo) {
+		dl.p("ReviewController", "getMyReviewOne() | Get", "시작");
+		dl.p("getMyReviewOne()", "reviewNo", reviewNo);
+		
+		// 로그인 세션 조회
 		User loginUser = (User)session.getAttribute("loginUser");
-		//	세션 내 사업자 정보 디버깅
-		dl.p("ComplainController", "complainList", loginUser);
+		dl.p("complainOne()", "loginUser", loginUser.toString());
 		
-		List<Review> reviewList = reviewService.getNotCommentedReviewListForHost(loginUser.getHost().getHostNo());
+		Review review = reviewService.getReviewOne(reviewNo);
 		
-		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("review", review);
 		
-		return "/host/notCommentedReviewList";
-		
-	}*/
+		return "/host/myReviewOne";
+	}
 	
 	//	ReviewList 요청 (사업자 페이지)
-	@GetMapping("host/reviewList")
-	public String reviewList(HttpSession session, Model model, 
+	@GetMapping("/host/myReviewList")
+	public String getMyReviewList(HttpSession session, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage) {
-
+		dl.p("ReviewController", "myReviewList() | Get", "시작");
+		
+		// 로그인 세션 조회
 		User loginUser = (User)session.getAttribute("loginUser");
-		//	세션 내 사업자 정보 디버깅
-		dl.p("ComplainController", "complainList", loginUser);
+		dl.p("complainList()", "loginUser", loginUser.toString());
 		
 		//	페이징용, 출력을 시작할 행 계산식
 		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE;
 		
-		List<Review> reviewList = reviewService.getReviewList(loginUser.getHost().getHostNo(), beginRow, ROW_PER_PAGE);
-				
-		model.addAttribute("reviewList", reviewList);
+		// 리뷰 목록 조회
+		Map<String, Object> map = reviewService.getReviewList(loginUser.getHost().getHostNo(), beginRow, ROW_PER_PAGE);
 		
-		return "/host/reviewList";
+		// 4. 10개의 page 번호를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		dl.p("complainList()", "pageNo", pageNo);
+		
+		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("reviewList", map.get("reviewList"));
+		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("pageNo", pageNo);
+		
+		return "/host/myReviewList";
 	}
 	
 }

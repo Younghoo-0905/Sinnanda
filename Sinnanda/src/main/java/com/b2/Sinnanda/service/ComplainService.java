@@ -26,12 +26,12 @@ public class ComplainService {	//	[김영후]
 // 사업자 기능
 	/* [이승준] 호스트 페이지(메인) - 답변이 없는 Complain 목록 조회 */
 	// ㄴ리턴 값 : complainList, totalCount, lastPage
-	public Map<String, Object> getNotCommentedComplainListForHost(int userLevel, int hostNo, String complainCategory, int currentPage, int rowPerPage) {
-		dl.p("ComplainService", "getNotCommentedComplainListForHost", "시작");
+	public Map<String, Object> getNotCommentedComplainListForHost(int userLevel, int hostNo, String complainCategory, int beginRow, int rowPerPage) {
+		dl.p("ComplainService", "getNotCommentedComplainListForHost()", "시작");
 		dl.p("ComplainService", "userLevel", userLevel);
 		dl.p("ComplainService", "hostNo", hostNo);
 		dl.p("ComplainService", "complainCategory", complainCategory);
-		dl.p("ComplainService", "currentPage", currentPage);
+		dl.p("ComplainService", "beginRow", beginRow);
 		dl.p("ComplainService", "rowPerPage", rowPerPage);
 		
 		// 0. '전체 문의' 조회인 경우 complainCategory를 null 값으로 변경하여 쿼리에서 where절이 실행되지 않도록 한다 (by 김영후)
@@ -39,9 +39,8 @@ public class ComplainService {	//	[김영후]
 			complainCategory = null;
 		}
 		
-		// 1. 답변 없는 Complain 목록 조회를 위한 데이터 가공 (paraComplainMap : userLevel, hostNo, qnaCategory, currentPage, rowPerPage)
+		// 1. 답변 없는 Complain 목록 조회를 위한 데이터 가공 (paraComplainMap : userLevel, hostNo, qnaCategory, beginRow, rowPerPage)
 		Map<String, Object> paraComplainMap = new HashMap<>();
-		int beginRow = (currentPage-1) * rowPerPage;
 		
 		paraComplainMap.put("userLevel", userLevel);
 		paraComplainMap.put("hostNo", hostNo);
@@ -54,6 +53,7 @@ public class ComplainService {	//	[김영후]
 		
 		// 3. complain의 총 개수를 위한 데이터 가공(paraPagingMap : userLevel, hostNo, qnaCategory)
 		Map<String, Object> paraPagingMap = new HashMap<>();
+		
 		paraPagingMap.put("userLevel", userLevel);
 		paraPagingMap.put("hostNo", hostNo);
 		paraPagingMap.put("complainCategory", complainCategory);
@@ -131,12 +131,12 @@ public class ComplainService {	//	[김영후]
 	}*/
 	
 	/* [이승준] complain 목록 조회 by hostQnaCategory */
-	public Map<String, Object> getComplainList(int userLevel, int hostNo, String complainCategory, int currentPage, int rowPerPage) {
+	public Map<String, Object> getComplainList(int userLevel, int hostNo, String complainCategory, int beginRow, int rowPerPage) {
 		dl.p("ComplainService", "getComplainList()", "시작");
 		dl.p("getComplainList()", "userLevel", userLevel);
 		dl.p("getComplainList()", "hostNo", hostNo);
 		dl.p("getComplainList()", "complainCategory", complainCategory);
-		dl.p("getComplainList()", "currentPage", currentPage);
+		dl.p("getComplainList()", "beginRow", beginRow);
 		dl.p("getComplainList()", "rowPerPage", rowPerPage);
 		
 		// 0. '전체' 조회인 경우 qnaCategory를 null 값으로 변경하여 쿼리에서 where절이 실행되지 않도록 한다 (by 김영후)
@@ -144,9 +144,8 @@ public class ComplainService {	//	[김영후]
 			complainCategory = null;
 		}
 		
-		// 1. Complain 목록 조회를 위한 데이터 가공 (paraComplainMap : userLevel, hostNo, qnaCategory, currentPage, rowPerPage)
+		// 1. Complain 목록 조회를 위한 데이터 가공 (paraComplainMap : userLevel, hostNo, complainCategory, beginRow, rowPerPage)
 		Map<String, Object> paraComplainMap = new HashMap<>();
-		int beginRow = (currentPage-1) * rowPerPage;
 		
 		paraComplainMap.put("userLevel", userLevel);
 		paraComplainMap.put("hostNo", hostNo);

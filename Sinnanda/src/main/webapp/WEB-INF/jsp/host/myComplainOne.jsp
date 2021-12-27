@@ -27,7 +27,7 @@
 	<link rel="stylesheet" href="/skydash/css/vertical-layout-light/style.css">
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title>컴플레인 상세보기</title>
+	<title>컴플레인 페이지</title>
 </head>
 
 <body>
@@ -63,15 +63,14 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading">
-										<a href="/host/hostPage">메인</a> > 
-										<a href="/host/myComplainList">컴플레인</a> > 
+										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="/host/myComplainList">컴플레인 목록</a> > 
 										상세보기
 									</span>
 									<h1 style="margin-top: 10px;"><strong>컴플레인 상세보기</strong></h1>
 									
 									<!-- 사업자 문의 부분 -->
 									<div class="container">
-					    			
 										<table class="table table-myPage" style="width: 100%;">
 											<tr>
 												<th style="width: 5%; font-size: 20px; text-align:center;">제목</th>

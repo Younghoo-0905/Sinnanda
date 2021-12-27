@@ -100,11 +100,62 @@
 								<div class="card-body">
 									<h3 style="margin-top: 10px;"><strong>신규 리뷰</strong></h3>
 									
-									<div class="container">
-										<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
-							    			<tr><th style="text-align:center; font-size: 20px;">내용 없음</th></tr>
-										</table>
+									<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+										<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${reviewListTotalCount}</strong></span>
+										<a href="/host/myReviewList" style="float: right; ">목록 보기</a>
 									</div>
+									
+								    <div class="container">
+								    	<c:if test="${empty reviewList}">
+								    		<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
+								    			<tr><th style="text-align:center; font-size: 20px;">내용 없음</th></tr>
+											</table>
+								    	</c:if>
+								    	
+								    	<c:if test="${!empty reviewList}">
+								    		<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
+											<tr style="text-align:center">
+												<th>번호</th>
+												<th>내용</th>
+												<th>별점</th>
+												<th>추천</th>
+												<th>작성자</th>
+												<th>작성일</th>
+											</tr>
+											<c:forEach items="${reviewList}" var="review">
+												<tr>
+													<td style="text-align:center">
+														<a href="/host/myReviewOne?reviewNo=${review.reviewNo}">${review.reviewNo}</a>
+													</td>
+													<td>
+														<!-- 답변의 유무 표시 -->
+														<c:if test="${review.reviewComment.reviewCommentContent != null}">
+															<span style="color: #2828CD; font-weight: bold;">[답변 완료]</span>
+														</c:if>
+														<!-- 리뷰 내용 일부 표시 -->
+														<c:choose>
+															<%-- 리뷰 내용이 20자가 넘을 경우 --%>
+															<c:when test="${fn:length(review.reviewContent) > 20}">
+																<%-- 20자까지만 출력 후 '...' 표시 --%>
+																<c:out value="${fn:substring(review.reviewContent, 0, 20)}"/>...
+															</c:when>
+														 	<c:otherwise>
+										            			<c:out value="${review.reviewContent}"/>
+										          			 </c:otherwise>
+														</c:choose>
+													</td>
+													<td style="text-align:center">${review.reviewRank}</td>
+													<td style="text-align:center">${review.reviewRecommend}</td>
+													<td style="text-align:center">${review.memberName}</td>
+													<td style="text-align:center">
+														<fmt:parseDate value="${review.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
+													</td>
+												</tr>
+											</c:forEach>
+											</table>
+								    	</c:if>
+								    </div>
 								</div>
 							</div>
 						</div>

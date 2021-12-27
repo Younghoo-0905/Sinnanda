@@ -14,8 +14,13 @@ public interface ReviewMapper {		//	[김영후]
 	//	Review Comment 등록
 	void insertReviewComment(ReviewComment reviewComment);
 	
-	//	Review 목록조회 (사업자 페이지)
+	// Review 상세 조회
+	Review selectReviewOne(int reviewNo);
+	
+	// Review 목록조회 (사업자 페이지)
 	List<Review> selectReviewList(Map<String, Object> map);
+	// [이승준] Review 총 개수
+	int selectReviewTotalCount(Map<String, Object> map);
 	
 	//	Not Commented Review 목록조회 (사업자 페이지) 
 	// ㄴ매개변수 : 

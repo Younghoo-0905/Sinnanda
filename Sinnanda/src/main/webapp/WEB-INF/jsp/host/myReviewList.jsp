@@ -27,7 +27,7 @@
 	<link rel="stylesheet" href="/skydash/css/vertical-layout-light/style.css">
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title>컴플레인 페이지</title>
+	<title>리뷰 페이지</title>
 </head>
 
 <body>
@@ -53,42 +53,44 @@
 								<div class="card-body">
 									<span class="subheading" style="margin-left: 10px;">
 										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
-										컴플레인 목록
+										리뷰 목록
 									</span>
-									<h1 style="margin-top: 10px;"><strong>문의받은 컴플레인</strong></h1>
 									
-								    <div class="container">
-										<div class="container2">
-											<select id="complainCategory" name="complainCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
-												<option value="">선택</option>
-												<option value="/host/myComplainList">전체 문의</option>
-												<option value="/host/myComplainList?complainCategory=예약일 변경">예약일 변경</option>
-												<option value="/host/myComplainList?complainCategory=예약 취소">예약 취소</option>
-												<option value="/host/myComplainList?complainCategory=이용 불편">이용 불편</option>
-												<option value="/host/myComplainList?complainCategory=기타">기타</option>
-											</select>
-										</div>
-										<table class="table table-myPage" style="width: 100%;">
+									<h1 style="margin-top: 10px;"><strong>객실의 리뷰 목록</strong></h1>
+									
+								    <div class="container" style="margin-top: 50px;">
+										<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 											<tr style="text-align:center">
-												<th width="5%">번호</th>
-												<th width="40%">제목</th>
-												<th width="10%">문의유형</th>
-												<th width="10%">작성자</th>
-												<th width="10%">작성일</th>
+												<th>번호</th>
+												<th>내용</th>
+												<th>별점</th>
+												<th>추천</th>
+												<th>작성자</th>
+												<th>작성일</th>
 											</tr>
-											<c:forEach items="${complainList}" var="complain">
+											<c:forEach items="${reviewList}" var="review">
 												<tr>
-													<td style="text-align:center">${complain.complainNo}</td>
-													<td>
-														<c:if test="${complain.complainComment.complainCommentContent != null}">
-															<span style="color: #2828CD; font-weight: bold;">[답변 완료]</span>
-														</c:if>
-														<a href="/host/myComplainOne?complainNo=${complain.complainNo}">${complain.complainTitle}</a>
-													</td>
-													<td style="text-align:center">${complain.complainCategory}</td>
-													<td style="text-align:center">${complain.memberName}</td>
 													<td style="text-align:center">
-														<fmt:parseDate value="${complain.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<a href="/host/myReviewOne?reviewNo=${review.reviewNo}">${review.reviewNo}</a>
+													</td>
+													<td>
+														<!-- 리뷰 내용 일부 표시 -->
+														<c:choose>
+															<%-- 리뷰 내용이 20자가 넘을 경우 --%>
+															<c:when test="${fn:length(review.reviewContent) > 20}">
+																<%-- 20자까지만 출력 후 '...' 표시 --%>
+																<c:out value="${fn:substring(review.reviewContent, 0, 20)}"/>...
+															</c:when>
+														 	<c:otherwise>
+										            			<c:out value="${review.reviewContent}"/>
+										          			 </c:otherwise>
+														</c:choose>
+													</td>
+													<td style="text-align:center">${review.reviewRank}</td>
+													<td style="text-align:center">${review.reviewRecommend}</td>
+													<td style="text-align:center">${review.memberName}</td>
+													<td style="text-align:center">
+														<fmt:parseDate value="${review.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
 														<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
 													</td>
 												</tr>
@@ -102,7 +104,7 @@
 													<ul>
 														<!-- '이전' 버튼 -->
 														<c:if test="${beginRow >= (ROW_PER_PAGE * 10)}">
-															<li><a href="host/myComplainList?currentPage=${pageNo-1}&complainCategory=${complainCategory}">&lt;</a></li>
+															<li><a href="host/myReviewList?currentPage=${pageNo-1}">&lt;</a></li>
 														</c:if>
 														
 														<!-- Page 번호 -->
@@ -116,7 +118,7 @@
 																		<li class="active"><span>${i}</span></li>
 																	</c:when>
 												    				<c:otherwise>
-																		<li><a href="/host/myComplainList?currentPage=${i}&complainCategory=${complainCategory}">${i}</a></li>	
+																		<li><a href="/host/myReviewList?currentPage=${i}">${i}</a></li>	
 																	</c:otherwise>		
 																</c:choose>
 																<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
@@ -128,7 +130,7 @@
 														
 														<!-- '다음' 버튼 -->
 														<c:if test="${currentPage + 10 <= lastPage}">
-															<li><a href="host/myComplainList?currentPage=${pageNo+10}&complainCategory=${complainCategory}">&gt;</a></li>
+															<li><a href="host/myReviewList?currentPage=${pageNo+10}">&gt;</a></li>
 														</c:if>
 													</ul>
 												</div>
