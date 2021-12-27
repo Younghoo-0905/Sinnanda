@@ -1,22 +1,253 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.HostQnaMapper">
-	
-<!-- 관리자 쿼리 -->
 
-<!-- 사업자 쿼리 -->	
+<!-- #인덱스 (작성자 : 이승준)
+	1. 조회
+		(목록)selectNoCommentedHostQnaList
+		(개수)selectNoCommentedHostQnaTotalCount
+		(목록)selectHostQnaList
+		(개수)selectHostQnaTotalCount
+		(상세)selectHostQnaOne
+		
+	2. 삽입
+		insertHostQna
+		
+	3. 수정
+		updateHostQna
+		
+	4. 삭제
+		deleteHostQnaComment
+		deleteHostQna
+
+ -->
+
+<!-- 1. 조회 -->
+
+	<!-- [이승준] (목록)"답변없는 사업자문의 목록" resultMap -->
+	<resultMap type="com.b2.Sinnanda.vo.HostQna" id="noCommentedHostQnaListMap">
+		<id column="host_qna_no" property="hostQnaNo"/>
+		<result column="host_no" property="hostNo"/>
+		<result column="host_qna_category" property="hostQnaCategory"/>
+		<result column="host_qna_title" property="hostQnaTitle"/>
+		<result column="host_qna_upload_file" property="hostQnaUploadFile"/>
+		<result column="create_date" property="createDate"/>
+		<result column="host_name" property="hostName"/>
+	</resultMap>
+	<!-- [이승준] (목록)"답변없는 사업자문의 목록" 조회 -->
+	<select id="selectNoCommentedHostQnaList" parameterType="Map" resultMap="noCommentedHostQnaListMap">
+		SELECT 
+			hq.host_qna_no, 
+			hq.host_no, 
+			hq.host_qna_category,
+			hq.host_qna_title, 
+			hq.host_qna_upload_file, 
+			hq.create_date, 
+			h.host_name
+		FROM host_qna hq 
+			LEFT JOIN host h ON hq.host_no = h.host_no
+			LEFT JOIN host_qna_comment hqc ON hq.host_qna_no = hqc.host_qna_no
+		<!-- 사업자가 접근하는 경우 -->
+		<if test="userLevel == 2">
+			<if test="hostQnaCategory != null">
+				<where>
+					hq.host_no = #{hostNo} AND hqc.admin_no IS NULL AND hq.host_qna_category = #{hostQnaCategory}
+				</where>
+			</if>
+			<if test="hostQnaCategory == null">
+				<where>
+					hq.host_no = #{hostNo} AND hqc.admin_no IS NULL
+				</where>
+			</if>
+		</if>
+		<!-- 관리자가 접근하는 경우 -->
+		<if test="userLevel == 3">
+			<if test="hostQnaCategory != null">
+				<where>
+					hqc.admin_no IS NULL AND hq.host_qna_category = #{hostQnaCategory}
+				</where>
+			</if>
+			<if test="hostQnaCategory == null">
+				<where>
+					hqc.admin_no IS NULL
+				</where>
+			</if>
+		</if>
+		ORDER BY hq.create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
 	
-	<!-- [이승준] Host QnA 수정 -->
-	<update id="updateHostQna" parameterType="com.b2.Sinnanda.vo.HostQna">
-		UPDATE host_qna 
-		SET host_qna_title = #{hostQnaTitle}, 
-			host_qna_content = #{hostQnaContent}, 
-			host_qna_upload_file = #{hostQnaUploadFile}, 
-			update_date = NOW()
-		WHERE host_qna_no = #{hostQnaNo} AND host_no = #{hostNo}
-	</update>
+	<!-- [이승준] (개수)"답변없는 사업자문의 개수" 조회 -->
+	<select id="selectNoCommentedHostQnaTotalCount" parameterType="Map" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM host_qna hq 
+			LEFT JOIN host_qna_comment hqc ON hq.host_qna_no = hqc.host_qna_no
+		<!-- 사업자가 접근하는 경우 -->
+		<if test="userLevel == 2">
+			<if test="hostQnaCategory != null">
+				<where>
+					hq.host_no = #{hostNo} AND hqc.admin_no IS NULL AND hq.host_qna_category = #{hostQnaCategory}
+				</where>
+			</if>
+			<if test="hostQnaCategory == null">
+				<where>
+					hq.host_no = #{hostNo} AND hqc.admin_no IS NULL
+				</where>
+			</if>
+		</if>
+		<!-- 관리자가 접근하는 경우 -->
+		<if test="userLevel == 3">
+			<if test="hostQnaCategory != null">
+				<where>
+					hqc.admin_no IS NULL AND hq.host_qna_category = #{hostQnaCategory}
+				</where>
+			</if>
+			<if test="hostQnaCategory == null">
+				<where>
+					hqc.admin_no IS NULL
+				</where>
+			</if>
+		</if>
+	</select>
 	
-	<!-- [이승준] Host QnA 삽입 -->
+	
+	<!-- [이승준] (목록)"사업자문의 목록" 조회 resultMap -->
+	<resultMap type="com.b2.Sinnanda.vo.HostQna" id="HostQnaListMap">
+		<id column="host_qna_no" property="hostQnaNo"/>
+		<result column="host_no" property="hostNo"/>
+		<result column="host_qna_category" property="hostQnaCategory"/>
+		<result column="host_qna_state" property="hostQnaState"/>
+		<result column="host_qna_title" property="hostQnaTitle"/>
+		<result column="host_qna_content" property="hostQnaContent"/>
+		<result column="host_qna_upload_file" property="hostQnaUploadFile"/>
+		<result column="create_date" property="createDate"/>
+		<result column="host_name" property="hostName"/>
+		
+		<collection property="hostQnaComments" ofType="com.b2.Sinnanda.vo.HostQnaComment">
+			<result column="admin_no" property="adminNo"/>
+		</collection>
+	</resultMap>
+	<!-- [이승준] (목록)"사업자문의 목록" 조회 -->
+	<select id="selectHostQnaList" parameterType="Map" resultMap="HostQnaListMap">
+		SELECT 
+			hq.host_qna_no, 
+			hq.host_no, 
+			hq.host_qna_category,
+			hq.host_qna_state, 
+			hq.host_qna_title, 
+			hq.host_qna_content, 
+			hq.host_qna_upload_file, 
+			hq.create_date, 
+			h.host_name, 
+			hqc.admin_no
+		FROM host_qna hq 
+			LEFT JOIN host h ON hq.host_no = h.host_no
+			LEFT JOIN host_qna_comment hqc ON hq.host_qna_no = hqc.host_qna_no
+		<!-- 사업자가 접근하는 경우 -->
+		<if test="userLevel == 2">
+			<if test="hostQnaCategory != null">
+				<where>
+					hq.host_no = #{hostNo} AND hq.host_qna_category = #{hostQnaCategory}
+				</where>
+			</if>
+			<if test="hostQnaCategory == null">
+				<where>
+					hq.host_no = #{hostNo}
+				</where>
+			</if>
+		</if>
+		<!-- 관리자가 접근하는 경우 -->
+		<if test="userLevel == 3">
+			<if test="hostQnaCategory != null">
+				<where>
+					hq.host_qna_category = #{hostQnaCategory}
+				</where>
+			</if>
+		</if>
+		ORDER BY hq.create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- [이승준] (개수)"사업자문의 개수" 조회-->
+	<select id="selectHostQnaTotalCount" parameterType="Map" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM host_qna
+		<!-- 사업자가 접근하는 경우 -->
+		<if test="userLevel == 2">
+			<if test="hostQnaCategory != null">
+				<where>
+					host_no = #{hostNo} AND host_qna_category = #{hostQnaCategory}
+				</where>
+			</if>
+			<if test="hostQnaCategory == null">
+				<where>
+					host_no = #{hostNo}
+				</where>
+			</if>
+		</if>
+		<!-- 관리자가 접근하는 경우 -->
+		<if test="userLevel == 3">
+			<if test="hostQnaCategory != null">
+				<where>
+					host_qna_category = #{hostQnaCategory}
+				</where>
+			</if>
+		</if>
+	</select>
+	
+	
+	<!-- [이승준] (상세)"사업자문의 상세" 조회 resultMap -->
+	<resultMap type="com.b2.Sinnanda.vo.HostQna" id="HostQnaOneMap">
+		<id column="host_qna_no" property="hostQnaNo"/>
+		<result column="host_no" property="hostNo"/>
+		<result column="host_name" property="hostName"/>
+		<result column="host_qna_category" property="hostQnaCategory"/>
+		<result column="host_qna_state" property="hostQnaState"/>
+		<result column="host_qna_title" property="hostQnaTitle"/>
+		<result column="host_qna_content" property="hostQnaContent"/>
+		<result column="host_qna_upload_file" property="hostQnaUploadFile"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<!--[이승준] Host QnA에 답변한 admin의 이름 -->
+		<result column="admin_name" property="adminName"/>
+		<!-- [이승준] Host QnA에 대한 답변 -->
+		<collection property="hostQnaComments" ofType="com.b2.Sinnanda.vo.HostQnaComment">
+			<result column="admin_no" property="adminNo"/>
+			<result column="host_qna_comment_content" property="hostQnaCommentContent"/>
+			<result column="comment_date" property="commentDate"/>
+		</collection>
+	</resultMap>
+	<!-- [이승준] (상세)"사업자문의 상세" 조회 -->
+	<select id="selectHostQnaOne"  parameterType="int" resultMap="HostQnaOneMap">
+		SELECT 
+			hq.host_qna_no, 
+			hq.host_no, 
+			h.host_name, 
+			hq.host_qna_category,
+			hq.host_qna_state, 
+			hq.host_qna_title, 
+			hq.host_qna_content, 
+			hq.host_qna_upload_file, 
+			hq.create_date, 
+			hq.update_date, 
+			hqc.admin_no, 
+			a.admin_name, 
+			hqc.host_qna_comment_content, 
+			hqc.comment_date
+		FROM host_qna hq 
+			LEFT JOIN host_qna_comment hqc ON hq.host_qna_no = hqc.host_qna_no
+			LEFT JOIN host h ON hq.host_no = h.host_no
+			LEFT JOIN admin a ON hqc.admin_no = a.admin_no
+		WHERE hq.host_qna_no = #{hostQnaNo}
+	</select>
+
+
+
+<!-- 2. 삽입 -->
+
+	<!-- [이승준] "사업자문의" 삽입 -->
 	<insert id="insertHostQna" parameterType="com.b2.Sinnanda.vo.HostQna">
 		INSERT INTO host_qna(
 			host_no, 
@@ -40,244 +271,36 @@
 		</selectKey>
 	</insert>
 
-<!-- 공통(사업자/관리자) 쿼리 -->
-	
-	<!-- [이승준] host QnA 삭제 -->
+
+
+<!-- 3. 수정 -->
+
+	<!-- [이승준] "사업자문의" 수정 -->
+	<update id="updateHostQna" parameterType="com.b2.Sinnanda.vo.HostQna">
+		UPDATE host_qna 
+		SET host_qna_title = #{hostQnaTitle}, 
+			host_qna_content = #{hostQnaContent}, 
+			host_qna_upload_file = #{hostQnaUploadFile}, 
+			update_date = NOW()
+		WHERE host_qna_no = #{hostQnaNo} AND host_no = #{hostNo}
+	</update>
+
+
+
+<!-- 4. 삭제 -->
+
+	<!-- [이승준] "사업자문의 답변" 삭제 -->
 	<delete id="deleteHostQnaComment" >
 		DELETE 
 		FROM host_qna_comment
 		WHERE host_qna_no = #{hostQnaNo}
 	</delete>
 	
-	<!-- [이승준] host QnA 삭제 -->
+	<!-- [이승준] "사업자문의" 삭제 -->
 	<delete id="deleteHostQna" >
 		DELETE 
 		FROM host_qna 
 		WHERE host_qna_no = #{hostQnaNo}
 	</delete>
-	
-	<!-- [이승준] 답변이 존제하지 않는 Host QnA의 목록 -->
-	<resultMap type="com.b2.Sinnanda.vo.HostQna" id="noCommentsHostQnaListMap">
-		<id column="host_qna_no" property="hostQnaNo"/>
-		<result column="host_no" property="hostNo"/>
-		<result column="host_qna_category" property="hostQnaCategory"/>
-		<result column="host_qna_title" property="hostQnaTitle"/>
-		<result column="host_qna_upload_file" property="hostQnaUploadFile"/>
-		<result column="create_date" property="createDate"/>
-		<result column="host_name" property="hostName"/>
-	</resultMap>
-	
-	<!-- [이승준] 답변이 없는 Host QnA 목록 조회 -->
-	<select id="selectNoCommentsHostQnaList" parameterType="Map" resultMap="noCommentsHostQnaListMap">
-		SELECT 
-			hq.host_qna_no, 
-			hq.host_no, 
-			hq.host_qna_category,
-			hq.host_qna_title, 
-			hq.host_qna_upload_file, 
-			hq.create_date, 
-			h.host_name
-		FROM host_qna hq 
-		LEFT JOIN host h ON hq.host_no = h.host_no
-		LEFT JOIN host_qna_comment hqc ON hq.host_qna_no = hqc.host_qna_no
-		<!-- [이승준] 사업자가 접근하는 경우 -->
-		<if test="userLevel == 2">
-			<if test="hostQnaCategory != null">
-				<where>
-					hq.host_no = #{hostNo} AND hqc.admin_no IS NULL AND hq.host_qna_category = #{hostQnaCategory}
-				</where>
-			</if>
-			<if test="hostQnaCategory == null">
-				<where>
-					hq.host_no = #{hostNo} AND hqc.admin_no IS NULL
-				</where>
-			</if>
-		</if>
-		<!-- [이승준] 관리자가 접근하는 경우 -->
-		<if test="userLevel == 3">
-			<if test="hostQnaCategory != null">
-				<where>
-					hqc.admin_no IS NULL AND hq.host_qna_category = #{hostQnaCategory}
-				</where>
-			</if>
-			<if test="hostQnaCategory == null">
-				<where>
-					hqc.admin_no IS NULL
-				</where>
-			</if>
-		</if>
-		ORDER BY hq.create_date DESC
-		LIMIT #{beginRow}, #{rowPerPage}
-	</select>
-	
-	<!-- [이승준] 답변이 없는 Host QnA 개수 조회 -->
-	<select id="selectNoCommentsHostQnaTotalCount" parameterType="Map" resultType="int">
-		SELECT 
-			COUNT(*) 
-		FROM host_qna hq 
-		LEFT JOIN host_qna_comment hqc ON hq.host_qna_no = hqc.host_qna_no
-		<!-- [이승준] 사업자가 접근하는 경우 -->
-		<if test="userLevel == 2">
-			<if test="hostQnaCategory != null">
-				<where>
-					hq.host_no = #{hostNo} AND hqc.admin_no IS NULL AND hq.host_qna_category = #{hostQnaCategory}
-				</where>
-			</if>
-			<if test="hostQnaCategory == null">
-				<where>
-					hq.host_no = #{hostNo} AND hqc.admin_no IS NULL
-				</where>
-			</if>
-		</if>
-		<!-- [이승준] 관리자가 접근하는 경우 -->
-		<if test="userLevel == 3">
-			<if test="hostQnaCategory != null">
-				<where>
-					hqc.admin_no IS NULL AND hq.host_qna_category = #{hostQnaCategory}
-				</where>
-			</if>
-			<if test="hostQnaCategory == null">
-				<where>
-					hqc.admin_no IS NULL
-				</where>
-			</if>
-		</if>
-	</select>
-	
-	
-	<!-- [이승준] Host QnA One Map -->
-	<resultMap type="com.b2.Sinnanda.vo.HostQna" id="HostQnaOneMap">
-		<id column="host_qna_no" property="hostQnaNo"/>
-		<result column="host_no" property="hostNo"/>
-		<result column="host_name" property="hostName"/>
-		<result column="host_qna_category" property="hostQnaCategory"/>
-		<result column="host_qna_state" property="hostQnaState"/>
-		<result column="host_qna_title" property="hostQnaTitle"/>
-		<result column="host_qna_content" property="hostQnaContent"/>
-		<result column="host_qna_upload_file" property="hostQnaUploadFile"/>
-		<result column="create_date" property="createDate"/>
-		<result column="update_date" property="updateDate"/>
-		<!--[이승준] Host QnA에 답변한 admin의 이름 -->
-		<result column="admin_name" property="adminName"/>
-		<!-- [이승준] Host QnA에 대한 답변 -->
-		<collection property="hostQnaComments" ofType="com.b2.Sinnanda.vo.HostQnaComment">
-			<result column="admin_no" property="adminNo"/>
-			<result column="host_qna_comment_content" property="hostQnaCommentContent"/>
-			<result column="comment_date" property="commentDate"/>
-		</collection>
-	</resultMap>
-	
-	<!-- [이승준] Host QnA 상세 조회 -->
-	<select id="selectHostQnaOne"  parameterType="int" resultMap="HostQnaOneMap">
-		SELECT 
-			hq.host_qna_no, 
-			hq.host_no, 
-			h.host_name, 
-			hq.host_qna_category,
-			hq.host_qna_state, 
-			hq.host_qna_title, 
-			hq.host_qna_content, 
-			hq.host_qna_upload_file, 
-			hq.create_date, 
-			hq.update_date, 
-			hqc.admin_no, 
-			a.admin_name, 
-			hqc.host_qna_comment_content, 
-			hqc.comment_date
-		FROM host_qna hq 
-		LEFT JOIN host_qna_comment hqc 
-			ON hq.host_qna_no = hqc.host_qna_no
-		LEFT JOIN host h
-			ON hq.host_no = h.host_no
-		LEFT JOIN admin a 
-			ON hqc.admin_no = a.admin_no
-		WHERE hq.host_qna_no = #{hostQnaNo}
-	</select>
-	
-	<!-- [이승준] selectHostQnaListByHostQnaCategory.hostQnAListMap -->
-	<resultMap type="com.b2.Sinnanda.vo.HostQna" id="HostQnaListMap">
-		<id column="host_qna_no" property="hostQnaNo"/>
-		<result column="host_no" property="hostNo"/>
-		<result column="host_qna_category" property="hostQnaCategory"/>
-		<result column="host_qna_state" property="hostQnaState"/>
-		<result column="host_qna_title" property="hostQnaTitle"/>
-		<result column="host_qna_content" property="hostQnaContent"/>
-		<result column="host_qna_upload_file" property="hostQnaUploadFile"/>
-		<result column="create_date" property="createDate"/>
-		<result column="host_name" property="hostName"/>
-		
-		<collection property="hostQnaComments" ofType="com.b2.Sinnanda.vo.HostQnaComment">
-			<result column="admin_no" property="adminNo"/>
-		</collection>
-	</resultMap>
-	
-	<!-- [이승준] Host QnA 목록 조회 (분기 : 사업자/관리자) -->
-	<!-- userLevel에 따라 사업자, 관리자를 구분하여 조회 -->
-	<select id="selectHostQnaListByHostQnaCategory" parameterType="Map" resultMap="HostQnaListMap">
-		SELECT 
-			hq.host_qna_no, 
-			hq.host_no, 
-			hq.host_qna_category,
-			hq.host_qna_state, 
-			hq.host_qna_title, 
-			hq.host_qna_content, 
-			hq.host_qna_upload_file, 
-			hq.create_date, 
-			h.host_name, 
-			hqc.admin_no
-		FROM host_qna hq 
-		LEFT JOIN host h ON hq.host_no = h.host_no
-		LEFT JOIN host_qna_comment hqc ON hq.host_qna_no = hqc.host_qna_no
-		<!-- [이승준] 사업자가 접근하는 경우 -->
-		<if test="userLevel == 2">
-			<if test="hostQnaCategory != null">
-				<where>
-					hq.host_no = #{hostNo} AND hq.host_qna_category = #{hostQnaCategory}
-				</where>
-			</if>
-			<if test="hostQnaCategory == null">
-				<where>
-					hq.host_no = #{hostNo}
-				</where>
-			</if>
-		</if>
-		<!-- [이승준] 관리자가 접근하는 경우 -->
-		<if test="userLevel == 3">
-			<if test="hostQnaCategory != null">
-				<where>
-					hq.host_qna_category = #{hostQnaCategory}
-				</where>
-			</if>
-		</if>
-		ORDER BY hq.create_date DESC
-		LIMIT #{beginRow}, #{rowPerPage}
-	</select>
-	
-	<!-- [이승준] Host QnA 개수 조회 (분기 : 사업자/관리자) -->
-	<select id="selectHostQnaTotalCount" parameterType="Map" resultType="int">
-		SELECT 
-			COUNT(*) 
-		FROM host_qna
-		<!-- [이승준] 사업자가 접근하는 경우 -->
-		<if test="userLevel == 2">
-			<if test="hostQnaCategory != null">
-				<where>
-					host_no = #{hostNo} AND host_qna_category = #{hostQnaCategory}
-				</where>
-			</if>
-			<if test="hostQnaCategory == null">
-				<where>
-					host_no = #{hostNo}
-				</where>
-			</if>
-		</if>
-		<!-- [이승준] 관리자가 접근하는 경우 -->
-		<if test="userLevel == 3">
-			<if test="hostQnaCategory != null">
-				<where>
-					host_qna_category = #{hostQnaCategory}
-				</where>
-			</if>
-		</if>
-	</select>
+
 </mapper>

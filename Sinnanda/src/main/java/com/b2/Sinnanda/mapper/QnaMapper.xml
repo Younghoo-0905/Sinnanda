@@ -1,54 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.QnaMapper">
+
+<!-- #인덱스 (작성자 : 이승준)
+	1. 조회
+		(목록)selectQnaList
+		(개수)selectQnaTotalCount
+		(상세)selectQnaOne
+		
+	2. 삽입
+		insertQna
+		insertQnaComment
+		
+	3. 수정
+		updateQna
+		
+	4. 삭제
+		deleteQnaComment
+		deleteQna
+		
+ -->
+ 
+<!-- 1. 조회 -->
 	
-	<!-- [이승준] QnA 답변 삭제 -->
-	<delete id="deleteQnaComment" >
-		DELETE 
-		FROM qna_comment 
-		WHERE qna_no = #{qnaNo} AND admin_no = #{adminNo}
-	</delete>
+	<!-- [이승준] (목록)"회원문의 목록" resultMap -->
+	<resultMap type="com.b2.Sinnanda.vo.Qna" id="QnaListMap">
+		<id column="qna_no" property="qnaNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="qna_category" property="qnaCategory"/>
+		<result column="qna_title" property="qnaTitle"/>
+		<result column="qna_secret" property="qnaSecret"/>
+		<result column="create_date" property="createDate"/>
+		<result column="member_name" property="memberName"/>
+		
+		<collection property="qnaComments" ofType="com.b2.Sinnanda.vo.QnaComment">
+			<result column="admin_no" property="adminNo"/>
+		</collection>
+	</resultMap>
+	<!-- [이승준] (목록)"회원문의 목록" 조회 -->
+	<select id="selectQnaList" parameterType="Map" resultMap="QnaListMap">
+		SELECT 
+			q.qna_no, 
+			q.member_no, 
+			q.qna_category,
+			q.qna_title, 
+			q.qna_secret, 
+			q.create_date, 
+			m.member_name, 
+			qc.admin_no
+		FROM qna q
+			LEFT JOIN member m ON q.member_no = m.member_no
+			LEFT JOIN qna_comment qc ON q.qna_no = qc.qna_no
+		<if test="qnaCategory != null">
+			<where>
+				qna_category = #{qnaCategory}
+			</where>
+		</if>
+		ORDER BY create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
 	
-	<!-- [이승준] QnA 답변 삽입 -->
-	<insert id="insertQnaComment">
-		INSERT INTO qna_comment(
-			qna_no, 
-			admin_no, 
-			qna_comment_content, 
-			comment_date
-		) VALUES(
-			#{qnaNo}, 
-			#{adminNo},
-			#{qnaCommentContent}, 
-			NOW()
-		)
-	</insert>
+	<!-- [이승준] (개수)"회원문의 개수" 조회 -->
+	<select id="selectQnaTotalCount" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM qna
+		<if test="qnaCategory != null">
+			<where>
+				qna_category = #{qnaCategory}
+			</where>
+		</if>
+	</select>
 	
-	<!-- [이승준] QnA 삭제 -->
-	<delete id="deleteQnaCommentByMember" >
-		DELETE 
-		FROM qna_comment
-		WHERE qna_no = #{qnaNo}
-	</delete>
 	
-	<!-- [이승준] QnA 삭제 -->
-	<delete id="deleteQna" >
-		DELETE 
-		FROM qna 
-		WHERE qna_no = #{qnaNo} AND member_no = #{memberNo}
-	</delete>
-	
-	<!-- [이승준] QnA 수정 -->
-	<update id="updateQna" parameterType="com.b2.Sinnanda.vo.Qna">
-		UPDATE qna 
-		SET qna_title = #{qnaTitle}, 
-			qna_content = #{qnaContent}, 
-			qna_secret = #{qnaSecret}, 
-			update_date = NOW()
-		WHERE qna_no = #{qnaNo} AND member_no = #{memberNo}
-	</update>
-	
-	<!-- [이승준] QnA 삽입 -->
+	<!-- [이승준] (상세)"회원문의 상세" 조회 resultMap -->
+	<resultMap type="com.b2.Sinnanda.vo.Qna" id="QnaOneMap">
+		<id column="qna_no" property="qnaNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="qna_category" property="qnaCategory"/>
+		<result column="qna_title" property="qnaTitle"/>
+		<result column="qna_content" property="qnaContent"/>
+		<result column="qna_secret" property="qnaSecret"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="member_name" property="memberName"/>
+		<result column="admin_name" property="adminName"/>
+		
+		<collection property="qnaComments" ofType="com.b2.Sinnanda.vo.QnaComment">
+			<result column="admin_no" property="adminNo"/>
+			<result column="qna_comment_content" property="qnaCommentContent"/>
+			<result column="comment_date" property="commentDate"/>
+		</collection>
+	</resultMap>
+	<!-- [이승준] (상세)"회원문의 상세" 조회 -->
+	<select id="selectQnaOne"  parameterType="Map" resultMap="QnaOneMap">
+		SELECT 
+			q.qna_no, 
+			q.member_no, 
+			m.member_name, 
+			q.qna_category, 
+			q.qna_title, 
+			q.qna_content, 
+			q.qna_secret, 
+			q.create_date, 
+			q.update_date, 
+			c.admin_no, 
+			a.admin_name, 
+			c.qna_comment_content, 
+			c.comment_date
+		FROM qna q 
+			LEFT JOIN qna_comment c ON q.qna_no = c.qna_no
+			LEFT JOIN member m ON q.member_no = m.member_no
+			LEFT JOIN admin a ON c.admin_no = a.admin_no
+		WHERE q.qna_no = #{qnaNo}
+	</select>
+
+
+<!-- 2. 삽입 -->
+ 
+	<!-- [이승준] "회원문의" 삽입 -->
 	<insert id="insertQna" parameterType="com.b2.Sinnanda.vo.Qna">
 		INSERT INTO qna(
 			member_no, 
@@ -71,100 +141,54 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
-	
-	<!-- [이승준] QnA One Map -->
-	<resultMap type="com.b2.Sinnanda.vo.Qna" id="QnaOneMap">
-		<id column="qna_no" property="qnaNo"/>
-		<result column="member_no" property="memberNo"/>
-		<result column="qna_category" property="qnaCategory"/>
-		<result column="qna_title" property="qnaTitle"/>
-		<result column="qna_content" property="qnaContent"/>
-		<result column="qna_secret" property="qnaSecret"/>
-		<result column="create_date" property="createDate"/>
-		<result column="update_date" property="updateDate"/>
-		<result column="member_name" property="memberName"/>
-		<result column="admin_name" property="adminName"/>
-		
-		<collection property="qnaComments" ofType="com.b2.Sinnanda.vo.QnaComment">
-			<result column="admin_no" property="adminNo"/>
-			<result column="qna_comment_content" property="qnaCommentContent"/>
-			<result column="comment_date" property="commentDate"/>
-		</collection>
-	</resultMap>
-	
-	<!-- [이승준] QnA 상세 조회 -->
-	<select id="selectQnaOne"  parameterType="Map" resultMap="QnaOneMap">
-		SELECT 
-			q.qna_no, 
-			q.member_no, 
-			m.member_name, 
-			q.qna_category, 
-			q.qna_title, 
-			q.qna_content, 
-			q.qna_secret, 
-			q.create_date, 
-			q.update_date, 
-			c.admin_no, 
-			a.admin_name, 
-			c.qna_comment_content, 
-			c.comment_date
-		FROM qna q 
-		LEFT JOIN qna_comment c 
-			ON q.qna_no = c.qna_no
-		LEFT JOIN member m
-			ON q.member_no = m.member_no
-		LEFT JOIN admin a 
-			ON c.admin_no = a.admin_no
-		WHERE q.qna_no = #{qnaNo}
-	</select>
-	
-	<!-- [이승준] QnA List Map -->
-	<resultMap type="com.b2.Sinnanda.vo.Qna" id="QnaListMap">
-		<id column="qna_no" property="qnaNo"/>
-		<result column="member_no" property="memberNo"/>
-		<result column="qna_category" property="qnaCategory"/>
-		<result column="qna_title" property="qnaTitle"/>
-		<result column="qna_secret" property="qnaSecret"/>
-		<result column="create_date" property="createDate"/>
-		<result column="member_name" property="memberName"/>
-		
-		<collection property="qnaComments" ofType="com.b2.Sinnanda.vo.QnaComment">
-			<result column="admin_no" property="adminNo"/>
-		</collection>
-	</resultMap>
+ 
+ 	<!-- [이승준] "회원문의 답변" 삽입 -->
+	<insert id="insertQnaComment">
+		INSERT INTO qna_comment(
+			qna_no, 
+			admin_no, 
+			qna_comment_content, 
+			comment_date
+		) VALUES(
+			#{qnaNo}, 
+			#{adminNo},
+			#{qnaCommentContent}, 
+			NOW()
+		)
+	</insert>
 
-	<!-- [이승준] QnA 목록 조회 -->
-	<select id="selectQnaListQnaCategory" parameterType="Map" resultMap="QnaListMap">
-		SELECT 
-			q.qna_no, 
-			q.member_no, 
-			q.qna_category,
-			q.qna_title, 
-			q.qna_secret, 
-			q.create_date, 
-			m.member_name, 
-			qc.admin_no
-		FROM qna q
-		LEFT JOIN member m ON q.member_no = m.member_no
-		LEFT JOIN qna_comment qc ON q.qna_no = qc.qna_no
-		<if test="qnaCategory != null">
-			<where>
-				qna_category = #{qnaCategory}
-			</where>
-		</if>
-		ORDER BY create_date DESC
-		LIMIT #{beginRow}, #{rowPerPage}
-	</select>
+
+
+<!-- 3. 수정 -->
+
+	<!-- [이승준] "회원문의" 수정 -->
+	<update id="updateQna" parameterType="com.b2.Sinnanda.vo.Qna">
+		UPDATE qna 
+		SET qna_title = #{qnaTitle}, 
+			qna_content = #{qnaContent}, 
+			qna_secret = #{qnaSecret}, 
+			update_date = NOW()
+		WHERE qna_no = #{qnaNo} AND member_no = #{memberNo}
+	</update>
+
+
+
+<!-- 4. 삭제 -->
+
+ 	<!-- [이승준] "회원문의 답변" 삭제 -->
+	<delete id="deleteQnaComment" >
+		DELETE 
+		FROM qna_comment 
+		WHERE qna_no = #{qnaNo}
+	</delete>
 	
-	<!-- [이승준] QnA 갯수 조회 -->
-	<select id="selectQnaTotalCount" parameterType="String" resultType="int">
-		SELECT 
-			COUNT(*) 
-		FROM qna
-		<if test="qnaCategory != null">
-			<where>
-				qna_category = #{qnaCategory}
-			</where>
-		</if>
-	</select>
+	<!-- [이승준] "회원문의" 삭제 -->
+	<delete id="deleteQna" >
+		DELETE 
+		FROM qna 
+		WHERE qna_no = #{qnaNo}
+	</delete>
+
+
+
 </mapper>

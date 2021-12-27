@@ -24,7 +24,9 @@ public class HostQnaService {
 	@Autowired
 	private DL dl;
 	
-// 관리자 기능
+/* 1. 조회 */
+	
+	// [이승준] "답변없는 사업자문의 목록" 조회 | 관리자용
 	public Map<String, Object> getNoCommentsHostQnaListForAdmin(int userLevel, String hostQnaCategory, int beginRow, int rowPerPage){
 		log.debug("[Debug] \"START\" HostQnaService.getNoCommentsHostQnaList()");
 		log.debug(" ├[param] userLevel : "+userLevel);
@@ -46,7 +48,7 @@ public class HostQnaService {
 		paraQnaListMap.put("rowPerPage", rowPerPage);
 		
 		// 2. host QnA 목록 조회 (paraQnaListMap : (hostQnaCategory, beginRow, rowPerPage))
-		List<HostQna> hostQnaList = hostQnaMapper.selectNoCommentsHostQnaList(paraQnaListMap);
+		List<HostQna> hostQnaList = hostQnaMapper.selectNoCommentedHostQnaList(paraQnaListMap);
 		
 		// 3. Host QnA의 총 개수를 위한 데이터 가공(paraPagingMap : (hostQnaCategory))
 		Map<String, Object> paraPagingMap = new HashMap<>();
@@ -54,7 +56,7 @@ public class HostQnaService {
 		paraPagingMap.put("hostQnaCategory", hostQnaCategory);
 		
 		// 4. Host QnA 총 개수 조회
-		int totalCount = hostQnaMapper.selectNoCommentsHostQnaTotalCount(paraPagingMap);
+		int totalCount = hostQnaMapper.selectNoCommentedHostQnaTotalCount(paraPagingMap);
 		log.debug(" ├[param] totalCount : "+totalCount);
 		
 		// 5. 페이징: lastPage 가공
@@ -76,9 +78,7 @@ public class HostQnaService {
 		return returnMap;
 	}
 	
-// 사업자 기능
-	
-	/* [이승준] 호스트 페이지(메인) - 답변이 없는 Host QnA 목록 조회 */
+	// [이승준] "답변없는 사업자문의 목록" 조회 | 사업자용
 	public Map<String, Object> getNoCommentsHostQnaListForHost(int userLevel, int hostNo, String hostQnaCategory, int beginRow, int rowPerPage) {
 		log.debug("[Debug] \"START\" HostQnaService.getNoCommentsHostQnaListForHost()");
 		log.debug(" ├[param] userLevel : "+userLevel);
@@ -101,7 +101,7 @@ public class HostQnaService {
 		paraQnaListMap.put("rowPerPage", rowPerPage);
 		
 		// 2. host QnA 목록 조회 (paraQnaListMap : (hostQnaCategory, beginRow, rowPerPage))
-		List<HostQna> hostQnaList = hostQnaMapper.selectNoCommentsHostQnaList(paraQnaListMap);
+		List<HostQna> hostQnaList = hostQnaMapper.selectNoCommentedHostQnaList(paraQnaListMap);
 		
 		// 3. Host QnA의 총 개수를 위한 데이터 가공(paraPagingMap : (hostQnaCategory))
 		Map<String, Object> paraPagingMap = new HashMap<>();
@@ -110,7 +110,7 @@ public class HostQnaService {
 		paraPagingMap.put("hostQnaCategory", hostQnaCategory);
 		
 		// 4. Host QnA 총 개수 조회
-		int totalCount = hostQnaMapper.selectNoCommentsHostQnaTotalCount(paraPagingMap);
+		int totalCount = hostQnaMapper.selectNoCommentedHostQnaTotalCount(paraPagingMap);
 		log.debug(" ├[param] totalCount : "+totalCount);
 		
 		// 5. 페이징: lastPage 가공
@@ -133,60 +133,8 @@ public class HostQnaService {
 		return returnMap;
 	}
 	
-	/* [이승준] QnA 삽입 */
-	public void addHostQna(HostQna hostQna) {
-		log.debug("[Debug] \"START\" HostQnaService.addHostQna()");
-		log.debug(" ├[param] hostQna : "+hostQna.toString());
-		
-		hostQnaMapper.insertHostQna(hostQna);
-	}
-	
-// 공통 기능
-	
-	// [이승준] host Qna 답변 삭제
-	public void removeHostQnaComment(int hostQnaNo) {
-		dl.p("HostQnaService", "removeHostQnaComment()", "시작");
-		dl.p("removeHostQnaComment()", "hostQnaNo", hostQnaNo);
-		
-		hostQnaMapper.deleteHostQnaComment(hostQnaNo);
-	}
-	
-	// [이승준] host Qna 삭제
-	public void removeHostQna(int hostQnaNo) {
-		dl.p("HostQnaService", "removeHostQna()", "시작");
-		dl.p("removeHostQna()", "hostQnaNo", hostQnaNo);
-		
-		// host Qna 조회
-		HostQna hostQna = hostQnaMapper.selectHostQnaOne(hostQnaNo);
-		
-		// host Qna에 답변이 있는 경우
-		if(hostQna.getHostQnaComments() != null) {
-			// host Qna 답변 삭제
-			hostQnaMapper.deleteHostQnaComment(hostQnaNo);
-		}
-		// host Qna 삭제
-		hostQnaMapper.deleteHostQna(hostQnaNo);
-	}
-	
-	
-	/* [이승준] QnA 수정 */
-	public void modifyHostQna(HostQna hostQna) {
-		log.debug("[Debug] \"START\" HostQnaService.modifyHostQna()");
-		log.debug(" ├[param] hostQna : "+hostQna.toString());
-		
-		hostQnaMapper.updateHostQna(hostQna);
-	}
-	
-	/* [이승준] Host QnA 상세 조회 */
-	public HostQna getHostQnaOne(int hostQnaNo) {
-		log.debug("[Debug] \"START\" HostQnaService.getHostQnaOne()");
-		log.debug(" ├[param] hostQnaNo : "+hostQnaNo);
-		
-		return hostQnaMapper.selectHostQnaOne(hostQnaNo);
-	}
-	
-	/* [이승준] Host QnA 목록 조회 by hostQnaCategory */
-	public Map<String, Object> getHostQnaListByHostQnaCategory(int userLevel, int hostNo, String hostQnaCategory, int beginRow, int rowPerPage){
+	// [이승준] "사업자문의 목록" 조회
+	public Map<String, Object> getHostQnaList(int userLevel, int hostNo, String hostQnaCategory, int beginRow, int rowPerPage){
 		log.debug("[Debug] \"START\" HostQnaService.getHostQnaListByQnaCategory()");
 		log.debug(" ├[param] userLevel : "+userLevel);
 		log.debug(" ├[param] hostNo : "+hostNo);
@@ -209,7 +157,7 @@ public class HostQnaService {
 		paraQnaListMap.put("rowPerPage", rowPerPage);
 		
 		// 2. host QnA 목록 조회 (paraQnaListMap : (userLevel, hostNo, hostQnaCategory, beginRow, rowPerPage))
-		List<HostQna> hostQnaList = hostQnaMapper.selectHostQnaListByHostQnaCategory(paraQnaListMap);
+		List<HostQna> hostQnaList = hostQnaMapper.selectHostQnaList(paraQnaListMap);
 		
 		// 3. Host QnA의 총 개수를 위한 데이터 가공(paraPagingMap : (userLevel, hostNo, hostQnaCategory))
 		Map<String, Object> paraPagingMap = new HashMap<>();
@@ -239,4 +187,68 @@ public class HostQnaService {
 		// 5. returnMap : (hostQnaList, lastPage) 리턴
 		return returnMap;
 	}
+	
+	// [이승준] "사업자문의 상세" 조회
+	public HostQna getHostQnaOne(int hostQnaNo) {
+		log.debug("[Debug] \"START\" HostQnaService.getHostQnaOne()");
+		log.debug(" ├[param] hostQnaNo : "+hostQnaNo);
+		
+		return hostQnaMapper.selectHostQnaOne(hostQnaNo);
+	}
+	
+	
+	
+/* 2. 삽입 */
+	
+	// [이승준] "사업자문의" 삽입
+	public void addHostQna(HostQna hostQna) {
+		log.debug("[Debug] \"START\" HostQnaService.addHostQna()");
+		log.debug(" ├[param] hostQna : "+hostQna.toString());
+		
+		hostQnaMapper.insertHostQna(hostQna);
+	}
+	
+	
+	
+/* 3. 수정 */
+	
+	// [이승준] "사업자문의" 수정
+	public void modifyHostQna(HostQna hostQna) {
+		log.debug("[Debug] \"START\" HostQnaService.modifyHostQna()");
+		log.debug(" ├[param] hostQna : "+hostQna.toString());
+		
+		hostQnaMapper.updateHostQna(hostQna);
+	}
+	
+	
+	
+/* 4. 삭제 */
+	
+	// [이승준] "사업자문의 답변" 삭제
+	public void removeHostQnaComment(int hostQnaNo) {
+		dl.p("HostQnaService", "removeHostQnaComment()", "시작");
+		dl.p("removeHostQnaComment()", "hostQnaNo", hostQnaNo);
+		
+		hostQnaMapper.deleteHostQnaComment(hostQnaNo);
+	}
+	
+	// [이승준] "사업자문의" 삭제
+	public void removeHostQna(int hostQnaNo) {
+		dl.p("HostQnaService", "removeHostQna()", "시작");
+		dl.p("removeHostQna()", "hostQnaNo", hostQnaNo);
+		
+		// host Qna 조회
+		HostQna hostQna = hostQnaMapper.selectHostQnaOne(hostQnaNo);
+		
+		// host Qna에 답변이 있는 경우
+		if(hostQna.getHostQnaComments() != null) {
+			// host Qna 답변 삭제
+			hostQnaMapper.deleteHostQnaComment(hostQnaNo);
+		}
+		// host Qna 삭제
+		hostQnaMapper.deleteHostQna(hostQnaNo);
+	}
+	
+	
+	
 }

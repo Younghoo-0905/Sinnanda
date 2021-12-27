@@ -11,30 +11,45 @@ import com.b2.Sinnanda.vo.QnaComment;
 @Mapper
 public interface QnaMapper {
 	
-	void deleteQnaCommentByMember(int qnaNo);
+/* 1. 조회 */
 	
-	// [이승준] QnA 답변 삭제
-	void deleteQnaCommentByAdmin(QnaComment qnaComment);
+	// [이승준] (목록)"회원문의 목록" 조회
+		// map : qnaCategory, beginRow, rowPerPage
+	List<Qna> selectQnaList(Map<String, Object> map);
 	
-	// [이승준] QnA 답변 삽입
-	void insertQnaComment(QnaComment qnaComment);
+	// [이승준] (개수)"회원문의 개수" 조회
+	int selectQnaTotalCount(String qnaCategory);
 	
-	// [이승준] QnA 삭제
-	void deleteQna(int qnaNo, int memberNo);
-	
-	// [이승준] QnA 수정
-	void updateQna(Qna qna);
-	
-	// [이승준] QnA 삽입
-	void insertQna(Qna qna);
-	
-	// [이승준] QnA 상세 조회
+	// [이승준] (상세)"회원문의 상세" 조회
 	Qna selectQnaOne(int qnaNo);
 	
-	// [이승준] QnA 목록 조회
-		/* 매개변수 : 페이징을 위한 "qnaCategory, beginRow, rowPerPage" */
-	List<Qna> selectQnaListQnaCategory(Map<String, Object> map);
 	
-	// [이승준] QnA의 총 갯수 조회
-	int selectQnaTotalCount(String qnaCategory);
+	
+/* 2. 삽입 */
+	
+	// [이승준] "회원문의" 삽입
+	void insertQna(Qna qna);
+	
+	// [이승준] "회원문의 답변" 삽입
+	void insertQnaComment(QnaComment qnaComment);
+	
+	
+	
+/* 3. 수정 */
+	
+	// [이승준] "회원문의" 수정
+	void updateQna(Qna qna);
+	
+	
+	
+/* 4. 삭제 */
+	
+	// [이승준] "회원문의 답변" 삭제
+	void deleteQnaComment(int qnaNo);
+	
+	// [이승준] "회원문의" 삭제
+	void deleteQna(int qnaNo);
+	
+	
+	
 }

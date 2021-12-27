@@ -11,39 +11,50 @@ import com.b2.Sinnanda.vo.Qna;
 @Mapper
 public interface HostQnaMapper {
 	
-// 관리자 기능
-	// [이승준] 답변없는 Host QnA 목록 조회
-	// ㄴ매개변수(map) : hostQnaCategory, currentPage, rowPerPage
-	List<HostQna> selectNoCommentsHostQnaList(Map<String, Object> map);
+/* 1. 조회 */
 	
-	// [이승준] 답변없는 Host QnA 개수 조회
-	// ㄴ매개변수(map) : hostQnaCategory
-	int selectNoCommentsHostQnaTotalCount(Map<String, Object> map);
+	// [이승준] (목록)"답변없는 사업자문의 목록" 조회
+		// map : userLevel ,hostNo, hostQnaCategory, currentPage, rowPerPage
+	List<HostQna> selectNoCommentedHostQnaList(Map<String, Object> map);
 	
-// 사업자 기능
-		
-	// [이승준] Host QnA 수정
-	void updateHostQna(HostQna hostQna);
+	// [이승준] (개수)"답변없는 사업자문의 개수" 조회
+		// map : userLevel, hostNo, hostQnaCategory
+	int selectNoCommentedHostQnaTotalCount(Map<String, Object> map);
 	
-	// [이승준] Host QnA 삽입
-	void insertHostQna(HostQna HostQna);
+	// [이승준] (목록)"사업자문의 목록" 조회
+		// map : userLevel, hostNo, hostQnaCategory, currentPage, rowPerPage
+	List<HostQna> selectHostQnaList(Map<String, Object> map);
 	
-// 공통 기능
+	// [이승준] (개수)"사업자문의 개수" 조회
+		// map : userLevel, hostNo, hostQnaCategory
+	int selectHostQnaTotalCount(Map<String, Object> map);
 	
-	// [이승준] host Qna 답변 삭제
-	void deleteHostQnaComment(int hostQnaNo);
-	
-	// [이승준] host Qna 삭제
-	void deleteHostQna(int hostQnaNo);
-	
-	// [이승준] Host QnA 상세 조회
+	// [이승준] (상세)"사업자문의 상세" 조회
 	HostQna selectHostQnaOne(int hostQnaNo);
 	
-	// [이승준] Host QnA 목록 조회
-	// ㄴ매개변수(map) : userLevel, hostNo, hostQnaCategory, currentPage, rowPerPage
-	List<HostQna> selectHostQnaListByHostQnaCategory(Map<String, Object> map);
 	
-	// [이승준] Host QnA 개수 조회
-	// ㄴ매개변수(map) : userLevel, hostNo, hostQnaCategory
-	int selectHostQnaTotalCount(Map<String, Object> map);
+	
+/* 2. 삽입 */
+	
+	// [이승준] "사업자문의" 삽입
+	void insertHostQna(HostQna HostQna);
+	
+	
+	
+/* 3. 수정 */
+	
+	// [이승준] "사업자문의" 수정
+	void updateHostQna(HostQna hostQna);
+	
+	
+	
+/* 4. 삭제 */
+	
+	// [이승준] "사업자문의 답변" 삭제
+	void deleteHostQnaComment(int hostQnaNo);
+	
+	// [이승준] "사업자문의" 삭제
+	void deleteHostQna(int hostQnaNo);
+	
+	
 }
