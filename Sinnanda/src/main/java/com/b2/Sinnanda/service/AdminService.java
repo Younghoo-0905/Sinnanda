@@ -134,11 +134,18 @@ public class AdminService {
 		return returnMap;
 		
 	}
-	
+	//[윤경환] 맴버 활성화 
 	public int getModifyMemberAc(int memberNo) {
 		log.debug("memberNo+++++++++++++++"+memberNo);
 		return adminMapper.modifyMemberAc(memberNo);
 	}
+	
+	//[윤경환] 관리자 활성화 
+	public int getModifyHostAc(int hostNo) {
+		log.debug("memberNo+++++++++++++++"+hostNo);
+		return adminMapper.modifyHostAc(hostNo);
+	}
+	
 	
 	//[윤경환] 호스트 리스트 
 	public Map<String, Object> getHostList(int hostActive, int currentPage, int rowPerPage){
@@ -196,5 +203,22 @@ public class AdminService {
 		Map<String, Object>  map = adminMapper.TotalHostYear(year);
 		return map;
 	}
+
+	//[윤경환] 년도에 따른 숙소 종류 수 
+	public Map<String, Object> getTotalAccomYear(int year, String accomName) {
+		//전체를 조회할때 모든 숙소가 나올 수 있게 조치 
+		if(accomName == null || accomName.equals("전체")) {
+			accomName = null;
+		}
+		
+		
+		Map<String, Object> map = adminMapper.TotalAccomYear(year, accomName);
+		
+		
+		
+		dl.p("AdminService", "getTotalAccomYear", map);
+		return map;
+	}
+	
 
 }

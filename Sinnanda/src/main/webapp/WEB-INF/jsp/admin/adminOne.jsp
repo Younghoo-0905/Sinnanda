@@ -75,9 +75,10 @@
 			<td colspan="3" style="font-size: 20px; text-align:center;">${admin.updateDate}</td>
 		</tr>	
 		</table>
+	<div style ="text-align:center;">
 		<a class= "btn btn-primary" href="adminPage?adminNo=${loginUser.admin.adminNo }">메인페이지</a>
-	<a class= "btn btn-primary" href="modifyAdminOne?adminNo=${loginUser.admin.adminNo}">수정페이지</a>
-		
+		<a class= "btn btn-primary" href="modifyAdminOne?adminNo=${loginUser.admin.adminNo}">수정페이지</a>
+	</div>	
 	</form>
 								</div>
 							</div>

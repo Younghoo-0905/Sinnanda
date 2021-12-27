@@ -68,11 +68,15 @@ public class AdminController {
       //이슈 로그인된값이 같지 않으면 index 페이지로 리턴
       Map<String, Object> map = hostQnaService.getNoCommentsHostQnaListForAdmin(loginUser.getUserLevel(), hostQnaCategory, currentPage, ROW_PER_PAGE);
    
+      Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNoCommentsHostQnaListForHost(loginUser.getUserLevel(), loginUser.getAdmin().getAdminNo(), null, 1, 10);
+      
+      
       Admin admin =  adminService.getAdminOne(loginUser.getAdmin().getAdminNo()); 
       
       model.addAttribute(admin);
-      model.addAttribute("hostQnaList", map.get("hostQnaList"));   // QnA 목록 정보
-      
+      model.addAttribute("hostQnaList", map.get("hostQnaList"));   
+      model.addAttribute("hostQnaListTotalCount", noCommentedHostQnaMap.get("totalCount"));
+      // QnA 목록 정보
       return "admin/adminPage";
    }
    
@@ -251,7 +255,13 @@ public class AdminController {
          return "redirect:memberList?memberActive="+0;
          
       }
-      
+      //[윤경환] 관리자 활성화 상태만드릭 
+      @GetMapping("/admin/modifyHostAc")
+      public String postModifyHostAc(int hostNo) {
+         adminService.getModifyHostAc(hostNo);
+         return "redirect:hostList?memberActive="+0;
+         
+      }
       
       //[윤경환] 호스트 리스트 
       @GetMapping("/admin/hostList")
@@ -316,5 +326,10 @@ public class AdminController {
     	  return "/admin/totalHostYear";
       }
       
-      
+      //[운경환] 년도에 따른 숙박업속 종류수 
+      @GetMapping("/admin/totalAccomYear")
+      public String getTotalAccomYear() {
+		return "/admin/totalAccomYear";
+    	  
+      }
 }

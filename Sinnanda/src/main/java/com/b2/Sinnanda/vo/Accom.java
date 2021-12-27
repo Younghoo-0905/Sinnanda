@@ -15,4 +15,9 @@ public class Accom {
 	String accomDescription;
 	String createDate;
 	String updateDate;
+
+	
+	
+
+
 }

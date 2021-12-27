@@ -47,4 +47,16 @@ public class ChartRestController {
 			return map;
         	 
          }
+         //[운경환] 년도에 따른 숙박업속 종류수 
+         @GetMapping("/admin/getTotalAccomYear")
+         public Map<String, Object> AccomYear(@RequestParam(name="year") int year, 
+        		 @RequestParam(defaultValue = "전체") String accomName){
+					
+        	 Map<String,Object> map = adminService.getTotalAccomYear(year,accomName);
+        	 dl.p("ChartRestController", "AccomYear", map);
+        	 return map;
+        	 
+         }
+         
+         
 }

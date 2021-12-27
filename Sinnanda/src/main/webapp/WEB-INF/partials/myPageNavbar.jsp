@@ -33,7 +33,7 @@
 							${loginUser.host.hostName}&nbsp;사업자
 						</c:if>
 						<c:if test="${loginUser.userLevel == 3}">
-							<img src="/images/faces/defaultAdminImg.png" alt="profile"/>
+							<img src="/images/myPage/defaultAdminImg.png" alt="profile"/>
 							${loginUser.admin.adminName}&nbsp;관리자
 						</c:if>
 					</c:if>

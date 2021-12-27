@@ -214,13 +214,24 @@
 	</select>
 	
 	
-	<!-- [윤경환] admin 비활성화되어 있는거 다시 활성화 -->
-	<update id="modifyMemberAc" parameterType="com.b2.Sinnanda.vo.Admin">
+	<!-- [윤경환] member 비활성화되어 있는거 다시 활성화 -->
+	<update id="modifyMemberAc" parameterType="com.b2.Sinnanda.vo.Member">
 		
 		UPDATE member SET 
 			member_active = '1',
 			update_date = NOW()
 		WHERE member_no = #{memberNo}
+	</update>
+	
+	
+	
+	<!-- [윤경환] host 비활성화되어 있는거 다시 활성화 -->
+	<update id="modifyHostAc" parameterType="com.b2.Sinnanda.vo.Host">
+		
+		UPDATE host SET 
+			host_active = '1',
+			update_date = NOW()
+		WHERE host_no = #{hostNo}
 	</update>
 	
 	<resultMap type="com.b2.Sinnanda.vo.Host" id="HostListMap">
@@ -345,7 +356,33 @@
 		FROM host 
 		WHERE YEAR(create_date) = #{year}
 
-		
+	</select>
+	<!-- 숙바 관련하여 년도와 종류에 따른 분류  -->
 	
+	
+	<select id="TotalAccomYear" parameterType="com.b2.Sinnanda.vo.Accom" resultType="java.util.Map">
+		SELECT 
+			count(CASE WHEN MONTH(a.create_date) =1 THEN a.accom_no END) january,
+			count(CASE WHEN MONTH(a.create_date) =2 THEN a.accom_no END) february,
+			count(CASE WHEN MONTH(a.create_date) =3 THEN a.accom_no END) march,
+			count(CASE WHEN MONTH(a.create_date) =4 THEN a.accom_no END) april,
+			count(CASE WHEN MONTH(a.create_date) =5 THEN a.accom_no END) may,
+			count(CASE WHEN MONTH(a.create_date) =6 THEN a.accom_no END) june,
+			count(CASE WHEN MONTH(a.create_date) =7 THEN a.accom_no END) july,
+			count(CASE WHEN MONTH(a.create_date) =8 THEN a.accom_no END) august,
+			count(CASE WHEN MONTH(a.create_date) =9 THEN a.accom_no END) september,
+			count(CASE WHEN MONTH(a.create_date) =10 THEN a.accom_no END) october,
+			count(CASE WHEN MONTH(a.create_date) =11 THEN a.accom_no END) november,
+			count(CASE WHEN MONTH(a.create_date) =12 THEN a.accom_no END) december
+		FROM accom as a
+		INNER JOIN accom_category AS ac
+		ON a.accom_category_no = ac.accom_category_no 
+			<if test="accomName != null">
+				<where>
+					ac.accom_category_name = #{accomName}
+				</where>
+			</if>
+		AND YEAR(a.create_date)=#{year} 	
+		
 	</select>
 </mapper>

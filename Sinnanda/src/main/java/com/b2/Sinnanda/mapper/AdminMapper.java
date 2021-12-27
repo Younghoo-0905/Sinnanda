@@ -50,6 +50,9 @@ public interface AdminMapper {
 	//[윤경환] 관리자 활성화
 	int modifyMemberAc(int memberNo);
 	
+	
+	int modifyHostAc(int hostNo); 
+	
 	//[윤경환] 호스트 리스트 
 	List<Host> selectHostList(Map<String, Object> map);
 	
@@ -68,4 +71,7 @@ public interface AdminMapper {
 	
  	//[윤경환] 회원가입한 사업자 차트 
  	Map<String,Object> TotalHostYear(int year);
+ 	
+ 	//[윤경환] 날짜에 따른 숙소 종류 수 
+ 	Map<String,Object> TotalAccomYear(int year, String accomName);
 }
