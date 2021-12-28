@@ -15,7 +15,7 @@ public interface ComplainMapper {
 /* 1. 조회 */
 	
 	// [이승준] (목록)"답변없는 컴플레인 목록" 조회
-		// map : userLevel, hostNo, complainCategory, currentPage, rowPerPage
+		// map : userLevel, hostNo, complainCategory, beginRow, rowPerPage
 	List<Complain> selectNotCommentedComplainList(Map<String, Object> map);
 	
 	// [이승준] (개수)"답변없는 컴플레인 개수" 조회
@@ -23,7 +23,7 @@ public interface ComplainMapper {
 	int selectNotCommentedComplainTotalCount(Map<String, Object> map);
 	
 	// [이승준] (목록)"컴플레인 목록" 조회
-		// map : userLevel, hostNo, complainCategory
+		// map : userLevel, hostNo, complainCategory, beginRow, rowPerPage
 	List<Complain> selectComplainList(Map<String, Object> map);
 	
 	// [이승준] (개수)"컴플레인 개수" 조회

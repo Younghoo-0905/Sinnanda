@@ -51,7 +51,7 @@ public class HostController {
 		Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNotCommentedHostQnaList(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 0, 10);
 		
 		// 4. 답변이 없는 Review 목록, 총 개수 조회
-		Map<String, Object> noCommentedReviewMap = reviewService.getNotCommentedReviewListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), 0, 10);
+		Map<String, Object> noCommentedReviewMap = reviewService.getNotCommentedReviewList(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), 0, 10);
 		
 		// 5. 답변이 없는 Complain 목록, 총 개수 조회
 		Map<String, Object> noCommentedComplainMap = complainService.getNotCommentedComplainList(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 0, 10);

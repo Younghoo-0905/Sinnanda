@@ -31,7 +31,7 @@ public class ComplainController {	//	[김영후]
 	
 /* 1. 조회 */
 	
-	// [이승준] "컴플레인 목록" | 관리자페이지
+	// [이승준] "컴플레인 목록" 조회 | 사업자페이지
 	@GetMapping("/host/myComplainList")
 	public String getComplainList(HttpSession session, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
@@ -57,9 +57,9 @@ public class ComplainController {	//	[김영후]
 		// 5. 모델 전달
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("complainCategory", complainCategory);
-		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("complainList", map.get("complainList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
@@ -67,16 +67,20 @@ public class ComplainController {	//	[김영후]
 		return "/host/myComplainList";
 	}
 	
-	//	ComplainOne 요청
+	// [이승준] "컴플레인 상세" 조회 | 사업자페이지
 	@GetMapping("/host/myComplainOne")
 	public String getComplainOne(HttpSession session, Model model, int complainNo) {
-		dl.p("ComplainController", "complainOne()", complainNo);
+		dl.p("ComplainController", "getComplainOne() | Get", "시작");
+		dl.p("getComplainOne()", "complainNo", complainNo);
 		
+		// 1. 로그인 세션 조회
 		User loginUser = (User)session.getAttribute("loginUser");
-		dl.p("complainOne()", "loginUser", loginUser.toString());
+		dl.p("complainList()", "loginUser", loginUser.toString());
 		
+		// 2. "컴플레인 상세" 조회 서비스 호출
 		Complain complain = complainService.getComplainOne(complainNo);
 		
+		// 3. 모델 전달
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("complain", complain);
 		
@@ -85,30 +89,43 @@ public class ComplainController {	//	[김영후]
 	
 /* 2. 삽입 */
 	
-	//	addComplain 요청
+	// [이승준] "컴플레인" 삽입 | 회원페이지
 	@GetMapping("/member/addComplain")
-	public String addComplain(Model model, int paymentNo) {
-		dl.p("ComplainController", "addComplain", paymentNo);		
-		model.addAttribute("paymentNo", paymentNo);
+	public String addComplain(HttpSession session, Model model, int paymentNo) {
+		dl.p("ComplainController", "addComplain() | Get", "시작");
+		dl.p("addComplain()", "paymentNo", paymentNo);
+		
+		// 1. 로그인 세션 조회
+		User loginUser = (User)session.getAttribute("loginUser");
+		dl.p("complainList()", "loginUser", loginUser.toString());
+		
+		// 2. 모델 전달
+		model.addAttribute("paymentNo", paymentNo);	// "컴플레인 삽입"에 필요한 "결제번호"
+		model.addAttribute("loginUser", loginUser);
 		
 		return "/member/addComplain";
 	}
 	@PostMapping("/member/addComplain")
 	public String addComplain(HttpSession session, Complain complain){
-		dl.p("ComplainController", "addComplain", complain);
+		dl.p("ComplainController", "addComplain() | Post", "시작");
+		dl.p("addComplain()", "complain", complain.toString());
 		
+		// 1. 로그인 세션 조회
 		User loginUser = (User)session.getAttribute("loginUser");
+		
+		// 2. "컴플레인" 삽입 서비스 호출
 		complainService.addComplain(complain);
 		
 		return "/member/myPage?memberNo=" + loginUser.getMember().getMemberNo();
 	}
 	
-	//	addComplainComment 요청
+	// [이승준] "컴플레인 답변" 삽입 | 사업자페이지
 	@PostMapping("/host/addComplainComment")
 	public String addComplainComment(ComplainComment complainComment) {
-		dl.p("ComplainController", "addComplainComment()", "시작");
+		dl.p("ComplainController", "addComplainComment() | Post", "시작");
 		dl.p("addComplainComment()", "complainComment", complainComment.toString());
 		
+		// 1. "컴플레인 답변" 삽입 서비스 호출
 		complainService.addComplainComment(complainComment);
 		
 		return "redirect:/host/myComplainOne?complainNo=" + complainComment.getComplainNo();
@@ -126,12 +143,13 @@ public class ComplainController {	//	[김영후]
 	
 /* 4. 삭제 */
 	
-		//	addComplainComment 요청
+	// [이승준] "컴플레인 답변" 삭제 | 사업자페이지
 	@GetMapping("/host/removeComplainComment")
 	public String removeComplainComment(int complainNo) {
-		dl.p("ComplainController", "addComplainComment() | Get", "시작");
-		dl.p("addComplainComment()", "complainNo", complainNo);
+		dl.p("ComplainController", "removeComplainComment() | Get", "시작");
+		dl.p("removeComplainComment()", "complainNo", complainNo);
 		
+		// 1. "컴플레인 답변" 삭제 서비스 호출
 		complainService.removeComplainComment(complainNo);
 		
 		return "redirect:/host/myComplainOne?complainNo="+complainNo;
@@ -139,25 +157,4 @@ public class ComplainController {	//	[김영후]
 	
 	
 	
-	
-
-	
-	
-	
-	
-/*	//	ComplainList 요청 (아직 답변이 없는 ComplainList)
-	@GetMapping("/host/notCommentedComplainList")
-	public String complainList(HttpSession session, Model model) {
-
-		User loginUser = (User)session.getAttribute("loginUser");
-		//	세션 내 사업자 정보 디버깅
-		dl.p("ComplainController", "complainList", loginUser);
-		
-		//List<Complain> complainList = complainService.getNotCommentedComplainList(loginUser.getHost().getHostNo());
-		
-		//model.addAttribute("complainList", complainList);
-		
-		return "/host/notCommentedComplainList";
-	}*/
-
 }

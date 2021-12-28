@@ -11,24 +11,53 @@ import com.b2.Sinnanda.vo.ReviewComment;
 @Mapper
 public interface ReviewMapper {		//	[김영후]
 	
-	//	Review Comment 등록
-	void insertReviewComment(ReviewComment reviewComment);
+/* 1. 조회 */
 	
-	void deleteReviewComment(int reviewNo);
-	
-	// Review 상세 조회
-	Review selectReviewOne(int reviewNo);
-	
-	// Review 목록조회 (사업자 페이지)
-	List<Review> selectReviewList(Map<String, Object> map);
-	// [이승준] Review 총 개수
-	int selectReviewTotalCount(Map<String, Object> map);
-	
-	//	Not Commented Review 목록조회 (사업자 페이지) 
-	// ㄴ매개변수 : 
+	// [이승준] (목록)"답변없는 리뷰 목록" 조회
+		// map : userLevel, hostNo, beginRow, rowPerPage
 	List<Review> selectNotCommentedReviewList(Map<String, Object> map);
 	
-	// [이승준] 답변이 없는 컴플레인의 총 개수
-	// ㄴ매개변수(map) : userLevel, hostNo, complainCategory, currentPage, rowPerPage
+	// [이승준] (개수)"답변없는 리뷰 개수" 조회
+		// map : userLevel, hostNo
 	int selectNotCommentedReviewTotalCount(Map<String, Object> map);
+	
+	// [이승준] (목록)"리뷰 목록" 조회
+		// map : hostNo, beginRow, rowPerPage
+	List<Review> selectReviewList(Map<String, Object> map);
+	
+	// [이승준] (개수)"리뷰 개수" 조회
+		// map : hostNo
+	int selectReviewTotalCount(Map<String, Object> map);
+	
+	// [이승준] (상세)"리뷰 상세" 조회
+	Review selectReviewOne(int reviewNo);
+	
+	
+	
+/* 2. 삽입 */
+	
+	// [이승준] "리뷰" 삽입
+	void insertReview(Review review);
+	
+	// [이승준] "리뷰 답변" 삽입
+	void insertReviewComment(ReviewComment reviewComment);
+	
+	
+/* 3. 수정 */
+	
+	
+	
+	
+	
+	
+/* 4. 삭제 */
+	
+	// [이승준] "리뷰 답변" 삭제
+	void deleteReviewComment(int reviewNo);
+	
+	// [이승준] "리뷰" 삭제
+	void deleteReview(int reviewNo);
+	
+	
+	
 }

@@ -46,72 +46,65 @@ public class QnaController {
 		User loginUser = (User)session.getAttribute("loginUser");
 		dl.p("complainList()", "loginUser", loginUser.toString());
 		
-		//	출력을 시작하는 행 구하기 수식
+		// 2. 페이지번호의 출력을 시작하는 수를 구하기 수식
 		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE;
 
-		// QnA 목록 조회
+		// 3. "회원문의 목록" 조회 서비스 호출
 		Map<String, Object> map = qnaService.getQnaList(qnaCategory, beginRow, ROW_PER_PAGE);
 		
+		// 4. 10개의 페이지번호의를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		dl.p("complainList()", "pageNo", pageNo);
 		
-		/* 모델 추가 */
-		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+		// 5. 모델 전달
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("qnaCategory", qnaCategory);
+		model.addAttribute("qnaList", map.get("qnaList"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
-		model.addAttribute("qnaCategory", qnaCategory);	// 선택된 QnA 카테고리
-		model.addAttribute("qnaList", map.get("qnaList"));	// QnA 목록 정보
-		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
-		model.addAttribute("currentPage", currentPage);	// 현재 페이지
-		
-		//	10개의 page 번호를 출력하기 위한 변수
-		int pageNo = ((beginRow / 100) * 10 + 1);
-		log.debug(" ├[param] pageNo : " + pageNo);
-		model.addAttribute("pageNo", pageNo);
 			
 		return "qnaList";
 	}
 	
 	// [이승준] "회원문의 상세" 조회
 	@GetMapping("/qnaOne")
-	public String qnaOne(HttpServletRequest request, Model model, int qnaNo) {
-		log.debug("[Debug] \"START\" QnaController.qnaOne() | Get");
-		log.debug(" ├[param] qnaNo : "+qnaNo);
+	public String getQnaOne(HttpSession session, Model model, int qnaNo) {
+		dl.p("QnaController", "getQnaOne() | Get", "시작");
+		dl.p("getQnaOne()", "qnaNo", qnaNo);
 		
-		// QnA 상세 조회
+		// 1. 로그인 세션 조회
+		User loginUser = (User)session.getAttribute("loginUser");
+		dl.p("complainList()", "loginUser", loginUser.toString());
+		
+		// 2. "회원문의" 상세 조회 서비스 호출
 		Qna qna = qnaService.getQnaOne(qnaNo);
 		
-		// 로그인 세션 조회
-		HttpSession session = request.getSession();
-		User loginUser = (User)session.getAttribute("loginUser");
-		// 로그인 세션 디버깅
-		if(loginUser != null) {
-			log.debug(" ├[param] loginUser : "+loginUser.toString());
-		} else {
-			log.debug(" ├[param] loginUser : Null");
-		}
 		
-		// *비밀문의인 경우, 접근제한 필요(작성자 본인 or 관리자)
+		// 3. 비밀글인 경우 (접근가능자 : 작성자 본인 or 관리자)
 		if(qna.getQnaSecret().equals("비밀문의")) {
-			// 1. 비회원 or 사업자인 경우 -> qnaList
+			// 3-1. 비회원, 사업자인 경우
 			if((loginUser == null) || (loginUser.getUserLevel() == 2)) {
-				log.info(" ├[info] qnaOne 접근 불가 : 비회원 or 사업자");
+				dl.p("getQnaOne()", "비밀글", "접근불가 | 권한부족");
 				return "redirect:/qnaList";
-			}
-			log.debug(" ├[param] 작성자 memberNo : "+qna.getMemberNo());
-			log.debug(" ├[param] 접근자 Level : "+loginUser.getUserLevel());
-			
-			// 2. 멤버인 경우, 작성자 No + 세션 No = 일치 X -> qnaList
-			if(loginUser.getUserLevel() == 1) {
-				log.debug(" ├[param] 세션 memberNo : "+loginUser.getMember().getMemberNo());
+				
+			// 3-2. 멤버이지만
+			} else if(loginUser.getUserLevel() == 1) {
+				dl.p("getQnaOne()", "작성자 memberNo", qna.getMemberNo());
+				dl.p("getQnaOne()", "세션 memberNo", loginUser.getMember().getMemberNo());
+				
+				// 3-2-1. 글 작성자의 '회원번호'와 로그인된 '회원번호'가 일치하지 않는 경우
 				if(qna.getMemberNo() != loginUser.getMember().getMemberNo()) {
+					dl.p("getQnaOne()", "비밀글", "접근불가 | 작성자가 아님");
 					return "redirect:/qnaList";
 				}
 			}
-			log.info(" ├[info] qnaOne 접근 허용");
 		}
 		
-		/* 모델 추가 */
-		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
-		model.addAttribute(qna);	// 선택된 QnA 상세 정보
+		// 5. 모델 전달
+		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("qna", qna);
 		
 		return "qnaOne";
 	}
@@ -122,62 +115,42 @@ public class QnaController {
 	
 	// [이승준] "회원문의" 삽입
 	@GetMapping("/member/addQna")
-	public String addQna(HttpServletRequest request, Model model) {
-		log.debug("[Debug] \"START\" QnaController.addQna() | Get");
+	public String addQna(HttpSession session, Model model) {
+		dl.p("QnaController", "getQnaOne() | Get", "시작");
 		
-		// 로그인 세션 조회
-		HttpSession session = request.getSession();
+		// 1. 로그인 세션 조회
 		User loginUser = (User)session.getAttribute("loginUser");
-		// 로그인 세션 디버깅
-		if(loginUser != null) {
-			log.debug(" ├[param] loginUser : "+loginUser.toString());
-			// 오직 멤버만 작성 가능
-			if(loginUser.getUserLevel() != 1) {
-				return "redirect:/qnaList";
-			}
-		} else {
-			log.debug(" ├[param] loginUser : Null");
+		dl.p("complainList()", "loginUser", loginUser.toString());
+		
+		// 2. 회원이 아닌 경우, "회원문의" 작성불가
+		if(loginUser.getUserLevel() != 1) {
+			dl.p("addQna()", "회원문의 작성", "접근불가 | 오직 회원만 작성가능");
 			return "redirect:/qnaList";
 		}
 		
-		/* 모델 추가 */
-		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+		// 3. 모델 전달
+		model.addAttribute("loginUser", loginUser);
 		
 		return "/member/addQna";
 	}
 	@PostMapping("/member/addQna")
 	public String addQna(Qna qna) {
-		log.debug("[Debug] \"START\" QnaController.addQna() | Post");
-		log.debug(" ├[param] qna : "+qna.toString());
+		dl.p("QnaController", "getQnaOne() | Post", "시작");
+		dl.p("getQnaOne()", "qna", qna.toString());
 		
+		// 1. "회원문의" 삽입 서비스 호출
 		qnaService.addQna(qna);
 		
 		return "redirect:/qnaOne?qnaNo="+qna.getQnaNo();
 	}
 	
 	// [이승준] "회원문의 답변" 삽입
-	@GetMapping("/addQnaComment")
-	public String addQnaComment() {
-		log.debug("[Debug] \"START\" QnaController.addQnaComment() | Get");
-		
-		return "addQnaComment";
-	}
 	@PostMapping("/addQnaComment")
-	public String addQnaComment(HttpServletRequest request, QnaComment qnaComment) {
-		log.debug("[Debug] \"START\" QnaController.addQnaComment() | Post");
-		log.debug(" ├[param] qnaComment : "+qnaComment.toString());
+	public String addQnaComment( QnaComment qnaComment) {
+		dl.p("QnaController", "addQnaComment() | Post", "시작");
+		dl.p("addQnaComment()", "qnaComment", qnaComment.toString());
 		
-		// 로그인 세션 조회
-		HttpSession session = request.getSession();
-		User loginUser = (User) session.getAttribute("loginUser");
-		// 로그인 세션 디버깅
-		if(loginUser != null) {
-			log.debug(" ├[param] loginUser : "+loginUser.toString());
-		} else {
-			log.debug(" ├[param] loginUser : Null");
-		}
-		
-		// 답변 삽입
+		// 1. "회원문의 답변" 삽입 서비스 호출
 		qnaService.addQnaComment(qnaComment);
 		
 		return "redirect:/qnaOne?qnaNo="+qnaComment.getQnaNo();
@@ -189,36 +162,33 @@ public class QnaController {
 	
 	// [이승준] "회원문의" 수정
 	@GetMapping("/member/modifyQna")
-	public String modifyQna(HttpServletRequest request, Model model, int qnaNo) {
-		log.debug("[Debug] \"START\" QnaController.modifyQna() | Get");
-		log.debug(" ├[param] qnaNo : "+qnaNo);
+	public String modifyQna(HttpSession session, Model model, int qnaNo) {
+		dl.p("QnaController", "modifyQna() | Get", "시작");
+		dl.p("modifyQna()", "qnaNo", qnaNo);
 		
-		// 수정 전 기존 값 조회
-		Qna qna = qnaService.getQnaOne(qnaNo);
-		model.addAttribute(qna);
-		
-		// 로그인 세션 조회
-		HttpSession session = request.getSession();
+		// 1. 로그인 세션 조회
 		User loginUser = (User)session.getAttribute("loginUser");
-		// 로그인 세션 디버깅
-		if(loginUser != null) {
-			log.debug(" ├[param] loginUser : "+loginUser.toString());
-			// 오직 게시글을 작성한 회원만 접근 가능
-			if(loginUser.getUserLevel() != 1 && loginUser.getMember().getMemberNo() == qna.getMemberNo()) {
-				return "redirect:/qnaList";
-			}
-		} else {
-			log.debug(" ├[param] loginUser : Null");
+		dl.p("complainList()", "loginUser", loginUser.toString());
+		
+		// 2. "회원문의 상세" 조회 서비스 호출
+		Qna qna = qnaService.getQnaOne(qnaNo);
+		
+		// 3. "회원문의"를 작성한 작성자만 수정 가능
+		if(loginUser.getUserLevel() != 1 && loginUser.getMember().getMemberNo() == qna.getMemberNo()) {
 			return "redirect:/qnaList";
 		}
+		
+		// 4. 모델 전달
+		model.addAttribute("qna", qna);
 		
 		return "/member/modifyQna";
 	}
 	@PostMapping("/member/modifyQna")
 	public String modifyQna(Qna qna) {
-		log.debug("[Debug] \"START\" QnaController.modifyQna() | Post");
-		log.debug(" ├[param] qna : "+qna.toString());
+		dl.p("QnaController", "modifyQna() | Post", "시작");
+		dl.p("modifyQna()", "qna", qna.toString());
 		
+		// 1. "회원문의" 수정 서비스 호출
 		qnaService.modifyQna(qna);
 		
 		return "redirect:/qnaOne?qnaNo="+qna.getQnaNo();
@@ -230,21 +200,11 @@ public class QnaController {
 	
 	// [이승준] "회원문의 답변" 삭제
 	@GetMapping("/removeQnaComment")
-	public String removeQnaComment(HttpServletRequest request, int qnaNo) {
-		log.debug("[Debug] \"START\" QnaController.removeQnaComment() | Get");
-		log.debug(" ├[param] qnaNo : "+qnaNo);
+	public String removeQnaComment(int qnaNo) {
+		dl.p("QnaController", "removeQnaComment() | Post", "시작");
+		dl.p("removeQnaComment()", "qnaNo", qnaNo);
 		
-		// 로그인 세션 조회
-		HttpSession session = request.getSession();
-		User loginUser = (User)session.getAttribute("loginUser");
-		// 로그인 세션 디버깅
-		if(loginUser != null) {
-			log.debug(" ├[param] loginUser : "+loginUser.toString());
-		} else {
-			log.debug(" ├[param] loginUser : Null");
-		}
-		
-		// 답변 삽입
+		// 2. "회원문의 답변" 삭제 서비스 호출
 		qnaService.removeQnaComment(qnaNo);
 		
 		return "redirect:/qnaOne?qnaNo="+qnaNo;
@@ -252,21 +212,11 @@ public class QnaController {
 	
 	// [이승준] "회원문의" 삭제
 	@GetMapping("/removeQna")
-	public String removeQna(HttpServletRequest request, int qnaNo) {
-		log.debug("[Debug] \"START\" QnaController.removeQna() | Get");
-		log.debug(" ├[param] qnaNo : "+qnaNo);
+	public String removeQna(int qnaNo) {
+		dl.p("QnaController", "removeQna() | Get", "시작");
+		dl.p("removeQna()", "qnaNo", qnaNo);
 		
-		// 로그인 세션 조회
-		HttpSession session = request.getSession();
-		User loginUser = (User) session.getAttribute("loginUser");
-		// 로그인 세션 디버깅
-		if(loginUser != null) {
-			log.debug(" ├[param] loginUser : "+loginUser.toString());
-		} else {
-			log.debug(" ├[param] loginUser : Null");
-		}
-		
-		// 수정 전 기존 값 출력
+		// 2. "회원문의" 삭제 서비스 호출
 		qnaService.removeQna(qnaNo);
 		
 		return "redirect:/qnaList";

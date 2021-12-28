@@ -27,11 +27,11 @@ public class ComplainService {	//	[김영후]
 	// [이승준] 답변없는 "컴플레인 목록" 조회
 	public Map<String, Object> getNotCommentedComplainList(int userLevel, int hostNo, String complainCategory, int beginRow, int rowPerPage) {
 		dl.p("ComplainService", "getNotCommentedComplainList()", "시작");
-		dl.p("ComplainService", "userLevel", userLevel);
-		dl.p("ComplainService", "hostNo", hostNo);
-		dl.p("ComplainService", "complainCategory", complainCategory);
-		dl.p("ComplainService", "beginRow", beginRow);
-		dl.p("ComplainService", "rowPerPage", rowPerPage);
+		dl.p("getNotCommentedComplainList()", "userLevel", userLevel);
+		dl.p("getNotCommentedComplainList()", "hostNo", hostNo);
+		dl.p("getNotCommentedComplainList()", "complainCategory", complainCategory);
+		dl.p("getNotCommentedComplainList()", "beginRow", beginRow);
+		dl.p("getNotCommentedComplainList()", "rowPerPage", rowPerPage);
 		
 		// 0. "전체"의 카테고리를 조회하는 경우, null 값으로 변경 -> 쿼리에서 WHERE절이 실행되지 않도록 한다 (by 김영후)
 		if(complainCategory == null || complainCategory.equals("전체")) {
@@ -57,7 +57,7 @@ public class ComplainService {	//	[김영후]
 		
 		// 4. "답변없는 컴플레인 개수" 조회
 		int totalCount = complainMapper.selectNotCommentedComplainTotalCount(paraPagingMap);
-		dl.p("ComplainService", "totalCount", totalCount);
+		dl.p("getNotCommentedComplainList()", "totalCount", totalCount);
 		
 		// 5. 해당 목록의 "끝 페이지 번호" 가공
 		int lastPage = 0;
@@ -66,7 +66,7 @@ public class ComplainService {	//	[김영후]
 		if(totalCount % rowPerPage != 0) {	// 조건 : 총 페이지(101), 페이지당 출력 개수(10) -> 총 11 페이지가 필요하게 됨으로
 			lastPage += 1;
 		}
-		dl.p("ComplainService", "lastPage", lastPage);
+		dl.p("getNotCommentedComplainList()", "lastPage", lastPage);
 		
 		// 6. 리턴할 모델 가공
 		Map<String, Object> returnMap = new HashMap<>();
@@ -111,7 +111,7 @@ public class ComplainService {	//	[김영후]
 		
 		// 4. "컴플레인 개수" 조회
 		int totalCount = complainMapper.selectComplainTotalCount(paraPagingMap);
-		dl.p("ComplainService", "totalCount", totalCount);
+		dl.p("getComplainList()", "totalCount", totalCount);
 		
 		// 5. 해당 목록의 "끝 페이지 번호" 가공
 		int lastPage = 0;
