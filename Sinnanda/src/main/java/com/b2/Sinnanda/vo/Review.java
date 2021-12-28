@@ -17,4 +17,5 @@ public class Review {
 	private String accomName;
 	private String roomName;
 	private int memberNo;
+	private int accomNo;
 }

@@ -84,12 +84,12 @@
 				<td>
 					<c:choose>
 						<c:when test="${fn:length(review.reviewContent) > 20}">
-							<a href="/member/myReviewOne?reviewNo=${review.reviewNo}">
+							<a href="/searchAccomOne?accomNo=${review.accomNo}">
 						 		<c:out value="${fn:substring(review.reviewContent,0,20)}"/>...
 						 	</a>
 						</c:when>
 					 	<c:otherwise>
-	            			<a href="/member/myReviewOne?reviewNo=${review.reviewNo}"><c:out value="${review.reviewContent}"/></a>
+	            			<a href="/searchAccomOne?accomNo=${review.accomNo}"><c:out value="${review.reviewContent}"/></a>
 	          			 </c:otherwise>
 					</c:choose>
 				</td>

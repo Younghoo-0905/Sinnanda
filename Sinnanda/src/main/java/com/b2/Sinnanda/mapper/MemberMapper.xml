@@ -178,6 +178,7 @@
 		<result column="member_name" property="memberName"/>
 		<result column="room_name" property="roomName"/>
 		<result column="accom_name" property="accomName"/>
+		<result column="accom_no" property="accomNo"/>
 	</resultMap>
 	
 	<!-- [유동진] 내가 작성한 리뷰 목록 조회 -->
@@ -185,7 +186,8 @@
 		SELECT 
 			m.member_no, 
 			m.member_name, 
-			ac.accom_name, 
+			ac.accom_name,
+			ac.accom_no, 
 			r.room_name,
 			rev.review_no,
 			rev.review_content,
