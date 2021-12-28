@@ -84,7 +84,7 @@ public class QnaService {
 		paraQnaListMap.put("beginRow", beginRow);
 		paraQnaListMap.put("rowPerPage", rowPerPage);
 		
-		List<Qna> adminQnaList = qnaMapper.selectQnaList(paraQnaListMap);
+		List<Qna> adminQnaList = qnaMapper.selectAdminQnaList(paraQnaListMap);
 		dl.p("getAdminQnaList", "AdminQnaList", adminQnaList);
 		
 		int totalCount = qnaMapper.selectAdminQnaTotalCount();

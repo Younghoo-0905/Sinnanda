@@ -109,6 +109,17 @@ public class QnaController {
 		return "qnaOne";
 	}
 	
+	@GetMapping("/admin/memberQnaOne")
+	public String getMemberQnaList(HttpSession session, Model model, int qnaNo) {
+		User loginUser = (User)session.getAttribute("loginUser");
+		Qna qna = qnaService.getQnaOne(qnaNo);
+		
+		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("qna", qna);
+		
+		return "admin/memberQnaOne";
+	}
+	
 	
 	
 /* 2. 삽입 */

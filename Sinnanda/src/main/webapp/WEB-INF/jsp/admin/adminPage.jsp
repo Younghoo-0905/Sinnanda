@@ -126,7 +126,7 @@
 												<tr>
 													<td style="text-align:center">${adminQna.qnaNo}</td>
 													<td>
-														<a href="/admin/memberQnaLit?qnaNo=${adminQna.qnaNo}">${adminQna.qnaTitle}</a>
+														<a href="/admin/memberQnaOne?qnaNo=${adminQna.qnaNo}">${adminQna.qnaTitle}</a>
 													</td>
 													<td style="text-align:center">${adminQna.qnaCategory}</td>
 													<td style="text-align:center">${adminQna.qnaSecret}</td>
