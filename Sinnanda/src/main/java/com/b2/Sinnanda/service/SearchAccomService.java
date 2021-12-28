@@ -34,7 +34,7 @@ public class SearchAccomService {
 	
 	/* [이원희] 숙소 목록 조회 by accomName */
 	
-	public Map<String, Object> getAccomListByName(Accom accomName, int person, int currentPage, int rowPerPage, List<String>accomCategory1){
+	public Map<String, Object> getAccomListByName(Accom accomName, int person, int currentPage, int rowPerPage, List<String>accomCategory1, List<Integer> accomRate){
 		log.debug("[Debug] \"START\" SearchAccomService.getAccomListByName()");
 		log.debug(" ├[param] accomName : "+accomName);
 		log.debug(" ├[param] currentPage : "+currentPage);
@@ -50,6 +50,27 @@ public class SearchAccomService {
 		paraMap.put("person", person);
 		paraMap.put("beginRow", beginRow);
 		paraMap.put("rowPerPage", rowPerPage);
+		
+		if(accomRate.contains(2)) {
+			
+		}
+		
+		if(accomRate.contains(2)) {
+			
+		}
+		
+		if(accomRate.contains(2)) {
+			
+		}
+		
+		if(accomRate.contains(2)) {
+			
+		}
+		
+		if(accomRate.contains(2)) {
+			
+		}
+
 		
 		// 2. 숙소 리스트 조회
 		List<Accom> accomList = accomMapper.selectAccomListByName(paraMap);

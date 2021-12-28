@@ -57,10 +57,39 @@
         		
         		<form action="searchAccomList" method="post" class="d-block d-flex" id="searchForm">
         		
+        		<input type="text" value="${currentPage}" id="currentPage" name="currentPage" hidden="hidden">
+        		
         		<div class="sidebar-wrap bg-light ftco-animate">
         			
 		             <!-- [이원희] 검색리스트뷰 검색바-->
-        			<h3 class="heading mb-4">숙소 유형</h3>
+        			
+        			<h3 class="heading mb-4">숙소 상세검색</h3>
+        			 
+        				<div class="fields">
+		              <div class="form-group">
+		                <input type="text" name="accomName" class="form-control" placeholder="숙소아름" value="${accomName}">
+		              </div>
+		              <div class="form-group">
+		                <div class="select-wrap one-third">
+	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+	                    <select name="" id="" class="form-control" placeholder="Keyword search">
+	                      <option value="">지역</option>
+	                      <option value="">San Francisco USA</option>
+	                      <option value="">Berlin Germany</option>
+	                      <option value="">Lodon United Kingdom</option>
+	                      <option value="">Paris Italy</option>
+	                    </select>
+	                  </div>
+		              </div>
+		              <div class="form-group">
+		                <input type="text" id="checkin_date" class="form-control" placeholder="체크인 날짜">
+		              </div>
+		              <div class="form-group">
+		                <input type="text" id="checkin_date" class="form-control" placeholder="체크아웃 날짜">
+		              </div>
+					<div class="form-group">
+				
+        			<div>숙소 유형</div>
 						<c:choose>
 							<c:when test="${fn:contains(accomCategory1, '호텔')}">
 								<input type="checkbox" name="accomCategory1" value="호텔" checked onclick="getCheckboxValue()"/>호텔<br>
@@ -102,36 +131,94 @@
 							</c:otherwise>
 						</c:choose>
 						
-						
+        			<br>
+        				<div>별점 등급</div>
+					
+							<c:choose>
+							<c:when test="${fn:contains(accomRate, '10')}">
+								<input type="checkbox" name="accomRate" value="10" checked onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+								<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
+								</label>
+								
+								<br>
+							</c:when>
+							<c:otherwise>
+							<input type="checkbox" name="accomRate" value="10" onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+								<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
+								</label>
+								<br>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:contains(accomRate, '8')}">
+								<input type="checkbox" name="accomRate" value="8" checked onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
+								</label>
+								<br>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" name="accomRate" value="8" onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
+								</label>
+								<br>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:contains(accomRate, '6')}">
+								<input type="checkbox" name="accomRate" value="6" checked onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+						     	</label>
+								<br>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" name="accomRate" value="6" onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+						     	</label>
+								<br>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:contains(accomRate, '4')}">
+								<input type="checkbox" name="accomRate" value="4" checked onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+						      	</label>
+								<br>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" name="accomRate" value="4" onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+						      	</label>
+								<br>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:contains(accomRate, '2')}">
+								<input type="checkbox" name="accomRate" value="2" checked onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+							    </label>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" name="accomRate" value="2" onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+							    </label>
+							</c:otherwise>
+						</c:choose>
+							  
+							  
+							  
         			<br>
         			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
         			
-        			<h3 class="heading mb-4">숙소 상세검색</h3>
-        			 
-        				<div class="fields">
-		              <div class="form-group">
-		                <input type="text" name="accomName" class="form-control" placeholder="숙소아름">
-		              </div>
-		              <div class="form-group">
-		                <div class="select-wrap one-third">
-	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                    <select name="" id="" class="form-control" placeholder="Keyword search">
-	                      <option value="">지역</option>
-	                      <option value="">San Francisco USA</option>
-	                      <option value="">Berlin Germany</option>
-	                      <option value="">Lodon United Kingdom</option>
-	                      <option value="">Paris Italy</option>
-	                    </select>
-	                  </div>
-		              </div>
-		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="체크인 날짜">
-		              </div>
-		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="체크아웃 날짜">
-		              </div>
-					<div class="form-group">
-		              	
 		              	<div class="range-slider">
 		              		<div>요금 범위(1박당)</div>
 		              		
@@ -148,47 +235,14 @@
 						</span>
 					</div>
 		              <div class="form-group">                                                             
-		                <button type="submit" class="search-submit btn btn-primary">검색</button>
+		                <button type="button" class="search-submit btn btn-primary" onclick="search()">검색</button>
 		              </div>
 		            </div>
+	            
 	            </form>
         		</div>
         		<!-- 검색바 끝 -->
-        		<div class="sidebar-wrap bg-light ftco-animate">
-        			<h3 class="heading mb-4">별점 등급</h3>
-        			<form method="post" class="star-rating">
-							  <div class="form-check">
-									<input type="checkbox" class="form-check-input" id="exampleCheck1">
-									<label class="form-check-label" for="exampleCheck1">
-										<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
-									</label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						    	   <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
-						      </label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						     </label>
-							  </div>
-							  <div class="form-check">
-							    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						      </label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-							    </label>
-							  </div>
-							</form>
-        		</div>
+        		
           </div>
           <div class="col-lg-9">
           	<div class="row">
@@ -253,17 +307,20 @@
 		              			<li><a>&lt;</a></li>
 		              		</c:when>
 		              		<c:otherwise>
-		              			<li><a href="searchAccomList?accomName=${accomName}&accomCategoryName=${accomCategoryName}&currentPage=${currentPage-1}">&lt;</a></li>
+		              			<li><a href="javascript:void(0);" onclick="clickPrevBtn(${currentPage});">&lt;</a></li>
 		              		</c:otherwise>
 		              	</c:choose>
-		              	<c:forEach var="page" begin = "1" end="${lastPage}" step="1">
+		              	<c:forEach var="page" begin = "${beginRow}" end="${beginRow+9}" step="1">
 		              		<c:choose>
 		              		<c:when test="${currentPage eq page}">
 		              			 <li class="active"><span>${page}</span></li>
 		              		</c:when>
 		              		<c:otherwise>
-		              			<li><a href="searchAccomList?accomName=${accomName}&accomCategoryName=${accomCategoryName}&currentPage=${page}">${page}</a></li>
+		              			<c:if test="${page <= lastPage}">
+		              				<li><a href="javascript:void(0);" onclick="clickNumBtn(${page});">${page}</a></li>
+		              			</c:if>
 		              		</c:otherwise>
+		              	
 		              	</c:choose>
 		              	</c:forEach>
 		              	<c:choose>
@@ -271,7 +328,7 @@
 		              			<li><a>&gt;</a></li>
 		              		</c:when>
 		              		<c:otherwise>
-		              			<li><a href="searchAccomList?accomName=${accomName}&accomCategoryName=${accomCategoryName}&currentPage=${currentPage+1}">&gt;</a></li>
+		              			<li><a href="javascript:void(0);" onclick="clickNextBtn(${currentPage});">&gt;</a></li>
 		              		</c:otherwise>
 		              	</c:choose>
 		               
@@ -372,4 +429,59 @@
   <script src="js/main.js"></script>
     
   </body>
+  
+	<script>
+		function clickNumBtn(obj) {
+			
+			//alert(obj);
+			
+			let Myelement = document.forms['searchForm']['currentPage'];
+	    	console.log(Myelement.value);
+	    	Myelement.setAttribute('value',obj);
+	    	console.log(Myelement.value);
+	    	
+	        document.getElementById('searchForm').submit();
+	        return;
+			
+		}
+		
+		function clickNextBtn(obj) {
+			
+			//alert(obj);
+			
+			let Myelement = document.forms['searchForm']['currentPage'];
+	    	console.log(Myelement.value);
+	    	Myelement.setAttribute('value',obj+1);
+	    	console.log(Myelement.value);
+	    	
+	        document.getElementById('searchForm').submit();
+	        return;
+			
+		}
+		
+		function clickPrevBtn(obj) {
+			
+			//alert(obj);
+			
+			let Myelement = document.forms['searchForm']['currentPage'];
+	    	console.log(Myelement.value);
+	    	Myelement.setAttribute('value',obj-1);
+	    	console.log(Myelement.value);
+	    	
+	        document.getElementById('searchForm').submit();
+	        return;
+			
+		}
+		
+		function search(){
+			let Myelement = document.forms['searchForm']['currentPage'];
+	    	console.log(Myelement.value);
+	    	Myelement.setAttribute('value',1);
+	    	console.log(Myelement.value);
+	    	
+	        document.getElementById('searchForm').submit();
+	        return;
+		}
+		
+	</script>
 </html>

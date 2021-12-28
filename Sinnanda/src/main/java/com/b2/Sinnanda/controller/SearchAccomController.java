@@ -59,11 +59,11 @@ public class SearchAccomController {
 	public String postSerchList(Accom accom, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
 			@RequestParam(defaultValue = "1") int person,
-			@RequestParam(defaultValue = "호텔")List<String> accomCategory1
-			) {
+			@RequestParam(defaultValue = "호텔")List<String> accomCategory1,
+			@RequestParam(defaultValue = "10,8,6,4,2") List<Integer> accomRate) {
 		dl.p("AccomController", "getSerchList(accom)", accom);
 		
-		Map<String, Object> map = searchAccomService.getAccomListByName(accom, person, currentPage, ROW_PER_PAGE, accomCategory1);
+		Map<String, Object> map = searchAccomService.getAccomListByName(accom, person, currentPage, ROW_PER_PAGE, accomCategory1, accomRate);
 		dl.p("AccomController","accomName",map.get("accomName"));
 		dl.p("AccomController","accomList",map.get("accomList"));
 		dl.p("AccomController", "accomCategoryName", map.get("accomCategoryName"));
@@ -71,6 +71,15 @@ public class SearchAccomController {
 		dl.p("AccomController","lastPage",map.get("lastPage"));
 		dl.p("AccomController","currentPage",map.get("currentPage"));
 		dl.p("AccomController","accomCategory1",accomCategory1);
+		dl.p("AccomController","accomRate",accomRate);
+		int beginRow = 0;
+		if(currentPage%10 == 0) {
+			beginRow = (((currentPage-1)/10)*10)+1; 
+		}else {
+			beginRow = ((currentPage/10)*10)+1;
+		}
+		
+		dl.p("AccomController","beginRow",beginRow);
 		
 		model.addAttribute("accomName",accom.getAccomName());
 		model.addAttribute("accomCategoryName",accom.getAccomCategoryName());
@@ -79,6 +88,8 @@ public class SearchAccomController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("accomCategory1", accomCategory1);
 		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("beginRow",beginRow);
+		model.addAttribute("accomRate",accomRate);
 		
 		return"/searchAccomList";
 	}

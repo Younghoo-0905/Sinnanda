@@ -10,6 +10,7 @@
 		<result column="commission_no" property="commissionNo"/>
 		<result column="accom_category_no" property="accomCategoryNo"/>
 		<result column="accom_category_name" property="accomCategoryName"/>
+		<result column="accom_rate" property="accomRate"/>
 		<result column="accom_name" property="accomName"/>
 		<result column="accom_img" property="accomImg"/>
 		<result column="accom_description" property="accomDescription"/>
@@ -37,6 +38,7 @@
 			   ORDER BY create_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 		 -->
+		<!--
 		SELECT accom.accom_no, 
 			   accom.host_no, 
 			   accom.admin_no, 
@@ -52,9 +54,39 @@
 				<foreach collection="accomCategory1" item="value" index="idx" separator="," open="(" close=")">
     				#{value}
     			</foreach>
-				AND accom.accom_name LIKE CONCAT('%',#{accomName},'%')
+				AND 
+				accom.accom_name LIKE CONCAT('%',#{accomName},'%')
 				ORDER BY accom.create_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
+		-->
+		
+		SELECT a.accom_no, 
+			   a.host_no, 
+			   a.admin_no, 
+			   a.commission_no,
+			   accom_category.accom_category_name,
+			   a.accom_name,
+			   (sum(rev.review_rank)/COUNT(rev.review_rank)) AS accom_rate,
+			   a.accom_img,
+			   a.accom_description, 
+			   a.create_date, 
+			   a.update_date 
+			   FROM accom a 
+				JOIN accom_category ON a.accom_category_no = accom_category.accom_category_no 
+				JOIN room r ON r.accom_no = a.accom_no 
+				JOIN reserve re ON r.room_no = re.room_no 
+				JOIN payment pa ON pa.reserve_no = re.reserve_no 
+				JOIN review rev ON rev.payment_no = pa.payment_no 
+				WHERE accom_category_name IN
+				<foreach collection="accomCategory1" item="value" index="idx" separator="," open="(" close=")">
+    				#{value}
+    			</foreach>
+				AND
+				a.accom_name LIKE CONCAT('%',#{accomName},'%')
+				GROUP BY a.accom_name
+				ORDER BY a.create_date DESC 
+		LIMIT #{beginRow}, #{rowPerPage}
+		
 		
 	</select>
 	
@@ -62,19 +94,29 @@
 	<select id="selectAccomTotalCount" parameterType="Map" resultType="int">
 		SELECT 
 			COUNT(*) 
-		FROM accom a JOIN accom_category ac ON a.accom_category_no = ac.accom_category_no WHERE a.accom_name LIKE CONCAT('%',#{accomName},'%')
-		<!--AND ac.accom_category_name= #{accomCategoryName} -->
+		FROM accom a JOIN accom_category ac ON a.accom_category_no = ac.accom_category_no WHERE ac.accom_category_name IN 
+		<foreach collection="accomCategory1" item="value" index="idx" separator="," open="(" close=")">
+    		#{value}
+    	</foreach>
+    	AND a.accom_name LIKE CONCAT('%',#{accomName},'%')
 	</select>
 	
 	<!-- [이원희] 검색 대상 숙소 별점 조회 -->
 	<select id="selectAccomRank" parameterType="Map" resultType ="double">
-		SELECT ((sum(rev.review_rank)/COUNT(rev.review_rank))*10) 
-		FROM accom a 
+		SELECT ((sum(rev.review_rank)/COUNT(rev.review_rank))*10),
+		accom_category.accom_category_name
+		FROM accom a
+		JOIN accom_category ON a.accom_category_no = accom_category.accom_category_no
 		LEFT JOIN room r ON r.accom_no = a.accom_no 
 		LEFT JOIN reserve re ON r.room_no = re.room_no 
 		LEFT JOIN payment pa ON pa.reserve_no = re.reserve_no 
 		LEFT JOIN review rev ON rev.payment_no = pa.payment_no
-		WHERE a.accom_name LIKE CONCAT('%',#{accomName},'%')
+		WHERE accom_category_name IN
+				<foreach collection="accomCategory1" item="value" index="idx" separator="," open="(" close=")">
+    				#{value}
+    			</foreach>
+				AND
+				a.accom_name LIKE CONCAT('%',#{accomName},'%')
 		GROUP BY a.accom_no ORDER BY a.create_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>

@@ -9,6 +9,7 @@ public class Accom {
 	int adminNo;
 	int commissionNo;
 	int accomCategoryNo;
+	int accomRate;
 	String accomCategoryName;
 	String accomName;
 	String accomImg;
