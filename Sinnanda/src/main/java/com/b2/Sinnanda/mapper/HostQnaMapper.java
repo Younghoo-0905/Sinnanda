@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.b2.Sinnanda.vo.HostQna;
+import com.b2.Sinnanda.vo.HostQnaComment;
 import com.b2.Sinnanda.vo.Qna;
 
 @Mapper
@@ -15,11 +16,11 @@ public interface HostQnaMapper {
 	
 	// [이승준] (목록)"답변없는 사업자문의 목록" 조회
 		// map : userLevel ,hostNo, hostQnaCategory, currentPage, rowPerPage
-	List<HostQna> selectNoCommentedHostQnaList(Map<String, Object> map);
+	List<HostQna> selectNotCommentedHostQnaList(Map<String, Object> map);
 	
 	// [이승준] (개수)"답변없는 사업자문의 개수" 조회
 		// map : userLevel, hostNo, hostQnaCategory
-	int selectNoCommentedHostQnaTotalCount(Map<String, Object> map);
+	int selectNotCommentedHostQnaTotalCount(Map<String, Object> map);
 	
 	// [이승준] (목록)"사업자문의 목록" 조회
 		// map : userLevel, hostNo, hostQnaCategory, currentPage, rowPerPage
@@ -39,6 +40,8 @@ public interface HostQnaMapper {
 	// [이승준] "사업자문의" 삽입
 	void insertHostQna(HostQna HostQna);
 	
+	// [이승준] "사업자문의 답변" 삽입
+	void insertHostQnaComment(HostQnaComment hostQnaComment);
 	
 	
 /* 3. 수정 */

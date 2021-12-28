@@ -64,7 +64,7 @@ public class AdminController {
       User loginUser = (User)session.getAttribute("loginUser");
       
       //이슈 로그인된값이 같지 않으면 index 페이지로 리턴
-      Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNoCommentedHostQnaList(loginUser.getUserLevel(), 0, null, 0, 10);
+      Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNotCommentedHostQnaList(loginUser.getUserLevel(), 0, null, 0, 10);
       
       
       //Admin admin =  adminService.getAdminOne(loginUser.getAdmin().getAdminNo()); 

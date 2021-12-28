@@ -29,50 +29,52 @@ public class QnaService {
 	
 	// [이승준] "회원문의 목록" 조회
 	public Map<String, Object> getQnaList(String qnaCategory, int beginRow, int rowPerPage){
+		dl.p("QnaService", "getQnaList()", "시작");
+		dl.p("getQnaList()", "qnaCategory", qnaCategory);
+		dl.p("getQnaList()", "beginRow", beginRow);
+		dl.p("getQnaList()", "rowPerPage", rowPerPage);
 		
-		// '전체' 조회인 경우 qnaCategory를 null 값으로 변경하여 쿼리에서 where절이 실행되지 않도록 한다
+		// 0. "전체"의 카테고리를 조회하는 경우, null 값으로 변경 -> 쿼리에서 WHERE절이 실행되지 않도록 한다 (by 김영후)
 		if(qnaCategory == null || qnaCategory.equals("전체")) {
 			qnaCategory = null;
 		}
 		
-		log.debug("[Debug] \"START\" QnaService.getQnaList()");
-		log.debug(" ├[param] qnaCategory : "+qnaCategory);
-		log.debug(" ├[param] beginRow : "+beginRow);
-		log.debug(" ├[param] rowPerPage : "+rowPerPage);
+		// 1. "회원문의 목록"을 위한 데이터 가공
+		Map<String, Object> paraQnaListMap = new HashMap<>();
+			paraQnaListMap.put("qnaCategory", qnaCategory);
+			paraQnaListMap.put("beginRow", beginRow);
+			paraQnaListMap.put("rowPerPage", rowPerPage);
 		
-		// 1. 매개변수 가공 (paraMap <-- qnaCategory, currentPage, rowPerPage)
-		Map<String, Object> paraMap = new HashMap<>();
+		// 2. "회원문의 목록" 조회 쿼리 실행
+		List<Qna> qnaList = qnaMapper.selectQnaList(paraQnaListMap);
 		
-		paraMap.put("qnaCategory", qnaCategory);
-		paraMap.put("beginRow", beginRow);
-		paraMap.put("rowPerPage", rowPerPage);
-		
-		// 2. qna 리스트 조회
-		List<Qna> qnaList = qnaMapper.selectQnaList(paraMap);
-		
-		// 3. 리턴 값 가공 (return : qna & lastPage)
-		Map<String, Object> returnMap = new HashMap<>();
-		
-		int lastPage = 0;
+		// 3. "회원문의 개수" 조회
 		int totalCount = qnaMapper.selectQnaTotalCount(qnaCategory);
-		log.debug(" ├[param] totalCount : "+totalCount);
+		dl.p("getQnaList()", "totalCount", totalCount);
 		
-		lastPage = totalCount / rowPerPage;
-		if(totalCount % rowPerPage !=0) {
+		// 4. 해당 목록의 "끝 페이지 번호" 가공
+		int lastPage = 0;
+		lastPage = totalCount / rowPerPage;	// 총 게시글의 개수와 한 페이지에 보여줄 개수를 나눠주면 -> 페이지의 개수
+		// 4-1. 나머지 페이지가 있는 경우
+		if(totalCount % rowPerPage != 0) {	// 조건 : 총 페이지(101), 페이지당 출력 개수(10) -> 총 11 페이지가 필요하게 됨으로
 			lastPage += 1;
 		}
+		dl.p("getQnaList()", "lastPage", lastPage);
 		
-		log.debug(" ├[param] lastPage : "+lastPage);
-		returnMap.put("qnaList", qnaList);
-		returnMap.put("lastPage", lastPage);
+		// 5. 리턴할 모델 가공
+		Map<String, Object> returnMap = new HashMap<>();
+			returnMap.put("qnaList", qnaList);
+			returnMap.put("totalCount", totalCount);
+			returnMap.put("lastPage", lastPage);
 		
+		// 6. 리턴 : "회원문의 목록", "회원문의 개수", "마지막 페이지"
 		return returnMap;
 	}
 	
 	// [이승준] "회원문의 상세" 조회
 	public Qna getQnaOne(int qnaNo) {
-		log.debug("[Debug] \"START\" QnaService.getQnaOne()");
-		log.debug(" ├[param] qnaNo : "+qnaNo);
+		dl.p("QnaService", "getQnaOne()", "시작");
+		dl.p("getQnaOne()", "qnaNo", qnaNo);
 		
 		return qnaMapper.selectQnaOne(qnaNo);
 	}
@@ -83,23 +85,24 @@ public class QnaService {
 	
 	// [이승준] "회원문의" 삽입
 	public void addQna(Qna qna) {
-		log.debug("[Debug] \"START\" QnaService.addQna()");
-		log.debug(" ├[param] qna : "+qna.toString());
+		dl.p("QnaService", "addQna()", "시작");
+		dl.p("addQna()", "qna", qna.toString());
 		
-		// 비밀글 설정을 하지 않은 경우, 일반문의로 취급
+		// 0. '비밀문의'로 설정되지 않은 경우 -> '일반문의'로 취급
 		if(qna.getQnaSecret() == null || qna.getQnaSecret().equals("off")) {
 			qna.setQnaSecret("일반문의");
 		} else {
 			qna.setQnaSecret("비밀문의");
 		}
 		
+		// 1. "회원문의" 삽입
 		qnaMapper.insertQna(qna);
 	}
 	
 	// [이승준] "회원문의 답변" 삽입
 	public void addQnaComment(QnaComment qnaComment) {
-		log.debug("[Debug] \"START\" QnaService.addQnaComment()");
-		log.debug(" ├[param] qnaComment : "+qnaComment.toString());
+		dl.p("QnaService", "addQnaComment()", "시작");
+		dl.p("addQnaComment()", "qnaComment", qnaComment.toString());
 		
 		qnaMapper.insertQnaComment(qnaComment);
 	}
@@ -110,16 +113,17 @@ public class QnaService {
 	
 	// [이승준] "회원문의" 수정
 	public void modifyQna(Qna qna) {
-		log.debug("[Debug] \"START\" QnaService.modifyQna()");
-		log.debug(" ├[param] qna : "+qna.toString());
+		dl.p("QnaService", "modifyQna()", "시작");
+		dl.p("modifyQna()", "qna", qna.toString());
 		
-		// 비밀글 설정을 하지 않은 경우, 일반문의로 취급
+		// 0. '비밀문의'로 설정되지 않은 경우 -> '일반문의'로 취급
 		if(qna.getQnaSecret() == null || qna.getQnaSecret().equals("off")) {
 			qna.setQnaSecret("일반문의");
 		} else {
 			qna.setQnaSecret("비밀문의");
 		}
 		
+		// 1. "회원문의" 수정
 		qnaMapper.updateQna(qna);
 	}
 	
@@ -129,22 +133,27 @@ public class QnaService {
 	
 	// [이승준] "회원문의 답변" 삭제
 	public void removeQnaComment(int qnaNo) {
-		log.debug("[Debug] \"START\" QnaService.removeQnaComment()");
-		log.debug(" ├[param] qnaNo : "+qnaNo);
+		dl.p("QnaService", "removeQnaComment()", "시작");
+		dl.p("removeQnaComment()", "qnaNo", qnaNo);
 		
 		qnaMapper.deleteQnaComment(qnaNo);
 	}
 	
 	// [이승준] "회원문의" 삭제
 	public void removeQna(int qnaNo) {
-		log.debug("[Debug] \"START\" QnaService.removeQna()");
-		log.debug(" ├[param] qnaNo : "+qnaNo);
+		dl.p("QnaService", "removeQna()", "시작");
+		dl.p("removeQna()", "qnaNo", qnaNo);
 		
+		// 1. 답변의 유무를 위해, "회원문의 상세" 조회
 		Qna qna = qnaMapper.selectQnaOne(qnaNo);
 		
+		// 2. "회원문의"에 "답변"이 있는 경우
 		if(qna.getQnaComments() != null) {
+			// 2-1. "회원문의 답변" 삭제
 			qnaMapper.deleteQnaComment(qnaNo);
 		}
+		
+		// 3. "회원문의" 삭제
 		qnaMapper.deleteQna(qnaNo);
 	}
 	
