@@ -23,6 +23,11 @@ public interface QnaMapper {
 	// [이승준] (상세)"회원문의 상세" 조회
 	Qna selectQnaOne(int qnaNo);
 	
+	//[윤경환] 관리자 답변이 없는 회원 Qna
+	List<Qna> selectAdminQnaList(Map<String,Object> map);
+	
+	//[윤경환] 관리자 답변이 없는 회원 Qna 수
+	int selectAdminQnaTotalCount();
 	
 	
 /* 2. 삽입 */

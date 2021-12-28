@@ -48,7 +48,7 @@
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<h3 style="margin-top: 10px;"><strong>신규 컴플레인</strong></h3>
+									<h3 style="margin-top: 10px;"><strong>공지 사항</strong></h3>
 									
 									<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
 										<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${complainListTotalCount}</strong></span>
@@ -94,17 +94,52 @@
 					</div>
 					
 					<!-- [이승준] 메인 페이지 - 신규 리뷰 -->
-					<div class="row">
+					<<div class="row">
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<h3 style="margin-top: 10px;"><strong>회원 Q&A</strong></h3>
+									<h3 style="margin-top: 10px;"><strong>답변 안된 회원 Q&A</strong></h3>
 									
-									<div class="container">
-										<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
-							    			<tr><th style="text-align:center; font-size: 20px;">내용 없음</th></tr>
-										</table>
+									<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+										<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${totalCount}</strong></span>
+										<a href="/admin/hostQnaList" style="float: right; ">목록 보기</a>
 									</div>
+									
+								    <div class="container">
+								    	<c:if test="${empty adminQnaList}">
+								    		<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
+								    			<tr><th style="text-align:center; font-size: 20px;">내용 없음</th></tr>
+											</table>
+								    	</c:if>
+								    	
+								    	<c:if test="${!empty adminQnaList}">
+								    		<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
+											<tr style="text-align:center">
+												<th width="5%">번호</th>
+												<th width="40%">제목</th>
+												<th width="10%">문의유형</th>
+												<th width="10%">비밀유지</th>
+												<th width="10%">작성자</th>
+												<th width="10%">작성일</th>
+											</tr>
+											<c:forEach items="${adminQnaList}" var="adminQna">
+												<tr>
+													<td style="text-align:center">${adminQna.qnaNo}</td>
+													<td>
+														<a href="/admin/memberQnaLit?qnaNo=${adminQna.qnaNo}">${adminQna.qnaTitle}</a>
+													</td>
+													<td style="text-align:center">${adminQna.qnaCategory}</td>
+													<td style="text-align:center">${adminQna.qnaSecret}</td>
+													<td style="text-align:center">${adminQna.memberName}</td>
+													<td style="text-align:center">
+														<fmt:parseDate value="${adminQna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<fmt:formatDate value="${createDate}" pattern="yy/MM/dd HH:mm"/>
+													</td>
+												</tr>
+											</c:forEach>
+											</table>
+								    	</c:if>
+								    </div>
 								</div>
 							</div>
 						</div>
@@ -142,7 +177,7 @@
 												<tr>
 													<td style="text-align:center">${hostQna.hostQnaNo}</td>
 													<td>
-														<a href="/host/myHostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
+														<a href="/admin/hostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
 													</td>
 													<td style="text-align:center">${hostQna.hostQnaCategory}</td>
 													<td style="text-align:center">${hostQna.hostName}</td>

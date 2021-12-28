@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.mapper.AdminMapper;
+import com.b2.Sinnanda.mapper.QnaMapper;
 import com.b2.Sinnanda.service.AdminService;
 import com.b2.Sinnanda.service.HostQnaService;
+import com.b2.Sinnanda.service.QnaService;
 import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.AdminSales;
 import com.b2.Sinnanda.vo.Member;
@@ -35,6 +37,7 @@ public class AdminController {
    @Autowired AdminService adminService;
    @Autowired HostQnaService hostQnaService;
    @Autowired AdminMapper adminMapper;
+   @Autowired QnaService qnaService; 
    
    @Autowired DL dl;
    
@@ -58,14 +61,17 @@ public class AdminController {
    
    //[윤경환] 관리자 페이지
    @GetMapping("/admin/adminPage")
-   public String getAdminPage(HttpSession session, Model model) {
+   public String getAdminPage(HttpSession session, Model model, 
+		   @RequestParam(defaultValue = "1") int currentPage) {
 	   
       // 로그인 세션 조회
       User loginUser = (User)session.getAttribute("loginUser");
       
       //이슈 로그인된값이 같지 않으면 index 페이지로 리턴
       Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNotCommentedHostQnaList(loginUser.getUserLevel(), 0, null, 0, 10);
+      Map<String, Object> map = qnaService.getAdminQnaList(currentPage, ROW_PER_PAGE);
       
+      dl.p("getAdminPage", "map", map);
       
       //Admin admin =  adminService.getAdminOne(loginUser.getAdmin().getAdminNo()); 
       
@@ -73,6 +79,10 @@ public class AdminController {
       model.addAttribute("loginUser", loginUser);	// 로그인된 세션 정보
       model.addAttribute("hostQnaList", noCommentedHostQnaMap.get("hostQnaList"));	// 답변없는 사업자문의
       model.addAttribute("hostQnaListTotalCount", noCommentedHostQnaMap.get("totalCount"));	// 다변없는 사업자문의 개수
+      model.addAttribute("adminQnaList",map.get("adminQnaList"));
+      model.addAttribute("totalCount",map.get("totalCount"));
+      model.addAttribute("ROW_PER_PAGE",ROW_PER_PAGE);
+       
       // QnA 목록 정보
       return "admin/adminPage";
    }

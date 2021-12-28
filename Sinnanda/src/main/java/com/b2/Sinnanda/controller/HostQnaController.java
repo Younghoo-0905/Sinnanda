@@ -140,7 +140,30 @@ public class HostQnaController {
 		return "host/myHostQnaOne";
 	}
 	
-	
+	//[윤경환] 관리자 답변이 필요한 Qna
+	@GetMapping("/admin/hostQnaOne")
+	public String hostAdminQnaOne(HttpServletRequest request, Model model, int hostQnaNo) {
+				// Host QnA 상세 조회
+				HostQna hostQna = hostQnaService.getHostQnaOne(hostQnaNo);
+				
+				// 로그인 세션 조회
+				HttpSession session = request.getSession();
+				User loginUser = (User)session.getAttribute("loginUser");
+				// 로그인 세션 디버깅
+				if(loginUser != null) {
+					log.debug(" ├[param] loginUser : "+loginUser.toString());
+				} else {
+					log.debug(" ├[param] loginUser : Null");
+				}
+				
+				/* 모델 추가 */
+				model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+				model.addAttribute("hostQna", hostQna);	// 선택된 QnA 상세 정보 */
+		
+		
+		return "admin/hostQnaOne";
+		
+	}
 	
 /* 2. 삽입 */
 	
@@ -174,7 +197,7 @@ public class HostQnaController {
 		return "redirect:/host/myHostQnaOne?hostQnaNo="+hostQna.getHostQnaNo();
 	}
 	
-	//	사업자문의 답변 삽입
+	//[윤경환] 사업자문의 답변 삽입
 	@PostMapping("/admin/addHostQnaComment")
 	public String addHostQnaComment(HostQnaComment hostQnaComment) {
 		dl.p("HostQnaController", "addHostQnaComment()", "시작");

@@ -115,6 +115,61 @@
 		WHERE q.qna_no = #{qnaNo}
 	</select>
 
+	<resultMap type="com.b2.Sinnanda.vo.Qna" id="AdminQnaListMap">
+		<id column="qna_no" property="qnaNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="member_name" property="memberName"/>
+		<result column="qna_category" property="qnaCategory"/>
+		<result column="qna_title" property="qnaTitle"/>
+		<result column="qna_secret" property="qnaSecret"/>
+		<result column="qna_content" property="qnaContent"/>
+		<result column="create_date" property="createDate"/>
+		
+		
+		<collection property="qnaComments" ofType="com.b2.Sinnanda.vo.QnaComment">
+			<result column="admin_no" property="adminNo"/>
+			<result column="qna_comment_content" property="qnaCommentContent"/>
+		</collection>
+	</resultMap>
+
+
+
+	
+	<!-- [윤경환] 관리자 답변이 없는 회원 Qna-->
+	<select id="selectAdminQnaList" parameterType="Map" resultMap="AdminQnaListMap">
+		SELECT 
+			q.qna_no,
+			q.member_no,
+			m.member_name
+			q.qna_category,
+			q.qna_title,
+			q.qna_secret,
+			q.qna_content,
+			q.qna_secret,
+			q.create_date
+		FROM qna AS q
+		LEFT join qna_comment AS qn
+			ON q.qna_no = qn.qna_no 
+		LEFT JOIN member m 
+			ON q.member_no = m.member_no
+		WHERE EXISTS(SELECT qn.qna_comment_content FROM qna_comment) 
+			AND qna_comment_content IS null
+		ORDER BY update_date DESC 
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- [윤경환] 관리자 답변이 없는 회원 Qna 수  -->	
+	<select id="selectAdminQnaTotalCount" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM qna AS q
+		LEFT join qna_comment AS qn
+		ON q.qna_no = qn.qna_no 
+		WHERE EXISTS(SELECT qn.qna_comment_content FROM qna_comment) 
+			AND qna_comment_content IS null
+		ORDER BY update_date DESC 
+	</select>
+
 
 <!-- 2. 삽입 -->
  

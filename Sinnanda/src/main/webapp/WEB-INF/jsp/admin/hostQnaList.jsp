@@ -85,7 +85,7 @@
 														<c:if test="${hostQna.hostQnaComments.adminNo != null}">
 															<span style="color: #2828CD; font-weight: bold;">[답변 완료]</span>
 														</c:if>
-														<a href="/host/myHostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
+														<a href="/admin/hostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
 													</td>
 													<td style="text-align:center">${hostQna.hostQnaCategory}</td>
 													<td style="text-align:center">${hostQna.hostName}</td>
@@ -130,7 +130,7 @@
 															</c:if>
 														</c:forEach>
 														
-														<!-- '다음' 버튼 -->
+															<!-- '다음' 버튼 -->
 														<c:if test="${lastPage >= pageNo + 10}">
 															<li><a href="hostQnaList?currentPage=${pageNo+10}&hostQnaCategory=${hostQnaCategory}">&gt;</a></li>
 														</c:if>

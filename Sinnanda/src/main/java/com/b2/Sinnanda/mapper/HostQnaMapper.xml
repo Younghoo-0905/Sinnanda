@@ -274,7 +274,7 @@
 
 		<!-- [이승준] "사업자문의 답변" 삽입 -->
 	<insert id="insertHostQnaComment" parameterType="com.b2.Sinnanda.vo.HostQnaComment">
-		INSERT INTO host_qna(
+		INSERT INTO host_qna_comment(
 			host_qna_no, 
 			admin_no, 
 			host_qna_comment_content, 

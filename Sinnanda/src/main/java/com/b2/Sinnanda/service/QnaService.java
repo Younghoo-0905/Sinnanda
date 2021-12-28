@@ -78,6 +78,26 @@ public class QnaService {
 		
 		return qnaMapper.selectQnaOne(qnaNo);
 	}
+	//[윤경환] 관리자 답변이 없는 화원 QNA
+	public Map<String,Object> getAdminQnaList(int beginRow, int rowPerPage){
+		Map<String, Object> paraQnaListMap = new HashMap<>();
+		paraQnaListMap.put("beginRow", beginRow);
+		paraQnaListMap.put("rowPerPage", rowPerPage);
+		
+		List<Qna> adminQnaList = qnaMapper.selectQnaList(paraQnaListMap);
+		dl.p("getAdminQnaList", "AdminQnaList", adminQnaList);
+		
+		int totalCount = qnaMapper.selectAdminQnaTotalCount();
+		dl.p("getAdminQnaList()", "totalCount", totalCount);
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		returnMap.put("adminQnaList", adminQnaList);
+		returnMap.put("totalCount", totalCount);
+		
+		
+		return returnMap;
+		
+	}
 	
 	
 	
