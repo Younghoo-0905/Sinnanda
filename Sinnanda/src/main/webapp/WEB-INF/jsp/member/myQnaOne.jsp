@@ -9,8 +9,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- plugins:css -->
-		<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/animate.css">
+
 	
 	<link rel="stylesheet" href="/skydash/vendors/feather/feather.css">
 	<link rel="stylesheet" href="/skydash/vendors/ti-icons/css/themify-icons.css">
@@ -65,7 +64,7 @@
 				</c:if>
 			</div>
 			
-			<table class="table table-board" style="width: 100%;">
+			<table class="table table-myPage" style="width: 100%;">
 				<tr>
 					<th style="width: 100px; font-size: 20px; text-align:center;">제목</th>
 					<td colspan="3" style="font-size: 20px;">
@@ -83,19 +82,22 @@
 				</tr>
 				<tr>
 					<th style="text-align:center;">내용</th>
-					<td colspan="3">${qna.qnaContent}</td>
+					<td colspan="3"><textarea class="form-control" cols="150" rows="5"  readonly>${qna.qnaContent}</textarea></td>
 				</tr>
 			</table>
 		</div>
 	</section>
 	<!-- 본문 My QnA One 부분 - END -->
 	
+	<!-- 구분선 -->
+	<hr class="myPage-line">
+	
 	<!-- 본문 My QnA One 답변 부분 - START -->
 	<section class="ftco-section services-section bg-light">
 		<div class="container">
 			<h2><strong>관리자 답변</strong></h2>
 			
-			<table class="table table-board" style="width: 100%;">
+			<table class="table table-myPage" style="width: 100%;">
 				<!-- 비회원 or 회원, 답변이 없을 때 -->
 				<c:if test="${qna.qnaComments == null}">
 					<th style="text-align:center; font-size: 30px;">답변 없음</th>
@@ -133,7 +135,7 @@
 						</tr>
 						<tr>
 							<td style="text-align:center;">${qna.adminName}</td>
-							<td>${qna.qnaComments.qnaCommentContent}</td>
+							<td><textarea class="form-control" cols="50" rows="7"  readonly>${qna.qnaComments.qnaCommentContent}</textarea></td>
 							<td style="text-align:center;">${qna.qnaComments.commentDate}</td>
 
 							<!-- 관리자, 답변이 있을 때, 삭제 기능 사용가능 -->

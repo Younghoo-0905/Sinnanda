@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -9,8 +9,6 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- plugins:css -->
-		<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/animate.css">
 	
 	<link rel="stylesheet" href="/skydash/vendors/feather/feather.css">
 	<link rel="stylesheet" href="/skydash/vendors/ti-icons/css/themify-icons.css">
@@ -26,7 +24,7 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title>예약내역 상세보기 페이지</title>
+	<title> 페이지</title>
 </head>
 <body>
 	<div class="container-scroller">
@@ -48,57 +46,82 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>예약내역 상세보기</h2>
+						<h2>내가 작성한 컴플레인 상세보기</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
 									<table class="table table-board">
 										<tr>
-											<td>예약번호</td>
-											<td>${reserve.reserveNo}</td>
+											<td>컴플레인 번호</td>
+											<td>${complain.complainNo}</td>
 										</tr>
 										<tr>
-											<td>예약자</td>
-											<td>${reserve.memberName}</td>
+											<td>작성자</td>
+											<td>${complain.memberName}</td>
 										</tr>
 										<tr>
-											<td>숙소명</td>
-											<td>${reserve.accomName }</td>
+											<td>숙소이름</td>
+											<td>${complain.accomName}</td>
 										</tr>
 										<tr>
 											<td>객실이름</td>
-											<td>${reserve.roomName }</td>
+											<td>${complain.roomName}</td>
 										</tr>
 										<tr>
-											<td>이용여부</td>
-											<td>${reserve.reserveUse }</td>
+											<td>컴플레인 제목</td>
+											<td>${complain.complainTitle}</td>
 										</tr>
 										<tr>
-											<td>가격</td>
-											<td><fmt:formatNumber value="${reserve.paymentPrice }" pattern="#,###" />원</td>
+											<td>컴플레인 내용</td>
+											<td colspan="3"><textarea  cols="150" rows="5"  readonly>${complain.complainContent}</textarea></td>
 										</tr>
 										<tr>
-											<td>결제방법</td>
-											<td>${reserve.paymentMethod }</td>
+											<td>컴플레인 종류</td>
+											<td>${complain.complainCategory}</td>
 										</tr>
 										<tr>
-											<td>예약한 날짜</td>
-											<td>${reserve.reserveDate }</td>
-										</tr>
-										<tr>
-											<td>체크인</td>
-											<td>${reserve.reserveCheckIn }</td>
-										</tr>
-										<tr>
-											<td>체크아웃</td>
-											<td>${reserve.reserveCheckOut }</td>
-										</tr>
-										
+											<td>작성일</td>
+											<td>${complain.createDate}</td>
+										</tr>								
 									</table>
-								</div>
+									
+									<!-- 구분선 -->
+									<hr class="myPage-line">
+									
+									<!-- 본문 My QnA One 답변 부분 - START -->
+					<section class="ftco-section services-section bg-light">
+					<div >
+						<h2>사업자 답변</h2>
+						
+						<table class="table table-myPage" style="width: 100%;">
+							<!-- 비회원 or 회원, 답변이 없을 때 -->
+							<c:if test="${complain.complainCommentContent == null}">
+								<th style="text-align:center; font-size: 30px;">답변 없음</th>
+							</c:if>
+							
+							<!-- 공통, 답변이 있을 때 -->
+							<c:if test="${complain.complainCommentContent != null}">
+									<tr>
+										<th style="width: 100px; text-align:center;">답변자</th>
+										<th style="text-align:center;">답변 내용</th>
+										<th style="width: 150px; text-align:center;">작성일</th>								
+									</tr>
+									<tr>
+										<td style="text-align:center;">${complain.hostName}</td>
+										<td style="text-align:center;"><textarea class="form-control" cols="50" rows="3"  readonly>${complain.complainCommentContent}</textarea></td>
+										<td style="text-align:center;">${complain.commentDate}</td>
+									</tr>
+							</c:if>
+						</table>
+					</div>
+				</section>
+				<!-- 본문 QnA One 답변 부분 - END -->
+								
+								</div>				
 							</div>
 						</div>
 					</div>
+					
 				</div>
 			</div>
 		</div>

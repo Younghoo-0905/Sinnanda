@@ -228,6 +228,7 @@
 	<resultMap type="com.b2.Sinnanda.vo.Reserve" id="MyReserveMap">
 		<id column="reserve_no" property="reserveNo"/>
 		<result column="member_no" property="memberNo"/>
+		<result column="room_no" property="roomNo"/>
 		<result column="member_name" property="memberName"/>
 		<result column="accom_name" property="accomName"/>
 		<result column="room_name" property="roomName"/>
@@ -289,6 +290,89 @@
 				reserve_use = #{reserveUse}
 			</where>
 		</if>
+	</select>
+	
+	<!-- [유동진] 컴플레인Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Complain" id="myComplainMap">
+		<id column="complain_no" property="complainNo"/>
+		<result column="payment_no" property="paymentNo"/>
+		<result column="complain_category" property="complainCategory"/>
+		<result column="complain_title" property="complainTitle"/>
+		<result column="complain_content" property="complainContent"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="member_name" property="memberName"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="room_name" property="roomName"/>
+		<result column="host_name" property="hostName"/>
+		<result column="comment_date" property="commentDate"/>
+		<result column="complain_comment_content" property="complainCommentContent"/>
+	</resultMap>
+	
+	<!-- [유동진] 내가 작성한 컴플레인 목록 조회 -->
+	<select id="selectMyComplainList" parameterType="Map" resultMap="myComplainMap">
+		SELECT 
+			c.complain_no,
+			c.complain_category,
+			c.complain_title,
+			c.create_date,
+			m.member_name,
+			a.accom_name
+		FROM complain c
+		JOIN payment p ON c.payment_no = p.payment_no 
+		JOIN reserve r ON p.reserve_no = r.reserve_no
+		JOIN room ro ON ro.room_no = r.room_no
+		JOIN accom a ON a.accom_no = ro.accom_no
+		JOIN member m ON r.member_no = m.member_no
+		<if test="complainCategory != null">
+         <where>
+            m.member_no = #{memberNo} AND complain_category = #{complainCategory}
+         </where>
+      </if>
+      <if test="complainCategory == null">
+         <where>
+            m.member_no = #{memberNo}
+         </where>
+      </if>
+	</select>
+	
+	<!-- [유동진] 내가 작성한 컴플레인 갯수 -->
+	<select id="selectMyComplainTotalCount" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM complain
+		<if test="complainCategory != null">
+			<where>
+				complain_category = #{complainCategory}
+			</where>
+		</if>
+	</select>
+	
+	<!-- [유동진] 내가 작성한 컴플레인 상세보기 -->
+	<select id="selectMyComplainOne" parameterType="Map" resultMap="myComplainMap">
+		SELECT 
+			c.complain_no, 
+			p.payment_no, 
+			c.complain_category, 
+			c.complain_title,
+			c.complain_content, 
+			c.create_date, 
+			c.update_date, 
+			m.member_name, 
+			h.host_name,
+			a.accom_name, 
+			ro.room_name, 
+			cc.complain_comment_content,
+			cc.comment_date
+		FROM complain c
+		LEFT JOIN payment p ON c.payment_no = p.payment_no 
+		LEFT JOIN reserve r ON p.reserve_no = r.reserve_no
+		LEFT JOIN room ro ON ro.room_no = r.room_no
+		LEFT JOIN accom a ON a.accom_no = ro.accom_no
+		LEFT JOIN member m ON r.member_no = m.member_no
+		LEFT JOIN host h ON a.host_no = h.host_no
+		LEFT JOIN complain_comment cc ON cc.complain_no = c.complain_no	
+		WHERE c.complain_no = #{complainNo}
 	</select>
 	
 	<!-- [김영후] 회원 가입 -->

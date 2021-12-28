@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.mapper.MemberMapper;
 import com.b2.Sinnanda.vo.Admin;
+import com.b2.Sinnanda.vo.Complain;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
 import com.b2.Sinnanda.vo.Qna;
@@ -184,6 +185,53 @@ public class MemberService {
 		dl.p("MemberService", "getMyReserveOne()", "reserveNo : "+reserveNo);
 		
 		return memberMapper.selectMyReserveOne(reserveNo);
+	}
+	
+	// [유동진] 내가 작성한 컴플레인 목록 조회
+	public Map<String, Object> getMyComplainList(int memberNo, String complainCategory, int currentPage, int rowPerPage){
+		dl.p("MemberService", "getMyComplainList()", "내가 작성한 컴플레인 시작");
+		dl.p("MemberService", "getMyComplainList()", "memberNo : "+memberNo);
+		dl.p("MemberService", "getMyComplainList()", "complainCategory : "+complainCategory);
+		dl.p("MemberService", "getMyComplainList()", "currentPage : "+currentPage);
+		dl.p("MemberService", "getMyComplainList()", "rowPerPage : "+rowPerPage);
+		
+		// 1. 매개변수 가공 (paraMap <-- complainCategory, currentPage, rowPerPage)
+		Map<String, Object> paraMap = new HashMap<>();
+		int beginRow = (currentPage-1) * rowPerPage;
+		
+		paraMap.put("memberNo", memberNo);
+		paraMap.put("complainCategory", complainCategory);
+		paraMap.put("beginRow", beginRow);
+		paraMap.put("rowPerPage", rowPerPage);
+		
+		// 2. qna 리스트 조회
+		List<Complain> myComplainList = memberMapper.selectMyComplainList(paraMap);
+		dl.p("MemberService", "getMyQnaListByQnaCategory()", "myComplainList : "+myComplainList.toString());
+		// 3. 리턴 값 가공 (return : complain & lastPage)
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		int lastPage = 0;
+		int totalCount = memberMapper.selectMyComplainTotalCount(complainCategory);
+		dl.p("MemberService", "getMyComplainList()", "totalCount : "+totalCount);
+		
+		lastPage = totalCount / rowPerPage;
+		if(totalCount % rowPerPage !=0) {
+			lastPage += 1;
+		}
+		
+		dl.p("MemberService", "getMyComplainList()", "lastPage : "+lastPage);
+		returnMap.put("myComplainList", myComplainList);
+		returnMap.put("lastPage", lastPage);
+		
+		return returnMap;
+	}
+	
+	// [유동진] 컴플레인 상세 조회
+	public Complain getMyComplainOne(int complainNo) {
+		dl.p("MemberService", "getMyComplainOne()", "컴플레인 상세보기");
+		dl.p("MemberService", "getMyComplainOne()", "complainNo : "+complainNo);
+		
+		return memberMapper.selectMyComplainOne(complainNo);
 	}
 
 	//	[김영후] 회원 이메일 인증

@@ -17,6 +17,7 @@ import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.service.CertifyEmailService;
 import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.vo.Admin;
+import com.b2.Sinnanda.vo.Complain;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
 import com.b2.Sinnanda.vo.Qna;
@@ -243,8 +244,8 @@ public class MemberController {
 		
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
-		model.addAttribute("reserveUse", map.get("reserveUse"));	// 선택된 reviewRecommend
-		model.addAttribute("myReserveList", map.get("myReserveList"));	// 리뷰 목록 정보
+		model.addAttribute("reserveUse", map.get("reserveUse"));	// 선택된 reserveUse
+		model.addAttribute("myReserveList", map.get("myReserveList"));	// 예약 목록 정보
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
 
@@ -282,7 +283,70 @@ public class MemberController {
 	
 	return "/member/myReserveOne";
 	}
+	
+	// [유동진] 내가 작성한 컴플레인 목록 조회
+	@GetMapping("/member/myComplainList")
+	public String myComplainList(HttpServletRequest request, Model model, 
+			@RequestParam(defaultValue = "1") int currentPage, 
+			@RequestParam(required = false) String complainCategory) {
+		dl.p("MemberController", "myComplainList()", "내가 작성한 컴플레인 목록 조회");
+		dl.p("MemberController", "myComplainList()", "currentPage : "+currentPage);
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			dl.p("MemberController", "myComplainList()", "loginUser : "+loginUser.toString());
+		} else {
+			dl.p("MemberController", "myComplainList()", "loginUser : Null");
+			return "redirect:/index";
+		}
 
+		// 컴플레인 목록 조회
+		Map<String, Object> map = memberService.getMyComplainList(loginUser.getMember().getMemberNo(), complainCategory, currentPage, ROW_PER_PAGE);
+		
+		/* 모델 추가 */
+		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+		model.addAttribute("complainCategory", complainCategory);	// 선택된 컴플레인 카테고리
+		model.addAttribute("myComplainList", map.get("myComplainList"));	// 컴플레인 목록 정보
+		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
+		model.addAttribute("currentPage", currentPage);	// 현재 페이지
+		return "/member/myComplainList";
+	}
+	
+	// [유동진] 컴플레인 상세조회
+	@GetMapping("/member/myComplainOne")
+	public String myComplainOne(HttpServletRequest request, Model model, int complainNo) {
+		dl.p("memberController","myComplainOne()", "컴플레인 상세조회");
+		dl.p("memberController ","myComplainOne()","complainNo : " + complainNo);
+		
+		// 컴플레인 상세 조회
+		Complain complain = memberService.getMyComplainOne(complainNo);
+		
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			dl.p("memberController","myComplainOne()", "loginUser : "+loginUser.toString());
+		} else {
+			dl.p("memberController","myComplainOne()", "loginUser : Null");
+		}
+		
+		// 멤버인 경우, 작성자 No + 세션 No = 일치 X -> myReserveList
+		if(loginUser.getUserLevel() == 1) {
+			dl.p("memberController","myComplainOne()","memberNo : "+loginUser.getMember().getMemberNo());
+		}
+		dl.p("memberController","myComplainOne()", "myComplainOne 접근 허용");
+	
+		// 모델 추가
+		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
+		model.addAttribute(complain);	// 선택된 complain 상세 정보
+		
+		return "/member/myComplainOne";
+	}
 	
 	//	[김영후] 회원 가입
 	@GetMapping("/insertMember")

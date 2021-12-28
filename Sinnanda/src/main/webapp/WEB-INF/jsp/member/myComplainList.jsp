@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -26,7 +26,7 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title>예약내역 상세보기 페이지</title>
+	<title> 페이지</title>
 </head>
 <body>
 	<div class="container-scroller">
@@ -48,53 +48,49 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>예약내역 상세보기</h2>
+						<h2>${loginUser.member.memberName}님의 컴플레인 목록</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<table class="table table-board">
-										<tr>
-											<td>예약번호</td>
-											<td>${reserve.reserveNo}</td>
-										</tr>
-										<tr>
-											<td>예약자</td>
-											<td>${reserve.memberName}</td>
-										</tr>
-										<tr>
-											<td>숙소명</td>
-											<td>${reserve.accomName }</td>
-										</tr>
-										<tr>
-											<td>객실이름</td>
-											<td>${reserve.roomName }</td>
-										</tr>
-										<tr>
-											<td>이용여부</td>
-											<td>${reserve.reserveUse }</td>
-										</tr>
-										<tr>
-											<td>가격</td>
-											<td><fmt:formatNumber value="${reserve.paymentPrice }" pattern="#,###" />원</td>
-										</tr>
-										<tr>
-											<td>결제방법</td>
-											<td>${reserve.paymentMethod }</td>
-										</tr>
-										<tr>
-											<td>예약한 날짜</td>
-											<td>${reserve.reserveDate }</td>
-										</tr>
-										<tr>
-											<td>체크인</td>
-											<td>${reserve.reserveCheckIn }</td>
-										</tr>
-										<tr>
-											<td>체크아웃</td>
-											<td>${reserve.reserveCheckOut }</td>
-										</tr>
-										
-									</table>
+								<section class="ftco-section testimony-section bg-light">
+    	<div class="container3">
+		<h1>내가 작성한 컴플레인</h1>
+		<div>
+			<select id="complainCategory" name="complainCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
+				<option value="">선택</option>
+				<option value="/member/myComplainList">전체</option>
+				<option value="/member/myComplainList?complainCategory=예약일 변경">예약일 변경</option>
+				<option value="/member/myComplainList?complainCategory=예약 취소">예약 취소</option>
+				<option value="/member/myComplainList?complainCategory=이용 불편">이용 불편</option>
+				<option value="/member/myComplainList?complainCategory=기타">기타</option>
+			</select>
+		</div>
+	
+	<table class="table table-hover" style="width: 100%;">
+		<tr>
+			<th>컴플레인 번호</th>
+			<th>작성자</th>
+			<th>숙소이름</th>
+			<th>컴플레인 제목</th>
+			<th>컴플레인 종류</th>
+			<th>작성일</th>
+			<th>컴플레인 상세정보</th>
+		</tr>
+		
+		<c:forEach items="${myComplainList}" var="complain">
+			<tr>
+				<td>${complain.complainNo}</td>
+				<td>${loginUser.member.memberName}</td>
+				<td>${complain.accomName}</td>
+				<td>${complain.complainTitle}</td>
+				<td>${complain.complainCategory}</td>
+				<td>${complain.createDate}</td>
+				<td><a href="/member/myComplainOne?complainNo=${complain.complainNo}">상세보기</a></td>
+			</tr>
+		</c:forEach>
+	</table>
+	</div>
+	</section>
 								</div>
 							</div>
 						</div>

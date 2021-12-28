@@ -17,4 +17,8 @@ public class Complain {
 	private String roomName;
 	
 	private ComplainComment complainComment;
+	
+	private String complainCommentContent;
+	private String CommentDate;
+	private String hostName;
 }

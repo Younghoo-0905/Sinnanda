@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.b2.Sinnanda.vo.Admin;
+import com.b2.Sinnanda.vo.Complain;
 import com.b2.Sinnanda.vo.Member;
 import com.b2.Sinnanda.vo.MemberOut;
 import com.b2.Sinnanda.vo.Qna;
@@ -56,6 +57,15 @@ public interface MemberMapper {
 	
 	// [유동진] 예약내역 상세 조회
 	Reserve selectMyReserveOne(int reserveNo);
+	
+	// [유동진] 내가 작성한 컴플레인 목록 조회
+	List<Complain> selectMyComplainList(Map<String, Object> map);
+	
+	// [유동진] 내가 작성한 컴플레인 갯수 조회
+	int selectMyComplainTotalCount(String complainCategory);
+	
+	// [유동진] 내가 작성한 컴플레인 상세조회
+	Complain selectMyComplainOne(int complainNo);
 	
 	//	[김영후] 회원 가입
 	int insertMember(Member member);
