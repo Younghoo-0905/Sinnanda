@@ -2,53 +2,279 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.ComplainMapper">
 
+<!-- #인덱스 (작성자 : 김영후, 수정자 : 이승준)
+	1. 조회
+		(목록)selectNotCommentedComplainList
+		(개수)selectNotCommentedComplainTotalCount
+		(목록)selectComplainList
+		(개수)selectComplainTotalCount
+		(상세)selectComplainOne
 
-<!-- 공통(사업자/관리자) 쿼리 -->
+	2. 삽입
+		insertComplain
+		insertComplainComment
 
+	3. 수정
+		updateComplain
 
-<!--  -->
+	4. 삭제
+		deleteComplainComment
+		deleteComplain
+		
+ -->
 
+<!-- 1. 조회 -->
+	
+	<!-- [김영후] (목록)"답변없는 컴플레인 목록" resultMap -->
+	<resultMap type="com.b2.Sinnanda.vo.Complain" id="NotCommentedComplainListMap">
+		<id column="complain_no" property="complainNo"/>
+		<result column="payment_no" property="paymentNo"/>
+		<result column="complain_category" property="complainCategory"/>
+		<result column="complain_title" property="complainTitle"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="member_name" property="memberName"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="room_name" property="roomName"/>
+	</resultMap>
+	<!-- [김영후] (목록)"답변없는 컴플레인 목록" 조회 -->
+	<select id="selectNotCommentedComplainList" parameterType="Map" resultMap="NotCommentedComplainListMap">
+		SELECT 
+			c.complain_no, 
+			p.payment_no, 
+			c.complain_category, 
+			c.complain_title, 
+			c.create_date, 
+			c.update_date, 
+			m.member_name, 
+			a.accom_name, 
+			ro.room_name 
+		FROM complain c
+			LEFT JOIN payment p ON c.payment_no = p.payment_no 
+			LEFT JOIN reserve r ON p.reserve_no = r.reserve_no
+			LEFT JOIN room ro ON ro.room_no = r.room_no
+			LEFT JOIN accom a ON a.accom_no = ro.accom_no
+			LEFT JOIN member m ON r.member_no = m.member_no
+			LEFT JOIN complain_comment cc ON cc.complain_no = c.complain_no
+		<!-- [이승준] 사업자가 접근하는 경우 -->
+		<if test="userLevel == 2">
+			<if test="complainCategory != null">
+				<where>
+					a.host_no = #{hostNo} AND cc.complain_comment_content IS NULL AND c.complain_category = #{complainCategory}
+				</where>
+			</if>
+			<if test="complainCategory == null">
+				<where>
+					a.host_no = #{hostNo} AND cc.complain_comment_content IS NULL
+				</where>
+			</if>
+		</if>
+		<!-- [이승준] 관리자가 접근하는 경우 -->
+		<if test="userLevel == 3">
+			<if test="complainCategory != null">
+				<where>
+					cc.complain_comment_content IS NULL AND c.complain_category = #{complainCategory}
+				</where>
+			</if>
+			<if test="complainCategory == null">
+				<where>
+					cc.complain_comment_content IS NULL
+				</where>
+			</if>
+		</if>
+		ORDER BY c.create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
 
+	<!-- [이승준] (개수)"답변없는 컴플레인 개수" 조회 -->
+	<select id="selectNotCommentedComplainTotalCount" parameterType="Map" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM complain c
+			LEFT JOIN payment p ON c.payment_no = p.payment_no 
+			LEFT JOIN reserve r ON p.reserve_no = r.reserve_no
+			LEFT JOIN room ro ON ro.room_no = r.room_no
+			LEFT JOIN accom a ON a.accom_no = ro.accom_no
+			LEFT JOIN member m ON r.member_no = m.member_no
+			LEFT JOIN complain_comment cc ON cc.complain_no = c.complain_no
+		<!-- [이승준] 사업자가 접근하는 경우 -->
+		<if test="userLevel == 2">
+			<if test="complainCategory != null">
+				<where>
+					a.host_no = #{hostNo} AND cc.complain_comment_content IS NULL AND c.complain_category = #{complainCategory}
+				</where>
+			</if>
+			<if test="complainCategory == null">
+				<where>
+					a.host_no = #{hostNo} AND cc.complain_comment_content IS NULL
+				</where>
+			</if>
+		</if>
+		<!-- [이승준] 관리자가 접근하는 경우 -->
+		<if test="userLevel == 3">
+			<if test="complainCategory != null">
+				<where>
+					cc.complain_comment_content IS NULL AND c.complain_category = #{complainCategory}
+				</where>
+			</if>
+			<if test="complainCategory == null">
+				<where>
+					cc.complain_comment_content IS NULL
+				</where>
+			</if>
+		</if>
+	</select>
+	
+	
+	<!-- [김영후] (목록)"컴플레인 목록" 조회 resultMap -->
+	<resultMap type="com.b2.Sinnanda.vo.Complain" id="ComplainListMap">
+		<id column="complain_no" property="complainNo"/>
+		<result column="payment_no" property="paymentNo"/>
+		<result column="complain_category" property="complainCategory"/>
+		<result column="complain_title" property="complainTitle"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="member_name" property="memberName"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="room_name" property="roomName"/>
+				
+		<!-- [이승준] "컴플레인"에 대한 답변 유무 확인용 -->
+		<collection property="complainComment" ofType="com.b2.Sinnanda.vo.ComplainComment">
+			<result column="complain_comment_content" property="complainCommentContent"/>
+		</collection>
+	</resultMap>
+	<!-- [김영후] (목록)"컴플레인 목록" 조회 -->
+	<select id="selectComplainList" parameterType="Map" resultMap="ComplainListMap">
+		SELECT 
+			c.complain_no, 
+			p.payment_no, 
+			c.complain_category, 
+			c.complain_title, 
+			c.create_date, 
+			c.update_date, 
+			m.member_name, 
+			a.accom_name, 
+			ro.room_name, 
+			cc.complain_comment_content
+		FROM complain c
+			LEFT JOIN payment p ON c.payment_no = p.payment_no 
+			LEFT JOIN reserve r ON p.reserve_no = r.reserve_no
+			LEFT JOIN room ro ON ro.room_no = r.room_no
+			LEFT JOIN accom a ON a.accom_no = ro.accom_no
+			LEFT JOIN member m ON r.member_no = m.member_no
+			LEFT JOIN complain_comment cc ON cc.complain_no = c.complain_no	
+		<!-- 사업자가 접근하는 경우 -->
+		<if test="userLevel == 2">
+			<if test="complainCategory != null">
+				<where>
+					a.host_no = #{hostNo} AND c.complain_category = #{complainCategory}
+				</where>
+			</if>
+			<if test="complainCategory == null">
+				<where>
+					a.host_no = #{hostNo}
+				</where>
+			</if>
+		</if>
+		<!-- 관리자가 접근하는 경우 -->
+		<if test="userLevel == 3">
+			<if test="complainCategory != null">
+				<where>
+					c.complain_category = #{complainCategory}
+				</where>
+			</if>
+		</if>
+		ORDER BY c.create_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- [이승준] (개수)"컴플레인 개수" 조회-->
+	<select id="selectComplainTotalCount" parameterType="Map" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM complain c
+			LEFT JOIN payment p ON c.payment_no = p.payment_no 
+			LEFT JOIN reserve r ON p.reserve_no = r.reserve_no
+			LEFT JOIN room ro ON ro.room_no = r.room_no
+			LEFT JOIN accom a ON a.accom_no = ro.accom_no
+			LEFT JOIN member m ON r.member_no = m.member_no
+			LEFT JOIN complain_comment cc ON cc.complain_no = c.complain_no	
+		<!-- 사업자가 접근하는 경우 -->
+		<if test="userLevel == 2">
+			<if test="complainCategory != null">
+				<where>
+					a.host_no = #{hostNo} AND c.complain_category = #{complainCategory}
+				</where>
+			</if>
+			<if test="complainCategory == null">
+				<where>
+					a.host_no = #{hostNo}
+				</where>
+			</if>
+		</if>
+		<!-- 관리자가 접근하는 경우 -->
+		<if test="userLevel == 3">
+			<if test="complainCategory != null">
+				<where>
+					c.complain_category = #{complainCategory}
+				</where>
+			</if>
+		</if>
+	</select>
+	
+	
+	<!-- [김영후] (상세)"컴플레인 상세" 조회 resultMap -->
+	<resultMap type="com.b2.Sinnanda.vo.Complain" id="ComplainOneMap">
+		<id column="complain_no" property="complainNo"/>
+		<result column="payment_no" property="paymentNo"/>
+		<result column="complain_category" property="complainCategory"/>
+		<result column="complain_title" property="complainTitle"/>
+		<result column="complain_content" property="complainContent"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="member_name" property="memberName"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="room_name" property="roomName"/>
 
+		<collection property="complainComment" ofType="com.b2.Sinnanda.vo.ComplainComment">
+			<result column="complain_no" property="complainNo"/>
+			<result column="complain_comment_content" property="complainCommentContent"/>
+			<result column="comment_date" property="commentDate"/>
+			<result column="host_name" property="hostName"/>
+		</collection>
+	</resultMap>
+	<!-- [김영후] (상세)"컴플레인 상세" 조회 -->
+	<select id="selectComplainOne"  parameterType="Map" resultMap="ComplainOneMap">
+		SELECT 
+			c.complain_no, 
+			c.payment_no, 
+			c.complain_category, 
+			c.complain_title, 
+			c.complain_content, 
+			c.create_date, 
+			c.update_date, 
+			m.member_name, 
+			a.accom_name, 
+			ro.room_name, 
+			cc.complain_comment_content, 
+			cc.comment_date, 
+			h.host_name 
+		FROM complain c
+			LEFT JOIN complain_comment cc ON c.complain_no = cc.complain_no
+			LEFT JOIN payment p ON c.payment_no = p.payment_no 
+			LEFT JOIN reserve re ON p.reserve_no = re.reserve_no
+			LEFT JOIN room ro ON re.room_no = ro.room_no 
+			LEFT JOIN accom a ON ro.accom_no = a.accom_no
+			LEFT JOIN host h ON a.host_no = h.host_no		
+			LEFT JOIN member m ON re.member_no = m.member_no			
+		WHERE c.complain_no = #{complainNo}
+	</select>	
+	
+	
+	
+<!-- 2. 삽입 -->
 
-	<!-- [김영후] Complain 답변 삭제 -->
-	<delete id="deleteComplainComment" parameterType="com.b2.Sinnanda.vo.ComplainComment">
-		DELETE 
-		FROM complain_comment 
-		WHERE complain_no = #{complainNo}
-	</delete>
-
-	<!-- [김영후] Complain 답변 삽입 -->
-	<insert id="insertComplainComment" parameterType="com.b2.Sinnanda.vo.ComplainComment">
-		INSERT INTO complain_comment(
-			complain_no, 
-			complain_comment_content, 
-			comment_date
-		) VALUES(
-			#{complainNo}, 
-			#{complainCommentContent}, 
-			NOW()
-		)
-	</insert>
-
-	<!-- [김영후] Complain 삭제 -->
-	<delete id="deleteComplain" parameterType="com.b2.Sinnanda.vo.Complain">
-		DELETE 
-		FROM complain 
-		WHERE 
-			complain_no = #{complainNo} AND payment_no = #{paymentNo}
-	</delete>
-
-	<!-- [김영후] Complain 수정 -->
-	<update id="updateComplain" parameterType="com.b2.Sinnanda.vo.Complain">
-		UPDATE complain 
-		SET complain_title = #{complainTitle}, 
-			complain_content = #{complainContent}, 
-			update_date = NOW()
-		WHERE complain_no = #{complainNo} AND payment_no = #{paymentNo}
-	</update>
-
-	<!-- [김영후] Complain 추가 -->
+	<!-- [김영후] "컴플레인" 삽입 -->
 	<insert id="insertComplain" parameterType="com.b2.Sinnanda.vo.Complain">
 		INSERT INTO complain(
 			payment_no, 
@@ -69,259 +295,51 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>	
+	
+	<!-- [김영후] "컴플레인 답변" 삽입 -->
+	<insert id="insertComplainComment" parameterType="com.b2.Sinnanda.vo.ComplainComment">
+		INSERT INTO complain_comment(
+			complain_no, 
+			complain_comment_content, 
+			comment_date
+		) VALUES(
+			#{complainNo}, 
+			#{complainCommentContent}, 
+			NOW()
+		)
+	</insert>
+	
+	
+	
+<!-- 3. 수정 -->
 
-	<!-- [김영후] Complain 상세조회 Map -->
-	<resultMap type="com.b2.Sinnanda.vo.Complain" id="ComplainOneMap">
-		<id column="complain_no" property="complainNo"/>
-		<result column="payment_no" property="paymentNo"/>
-		<result column="complain_category" property="complainCategory"/>
-		<result column="complain_title" property="complainTitle"/>
-		<result column="complain_content" property="complainContent"/>
-		<result column="create_date" property="createDate"/>
-		<result column="update_date" property="updateDate"/>
-		<result column="member_name" property="memberName"/>
-		<result column="accom_name" property="accomName"/>
-		<result column="room_name" property="roomName"/>
-		
-		<collection property="complainComment" ofType="com.b2.Sinnanda.vo.ComplainComment">
-			<result column="complain_no" property="complainNo"/>
-			<result column="complain_comment_content" property="complainCommentContent"/>
-			<result column="comment_date" property="commentDate"/>
-			<result column="host_name" property="hostName"/>
-		</collection>
-	</resultMap>
-	
-	<!-- [김영후] Complain 상세조회 -->
-	<select id="selectComplainOne"  parameterType="Map" resultMap="ComplainOneMap">
-		SELECT 
-			c.complain_no, 
-			c.payment_no, 
-			c.complain_category, 
-			c.complain_title, 
-			c.complain_content, 
-			c.create_date, 
-			c.update_date, 
-			m.member_name, 
-			a.accom_name, 
-			ro.room_name, 
-			cc.complain_comment_content, 
-			cc.comment_date, 
-			h.host_name 
-		FROM complain c
-		LEFT JOIN complain_comment cc
-			ON c.complain_no = cc.complain_no
-		LEFT JOIN payment p 
-			ON c.payment_no = p.payment_no 
-		LEFT JOIN reserve re
-			ON p.reserve_no = re.reserve_no
-		LEFT JOIN room ro
-			ON re.room_no = ro.room_no 
-		LEFT JOIN accom a
-			ON ro.accom_no = a.accom_no
-		LEFT JOIN host h
-			ON a.host_no = h.host_no		
-		LEFT JOIN member m
-			ON re.member_no = m.member_no			
-		WHERE c.complain_no = #{complainNo}
-	</select>	
-	
-	<!-- [김영후] Comment 없는 Complain 목록조회 Map -->
-	<resultMap type="com.b2.Sinnanda.vo.Complain" id="NotCommentedComplainListMap">
-		<id column="complain_no" property="complainNo"/>
-		<result column="payment_no" property="paymentNo"/>
-		<result column="complain_category" property="complainCategory"/>
-		<result column="complain_title" property="complainTitle"/>
-		<result column="create_date" property="createDate"/>
-		<result column="update_date" property="updateDate"/>
-		<result column="member_name" property="memberName"/>
-		<result column="accom_name" property="accomName"/>
-		<result column="room_name" property="roomName"/>
-	</resultMap>
-	
-	<!-- [김영후] Comment 없는 Complain 목록조회 -->
-	<select id="selectNotCommentedComplainList" parameterType="Map" resultMap="NotCommentedComplainListMap">
-		SELECT 
-			c.complain_no, 
-			p.payment_no, 
-			c.complain_category, 
-			c.complain_title, 
-			c.create_date, 
-			c.update_date, 
-			m.member_name, 
-			a.accom_name, 
-			ro.room_name 
-		FROM complain c
-		LEFT JOIN payment p ON c.payment_no = p.payment_no 
-		LEFT JOIN reserve r ON p.reserve_no = r.reserve_no
-		LEFT JOIN room ro ON ro.room_no = r.room_no
-		LEFT JOIN accom a ON a.accom_no = ro.accom_no
-		LEFT JOIN member m ON r.member_no = m.member_no
-		LEFT JOIN complain_comment cc ON cc.complain_no = c.complain_no
-		<!-- [이승준] 사업자가 접근하는 경우 -->
-		<if test="userLevel == 2">
-			<if test="complainCategory != null">
-				<where>
-					a.host_no = #{hostNo} AND cc.complain_comment_content IS NULL AND c.complain_category = #{complainCategory}
-				</where>
-			</if>
-			<if test="complainCategory == null">
-				<where>
-					a.host_no = #{hostNo} AND cc.complain_comment_content IS NULL
-				</where>
-			</if>
-		</if>
-		<!-- [이승준] 관리자가 접근하는 경우 -->
-		<if test="userLevel == 3">
-			<if test="complainCategory != null">
-				<where>
-					cc.complain_comment_content IS NULL AND c.complain_category = #{complainCategory}
-				</where>
-			</if>
-			<if test="complainCategory == null">
-				<where>
-					cc.complain_comment_content IS NULL
-				</where>
-			</if>
-		</if>
-		ORDER BY c.create_date DESC
-		LIMIT #{beginRow}, #{rowPerPage}
-	</select>
-	
-	<!-- [이승준] Comment 없는 Complain 총 개수 조회 -->
-	<select id="selectNotCommentedComplainTotalCount" parameterType="Map" resultType="int">
-		SELECT 
-			COUNT(*) 
-		FROM complain c
-		LEFT JOIN payment p ON c.payment_no = p.payment_no 
-		LEFT JOIN reserve r ON p.reserve_no = r.reserve_no
-		LEFT JOIN room ro ON ro.room_no = r.room_no
-		LEFT JOIN accom a ON a.accom_no = ro.accom_no
-		LEFT JOIN member m ON r.member_no = m.member_no
-		LEFT JOIN complain_comment cc ON cc.complain_no = c.complain_no
-		<!-- [이승준] 사업자가 접근하는 경우 -->
-		<if test="userLevel == 2">
-			<if test="complainCategory != null">
-				<where>
-					a.host_no = #{hostNo} AND cc.complain_comment_content IS NULL AND c.complain_category = #{complainCategory}
-				</where>
-			</if>
-			<if test="complainCategory == null">
-				<where>
-					a.host_no = #{hostNo} AND cc.complain_comment_content IS NULL
-				</where>
-			</if>
-		</if>
-		<!-- [이승준] 관리자가 접근하는 경우 -->
-		<if test="userLevel == 3">
-			<if test="complainCategory != null">
-				<where>
-					cc.complain_comment_content IS NULL AND c.complain_category = #{complainCategory}
-				</where>
-			</if>
-			<if test="complainCategory == null">
-				<where>
-					cc.complain_comment_content IS NULL
-				</where>
-			</if>
-		</if>
-	</select>
+	<!-- [김영후] "컴플레인" 수정 -->
+	<update id="updateComplain" parameterType="com.b2.Sinnanda.vo.Complain">
+		UPDATE complain 
+		SET complain_title = #{complainTitle}, 
+			complain_content = #{complainContent}, 
+			update_date = NOW()
+		WHERE complain_no = #{complainNo} AND payment_no = #{paymentNo}
+	</update>
 	
 	
-	<!-- [김영후] Complain 목록조회 Map -->
-	<resultMap type="com.b2.Sinnanda.vo.Complain" id="ComplainListMap">
-		<id column="complain_no" property="complainNo"/>
-		<result column="payment_no" property="paymentNo"/>
-		<result column="complain_category" property="complainCategory"/>
-		<result column="complain_title" property="complainTitle"/>
-		<result column="create_date" property="createDate"/>
-		<result column="update_date" property="updateDate"/>
-		<result column="member_name" property="memberName"/>
-		<result column="accom_name" property="accomName"/>
-		<result column="room_name" property="roomName"/>
-				
-		<!-- [이승준] Complain에 대한 답변 유무 -->
-		<collection property="complainComment" ofType="com.b2.Sinnanda.vo.ComplainComment">
-			<result column="complain_comment_content" property="complainCommentContent"/>
-		</collection>
-	</resultMap>
-
-	<!-- [김영후] Complain 목록조회 -->
-	<select id="selectComplainList" parameterType="Map" resultMap="ComplainListMap">
-		SELECT 
-			c.complain_no, 
-			p.payment_no, 
-			c.complain_category, 
-			c.complain_title, 
-			c.create_date, 
-			c.update_date, 
-			m.member_name, 
-			a.accom_name, 
-			ro.room_name, 
-			cc.complain_comment_content
-		FROM complain c
-		LEFT JOIN payment p ON c.payment_no = p.payment_no 
-		LEFT JOIN reserve r ON p.reserve_no = r.reserve_no
-		LEFT JOIN room ro ON ro.room_no = r.room_no
-		LEFT JOIN accom a ON a.accom_no = ro.accom_no
-		LEFT JOIN member m ON r.member_no = m.member_no
-		LEFT JOIN complain_comment cc ON cc.complain_no = c.complain_no	
-		<!-- [이승준] 사업자가 접근하는 경우 -->
-		<if test="userLevel == 2">
-			<if test="complainCategory != null">
-				<where>
-					a.host_no = #{hostNo} AND c.complain_category = #{complainCategory}
-				</where>
-			</if>
-			<if test="complainCategory == null">
-				<where>
-					a.host_no = #{hostNo}
-				</where>
-			</if>
-		</if>
-		<!-- [이승준] 관리자가 접근하는 경우 -->
-		<if test="userLevel == 3">
-			<if test="complainCategory != null">
-				<where>
-					c.complain_category = #{complainCategory}
-				</where>
-			</if>
-		</if>
-		ORDER BY c.create_date DESC
-		LIMIT #{beginRow}, #{rowPerPage}
-	</select>
 	
-
-	<!-- [이승준] Complain 총 개수 조회-->
-	<select id="selectComplainTotalCount" parameterType="Map" resultType="int">
-		SELECT 
-			COUNT(*)
-		FROM complain c
-		LEFT JOIN payment p ON c.payment_no = p.payment_no 
-		LEFT JOIN reserve r ON p.reserve_no = r.reserve_no
-		LEFT JOIN room ro ON ro.room_no = r.room_no
-		LEFT JOIN accom a ON a.accom_no = ro.accom_no
-		LEFT JOIN member m ON r.member_no = m.member_no
-		LEFT JOIN complain_comment cc ON cc.complain_no = c.complain_no	
-		<!-- [이승준] 사업자가 접근하는 경우 -->
-		<if test="userLevel == 2">
-			<if test="complainCategory != null">
-				<where>
-					a.host_no = #{hostNo} AND c.complain_category = #{complainCategory}
-				</where>
-			</if>
-			<if test="complainCategory == null">
-				<where>
-					a.host_no = #{hostNo}
-				</where>
-			</if>
-		</if>
-		<!-- [이승준] 관리자가 접근하는 경우 -->
-		<if test="userLevel == 3">
-			<if test="complainCategory != null">
-				<where>
-					c.complain_category = #{complainCategory}
-				</where>
-			</if>
-		</if>
-	</select>
+<!-- 4. 삭제 -->
+	
+	<!-- [김영후] "컴플레인 답변" 삭제 -->
+	<delete id="deleteComplainComment" parameterType="com.b2.Sinnanda.vo.ComplainComment">
+		DELETE 
+		FROM complain_comment 
+		WHERE complain_no = #{complainNo}
+	</delete>
+	
+	<!-- [김영후] "컴플레인" 삭제 -->
+	<delete id="deleteComplain" parameterType="com.b2.Sinnanda.vo.Complain">
+		DELETE 
+		FROM complain 
+		WHERE complain_no = #{complainNo} AND payment_no = #{paymentNo}
+	</delete>
+	
+	
+	
 </mapper>

@@ -12,6 +12,7 @@
 		
 	2. 삽입
 		insertHostQna
+		insertHostQnaComment
 		
 	3. 수정
 		updateHostQna
@@ -35,7 +36,7 @@
 		<result column="host_name" property="hostName"/>
 	</resultMap>
 	<!-- [이승준] (목록)"답변없는 사업자문의 목록" 조회 -->
-	<select id="selectNoCommentedHostQnaList" parameterType="Map" resultMap="noCommentedHostQnaListMap">
+	<select id="selectNotCommentedHostQnaList" parameterType="Map" resultMap="noCommentedHostQnaListMap">
 		SELECT 
 			hq.host_qna_no, 
 			hq.host_no, 
@@ -78,7 +79,7 @@
 	</select>
 	
 	<!-- [이승준] (개수)"답변없는 사업자문의 개수" 조회 -->
-	<select id="selectNoCommentedHostQnaTotalCount" parameterType="Map" resultType="int">
+	<select id="selectNotCommentedHostQnaTotalCount" parameterType="Map" resultType="int">
 		SELECT 
 			COUNT(*) 
 		FROM host_qna hq 
@@ -271,7 +272,20 @@
 		</selectKey>
 	</insert>
 
-
+		<!-- [이승준] "사업자문의 답변" 삽입 -->
+	<insert id="insertHostQnaComment" parameterType="com.b2.Sinnanda.vo.HostQnaComment">
+		INSERT INTO host_qna(
+			host_qna_no, 
+			admin_no, 
+			host_qna_comment_content, 
+			comment_date
+		) VALUES (
+			#{hostQnaNo}, 
+			#{adminNo}, 
+			#{hostQnaCommentContent}, 
+			NOW()
+		)
+	</insert>
 
 <!-- 3. 수정 -->
 

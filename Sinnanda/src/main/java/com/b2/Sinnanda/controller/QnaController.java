@@ -35,27 +35,22 @@ public class QnaController {
 	
 	// [이승준] "회원문의 목록" 조회
 	@GetMapping("/qnaList")
-	public String qnaList(HttpServletRequest request, Model model, 
+	public String qnaList(HttpSession session, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
 			@RequestParam(defaultValue = "전체") String qnaCategory) {
-		log.debug("[Debug] \"START\" QnaController.qnaList() | Get");
-		log.debug(" ├[param] currentPage : "+currentPage);
+		dl.p("QnaController", "qnaList() | Get", "시작");
+		dl.p("qnaList()", "currentPage", currentPage);
+		dl.p("qnaList()", "qnaCategory", qnaCategory);
+		
+		// 1. 로그인 세션 조회
+		User loginUser = (User)session.getAttribute("loginUser");
+		dl.p("complainList()", "loginUser", loginUser.toString());
 		
 		//	출력을 시작하는 행 구하기 수식
 		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE;
 
 		// QnA 목록 조회
 		Map<String, Object> map = qnaService.getQnaList(qnaCategory, beginRow, ROW_PER_PAGE);
-		
-		// 로그인 세션 조회
-		HttpSession session = request.getSession();
-		User loginUser = (User) session.getAttribute("loginUser");
-		// 로그인 세션 디버깅
-		if(loginUser != null) {
-			log.debug(" ├[param] loginUser : "+loginUser.toString());
-		} else {
-			log.debug(" ├[param] loginUser : Null");
-		}
 		
 		
 		/* 모델 추가 */
