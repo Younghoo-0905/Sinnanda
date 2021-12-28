@@ -58,24 +58,21 @@ public class AdminController {
    
    //[윤경환] 관리자 페이지
    @GetMapping("/admin/adminPage")
-   public String getAdminPage(HttpServletRequest request, Model model, 
-         @RequestParam(defaultValue = "전체") String hostQnaCategory,
-         @RequestParam(defaultValue = "1") int currentPage) {
+   public String getAdminPage(HttpSession session, Model model) {
+	   
       // 로그인 세션 조회
-      HttpSession session = request.getSession();
       User loginUser = (User)session.getAttribute("loginUser");
       
       //이슈 로그인된값이 같지 않으면 index 페이지로 리턴
-      Map<String, Object> map = hostQnaService.getNoCommentsHostQnaListForAdmin(loginUser.getUserLevel(), hostQnaCategory, currentPage, ROW_PER_PAGE);
-   
-      Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNoCommentsHostQnaListForHost(loginUser.getUserLevel(), loginUser.getAdmin().getAdminNo(), null, 1, 10);
+      Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNoCommentedHostQnaList(loginUser.getUserLevel(), 0, null, 0, 10);
       
       
-      Admin admin =  adminService.getAdminOne(loginUser.getAdmin().getAdminNo()); 
+      //Admin admin =  adminService.getAdminOne(loginUser.getAdmin().getAdminNo()); 
       
-      model.addAttribute(admin);
-      model.addAttribute("hostQnaList", map.get("hostQnaList"));   
-      model.addAttribute("hostQnaListTotalCount", noCommentedHostQnaMap.get("totalCount"));
+      //model.addAttribute(admin);
+      model.addAttribute("loginUser", loginUser);	// 로그인된 세션 정보
+      model.addAttribute("hostQnaList", noCommentedHostQnaMap.get("hostQnaList"));	// 답변없는 사업자문의
+      model.addAttribute("hostQnaListTotalCount", noCommentedHostQnaMap.get("totalCount"));	// 다변없는 사업자문의 개수
       // QnA 목록 정보
       return "admin/adminPage";
    }

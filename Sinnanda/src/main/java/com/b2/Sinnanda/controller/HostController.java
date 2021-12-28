@@ -48,7 +48,7 @@ public class HostController {
 		}
 		
 		// 3. 답변이 없는 Host QnA 목록, 총 개수 조회
-		Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNoCommentsHostQnaListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 0, 10);
+		Map<String, Object> noCommentedHostQnaMap = hostQnaService.getNoCommentedHostQnaList(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), null, 0, 10);
 		
 		// 4. 답변이 없는 Review 목록, 총 개수 조회
 		Map<String, Object> noCommentedReviewMap = reviewService.getNotCommentedReviewListForHost(loginUser.getUserLevel(), loginUser.getHost().getHostNo(), 0, 10);
