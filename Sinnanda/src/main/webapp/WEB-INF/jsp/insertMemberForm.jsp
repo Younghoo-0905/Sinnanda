@@ -199,7 +199,7 @@
 				return false;
 			}
 			if(checkedId == false) {
-				alert("ID 중복을 확인하세요.")
+				alert("ID 중복을 확인하세요.");
 				return false;
 			}
 			if($('#memberPw').val()==''){

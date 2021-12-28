@@ -127,7 +127,7 @@
 														</c:forEach>
 														
 														<!-- '다음' 버튼 -->
-														<c:if test="${currentPage + 10 <= lastPage}">
+														<c:if test="${lastPage >= pageNo + 10}">
 															<li><a href="host/myComplainList?currentPage=${pageNo+10}&complainCategory=${complainCategory}">&gt;</a></li>
 														</c:if>
 													</ul>

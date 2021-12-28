@@ -119,7 +119,7 @@
 		            <div class="block-27">
 						<ul>
 							<!-- '이전' 버튼 -->
-							<c:if test="${beginRow > ROW_PER_PAGE}">
+							<c:if test="${beginRow >= ROW_PER_PAGE}">
 								<li><a href="noticeList?currentPage=${currentPage-1}&noticeCategory=${noticeCategory}">&lt;</a></li>
 							</c:if>
 							

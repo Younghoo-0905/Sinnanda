@@ -108,8 +108,8 @@
 									            <div class="block-27">
 													<ul>
 														<!-- '이전' 버튼 -->
-														<c:if test="${beginRow >= (ROW_PER_PAGE * 10)}">
-															<li><a href="host/myHostQnaList?currentPage=${pageNo-1}&hostQnaCategory=${hostQnaCategory}">&lt;</a></li>
+														<c:if test="${beginRow >= ROW_PER_PAGE}">
+															<li><a href="/host/myHostQnaList?currentPage=${currentPage-1}&hostQnaCategory=${hostQnaCategory}">&lt;</a></li>
 														</c:if>
 														
 														<!-- Page 번호 -->
@@ -134,8 +134,8 @@
 														</c:forEach>
 														
 														<!-- '다음' 버튼 -->
-														<c:if test="${currentPage + 10 <= lastPage}">
-															<li><a href="host/myHostQnaList?currentPage=${pageNo+10}&hostQnaCategory=${hostQnaCategory}">&gt;</a></li>
+														<c:if test="${currentPage != lastPage}">
+															<li><a href="/host/myHostQnaList?currentPage=${currentPage+1}&hostQnaCategory=${hostQnaCategory}">&gt;</a></li>
 														</c:if>
 													</ul>
 												</div>

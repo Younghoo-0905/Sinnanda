@@ -80,61 +80,57 @@
           				<span class="loc"><a href="#"><i class="icon-map"></i> 291 South 21th Street, Suite 721 New York NY 10016</a></span>
           				<p>${room.roomDescription}</p>
           		</div>
-          		<div class="col-md-12 hotel-single ftco-animate mb-5 mt-4">
-          			<h4 class="mb-5">예약 정보</h4>
-          			<div class="fields">
-          				<div class="row">
-          					<div class="col-md-6">
-				              <div class="form-group">
-				                <input type="text" class="form-control" placeholder="이름">
+          		
+          		<!-- 예약 Form -->
+          		<form action="/member/reserveRoom" id="reserveForm" method="post">
+          		
+          			<!-- member, room 정보 -->
+          			<input type="hidden" name="memberNo" value="${loginUser.member.memberNo}">
+          			<input type="hidden" name="roomNo" value="${room.roomNo}">
+          			
+	          		<div class="col-md-12 hotel-single ftco-animate mb-5 mt-4">
+	          			<h4 class="mb-5">예약 정보</h4>
+	          			<div class="fields">
+	          				<div class="row">
+				              <div class="col-md-6">
+					              <div class="form-group">
+					                <input type="text" id="checkin_date" name="reserveCheckIn" class="form-control" placeholder="체크인 날짜">
+					              </div>
+				              </div>
+				              <div class="col-md-6">
+					              <div class="form-group">
+					                <input type="text" id="checkout_date" name="reserveCheckOut" class="form-control" placeholder="체크아웃 날짜">				                
+					              </div>
+					            </div>
+					            <div class="col-md-6">
+						            <div class="form-group">
+					                <div class="select-wrap one-third">
+				                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+				                    <select name="reservePersonnel" id="reservePersonnel" class="form-control">
+				                    	<option value="">인원 선택</option>
+				                    	<c:forEach var="i" begin="1" end="${room.roomPerson}">
+					                      <option value="i">${i}</option>
+				                    	</c:forEach>
+				                    </select>
+				                  </div>
+					              </div>
+				              </div>
+				              <div class="col-md-6">
+					              <div class="form-group">
+					                <input type="text" class="form-control" placeholder="요청사항">
+					              </div>
+				              </div>
+					            <div class="col-md-12">
+					              <div class="form-group">
+					                <button type="button" id="reserveBtn" class="btn btn-primary py-3">예약</button>
+					              </div>
 				              </div>
 			              </div>
-			              <div class="col-md-6">
-				              <div class="form-group">
-				                <input type="text" class="form-control" placeholder="이메일">
-				              </div>
-			              </div>
-			              <div class="col-md-6">
-				              <div class="form-group">
-				                <input type="text" id="checkin_date" class="form-control" placeholder="체크인 날짜">
-				              </div>
-			              </div>
-			              <div class="col-md-6">
-				              <div class="form-group">
-				                <input type="text" id="checkin_date" class="form-control" placeholder="체크아웃 날짜">
-				              </div>
-				            </div>
-				            <div class="col-md-6">
-					            <div class="form-group">
-				                <div class="select-wrap one-third">
-			                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-			                    <select name="" id="" class="form-control" placeholder="인원수">
-			                      <option value="0">인원수</option>
-			                      <option value="1">1</option>
-			                      <option value="2">2</option>
-			                      <option value="3">3</option>
-			                      <option value="4">4</option>
-			                      <option value="5">5</option>
-			                      <option value="6">6</option>
-			               		  <option value="7">7</option>
-			                      <option value="8">8</option>
-			                    </select>
-			                  </div>
-				              </div>
-			              </div>
-			              <div class="col-md-6">
-				              <div class="form-group">
-				                <input type="text" class="form-control" placeholder="요청사항">
-				              </div>
-			              </div>
-				            <div class="col-md-12">
-				              <div class="form-group">
-				                <input type="submit" value="예약 하기" class="btn btn-primary py-3">
-				              </div>
-			              </div>
-		              </div>
-		            </div>
-          		</div>
+			            </div>
+	          		</div>
+          		</form>
+          		<!-- 예약 Form End -->
+          		
           	</div>
           </div> <!-- .col-md-8 -->
         </div>
@@ -227,6 +223,22 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+  
+  <!-- [김영후] 예약 입력 폼 유효성 검사 -->
+  <script>
+  	$('#reserveBtn').click(function(){
+  		if($('#checkin_date').val() == '' || $('#checkout_date').val() == '') {
+  			alert("예약 날짜를 선택하세요");
+  			return false;
+  		}
+  	  	if($('#reservePersonnel').val() == '') {
+  	  		alert("인원을 선택하세요");
+  	  		return false;
+  	  	}
+  	  	
+  	  	$('#reserveForm').submit();
+  	})
+  </script>
     
   </body>
 </html>
