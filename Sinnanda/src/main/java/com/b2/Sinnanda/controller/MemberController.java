@@ -244,7 +244,7 @@ public class MemberController {
 		
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
-		model.addAttribute("reserveUse", map.get("reserveUse"));	// 선택된 reserveUse
+		model.addAttribute("reserveUse", reserveUse);	// 선택된 reserveUse
 		model.addAttribute("myReserveList", map.get("myReserveList"));	// 예약 목록 정보
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
@@ -378,18 +378,13 @@ public class MemberController {
 	}
 	
 	//	[김영후] 회원 탈퇴
-	@GetMapping("/member/insertMemberOut")
-	public String getInsertMemberOut() {
+	@GetMapping("/member/memberOutForm")
+	public String memberOutForm(HttpSession session, Member member) {
+		memberService.removeMember(member);
+		session.invalidate();
 		return "/member/memberOutForm";
 	}	
-	@PostMapping("/member/insertMemberOut")
-	public String postInsertMemberOut(Member member, MemberOut memberOut) {
-		log.debug("탈퇴할 멤버 정보 :" + member);		
-		//	트랜잭션 처리 -> member 테이블 데이터 삭제 후 memberOut 테이블 데이터 삽입
-		memberService.removeMember(member, memberOut);
-		
-		return "redirect:/index";
-	}
+
 	
 	//	[김영후] 회원 가입 시 실시간 ID 중복체크
 	@GetMapping("/chkId")

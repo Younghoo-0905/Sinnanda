@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -82,7 +84,10 @@
 		</tr>
 		<tr>
 			<td  style="width: 200px; font-size: 20px; text-align:center;">가입날짜 </td>
-			<td colspan="3" style="font-size: 20px; text-align:center;">${member.createDate}</td>
+			<td colspan="3" style="font-size: 20px; text-align:center;">
+				<fmt:parseDate value="${member.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+				<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+			</td>
 		</tr>
 	
 	</table>

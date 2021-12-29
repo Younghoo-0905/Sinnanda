@@ -84,7 +84,10 @@
 										</tr>
 										<tr>
 											<td>예약한 날짜</td>
-											<td>${reserve.reserveDate }</td>
+											<td>
+												<fmt:parseDate value="${reserve.reserveDate}" var="reserveDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+												<fmt:formatDate value="${reserveDate}" pattern="yy / MM / dd HH:mm"/>
+											</td>
 										</tr>
 										<tr>
 											<td>체크인</td>

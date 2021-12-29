@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -95,7 +96,10 @@
 				</td>
 				<td>${review.reviewRank}</td>
 				<td>${review.reviewRecommend}</td>
-				<td>${review.createDate}</td>
+				<td>
+					<fmt:parseDate value="${review.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+					<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

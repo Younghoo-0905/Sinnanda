@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -84,7 +85,10 @@
 				<td>${complain.accomName}</td>
 				<td>${complain.complainTitle}</td>
 				<td>${complain.complainCategory}</td>
-				<td>${complain.createDate}</td>
+				<td>
+					<fmt:parseDate value="${complain.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+					<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+				</td>
 				<td><a href="/member/myComplainOne?complainNo=${complain.complainNo}">상세보기</a></td>
 			</tr>
 		</c:forEach>

@@ -74,7 +74,7 @@
 	<!-- [이승준] 하단 Footer - SATRT -->
 	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
-		<script>
+	<script>
 		function chk_form() {
 	
 		if(document.getElementById("memberPw").value==''){
@@ -86,7 +86,7 @@
 		}
 		
 			document.getElementById("nowMemberPw").submit();
-	}
+		}
 	</script>
 
   <!-- plugins:js -->

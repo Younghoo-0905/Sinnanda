@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -85,7 +86,10 @@
 						</td>
 						<td style="text-align:center">${qna.qnaCategory}</td>
 						<td style="text-align:center">${qna.memberName}</td>
-						<td style="text-align:center">${qna.createDate}</td>
+						<td style="text-align:center">
+							<fmt:parseDate value="${qna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+							<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+						</td>
 					</tr>
 				</c:forEach>
 			</table>

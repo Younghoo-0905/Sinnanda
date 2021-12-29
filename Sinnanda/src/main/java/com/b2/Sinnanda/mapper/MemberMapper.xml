@@ -338,7 +338,7 @@
 		JOIN reserve r ON p.reserve_no = r.reserve_no
 		JOIN room ro ON ro.room_no = r.room_no
 		JOIN accom a ON a.accom_no = ro.accom_no
-		JOIN member m ON r.member_no = m.member_no
+		JOIN member m ON r.member_no = m.member_no	
 		<if test="complainCategory != null">
         	<where>
          		m.member_no = #{memberNo} AND complain_category = #{complainCategory}
@@ -439,26 +439,17 @@
 			member_id = #{memberId}
 	</update>
 	
-   	<!-- [김영후] 회원 탈퇴 -->
-	<delete id="deleteMember" parameterType="com.b2.Sinnanda.vo.Member">
-		DELETE FROM member
+	<!-- [김영후] 회원 탈퇴 (active 업데이트로 탈퇴처리)-->
+	<update id="deleteMember" parameterType="com.b2.Sinnanda.vo.Member">
+		UPDATE member
+		SET
+			member_active = 0,
+			update_date = NOW()
 		WHERE 
-		member_id=#{memberId}
-		AND
-		member_pw=#{memberPw}
-	</delete>
-	<!-- [김영후] 탈퇴 멤버 데이터 추가 -->
-	<insert id="insertMemberOut" parameterType="com.b2.Sinnanda.vo.MemberOut">
-		INSERT INTO 
-		member_out(
-			member_id, 
-			out_date, 
-			out_reason
-		) VALUES(
-			#{memberId}, 
-			NOW(), 
-			#{outReason})
-	</insert>   
+			member_id=#{memberId} AND member_pw=#{memberPw}
+	</update>
+	
+  
 	
 	<!-- [김영후] 회원가입 시 ID 중복체크 -->
 	<select id="checkId" parameterType="String" resultType="int">

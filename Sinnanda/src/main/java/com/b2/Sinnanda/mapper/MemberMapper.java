@@ -76,7 +76,6 @@ public interface MemberMapper {
 	int selectCertifyMember(Member member);
 	
 	//	[김영후] 회원 탈퇴
-	int insertMemberOut(MemberOut memberOut);
 	int deleteMember(Member member);
 	
 	//	[김영후] 회원 가입 시 ID 중복체크

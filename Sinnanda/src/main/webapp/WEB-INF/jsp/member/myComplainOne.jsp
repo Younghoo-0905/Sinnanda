@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -50,6 +51,7 @@
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
+								<span class="subheading"><a href="myComplainList">내가 작성한 컴플레인</a> > 컴플레인 상세보기</span>
 									<table class="table table-board">
 										<tr>
 											<td>컴플레인 번호</td>
@@ -81,7 +83,10 @@
 										</tr>
 										<tr>
 											<td>작성일</td>
-											<td>${complain.createDate}</td>
+											<td>
+												<fmt:parseDate value="${complain.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+												<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+											</td>
 										</tr>								
 									</table>
 									

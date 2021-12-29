@@ -260,9 +260,8 @@ public class MemberService {
 	}
 	
 	//	[김영후] 회원 탈퇴
-	public void removeMember(Member member, MemberOut memberOut) {
+	public void removeMember(Member member) {
 		memberMapper.deleteMember(member);
-		memberMapper.insertMemberOut(memberOut);
 	}	
 	
 	//	[김영후] 회원 가입 시 ID 중복체크

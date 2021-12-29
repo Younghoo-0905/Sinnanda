@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -53,7 +54,7 @@
 								<div class="card-body">
 									<section id="startBoard" class="ftco-section testimony-section bg-light">
 		 <div class="container">
-	    	<span class="subheading"><a href="myQnaList">내가 작성한 Q&A</a> > 상세보기</span>
+	    	<span class="subheading"><a href="myQnaList">내가 작성한 Q&A</a> > QnA 상세보기</span>
 			<h1><strong>내가 작성한 문의 상세보기</strong></h1>
 			
 			<!-- 글작성자의 수정, 삭제 버튼 -->
@@ -78,7 +79,10 @@
 					<th style="text-align:center;">작성자</th>
 					<td style="width: 60%;">${qna.memberName}</td>
 					<th style="width: 100px; text-align:center;">작성일</th>
-					<td style="width: 30%;">${qna.createDate}</td>
+					<td style="width: 30%;">
+						<fmt:parseDate value="${qna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+						<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+					</td>
 				</tr>
 				<tr>
 					<th style="text-align:center;">내용</th>
