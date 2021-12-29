@@ -2,7 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.HostMapper">
 
-	<!-- [이승준] Host 상세 조회 -->
+<!-- #인덱스 (작성자 : 이승준)
+	1. 조회
+		selectHostPw
+		selectHostOne
+		selectHostOneWithAddress
+		
+	2. 삽입
+		insertHost
+		insertHostAdress
+		
+	3. 수정
+		updateHost
+		updateHostPw
+		
+	4. 삭제
+		deleteHost
+		
+ -->
+
+<!-- 1. 조회 -->
+
+	<!-- [이승준] (상세)"사업자 비밀번호" 조회 -->
+	<select id="selectHostPw" parameterType="int" resultType="String">
+		SELECT 
+			host_pw hostPw
+		FROM host
+		WHERE host_no = #{hostNo}
+	</select>
+
+	<!-- [이승준] (상세)"사업자 상세" 조회 -->
 	<select id="selectHostOne" parameterType="int">
 		SELECT 
 			host_no hostNo, 
@@ -16,4 +45,127 @@
 		FROM host
 		WHERE host_no = #{hostNo}
 	</select>
+	
+	<!-- [이승준] (상세)"사업자 상세+주소" 조회 resultMap -->
+	<resultMap type="com.b2.Sinnanda.vo.Host" id="hostOneWithAddressMap">
+		<id column="host_no" property="hostNo"/>
+		<result column="host_id" property="hostId"/>
+		<result column="host_name" property="hostName"/>
+		<result column="host_tel" property="hostTel"/>
+		<result column="host_active" property="hostActive"/>
+		<result column="member_level" property="memberLevel"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		
+		<collection property="hostAddress" ofType="com.b2.Sinnanda.vo.HostAddress" resultMap="hostAddressMap"></collection>
+	</resultMap>
+	<!-- 사업자에 대한 주소 resultMap -->
+	<resultMap id="hostAddressMap" type="com.b2.Sinnanda.vo.HostAddress">
+		<result column="address_detail" property="addressDetail"/>
+		
+		<collection property="address" ofType="com.b2.Sinnanda.vo.Address" resultMap="hostAddressDetailMap"></collection>
+	</resultMap>
+	<!-- 사업자 주소에 대한 주소 resultMap -->
+	<resultMap id="hostAddressDetailMap" type="com.b2.Sinnanda.vo.Address">
+		<id property="address_no" column="addressNo"/>
+		<result property="sido" column="sido"/>
+		<result property="sido" column="sido"/>
+		<result property="sigungu" column="sigungu"/>
+		<result property="road_name" column="roadName"/>
+		<result property="main_building_code" column="mainBuildingCode"/>
+		<result property="sub_building_code" column="subBuildingCode"/>
+	</resultMap>
+	<!-- [이승준] (상세)"사업자 상세+주소" 조회 -->
+	<select id="selectHostOneWithAddress" parameterType="int" resultMap="hostOneWithAddressMap">
+		SELECT 
+			h.host_no, 
+			h.host_id, 
+			h.host_name, 
+			h.host_tel, 
+			h.host_active, 
+			h.member_level, 
+			h.create_date, 
+			h.update_date,
+			ha.address_detail, 
+			a.address_no, 
+			a.sido, 
+			a.sigungu, 
+			a.road_name, 
+			a.main_building_code, 
+			a.sub_building_code
+		FROM host h 
+			LEFT JOIN host_address ha ON ha.host_no = h.host_no
+			LEFT JOIN address a ON a.address_no = ha.address_no
+		WHERE h.host_no = #{hostNo}
+	</select>
+
+<!-- 2. 삽입 -->
+	
+	<!-- [이승준] "사업자" 삽입 -->
+	<insert id="insertHost" parameterType="com.b2.Sinnanda.vo.Host">
+		INSER INTO host (
+			host_id, 
+			host_pw, 
+			host_name, 
+			host_tel, 
+			host_active, 
+			create_date, 
+			update_date
+		) VALUES (
+			#{hostId}, 
+			#{hostPw}, 
+			#{hostName}, 
+			#{hostTel}, 
+			#{hostActive}, 
+			NOW(),
+			NOW() 
+		)
+	</insert>
+	
+	<!-- [이승준] "사업자 주소" 삽입 -->
+	<insert id="insertHostAddress" parameterType="com.b2.Sinnanda.vo.HostAddress">
+		INSERT INTO host_address (
+			host_no, 
+			address_no, 
+			address_datail, 
+			create_date, 
+			update_date
+		) VALUES (
+			#{hostNo}, 
+			#{addressNo}, 
+			#{addressDetail}, 
+			NOW(), 
+			NOW()
+		)
+	</insert>
+	
+	
+<!-- 3. 수정 -->
+	
+	<!-- [이승준] "사업자" 수정 -->
+	<update id="updateHost" parameterType="com.b2.Sinnanda.vo.Host">
+		UPDATE host
+		SET host_name = #{hostName}, 
+			host_tel = #{hostTel}, 
+			host_active = #{hostActive}, 
+			update_date = NOW()
+		WHERE host_no = #{hostQnaNo}
+	</update>
+	
+	<!-- [이승준] "사업자 비밀번호" 수정 -->
+	<update id="updateHostPw" parameterType="com.b2.Sinnanda.vo.Host">
+		UPDATE host
+		SET host_pw = #{hostPw}, 
+			update_date = NOW()
+		WHERE host_no = #{hostQnaNo}
+	</update>
+	
+	
+	
+<!-- 4. 삭제 -->
+	
+	
+	
+	
+	
 </mapper>

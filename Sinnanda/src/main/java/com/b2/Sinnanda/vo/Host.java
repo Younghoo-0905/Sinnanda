@@ -9,8 +9,10 @@ public class Host {
 	private String hostPw;
 	private String hostName;
 	private String hostTel;
-	private String hostActive;
+	private int hostActive;
 	private int memberLevel;
 	private String createDate;
 	private String updateDate;
+
+	private HostAddress hostAddress;
 }

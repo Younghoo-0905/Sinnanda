@@ -10,9 +10,41 @@ import com.b2.Sinnanda.vo.Host;
 @Service
 public class HostService {
 	@Autowired
-	private DL dl;	// 조장이 만든 로그 출력 클래스
-	@Autowired
 	private HostMapper hostMapper;
+	@Autowired
+	private DL dl;	// 조장이 만든 로그 출력 클래스
+	
+	
+	/* [이승준] "사업자 상세+주소" 조회 */
+	public Host getHostOneWithAddress(int hostNo) {
+		dl.p("HostService", "getHostOneWithAddress()", "[시작]");
+		dl.p("getHostOneWithAddress()", "hostNo", hostNo);
+		
+		// 1. "사업자 상세+주소" 조회 서비스 호출
+		Host host = hostMapper.selectHostOneWithAddress(hostNo);
+		dl.p("getHostOneWithAddress()", "host.hostAddress.address", host.getHostAddress().getAddress().toString());
+		
+		
+		// 2. "주소" 모델 가공 | 시도+시군구+도로명
+		String addressInfo = 
+				host.getHostAddress().getAddress().getSido() + " " + 
+				host.getHostAddress().getAddress().getSigungu() + " " + 
+				host.getHostAddress().getAddress().getRoadName();
+		
+		// 3-1. '메인건물번호'가 있는 경우 -> 추가
+		if(host.getHostAddress().getAddress().getMainBuildingCode() != 0) {
+			addressInfo = addressInfo+" "+host.getHostAddress().getAddress().getMainJibun();
+			
+		// 3-2. '서브거물번호'가 있는 경우 -> 추가
+		} else if(host.getHostAddress().getAddress().getSubBuildingCode() != 0) {
+			addressInfo = addressInfo+"-"+host.getHostAddress().getAddress().getSubJibun();
+		}
+		
+		// 4. 반한활 모델에 주소 데이터 삽입
+		host.getHostAddress().setAddressInfo(addressInfo);
+		
+		return host;
+	}
 	
 	/* [이승준] Host QnA 상세 조회 */
 	public Host getHostOne(int hostNo) {

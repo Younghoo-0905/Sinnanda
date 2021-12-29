@@ -5,9 +5,9 @@
 <!-- #인덱스 (작성자 : 김영후, 수정자 : 이승준)
 	1. 조회
 		(목록)selectNotCommentedReviewList
-		개수)selectNotCommentedReviewTotalCount
+		(개수)selectNotCommentedReviewTotalCount
 		(목록)selectReviewList
-		개수)selectReviewTotalCount
+		(개수)selectReviewTotalCount
 		(상세)selectReviewOne
 		
 	2. 삽입

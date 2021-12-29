@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.b2.Sinnanda.mapper.AddressMapper">
+
+<!-- #인덱스 (작성자 : 이승준)
+	1. 조회
+		selectAddressOne
+		
+ -->
+
+<!-- 1. 조회 -->
+	
+	<!-- [이승준] "주소" 조회 -->
+	<select id="selectAddressOne" parameterType="com.b2.Sinnanda.vo.Address" resultType="com.b2.Sinnanda.vo.Address">
+		SELECT 
+			address_no addressNo, 
+			sido, 
+			sigungu, 
+			road_name roadName, 
+			main_building_code mainBuildingCode, 
+			sub_building_code subBuildingCode
+		FROM address 
+		<!-- '메인지번'이 있는 경우 -->
+		<if test="mainBuildingCode != 0">
+			<!-- '메인지번'과 '서브지번'이 있는 경우 -->
+			<if test="subBuildingCode != 0">
+				<where>
+					sido = #{sido} AND sigungu = #{sigungu} AND road_name = #{roadName} AND main_building_code = #{mainBuildingCode} AND sub_building_code = #{subBuildingCode}
+				</where>
+			</if>
+			<!-- 오직 '메인지번'만 있는 경우 -->
+			<if test="subBuildingCode == 0">
+				<where>
+					sido = #{sido} AND sigungu = #{sigungu} AND road_name = #{roadName} AND main_building_code = #{mainBuildingCode}
+				</where>
+			</if>
+		</if>
+		<!-- 어떤 '지번'도 없는 경우 -->
+		<if test="mainBuildingCode == 0">
+			<where>
+				sido = #{sido} AND sigungu = #{sigungu} AND road_name = #{roadName}
+			</where>
+		</if>
+	</select>	
+</mapper>
