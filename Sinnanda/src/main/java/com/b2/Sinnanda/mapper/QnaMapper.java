@@ -30,6 +30,8 @@ public interface QnaMapper {
 	int selectAdminQnaTotalCount();
 	
 	
+	
+	
 /* 2. 삽입 */
 	
 	// [이승준] "회원문의" 삽입

@@ -43,28 +43,6 @@ public class NoticeController {
 		return "redirect:/noticeList";
 	}
 
-	//	[김영후]	notice 수정
-	@GetMapping("/admin/modifyNotice")
-	public String modifyNotice(Model model, int noticeNo) {
-		log.debug("[Debug] \"START\" NoticeController.modifyNotice() | Get");
-		log.debug(" ├[param] noticeNo : " + noticeNo);
-		
-		// 수정 전 기존 값 출력
-		Notice Notice = noticeService.getNoticeOne(noticeNo);
-		model.addAttribute(Notice);
-		
-		return "admin/modifyNotice";
-	}
-	@PostMapping("/admin/modifyNotice")
-	public String modifyNotice(Notice notice) {
-		log.debug("[Debug] \"START\" NoticeController.modifyNotice() | Post");
-		log.debug(" ├[param] Notice : "+ notice.toString());
-		
-		noticeService.modifyNotice(notice);
-		
-		return "redirect:/noticeOne?noticeNo="+notice.getNoticeNo();
-	}
-	
 	//	[김영후]	notice 추가
 	@GetMapping("/admin/addNotice")
 	public String addNotice() {
@@ -83,7 +61,7 @@ public class NoticeController {
 		
 		noticeService.addNotice(notice);
 		
-		return "redirect:/noticeOne?noticeNo=" + notice.getNoticeNo();
+		return "redirect:/admin/noticeAdminList";
 	}
 	
 	//	[김영후]	notice 상세 조회
@@ -135,4 +113,72 @@ public class NoticeController {
 		
 		return "noticeList";
 	}
+	//[윤경환] 관리자 공지사항  리스트
+	@GetMapping("/admin/noticeAdminList")
+	public String getNoticeAdminList(Model model, 
+			@RequestParam(defaultValue = "1") int currentPage, 
+			@RequestParam(defaultValue = "전체") String noticeCategory) {
+			log.debug("[Debug] \"START\" noticeController.noticeList() | Get");
+			log.debug(" ├[param] currentPage : "+currentPage);
+					
+			//	출력을 시작하는 행 구하기 수식
+			int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE; 
+	
+			//	목록 출력
+			Map<String, Object> map = noticeService.getNoticeListByCategory(noticeCategory, beginRow, ROW_PER_PAGE);
+	
+			//	값 디버깅
+			log.debug(" ├[param] beginRow : " + beginRow);
+			log.debug(" ├[param] noticeCategory : " + noticeCategory);
+			log.debug(" ├[param] currentPage : " + currentPage);
+			//	log.debug(" ├ noticeList : " + map.get("noticeList"));
+			log.debug(" ├[param] lastPage : " + map.get("lastPage"));
+			
+			//	값 전달
+			model.addAttribute("beginRow", beginRow);
+			model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
+			model.addAttribute("noticeCategory", noticeCategory);
+			model.addAttribute("noticePinList", map.get("noticePinList"));
+			model.addAttribute("noticeList", map.get("noticeList"));
+			model.addAttribute("lastPage", map.get("lastPage"));
+			model.addAttribute("currentPage", currentPage);
+			
+			//	10개의 page 번호를 출력하기 위한 변수
+			int pageNo = ((beginRow / 100) * 10 + 1);
+			log.debug(" ├[param] pageNo : " + "pageNo");
+			model.addAttribute("pageNo", pageNo);
+		return "admin/noticeAdminList";
+	}
+	//[윤경환] 관리자가 볼수 있는 공지 사항 세부 정보
+	@GetMapping("/admin/noticeAdminOne")
+	public String getNoticeAdminOne(int noticeNo, Model model) {
+		Notice notice = noticeService.getNoticeOne(noticeNo);
+		
+		model.addAttribute(notice);
+		
+		return "admin/noticeAdminOne";
+	}
+	
+	//[윤경환]notice 수정
+	@GetMapping("/admin/modifyAdminNotice")
+	public String modifyNotice(Model model, int noticeNo) {
+		log.debug("[Debug] \"START\" NoticeController.modifyNotice() | Get");
+		log.debug(" ├[param] noticeNo : " + noticeNo);
+		
+		// 수정 전 기존 값 출력
+		Notice Notice = noticeService.getNoticeOne(noticeNo);
+		model.addAttribute(Notice);
+		
+		return "admin/modifyAdminNotice";
+	}
+	@PostMapping("/admin/modifyAdminNotice")
+	public String modifyNotice(Notice notice) {
+		log.debug("[Debug] \"START\" NoticeController.modifyNotice() | Post");
+		log.debug(" ├[param] Notice : "+ notice.toString());
+		
+		noticeService.modifyNotice(notice);
+		
+		return "redirect:noticeAdminList?noticeNo="+notice.getNoticeNo();
+	}
+	
 }

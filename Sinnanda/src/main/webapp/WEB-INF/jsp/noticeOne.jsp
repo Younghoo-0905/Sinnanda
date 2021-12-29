@@ -132,14 +132,7 @@
 				</tr>
 			</table>
 			
-			<!-- 본인의 게시글일 경우 수정, 삭제 -->
-			<c:if test="${loginUser.admin.adminNo == notice.adminNo}">
-				<div>
-					<a class="btn btn-primary" href="/noticeList" style="float: left; margin-top: auto;">목록</a>				
-					<a class="btn btn-primary" href="/admin/removeNotice?noticeNo=${notice.noticeNo}" style="float: right; margin-top: auto;">공지 삭제</a>
-					<a class="btn btn-primary" href="/admin/modifyNotice?noticeNo=${notice.noticeNo}" style="float: right; margin-top: auto;">공지 수정</a>
-				</div>
-			</c:if>		
+			
 		</div>			
 	</section>
 	<!-- [김영후] 공지 상세보기 END -->	

@@ -35,9 +35,9 @@
 		// [이승준] 리뷰 답변 입력 여부 확인
 		function formCheck(){
 			// 내용
-			if($("#hostQnaCommentContent").val() == ""){
+			if($("#qnaCommentContent").val() == ""){
 				alert("답변 내용을 입력해주세요.");
-				$("#hostQnaCommentContent").focus();
+				$("#qnaCommentContent").focus();
 				return false;
 			}
 		}
@@ -78,7 +78,7 @@
 										<table class="table table-myPage" style="width: 100%;">
 											<tr>
 												<th style="width: 5%; font-size: 20px; text-align:center;">제목</th>
-												<td style="width: 70%; style="font-size: 20px;">${qna.qnaTitle}</td>
+												<td style="width: 70%;" >${qna.qnaTitle}</td>
 												<th style="width: 50px; text-align:center;">비밀문의</th>
 												<td>${qna.qnaSecret}</td>
 											</tr>
@@ -106,16 +106,16 @@
 										<h2><strong>관리자 답변</strong></h2>
 										
 										
-											<!-- [이승준] 비회원 or 회원, 답변이 없을 때 -->
-										<c:if test="${hostQna.hostQnaComments.hostQnaCommentContent == null}">
-											<form onsubmit="return formCheck()" action="/admin/addHostQnaComment" method="post">
+											<!-- [윤경환] 비회원 or 회원, 답변이 없을 때 -->
+										<c:if test="${qna.qnaComments.qnaCommentContent == null}">
+											<form onsubmit="return formCheck()" action="/admin/addMemberQnaComment" method="post">
 											
 													<input type ="hidden" id="adminNo" name ="adminNo" value ="${loginUser.admin.adminNo}">
-													<input type ="hidden" id="hostQnaNo" name ="hostQnaNo" value ="${hostQna.hostQnaNo}">
+													<input type ="hidden" id="qnaNo" name ="qnaNo" value ="${qna.qnaNo}">
 												<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 														<tr>
 															<th style="width: 30%; text-align:center;">내용</th>
-															<td><textarea id="hostQnaCommentContent" name="hostQnaCommentContent" cols="100%" rows="5"></textarea></td>
+															<td><textarea id="qnaCommentContent" name="qnaCommentContent" cols="100%" rows="5"></textarea></td>
 															<td><button class="btn btn-primary" type="submit">답변하기</button></td>
 														</tr>			
 													</table>
@@ -125,18 +125,18 @@
 											
 											<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 											<!-- [이승준] 공통, 답변이 있을 때 -->
-											<c:if test="${hostQna.hostQnaComments.hostQnaCommentContent != null}">
+											<c:if test="${qna.qnaComments.qnaCommentContent != null}">
 													<tr>
 														<th style="width: 100px; text-align:center;">답변자</th>
 														<th style="text-align:center;">답변 내용</th>
 														<th style="width: 150px; text-align:center;">작성일</th>
 													</tr>
 													<tr>
-														<td style="text-align:center;">${hostQna.hostQnaComments.adminNo}</td>
+														<td style="text-align:center;">${qna.qnaComments.adminNo}</td>
 														<td>
-														<textarea cols="50" rows="3"  disabled>${hostQna.hostQnaComments.hostQnaCommentContent}</textarea></td>
+														<textarea cols="50" rows="3"  disabled>${qna.qnaComments.qnaCommentContent}</textarea></td>
 														<td style="text-align:center;">
-															<fmt:parseDate value="${hostQna.hostQnaComments.commentDate}" var="commentDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+															<fmt:parseDate value="${qna.qnaComments.commentDate}" var="commentDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
 															<fmt:formatDate value="${commentDate}" pattern="yy/MM/dd HH:mm"/>
 														</td>
 													</tr>

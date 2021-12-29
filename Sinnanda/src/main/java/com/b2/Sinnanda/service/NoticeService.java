@@ -93,6 +93,7 @@ public class NoticeService {
 		returnMap.put("noticePinList", noticePinList);
 		returnMap.put("noticeList", noticeList);
 		returnMap.put("lastPage", lastPage);
+		returnMap.put("noticeTotalCount", totalCount);
 		
 		return returnMap;
 	}

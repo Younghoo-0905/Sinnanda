@@ -97,7 +97,7 @@
 			n.notice_pin = 'yes'
 		</where>
 		ORDER BY create_date DESC
-		LIMIT 0, 5
+		LIMIT 0, 2
 	</select>
 	
 	<!-- [김영후] Notice 목록조회 Map -->
@@ -139,4 +139,7 @@
 			</where>
 		</if>
 	</select>
+	
+	
+	
 </mapper>

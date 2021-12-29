@@ -154,7 +154,10 @@
 		LEFT JOIN member m 
 			ON q.member_no = m.member_no
 		WHERE EXISTS(SELECT qn.qna_comment_content FROM qna_comment) 
-			AND qn.qna_comment_content IS null
+			AND qn.qna_comment_content IS null 
+			<if test ="qnaCategory != null">
+					AND qna_category = #{qnaCategory}
+			</if>
 		ORDER BY q.create_date DESC 
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
@@ -170,7 +173,7 @@
 			AND qna_comment_content IS null
 		ORDER BY update_date DESC 
 	</select>
-
+	
 
 <!-- 2. 삽입 -->
  

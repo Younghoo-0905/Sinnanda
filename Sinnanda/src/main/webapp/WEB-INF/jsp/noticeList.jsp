@@ -106,12 +106,6 @@
 				</c:forEach>
 			</table>
 						    
-			<!-- 관리자인 경우 공지사항 작성 링크 -->
-			<c:if test="${loginUser.userLevel == 3}">
-				<div>
-					<a class="btn btn-primary" href="/admin/addNotice" style="float: right; margin-top: auto;">공지사항 작성</a>
-				</div>
-			</c:if>
 			
 			<!-- [김영후] Paging -->	
 			<div class="row mt-5">

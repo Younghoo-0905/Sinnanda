@@ -79,8 +79,14 @@ public class QnaService {
 		return qnaMapper.selectQnaOne(qnaNo);
 	}
 	//[윤경환] 관리자 답변이 없는 화원 QNA
-	public Map<String,Object> getAdminQnaList(int beginRow, int rowPerPage){
+	public Map<String,Object> getAdminQnaList(String qnaCategory, int beginRow, int rowPerPage){
 		Map<String, Object> paraQnaListMap = new HashMap<>();
+
+		// 0. "전체"의 카테고리를 조회하는 경우, null 값으로 변경 -> 쿼리에서 WHERE절이 실행되지 않도록 한다 (by 김영후)
+		if(qnaCategory == null || qnaCategory.equals("전체")) {
+			qnaCategory = null;
+		}
+		paraQnaListMap.put("qnaCategory", qnaCategory);
 		paraQnaListMap.put("beginRow", beginRow);
 		paraQnaListMap.put("rowPerPage", rowPerPage);
 		
@@ -88,11 +94,22 @@ public class QnaService {
 		dl.p("getAdminQnaList", "AdminQnaList", adminQnaList);
 		
 		int totalCount = qnaMapper.selectAdminQnaTotalCount();
+		
+		// 4. 해당 목록의 "끝 페이지 번호" 가공
+		int lastPage = 0;
+		lastPage = totalCount / rowPerPage;	// 총 게시글의 개수와 한 페이지에 보여줄 개수를 나눠주면 -> 페이지의 개수
+		// 4-1. 나머지 페이지가 있는 경우
+		if(totalCount % rowPerPage != 0) {	// 조건 : 총 페이지(101), 페이지당 출력 개수(10) -> 총 11 페이지가 필요하게 됨으로
+			lastPage += 1;
+		}
+		dl.p("getQnaList()", "lastPage", lastPage);
+				
 		dl.p("getAdminQnaList()", "totalCount", totalCount);
 		Map<String, Object> returnMap = new HashMap<>();
 		
 		returnMap.put("adminQnaList", adminQnaList);
 		returnMap.put("totalCount", totalCount);
+		returnMap.put("lastPage", lastPage);
 		
 		
 		return returnMap;

@@ -109,6 +109,40 @@ public class QnaController {
 		return "qnaOne";
 	}
 	
+	//[윤경환] 관리자가 볼수 있는 답변이 안된 회원 QNA 목록
+	@GetMapping("/admin/memberQnaList")
+	public String getMemberQnaList(HttpSession session, Model model, 
+			@RequestParam(defaultValue = "1") int currentPage, 
+			@RequestParam(defaultValue = "전체") String qnaCategory) {
+		dl.p("QnaController", "qnaList() | Get", "시작");
+		dl.p("qnaList()", "currentPage", currentPage);
+		dl.p("qnaList()", "qnaCategory", qnaCategory);
+		
+		// 1. 로그인 세션 조회
+		User loginUser = (User)session.getAttribute("loginUser");
+		dl.p("complainList()", "loginUser", loginUser.toString());
+		
+		// 2. 페이지번호의 출력을 시작하는 수를 구하기 수식
+		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE;
+
+		// 3. "회원문의 목록" 조회 서비스 호출
+		Map<String, Object> map = qnaService.getAdminQnaList(qnaCategory, beginRow, ROW_PER_PAGE);
+		
+		// 4. 10개의 페이지번호의를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		dl.p("complainList()", "pageNo", pageNo);
+		
+		// 5. 모델 전달
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("qnaCategory", qnaCategory);
+		model.addAttribute("adminQnaList", map.get("adminQnaList"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
+		return "admin/memberQnaList";
+	}
+	//[윤경환] 관리자가 볼수 있는 답변이 안된 회원 QNA
 	@GetMapping("/admin/memberQnaOne")
 	public String getMemberQnaList(HttpSession session, Model model, int qnaNo) {
 		User loginUser = (User)session.getAttribute("loginUser");
@@ -167,7 +201,20 @@ public class QnaController {
 		return "redirect:/qnaOne?qnaNo="+qnaComment.getQnaNo();
 	}
 	
-	
+	//[윤경환] "관리자가 회원문의" 삽입
+	@PostMapping("/admin/addMemberQnaComment")
+	public String addMemberQnaComment(QnaComment qnaComment) {
+		
+		
+		dl.p("QnaController", "addQnaComment() | Post", "시작");
+		dl.p("addQnaComment()", "qnaComment", qnaComment.toString());
+		
+		// 1. "회원문의 답변" 삽입 서비스 호출
+		qnaService.addQnaComment(qnaComment);
+		
+		return "redirect:/admin/memberQnaOne?qnaNo="+qnaComment.getQnaNo();
+		
+	}
 	
 /* 3. 수정 */
 	
