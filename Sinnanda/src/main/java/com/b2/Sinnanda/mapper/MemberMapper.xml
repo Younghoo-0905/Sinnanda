@@ -126,6 +126,9 @@
 		<result column="qna_secret" property="qnaSecret"/>
 		<result column="create_date" property="createDate"/>
 		<result column="member_name" property="memberName"/>
+		<collection property="qnaComments" ofType="com.b2.Sinnanda.vo.QnaComment">
+			<result column="admin_no" property="adminNo"/>
+		</collection>
 	</resultMap>
 	
 	<!-- [유동진] 내가 작성한 QnA 목록 조회 -->
@@ -137,10 +140,11 @@
          q.qna_title, 
          q.qna_secret, 
          q.create_date, 
-         m.member_name
+         m.member_name,
+         qc.admin_no
       FROM qna q
-      LEFT JOIN member m
-         ON q.member_no = m.member_no
+      LEFT JOIN member m ON q.member_no = m.member_no
+      LEFT JOIN qna_comment qc ON q.qna_no = qc.qna_no
       <if test="qnaCategory != null">
          <where>
             q.member_no = #{memberNo} AND qna_category = #{qnaCategory}
@@ -256,7 +260,16 @@
 		JOIN member m ON re.member_no = m.member_no
 		JOIN room r ON r.room_no = re.room_no
 		JOIN accom ac ON r.accom_no = ac.accom_no
-		WHERE m.member_no = #{memberNo};
+		<if test="reserveUse != null">
+         <where>
+            m.member_no = #{memberNo} AND reserve_use = #{reserveUse}
+         </where>
+      </if>
+      <if test="reserveUse == null">
+         <where>
+            m.member_no = #{memberNo}
+         </where>
+      </if>	
 	</select>
 	
 	<!-- [유동진] 예약내역 상세조회 -->
@@ -327,10 +340,10 @@
 		JOIN accom a ON a.accom_no = ro.accom_no
 		JOIN member m ON r.member_no = m.member_no
 		<if test="complainCategory != null">
-         <where>
-            m.member_no = #{memberNo} AND complain_category = #{complainCategory}
-         </where>
-      </if>
+        	<where>
+         		m.member_no = #{memberNo} AND complain_category = #{complainCategory}
+         	</where>
+      	</if>
       <if test="complainCategory == null">
          <where>
             m.member_no = #{memberNo}

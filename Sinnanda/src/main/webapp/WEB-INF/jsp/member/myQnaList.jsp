@@ -75,6 +75,9 @@
 					<tr>
 						<td style="text-align:center">${qna.qnaNo}</td>
 						<td>
+							<c:if test="${qna.qnaComments.adminNo != null}">
+								<span style="color: #CD5C5C; font-weight: bold;">[답변 완료]</span>
+							</c:if>
 							<a href="/member/myQnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
 							<c:if test="${qna.qnaSecret == '비밀문의'}">
 								<img src="/images/qna/lockImg.png" width="20px" height="20px">

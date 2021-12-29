@@ -52,6 +52,7 @@
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
+								<span class="subheading"><a href="myReserveList">나의 예약내역</a> > 예약내역 상세보기</span>
 									<table class="table table-board">
 										<tr>
 											<td>예약번호</td>

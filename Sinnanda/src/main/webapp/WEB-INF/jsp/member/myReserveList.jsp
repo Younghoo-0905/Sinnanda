@@ -53,7 +53,17 @@
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									
+								<section class="ftco-section testimony-section bg-light">
+									<div class="container1">
+									<select id="reserveUse" name="reserveUse" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 40px;">
+										<option value="">선택</option>
+										<option value="/member/myReserveList">전체</option>
+										<option value="/member/myReserveList?reserveUse=이용전">이용전</option>
+										<option value="/member/myReserveList?reserveUse=중간취소">중간취소</option>
+										<option value="/member/myReserveList?reserveUse=이용완료">이용완료</option>
+										<option value="/member/myReserveList?reserveUse=결제대기">결제대기</option>
+									</select>
+									</div>	
 									<table class="table table-hover" style="width: 100%;">
 										<tr>
 											<th>예약번호</th>
@@ -73,7 +83,7 @@
 									</c:forEach>	
 									
 									</table>
-									
+									</section>
 								</div>
 							</div>
 						</div>
