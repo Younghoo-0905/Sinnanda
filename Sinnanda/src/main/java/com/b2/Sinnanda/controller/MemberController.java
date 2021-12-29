@@ -33,9 +33,26 @@ public class MemberController {
 	@Autowired CertifyEmailService certifyEmailService;
 	@Autowired DL dl;
 	
+	//	[김영후] 휴면계정 해제 요청
+	@GetMapping("/member/activeMember")
+	public String activeMember(HttpSession session) {
+
+		User loginUser = (User)session.getAttribute("loginUser");
+		memberService.activeMember(loginUser.getMember().getMemberNo());
+		
+		return "redirect:/index";
+	}
+	
 	// [유동진] 마이페이지
 	@GetMapping("/member/myPage")
-	public String myPage(Model model, int memberNo) {
+	public String myPage(HttpSession session, Model model, int memberNo) {
+		
+		//	[김영후] 로그인 한 memberNo 일치하지 않을 경우 index 화면으로
+		User loginUser = (User)session.getAttribute("loginUser");
+		if(loginUser.getMember().getMemberNo() != memberNo) {
+			log.debug("로그인 정보 불일치");
+			return "redirect:/index";
+		}
       // memberNo을 이용해서 member의 데이터들을 조회하고, member 객체에 삽입
       Member member = memberService.myPage(memberNo);
       log.debug("멤버 넘버 : "+ memberNo);

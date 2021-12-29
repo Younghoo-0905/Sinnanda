@@ -10,6 +10,9 @@ import com.b2.Sinnanda.vo.User;
 @Mapper
 public interface LoginMapper {
 	
+	//	[김영후] Member 마지막 로그인 날짜 데이터 갱신
+	public void updateMemberLastLogin(int memberNo);
+	
 	// [이승준] 모든 테이블 조회 로그인
 	public String selectLoginCheckAll(User user);
 	

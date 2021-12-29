@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.b2.Sinnanda.mapper.PaymentMapper">
+
+	<!-- [김영후] 예약 취소 완료 후 결제 환불 -->
+	<update id="refundPayment" parameterType="int">
+		UPDATE 
+			payment
+		SET
+			payment_refund = '환불', 
+			update_date = NOW()
+		WHERE
+			reserve_no = #{reserveNo}		
+	</update>
+
+	<!-- [김영후] 결제 정보 입력 -->
+	<insert id="insertPayment" parameterType="com.b2.Sinnanda.vo.Payment">
+		INSERT INTO
+			payment(
+				reserve_no, 
+				payment_method, 
+				payment_price, 
+				create_date, 
+				update_date
+			) VALUES (
+				#{reserveNo},
+				#{paymentMethod},
+				#{paymentPrice},
+				NOW(),
+				NOW()
+			)
+	</insert>
+</mapper>

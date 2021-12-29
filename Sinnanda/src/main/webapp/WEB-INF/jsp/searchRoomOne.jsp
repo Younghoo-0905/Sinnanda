@@ -92,6 +92,7 @@
 	          			<h4 class="mb-5">예약 정보</h4>
 	          			<div class="fields">
 	          				<div class="row">
+	          					<!-- 예약 관련 데이터 -->
 				              <div class="col-md-6">
 					              <div class="form-group">
 					                <input type="text" id="checkin_date" name="reserveCheckIn" class="form-control" placeholder="체크인 날짜">
@@ -120,6 +121,28 @@
 					                <input type="text" class="form-control" placeholder="요청사항">
 					              </div>
 				              </div>
+				              
+				              <!-- 결제 관련 데이터 -->
+				              
+					          <div class="col-md-6">
+						          <div class="form-group">
+					              <div class="select-wrap one-third">
+				                  	<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+					                  <select name="paymentMethod" id="paymentMethod" class="form-control">
+					                  	<option value="">결제 방법 선택</option>
+						                <option value="카드">카드</option>
+						                <option value="현장 결제">현장 결제</option>
+						                <option value="무통장 입금">무통장 입금</option>
+					                  </select>
+				                  </div>
+					              </div>
+				              </div>				              
+				              <div class="col-md-6">
+					              <div class="form-group">
+					                <input type="hidden" name="paymentPrice" class="form-control" value="${room.roomPrice}">
+					                <input type="text" class="form-control" value="${room.roomPrice} ₩" readonly="readonly">
+					              </div>
+				              </div>        
 					            <div class="col-md-12">
 					              <div class="form-group">
 					                <button type="button" id="reserveBtn" class="btn btn-primary py-3">예약</button>

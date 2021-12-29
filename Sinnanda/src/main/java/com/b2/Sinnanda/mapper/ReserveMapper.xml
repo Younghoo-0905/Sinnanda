@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.ReserveMapper">
+	
+	<!-- [김영후] (스케쥴러) 예약 내역 '이용 완료' 상태변경 -->
+	<update id="modifyReserveUseCheckOut">
+		UPDATE 
+			reserve r 
+			INNER JOIN 
+			room ro 
+			ON 
+			r.room_no = ro.room_no
+		SET r.reserve_use = '이용 완료'
+		WHERE 
+			r.reserve_use = '이용 중' 
+			AND
+			r.reserve_check_out = CURDATE() 
+			AND
+			CURTIME() > ro.room_check_out
+	</update>	
+
+	<!-- [김영후] (스케쥴러) 예약 내역 '이용 중' 상태변경. 체크인 당일부터 예약취소 불가 -->
+	<update id="modifyReserveUseCheckIn">
+		UPDATE 
+			reserve r 
+			INNER JOIN 
+			room ro 
+			ON 
+			r.room_no = ro.room_no
+		SET r.reserve_use = '이용 중'
+		WHERE 
+			r.reserve_use = '이용 전' 
+			AND
+			r.reserve_check_in = CURDATE() 
+			AND
+			CURTIME() > ro.room_check_in
+	</update>	
+	
+	<!-- [김영후] 예약 취소 -->
+	<update id="cancelReserve" parameterType="int">
+		UPDATE 
+			reserve
+		SET
+			reserve_use = '중간 취소', 
+			reserve_cancel_date = NOW()
+		WHERE
+			reserve_no = #{reserveNo}
+	</update>
 
 	<!-- [김영후] 예약 등록 -->
 	<insert id="insertReserve" parameterType="com.b2.Sinnanda.vo.Reserve">
@@ -19,7 +64,12 @@
 				#{reservePersonnel},
 				#{reserveCheckIn},
 				#{reserveCheckOut}				
-			)	
+			)				
+			<!-- 결제 정보 추가를 위한 reserveNo키값 추출 -->
+	        <selectKey keyProperty="reserveNo" order="AFTER" resultType="int">
+	            SELECT LAST_INSERT_ID()
+	        </selectKey>
+			
 	</insert>
 
 </mapper>

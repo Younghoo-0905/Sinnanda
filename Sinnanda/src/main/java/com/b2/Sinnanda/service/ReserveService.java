@@ -14,10 +14,29 @@ public class ReserveService {
 	@Autowired ReserveMapper reserveMapper;
 	@Autowired DL dl;
 	
-	public void addReserve(Reserve reserve) {
+	//	[김영후]	Reserve (스케쥴러) '이용 완료' 상태변경
+	public int modifyReserveUseCheckOut() {
+		return reserveMapper.modifyReserveUseCheckOut();
+	}
 		
-		//	입력받은 DATE 값을 DB 세팅에 맞게 format
-		//	checkIn 날짜
+	//	[김영후]	Reserve (스케쥴러) '이용 중' 상태변경
+	public int modifyReserveUseCheckIn() {
+		return reserveMapper.modifyReserveUseCheckIn();
+	}
+	
+	//	[김영후]	Reserve 취소
+	public void cancelReserve(int reserveNo) {
+		dl.p("ReserveService", "cancelReserve", reserveNo);
+		
+		reserveMapper.cancelReserve(reserveNo);
+	}
+	
+	
+	//	[김영후]	Reserve 등록
+	public void addReserve(Reserve reserve) {
+		dl.p("ReserveService", "addReserve", reserve);
+		// 입력받은 DATE 값을 DB 세팅에 맞게 format
+			//	checkIn 날짜
 		String[] checkInData = null;
 		checkInData = reserve.getReserveCheckIn().split("/");
 		String inYear = checkInData[2];
@@ -28,7 +47,7 @@ public class ReserveService {
 		}
 		reserve.setReserveCheckIn(inYear + "-" + inMonth + "-" + inDay);
 		
-		//	checkOut 날짜
+			//	checkOut 날짜
 		String[] checkOutData = null;
 		checkOutData = reserve.getReserveCheckOut().split("/");
 		String outYear = checkOutData[2];

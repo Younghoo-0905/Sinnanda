@@ -17,6 +17,12 @@ public class LoginService {
 	@Autowired LoginMapper loginMapper;
 	User loginUser = new User();
 	
+	//	[김영후] Member 마지막 로그인 날짜 갱신
+	public void updateMemberLastLogin(int memberNo) {
+		loginMapper.updateMemberLastLogin(memberNo);
+	}
+	
+	
 	// [이승준] 통합 로그인 
 	public User getLoginCheckAll(User user) {
 		log.debug("[Debug] \"START\" LoginService.getLoginCheckAll()");

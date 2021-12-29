@@ -46,15 +46,23 @@ public class LoginController {
 		}
 		
 		session.setAttribute("loginUser", loginUser);
-		
-		//	[김영후] 이메일 인증여부 확인
+				
+		//	[김영후] 이메일 인증여부, 휴면계정 확인
 		if(loginUser.getMember() != null) {		//	로그인 요청한 유저가 Member인 경우 실행
 			int memberActive = memberService.getCertifyMember(loginUser.getMember());
-			log.debug("로그인 멤버 이메일 인증 여부 : " + memberActive);
 			if(memberActive == 0) {		//	active = 0 인 Member는 이메일 인증 화면으로
+				log.debug("로그인 멤버 이메일 미인증");
 				return "certifyEmailForm";
 			}
+			if(memberActive == 2) {		//	active = 2 인 Member는 휴면 해제 화면으로
+				log.debug("로그인 멤버 휴면 계정 상태");
+				return "activeMemberForm";
+			}
 		}		
+		
+		//	[김영후]	로그인 성공한 Member의 마지막 접속일자 갱신 
+		loginService.updateMemberLastLogin(loginUser.getMember().getMemberNo());
+		
 		return "redirect:/index";	
 	}
 	

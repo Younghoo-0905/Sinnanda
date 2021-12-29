@@ -58,10 +58,9 @@
 									<select id="reserveUse" name="reserveUse" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 40px;">
 										<option value="">선택</option>
 										<option value="/member/myReserveList">전체</option>
-										<option value="/member/myReserveList?reserveUse=이용 전">이용 전</option>
-										<option value="/member/myReserveList?reserveUse=중간 취소">중간 취소</option>
-										<option value="/member/myReserveList?reserveUse=이용 완료">이용 완료</option>
-										<option value="/member/myReserveList?reserveUse=결제 대기">결제 대기</option>
+										<option value="/member/myReserveList?reserveUse=이용 전">이용전</option>
+										<option value="/member/myReserveList?reserveUse=중간 취소">중간취소</option>
+										<option value="/member/myReserveList?reserveUse=이용 완료">이용완료</option>
 									</select>
 									</div>	
 									<table class="table table-hover" style="width: 100%;">

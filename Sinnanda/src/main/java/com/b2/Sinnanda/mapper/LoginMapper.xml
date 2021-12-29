@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.LoginMapper">
+
+	<!-- [김영후] Member 로그인 성공 시 마지막 접속일 업데이트 -->
+	<update id="updateMemberLastLogin" parameterType="int">
+		UPDATE
+			member
+		SET
+			last_login_date = NOW()
+		WHERE 
+			member_no = #{memberNo}
+	</update>
 	
 	<!-- [이승준] 로그인 회원 유형 조회 (반환 값이 String인 이유, 조회 실패 시 null 반환되기 때문)-->
 	<select id="selectLoginCheckAll" parameterType="com.b2.Sinnanda.vo.User" resultType="String">

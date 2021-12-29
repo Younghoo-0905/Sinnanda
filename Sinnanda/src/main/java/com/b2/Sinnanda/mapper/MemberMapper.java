@@ -17,6 +17,13 @@ import com.b2.Sinnanda.vo.Review;
 
 @Mapper
 public interface MemberMapper {
+	
+	//	[김영후]	member 휴면계정 해제
+	void activeMember(int memberNo);
+	
+	//	[김영후]	(스케쥴러) 1년 이상 미접속 계정 휴면 변경
+	int modifyMemberActive();
+	
 	// [유동진] 마이페이지
 	Member selectMyPage(int memberNo);
 		

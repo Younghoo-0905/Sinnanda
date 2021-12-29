@@ -28,6 +28,16 @@ public class MemberService {
 	
 	@Autowired MemberMapper memberMapper;
 	@Autowired DL dl;
+		
+	//	[김영후]	member 휴면계정 해제
+	public void activeMember(int memberNo){
+		memberMapper.activeMember(memberNo);
+	}
+	
+	//	[김영후]	(스케쥴러) 1년 이상 미접속 계정 휴면 변경
+	public int modifyMemberActive() {
+		return memberMapper.modifyMemberActive();
+	}
 	
 	// [유동진] 마이페이지
 	public Member myPage(int memberNo) {
