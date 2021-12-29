@@ -82,7 +82,7 @@
           		</div>
           		
           		<!-- 예약 Form -->
-          		<form action="/member/reserveRoom" id="reserveForm" method="post">
+          		<form action="/member/addReserve" id="reserveForm" method="post">
           		
           			<!-- member, room 정보 -->
           			<input type="hidden" name="memberNo" value="${loginUser.member.memberNo}">
@@ -109,7 +109,7 @@
 				                    <select name="reservePersonnel" id="reservePersonnel" class="form-control">
 				                    	<option value="">인원 선택</option>
 				                    	<c:forEach var="i" begin="1" end="${room.roomPerson}">
-					                      <option value="i">${i}</option>
+					                      <option value="${i}">${i}</option>
 				                    	</c:forEach>
 				                    </select>
 				                  </div>
@@ -224,21 +224,20 @@
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
   
-  <!-- [김영후] 예약 입력 폼 유효성 검사 -->
-  <script>
-  	$('#reserveBtn').click(function(){
-  		if($('#checkin_date').val() == '' || $('#checkout_date').val() == '') {
-  			alert("예약 날짜를 선택하세요");
-  			return false;
-  		}
-  	  	if($('#reservePersonnel').val() == '') {
-  	  		alert("인원을 선택하세요");
-  	  		return false;
-  	  	}
-  	  	
-  	  	$('#reserveForm').submit();
-  	})
-  </script>
-    
-  </body>
+	<!-- [김영후] 예약 입력 폼 유효성 검사 -->
+	<script>
+		$('#reserveBtn').click(function(){
+			if($('#checkin_date').val() == '' || $('#checkout_date').val() == '') {
+				alert("예약 날짜를 선택하세요");
+				return false;
+			}
+		  	if($('#reservePersonnel').val() == '') {
+		  		alert("인원을 선택하세요");
+		  		return false;
+		  	}
+		  	$('#reserveForm').submit();
+		})
+	</script>
+  
+</body>
 </html>

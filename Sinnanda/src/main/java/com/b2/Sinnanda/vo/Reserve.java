@@ -10,6 +10,7 @@ public class Reserve {
 	private String reserveDate;
 	private String reserveUse;
 	private String reserveInfo;
+	private int reservePersonnel;
 	private String reserveCancelDate;
 	private String reserveCheckIn;
 	private String reserveCheckOut;

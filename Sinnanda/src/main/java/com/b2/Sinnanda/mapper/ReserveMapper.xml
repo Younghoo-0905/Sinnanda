@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.b2.Sinnanda.mapper.ReserveMapper">
+
+	<!-- [김영후] 예약 등록 -->
+	<insert id="insertReserve" parameterType="com.b2.Sinnanda.vo.Reserve">
+		INSERT INTO 
+			reserve(
+				member_no, 
+				room_no, 
+				reserve_info, 
+				reserve_personnel, 
+				reserve_check_in, 
+				reserve_check_out
+			) VALUES (
+				#{memberNo},
+				#{roomNo},
+				#{reserveInfo},
+				#{reservePersonnel},
+				#{reserveCheckIn},
+				#{reserveCheckOut}				
+			)	
+	</insert>
+
+</mapper>
