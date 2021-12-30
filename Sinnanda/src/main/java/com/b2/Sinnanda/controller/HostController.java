@@ -47,8 +47,8 @@ public class HostController {
 		User loginUser = (User)session.getAttribute("loginUser");
 		dl.p("getHostPage()", "loginUser", loginUser.toString());
 		
-		//Address address = addressService.getAddressOne("서울특별시 양천구 목동중앙본로2길 38-38");
-		Address address = addressService.getAddressOne("서울특별시 금천구 가마산로 70");
+		Address address = addressService.getAddressOne("서울특별시 양천구 목동중앙본로2길 38-38");
+		//Address address = addressService.getAddressOne("서울특별시 금천구 가마산로 70");
 		
 		Host host = hostService.getHostOneWithAddress(loginUser.getHost().getHostNo());
 		
