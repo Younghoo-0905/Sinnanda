@@ -23,8 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 //	[김영후] 유저 권한 별 필터링 작업 21.12.14
 // [이원희] 디버그 메소드 적용 21.12.20
 
-@Slf4j
-@WebFilter(urlPatterns = {"/member/*", "/addQna"})
+@WebFilter(urlPatterns = "/member/*")
 public class MemberFilter implements Filter {
 	@Autowired DL dl;
 	
@@ -53,6 +52,16 @@ public class MemberFilter implements Filter {
 		} else {
 			loginUser = (User)session.getAttribute("loginUser");
 			dl.p("MemberFilter", "user", loginUser.toString());
+			//	이메일 인증여부 검사
+			if(loginUser.getMember().getMemberActive() == 0) {
+				dl.p("MemberFilter", "doFilter()", "이메일 미인증 계정입니다. 인증 페이지로 이동");
+				req.getRequestDispatcher("/certifyEmailForm").forward(request, response);	
+			}
+			//	휴면 여부 검사
+			if(loginUser.getMember().getMemberActive() == 2) {
+				dl.p("MemberFilter", "doFilter()", "휴면 계정입니다. 휴면해제 페이지로 이동");
+				req.getRequestDispatcher("/activeMemberForm").forward(request, response);	
+			}
 			//	UserLevel 검사
 			if(loginUser.getUserLevel() != 1) {
 				dl.p("MemberFilter", "doFilter()", "User 권한 부족, 로그인 페이지로 이동");

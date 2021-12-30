@@ -30,6 +30,7 @@
 			   member_age memberAge, 
 			   member_tel memberTel, 
 			   member_email memberEmail, 
+			   member_active memberActive, 
 			   member_level memberLevel, 
 			   create_date createDate, 
 			   update_date updateDate 

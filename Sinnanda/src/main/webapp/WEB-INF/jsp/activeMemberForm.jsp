@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>휴면 상태를 해제하시라요</h1>
+	<h1>이승준 낫 휴면</h1>
 	<br>
-	<button><a href="/member/activeMember">@해제한다요@</a></button>
+	<button><a href="/member/activeMember">@@@ 휴면해제 @@@</a></button>
 </body>
 </html>

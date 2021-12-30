@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.MemberMapper">
+
+	
+	<!-- [김영후] Member 휴면계정 해제 -->
+	<update id="activeMember" parameterType="int">
+		UPDATE
+			member
+		SET
+			member_active = 1
+		WHERE
+			member_no = #{memberNo}
+	</update>
+
+	<!-- [김영후] (스케쥴러) 1년 미접속 회원 휴면 상태변경 -->
+	<update id="modifyMemberActive">
+		UPDATE 
+			member
+		SET 
+			member_active = 2
+		WHERE 
+			DATEDIFF(NOW(), last_login_date) > 365
+	</update>
   
    <resultMap type="com.b2.Sinnanda.vo.Member" id="resultMember">
       <result column="member_no" property="memberNo"/>

@@ -33,6 +33,12 @@ public class MemberController {
 	@Autowired CertifyEmailService certifyEmailService;
 	@Autowired DL dl;
 	
+	//	[김영후] 휴면계정 해제 페이지 요청
+	@GetMapping("/activeMemberForm")
+	public String activeMemberForm() {
+		return "/activeMemberForm";
+	}
+	
 	//	[김영후] 휴면계정 해제 요청
 	@GetMapping("/member/activeMember")
 	public String activeMember(HttpSession session) {
