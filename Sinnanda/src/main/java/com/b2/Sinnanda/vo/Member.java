@@ -16,4 +16,6 @@ public class Member {
 	int memberLevel;
 	String createDate;
 	String updateDate;
+	
+	MemberAddress memberAddress;
 }

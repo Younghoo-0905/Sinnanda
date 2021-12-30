@@ -474,10 +474,15 @@
 	
 	<!-- [김영후] 회원가입 시 ID 중복체크 -->
 	<select id="checkId" parameterType="String" resultType="int">
-		SELECT COUNT(member_id) FROM(
+		SELECT COUNT(member_id)
+		FROM (
 			SELECT member_id FROM member WHERE member_id = #{memberId}
 			UNION
+			SELECT host_id member_id FROM host WHERE host_id = #{memberId}
+			UNION
+			SELECT admin_id member_id FROM admin WHERE admin_id = #{memberId}
+			UNION
 			SELECT member_id FROM member_out WHERE member_id = #{memberId}
-			) AS u
+		) AS u
 	</select>
 </mapper>
