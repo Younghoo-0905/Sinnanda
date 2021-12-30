@@ -53,7 +53,7 @@
 								<div class="card-body">
 									<span class="subheading" style="margin-left: 10px;">회원 List</span>
 									<h1 style="margin-top: 10px;"><strong>회원 리스트</strong></h1>
-									
+								
 								    <div class="container">
 										<div class="container3">
 											<select id="memberActive" name="memberActive" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
@@ -79,7 +79,7 @@
 												<tr style="text-align:center" >
 													<td style="text-align:center">${member.memberNo}</td>
 													<td>
-														<a href="admin/adminOne?adminNo=${member.memberNo}">${member.memberId}</a>
+														<a href="memberAdminOne?memberNo=${member.memberNo}">${member.memberId}</a>
 													</td>
 													<td style="text-align:center"  width="5%">${member.memberPw}</td>
 													<td style="text-align:center"  width="5%">${member.memberName}</td>
@@ -90,7 +90,7 @@
 													<c:when test="${member.memberActive == 0}"> 
 													
 														<td style="text-align:center">
-															 <a href="/admin/modifyMemberAc?memberNo=${member.memberNo}" class="btn btn-block btn-primary " >활성화</a>
+															 <a href="/modifyMemberAc?memberNo=${member.memberNo}" class="btn btn-block btn-primary " >활성화</a>
 														</td>
 													
 													</c:when>

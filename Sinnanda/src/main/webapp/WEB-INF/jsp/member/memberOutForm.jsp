@@ -26,7 +26,8 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title>탈퇴 페이지</title>
+<title>탈퇴 페이지</title>
+
 </head>
 <body>
 	<div class="container-scroller">
@@ -56,11 +57,11 @@
 		<table class="table table-hover" style="width: 100%;">
 			<tr>
 				<td>ID</td>
-				<td><input type="hidden" name="memberId" value="member">${loginUser.member.memberId}</td>
+				<td><input type="text" name="memberId" value = "${loginUser.member.memberId}" readonly></td>
 			</tr>
 			<tr>
 				<td>Password</td>
-				<td><input type="password" name="memberPw"></td>
+				<td><input type="password" name="memberPw" placeholder="비밀번호 입력"></td>
 			</tr>
 			<tr>
 				<td>탈퇴 사유</td>
@@ -73,7 +74,7 @@
 				</td>
 			</tr>								
 		</table>
-		<button type="submit">탈퇴</button>
+		<button  type = "submit" class="btn btn-primary">탈퇴</button>
 	</form>
 								</div>
 							</div>
@@ -90,6 +91,7 @@
 	<!-- [이승준] 하단 Footer - END -->
 
 
+	
   <!-- plugins:js -->
   <script src="/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->

@@ -89,10 +89,7 @@
 		</div>
 	</div>
 	
-	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/footer.jsp" %>
-	<!-- [이승준] 하단 Footer - END -->
-
+	
 
   <!-- plugins:js -->
   <script src="/vendors/js/vendor.bundle.base.js"></script>
