@@ -24,7 +24,8 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title> 페이지</title>
+<title> 페이지</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 	<div class="container-scroller">
@@ -50,7 +51,7 @@
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<form id="pwForm" method="post" action ="/modifyMemberPw">
+									<form id="pwForm" method="post" action ="/member/modifyMemberPw">
 	<input type = "hidden" name ="memberNo" value = "${loginUser.member.memberNo}">
 	
 		<div class="form-group">
@@ -77,7 +78,23 @@
 	<!-- [이승준] 하단 Footer - SATRT -->
 	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
-
+	
+	<!-- [유동진] 유효성검사 -->
+	<script>   
+    // 새로운 비밀번호 설정 및 일치하는지 확인      
+    $('#pwBtn').click(function(){
+       if($('#newMemberPw').val() != $('#newMemberPw2').val()){
+             alert('비밀번호가 일치하지 않습니다.');
+             return;
+       } else if ($('#newMemberPw').val() == ''){
+            	 alert('비밀번호를 입력해주세요.');
+            	 return;
+       } else {
+             alert('비밀번호가 변경성공! 변경된 비밀번호로 다시 로그인 해주세요.');
+             $('#pwForm').submit();
+          }
+       });
+    </script>
 
   <!-- plugins:js -->
   <script src="/vendors/js/vendor.bundle.base.js"></script>

@@ -82,7 +82,7 @@ public interface MemberMapper {
 	int certifyMemberUpdate(Member member);
 	int selectCertifyMember(Member member);
 	
-	//	[김영후] 회원 탈퇴
+	//	[김영후, 유동진] 회원 탈퇴
 	int deleteMember(Member member);
 	
 	//	[김영후] 회원 가입 시 ID 중복체크

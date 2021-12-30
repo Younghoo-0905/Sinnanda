@@ -400,13 +400,30 @@ public class MemberController {
 		}
 	}
 	
-	//	[김영후] 회원 탈퇴
+	//	[김영후, 유동진] 회원 탈퇴
 	@GetMapping("/member/memberOutForm")
+	public String memberOutForm(HttpServletRequest request, Model model) {
+		// 로그인 세션 조회
+		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
+		// 로그인 세션 디버깅
+		if(loginUser != null) {
+			dl.p("MemberController", "memberOutForm()", " loginUser : "+loginUser.toString());
+		} else {
+			dl.p("MemberController", "memberOutForm()", "loginUser : Null");
+		}
+		
+		model.addAttribute(loginUser);
+		return "/member/memberOutForm";
+	}
+	@PostMapping("/member/memberOutForm")
 	public String memberOutForm(HttpSession session, Member member) {
+		dl.p("MemberController", "memberOutForm()", "memberOutForm -> " + member.toString());
 		memberService.removeMember(member);
 		session.invalidate();
-		return "/member/memberOutForm";
-	}	
+		dl.p("MemberController", "memberOutForm()", " 회원탈퇴 성공!");
+		return "redirect:/index";
+	}
 
 	
 	//	[김영후] 회원 가입 시 실시간 ID 중복체크

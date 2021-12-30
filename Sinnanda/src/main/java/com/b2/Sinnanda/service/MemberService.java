@@ -269,7 +269,7 @@ public class MemberService {
 		
 	}
 	
-	//	[김영후] 회원 탈퇴
+	//	[김영후, 유동진] 회원 탈퇴
 	public void removeMember(Member member) {
 		memberMapper.deleteMember(member);
 	}	
