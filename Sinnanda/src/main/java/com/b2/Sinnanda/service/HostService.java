@@ -23,7 +23,7 @@ public class HostService {
 		// 1. "사업자 상세+주소" 조회 서비스 호출
 		Host host = hostMapper.selectHostOneWithAddress(hostNo);
 		dl.p("getHostOneWithAddress()", "host.hostAddress.address", host.getHostAddress().getAddress().toString());
-		
+		dl.p("getHostOneWithAddress()", "getRoadName", host.getHostAddress().getAddress().getRoadName());
 		
 		// 2. "주소" 모델 가공 | 시도+시군구+도로명
 		String addressInfo = 
@@ -33,11 +33,11 @@ public class HostService {
 		
 		// 3-1. '메인건물번호'가 있는 경우 -> 추가
 		if(host.getHostAddress().getAddress().getMainBuildingCode() != 0) {
-			addressInfo = addressInfo+" "+host.getHostAddress().getAddress().getMainJibun();
-			
+			addressInfo = addressInfo+" "+Integer.toString(host.getHostAddress().getAddress().getMainBuildingCode());
+		}
 		// 3-2. '서브거물번호'가 있는 경우 -> 추가
-		} else if(host.getHostAddress().getAddress().getSubBuildingCode() != 0) {
-			addressInfo = addressInfo+"-"+host.getHostAddress().getAddress().getSubJibun();
+		if(host.getHostAddress().getAddress().getSubBuildingCode() != 0) {
+			addressInfo = addressInfo+"-"+Integer.toString(host.getHostAddress().getAddress().getSubBuildingCode());
 		}
 		
 		// 4. 반한활 모델에 주소 데이터 삽입

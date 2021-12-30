@@ -2,120 +2,170 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Sinnanda 회원가입</title>
+	
 	<!-- plugins:css -->
-	<link rel="stylesheet" href="../../vendors/feather/feather.css">
-	<link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
-	<link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
-	<!-- endinject -->
-	<!-- Plugin css for this page -->
-	<!-- End plugin css for this page -->
+	<link rel="stylesheet" href="/skydash/vendors/feather/feather.css">
+	<link rel="stylesheet" href="/skydash/vendors/ti-icons/css/themify-icons.css">
+	<link rel="stylesheet" href="/skydash/vendors/css/vendor.bundle.base.css">
+	
 	<!-- inject:css -->
-	<link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+	<link rel="stylesheet" href="/skydash/css/vertical-layout-light/style.css">
+	
 	<!-- endinject -->
-	<link rel="shortcut icon" href="../../images/favicon.png" />
+	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
+	
 	<!-- 지도 API 관련 태그 -->
-		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=882ef0b6751c864ad60f045a82f613ae&libraries=services"></script>	
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=882ef0b6751c864ad60f045a82f613ae&libraries=services"></script>	
 	<!-- 지도 API 관련 태그 -->
+	
 	<style>
-		.idOk
-		{
+		.idOk{
 			color: #6A82FB; 
 			display: none;
 		}
-		.idUsed
-		{
+		.idUsed{
 			color: red; 
 			display: none;
 		}
-	</style>	
+		.PwOk{
+			color: #6A82FB; 
+			display: none;
+		}
+		.PwNo{
+			color: red; 
+			display: none;
+		}
+	</style>
+	
+	<title>회원가입</title>
 </head>
 
 <body>
-  <div class="container-scroller">
-    <div class="container-fluid page-body-wrapper full-page-wrapper">
-      <div class="content-wrapper d-flex align-items-center auth px-0">
-        <div class="row w-100 mx-0">
-          <div class="col-lg-4 mx-auto">
-            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-              <div class="brand-logo">
-                <img src="../../images/logo.svg" alt="logo">
-              </div>
-              <h4>New here?</h4>
-              <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
-          <!-- 회원 가입 폼 -->
-              <form class="pt-3" method="post" action="insertMember" id="insertMemberForm">
-                <div class="form-group text-center">
-                  <input type="text" class="form-control form-control-lg" name="memberId" id="memberId" placeholder="UserID">
-                  <span class="idOk">사용 가능한 ID입니다</span>
-                  <span class="idUsed">중복된 ID입니다</span>
-                </div>
-               <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" name="memberPw" id="memberPw" placeholder="Password">
-                </div>
-                <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" id="memberPw2" placeholder="Repeat Password">
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="memberName" id="memberName" placeholder="Nickname">
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="memberAge" id="memberAge" placeholder="Age">
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="memberTel" id="memberTel" placeholder="Phone number  ex) 010-0000-0000">
-                </div>
-                <div class="form-group">
-                  <input type="email" class="form-control form-control-lg" name="memberEmail" id="memberEmail" placeholder="Email">
-                </div>                
-                <div class="form-group">
-	                <input type="text" class="form-control form-control-lg" name="addressDetail" id="address" placeholder="Search address" onclick="execDaumPostcode()">
-					<div id="map" style="width:length;height:300px;margin-top:10px;display:none"></div>
-                </div>
-            <!-- 회원 가입 값 입력 END -->
-                <div class="mb-4">
-                  <div class="form-check">
-                    <label class="form-check-label text-muted">
-                      <input type="checkbox" class="form-check-input">
-                      I agree to all Terms & Conditions
-                    </label>
-                  </div>
-                </div>
-                <div class="mt-3">
-                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onclick="return check_form()">SIGN IN</a>
-                </div>
-                <div class="text-center mt-4 font-weight-light">
-                  Already have an account? <a href="login" class="text-primary">Login</a>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- content-wrapper ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- plugins:js -->
-  <script src="../../vendors/js/vendor.bundle.base.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page -->
-  <!-- End plugin js for this page -->
-  <!-- inject:js -->
-  <script src="../../js/off-canvas.js"></script>
-  <script src="../../js/hoverable-collapse.js"></script>
-  <script src="../../js/template.js"></script>
-  <script src="../../js/settings.js"></script>
-  <script src="../../js/todolist.js"></script>
-  <!-- endinject -->
+	<div class="container-scroller">
+		<div class="container-fluid page-body-wrapper full-page-wrapper">
+			<div class="content-wrapper d-flex align-items-center auth px-0">
+				<div class="row w-100 mx-0">
+					<div class="col-lg-4 mx-auto">
+						<div class="auth-form-light text-left py-5 px-4 px-sm-5">
+							
+							<div class="brand-logo">
+								<a href="/index"><img src="/skydash/images/logo.svg" alt="logo"></a>
+							</div>
+							
+							<h4 style="font-weight: bold;">회원가입</h4>
+							
+							<!-- 회원 가입 폼 -->
+							<form class="pt-3" method="post" action="insertMember" id="insertMemberForm">
+								<div class="form-group text-center">
+									<!-- ID -->
+									<div class="input-group mb-3 input-group-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text" style="width: 80px;">ID</span>
+										</div>
+										<input type="text" class="form-control" name="memberId" id="memberId" placeholder="ID">
+										<div style="line-height: 40px;">
+											&nbsp; <span class="idOk">사용 가능한 ID입니다.</span>
+											&nbsp; <span class="idUsed">사용 불가능한 ID입니다.</span>
+										</div>
+									</div>
+									<!-- PW -->
+									<div class="input-group mb-3 input-group-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text" style="width: 80px;">PW</span>
+										</div>
+										<input type="password" class="form-control" name="memberPw" id="memberPw" placeholder="비밀번호">
+									</div>
+									<!-- PW 확인 -->
+									<div class="input-group mb-3 input-group-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text" style="width: 80px;">PW 확인</span>
+										</div>
+										<input type="password" class="form-control" name="memberPw2" id="memberPw2" placeholder="비밀번호 확인">
+										<div style="line-height: 40px;">
+											&nbsp; <span class="PwOk">PW가 일치합니다.</span>
+											&nbsp; <span class="PwNo">PW가 일치하지 않습니다.</span>
+										</div>
+									</div>
+									<!-- 회원이름 -->
+									<div class="input-group mb-3 input-group-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text" style="width: 80px;">이름</span>
+										</div>
+										<input type="text" class="form-control" name="memberName" id="memberName" placeholder="회원이름">
+									</div>
+									<!-- 회원나이 -->
+									<div class="input-group mb-3 input-group-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text" style="width: 80px;">나이</span>
+										</div>
+										<input type="text" class="form-control" name="memberAge" id="memberAge" placeholder="나이">
+									</div>
+									<!-- 회원 전화번호 -->
+									<div class="input-group mb-3 input-group-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text" style="width: 80px;">전화번호</span>
+										</div>
+										<input type="text" class="form-control" name="memberTel" id="memberTel" placeholder="전화번호">
+									</div>
+									<!-- 회원 이메일 -->
+									<div class="input-group mb-3 input-group-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text" style="width: 80px;">이메일</span>
+										</div>
+										<input type="text" class="form-control" name="memberEmail" id="memberEmail" placeholder="이메일">
+									</div>
+									<!-- 회원 주소 -->
+									<div class="input-group mb-3 input-group-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text" style="width: 80px;">주소</span>
+										</div>
+										<input type="text" class="form-control" name="addressInfo" id="addressInfo" placeholder="주소 검색" onclick="execDaumPostcode()">
+									</div>
+									<!-- 회원 상세주소 -->
+									<div class="input-group mb-3 input-group-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text" style="width: 80px;">상세주소</span>
+										</div>
+										<input type="text" class="form-control" name="addressDetail" id="addressDetail" placeholder="상세주소">
+									</div>
+									
+									<div id="map" style="width:length;height:300px;margin-top:10px;display:none"></div>
+									
+								</div>
+								<!-- 회원 가입 값 입력 END -->
+								
+								<div class="mt-3">
+									<a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onclick="return check_form()">회원가입 완료</a>
+								</div>
+								<div class="text-center mt-4 font-weight-light">
+									아이디를 가지고 계신가요? <a href="/login" class="text-primary">로그인 하기</a>
+								</div>
+								<br>
+								<div class="text-center mt-4 font-weight-light">
+									혹시 사업자 이신가요? <a href="/insertHost" class="text-primary">가입하기</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- plugins:js -->
+	<script src="/skydash/vendors/js/vendor.bundle.base.js"></script>
+	<!-- inject:js -->
+	<script src="/skydash/js/off-canvas.js"></script>
+	<script src="/skydash/js/hoverable-collapse.js"></script>
+	<script src="/skydash/js/template.js"></script>
+	<script src="/skydash/js/settings.js"></script>
+	<script src="/skydash/js/todolist.js"></script>
   
-  <!-- [김영후] 유효성 검사 -->
-  	<script>
+	<!-- [김영후] 유효성 검사 -->
+	<script>
 		    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 		        mapOption = {
 		            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
@@ -193,6 +243,18 @@
   			}
   		})
   		
+  		// PW 일치 여부
+  		$('#memberPw2').focusout(function() {
+  			if($('#memberPw').val() != $('#memberPw2').val()){
+				$('.PwOk').css("display", "none");
+				$('.PwNo').css("display", "inline-block");
+				return false;
+			} else {
+				$('.PwOk').css("display", "inline-block");
+				$('.PwNo').css("display", "none");
+			}
+  		})
+  		
 		function check_form() {
 			if($('#memberId').val()==''){
 				alert("ID를 입력하세요.");
@@ -209,7 +271,7 @@
 			if($('#memberPw').val() != $('#memberPw2').val()){
 				alert("비밀번호가 일치하지 않습니다.");
 				return false;
-			}		
+			}
 			if($('#memberName').val()==''){
 				alert("Nickname을 입력하세요.");
 				return false;

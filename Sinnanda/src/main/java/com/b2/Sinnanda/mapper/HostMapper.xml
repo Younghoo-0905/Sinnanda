@@ -67,13 +67,12 @@
 	</resultMap>
 	<!-- 사업자 주소에 대한 주소 resultMap -->
 	<resultMap id="hostAddressDetailMap" type="com.b2.Sinnanda.vo.Address">
-		<id property="address_no" column="addressNo"/>
-		<result property="sido" column="sido"/>
-		<result property="sido" column="sido"/>
-		<result property="sigungu" column="sigungu"/>
-		<result property="road_name" column="roadName"/>
-		<result property="main_building_code" column="mainBuildingCode"/>
-		<result property="sub_building_code" column="subBuildingCode"/>
+		<id column="address_no" property="addressNo"/>
+		<result column="sido" property="sido"/>
+		<result column="sigungu" property="sigungu"/>
+		<result column="road_name" property="roadName"/>
+		<result column="main_building_code" property="mainBuildingCode"/>
+		<result column="sub_building_code" property="subBuildingCode"/>
 	</resultMap>
 	<!-- [이승준] (상세)"사업자 상세+주소" 조회 -->
 	<select id="selectHostOneWithAddress" parameterType="int" resultMap="hostOneWithAddressMap">
