@@ -27,33 +27,33 @@ public class SearchAccomController {
 	private final int ROW_PER_PAGE = 12;
 	
 	//[이원희]검색 후 리스트 이동 21.12.10
-	@GetMapping("/searchAccomList")
-	public String getSerchList(Accom accom, Model model, 
-			@RequestParam(defaultValue = "1") int currentPage,
-			@RequestParam(defaultValue = "1")int person,
-			@RequestParam List<String> accomCategory1
-			) {
-		dl.p("AccomController", "getSerchList(accom)", accom);
-		dl.p("AccomController", "getSerchList(accomCategory1)", accomCategory1);
-		Map<String, Object> map = searchAccomService.getAccomListByName(accom, person, currentPage, ROW_PER_PAGE, accomCategory1);
-	
-		dl.p("AccomController","accomName",map.get("accomName"));
-		dl.p("AccomController","accomList",map.get("accomList"));
-		dl.p("AccomController", "accomCategoryName", map.get("accomCategoryName"));
-		dl.p("AccomController","accomRankList",map.get("accomRankList"));
-		dl.p("AccomController","lastPage",map.get("lastPage"));
-		dl.p("AccomController","currentPage",map.get("currentPage"));
-		
-		model.addAttribute("accomName",accom.getAccomName());
-		model.addAttribute("accomList", map.get("accomList"));
-		model.addAttribute("accomCategoryName",accom.getAccomCategoryName());
-		model.addAttribute("accomRankList",map.get("accomRankList"));
-		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("accomCategory1", accomCategory1);
-		model.addAttribute("currentPage", currentPage);
-		
-		return"/searchAccomList";
-	}
+//	@GetMapping("/searchAccomList")
+//	public String getSerchList(Accom accom, Model model, 
+//			@RequestParam(defaultValue = "1") int currentPage,
+//			@RequestParam(defaultValue = "1")int person,
+//			@RequestParam List<String> accomCategory1
+//			) {
+//		dl.p("AccomController", "getSerchList(accom)", accom);
+//		dl.p("AccomController", "getSerchList(accomCategory1)", accomCategory1);
+//		Map<String, Object> map = searchAccomService.getAccomListByName(accom, person, currentPage, ROW_PER_PAGE, accomCategory1);
+//	
+//		dl.p("AccomController","accomName",map.get("accomName"));
+//		dl.p("AccomController","accomList",map.get("accomList"));
+//		dl.p("AccomController", "accomCategoryName", map.get("accomCategoryName"));
+//		dl.p("AccomController","accomRankList",map.get("accomRankList"));
+//		dl.p("AccomController","lastPage",map.get("lastPage"));
+//		dl.p("AccomController","currentPage",map.get("currentPage"));
+//		
+//		model.addAttribute("accomName",accom.getAccomName());
+//		model.addAttribute("accomList", map.get("accomList"));
+//		model.addAttribute("accomCategoryName",accom.getAccomCategoryName());
+//		model.addAttribute("accomRankList",map.get("accomRankList"));
+//		model.addAttribute("lastPage", map.get("lastPage"));
+//		model.addAttribute("accomCategory1", accomCategory1);
+//		model.addAttribute("currentPage", currentPage);
+//		
+//		return"/searchAccomList";
+//	}
 	
 	@PostMapping("/searchAccomList")
 	public String postSerchList(Accom accom, Model model, 
