@@ -40,7 +40,7 @@
 		}
 	</style>
 	
-	<title>회원가입</title>
+	<title>사업자 회원가입</title>
 </head>
 
 <body>
@@ -55,17 +55,17 @@
 								<a href="/index"><img src="/skydash/images/logo.svg" alt="logo"></a>
 							</div>
 							
-							<h4 style="font-weight: bold;">회원가입</h4>
+							<h4 style="font-weight: bold;">사업자 회원가입</h4>
 							
 							<!-- 회원 가입 폼 -->
-							<form class="pt-3" method="post" action="insertMember" id="insertMemberForm">
+							<form class="pt-3" method="post" action="insertHost" id="insertHostForm">
 								<div class="form-group text-center">
 									<!-- ID -->
 									<div class="input-group mb-3 input-group-sm">
 										<div class="input-group-prepend">
 											<span class="input-group-text" style="width: 80px;">ID</span>
 										</div>
-										<input type="text" class="form-control" name="memberId" id="memberId" placeholder="ID">
+										<input type="text" class="form-control" name="hostId" id="hostId" placeholder="ID">
 										<div style="line-height: 40px;">
 											&nbsp; <span class="idOk">사용 가능한 ID입니다.</span>
 											&nbsp; <span class="idUsed">사용 불가능한 ID입니다.</span>
@@ -76,55 +76,41 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text" style="width: 80px;">PW</span>
 										</div>
-										<input type="password" class="form-control" name="memberPw" id="memberPw" placeholder="비밀번호">
+										<input type="password" class="form-control" name="hostPw" id="hostPw" placeholder="비밀번호">
 									</div>
 									<!-- PW 확인 -->
 									<div class="input-group mb-3 input-group-sm">
 										<div class="input-group-prepend">
 											<span class="input-group-text" style="width: 80px;">PW 확인</span>
 										</div>
-										<input type="password" class="form-control" name="memberPw2" id="memberPw2" placeholder="비밀번호 확인">
+										<input type="password" class="form-control" name="hostPw2" id="hostPw2" placeholder="비밀번호 확인">
 										<div style="line-height: 40px;">
 											&nbsp; <span class="PwOk">PW가 일치합니다.</span>
 											&nbsp; <span class="PwNo">PW가 일치하지 않습니다.</span>
 										</div>
 									</div>
-									<!-- 회원이름 -->
+									<!-- 사업자 이름 -->
 									<div class="input-group mb-3 input-group-sm">
 										<div class="input-group-prepend">
 											<span class="input-group-text" style="width: 80px;">이름</span>
 										</div>
-										<input type="text" class="form-control" name="memberName" id="memberName" placeholder="회원이름">
+										<input type="text" class="form-control" name="hostName" id="hostName" placeholder="사업자 이름">
 									</div>
-									<!-- 회원나이 -->
-									<div class="input-group mb-3 input-group-sm">
-										<div class="input-group-prepend">
-											<span class="input-group-text" style="width: 80px;">나이</span>
-										</div>
-										<input type="text" class="form-control" name="memberAge" id="memberAge" placeholder="나이">
-									</div>
-									<!-- 회원 전화번호 -->
+									<!-- 사업자 전화번호 -->
 									<div class="input-group mb-3 input-group-sm">
 										<div class="input-group-prepend">
 											<span class="input-group-text" style="width: 80px;">전화번호</span>
 										</div>
-										<input type="text" class="form-control" name="memberTel" id="memberTel" placeholder="전화번호">
+										<input type="text" class="form-control" name="hostTel" id="hostTel" placeholder="전화번호">
 									</div>
-									<!-- 회원 이메일 -->
-									<div class="input-group mb-3 input-group-sm">
-										<div class="input-group-prepend">
-											<span class="input-group-text" style="width: 80px;">이메일</span>
-										</div>
-										<input type="text" class="form-control" name="memberEmail" id="memberEmail" placeholder="이메일">
-									</div>
-									<!-- 회원 주소 -->
+									<!-- 사업자 주소 -->
 									<div class="input-group mb-3 input-group-sm">
 										<div class="input-group-prepend">
 											<span class="input-group-text" style="width: 80px;">주소</span>
 										</div>
 										<input type="text" class="form-control" name="addressInfo" id="addressInfo" placeholder="주소 검색" onclick="execDaumPostcode()">
 									</div>
-									<!-- 회원 상세주소 -->
+									<!-- 사업자 상세주소 -->
 									<div class="input-group mb-3 input-group-sm">
 										<div class="input-group-prepend">
 											<span class="input-group-text" style="width: 80px;">상세주소</span>
@@ -135,7 +121,7 @@
 									<div id="map" style="width:length;height:300px;margin-top:10px;display:none"></div>
 									
 								</div>
-								<!-- 회원 가입 값 입력 END -->
+								<!-- 사업자 회원 가입 값 입력 END -->
 								
 								<div class="mt-3">
 									<a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onclick="return check_form()">회원가입 완료</a>
@@ -144,9 +130,6 @@
 									아이디를 가지고 계신가요? <a href="/login" class="text-primary">로그인 하기</a>
 								</div>
 								<br>
-								<div class="text-center mt-4 font-weight-light">
-									혹시 사업자 이신가요? <a href="/insertHost" class="text-primary">가입하기</a>
-								</div>
 							</form>
 						</div>
 					</div>
@@ -219,8 +202,8 @@
   		//	중복검사 여부 표시
   		var checkedId = false;
   		
-  		$('#memberId').focusout(function() {
-  			let memberId = $('#memberId').val();
+  		$('#hostId').focusout(function() {
+  			let memberId = $('#hostId').val();
   			if(memberId != '') {
 	  			$.ajax({
 	  				type: 'get', 
@@ -244,8 +227,8 @@
   		})
   		
   		// PW 일치 여부
-  		$('#memberPw2').focusout(function() {
-  			if($('#memberPw').val() != $('#memberPw2').val()){
+  		$('#hostPw2').focusout(function() {
+  			if($('#hostPw').val() != $('#hostPw2').val()){
 				$('.PwOk').css("display", "none");
 				$('.PwNo').css("display", "inline-block");
 				return false;
@@ -256,7 +239,7 @@
   		})
   		
 		function check_form() {
-			if($('#memberId').val()==''){
+			if($('#hostId').val()==''){
 				alert("ID를 입력하세요.");
 				return false;
 			}
@@ -264,32 +247,24 @@
 				alert("ID 중복을 확인하세요.");
 				return false;
 			}
-			if($('#memberPw').val()==''){
+			if($('#hostPw').val()==''){
 				alert("Password를 입력하세요.");
 				return false;
 			}
-			if($('#memberPw').val() != $('#memberPw2').val()){
+			if($('#hostPw').val() != $('#hostPw2').val()){
 				alert("비밀번호가 일치하지 않습니다.");
 				return false;
 			}
-			if($('#memberName').val()==''){
+			if($('#hostName').val()==''){
 				alert("Nickname을 입력하세요.");
 				return false;
 			}
-			if($('#memberAge').val()==''){
-				alert("Age를 입력하세요.");
-				return false;
-			}
-			if($('#memberTel').val()==''){
+			if($('#hostTel').val()==''){
 				alert("Phone number를 입력하세요.");
 				return false;
 			}
-			if($('#memberEmail').val()==''){
-				alert("Email을 입력하세요.");
-				return false;
-			}
 		
-			$('#insertMemberForm').submit();
+			$('#insertHostForm').submit();
 		}
 	</script>
 </body>

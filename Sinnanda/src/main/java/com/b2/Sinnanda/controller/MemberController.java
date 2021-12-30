@@ -19,6 +19,7 @@ import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Complain;
 import com.b2.Sinnanda.vo.Member;
+import com.b2.Sinnanda.vo.MemberAddress;
 import com.b2.Sinnanda.vo.MemberOut;
 import com.b2.Sinnanda.vo.Qna;
 import com.b2.Sinnanda.vo.Reserve;
@@ -377,8 +378,12 @@ public class MemberController {
 		return "/insertMemberForm";
 	}
 	@PostMapping("/insertMember")
-	public String postInsertMember(Member member) {
+	public String postInsertMember(Member member, MemberAddress memberAddress) {
 		log.debug("입력된 회원 정보 :" + member.toString());
+		
+		// 멤버 데이터 패키징
+		member.setMemberAddress(memberAddress);
+		
 		//	회원정보 입력
 		memberService.addMember(member);
 		//	입력된 이메일로 인증코드 발송

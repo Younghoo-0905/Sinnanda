@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.b2.Sinnanda.mapper.HostAddressMapper">
+
+	<!-- [이승준] "사업자 주소 상세" 조회 -->
+	<select id="selectHostAddressOne" parameterType="com.b2.Sinnanda.vo.HostAddress">
+		SELECT 
+			host_no, 
+			address_no, 
+			address_datail, 
+			create_date, 
+			update_date
+		FROM host_address
+		WHERE host_no = #{hostNo}
+	</select>
+
+	<!-- [이승준] "사업자 주소" 삽입 -->
+	<insert id="insertHostAddress" parameterType="com.b2.Sinnanda.vo.HostAddress">
+		INSERT INTO host_address (
+			host_no, 
+			address_no, 
+			address_detail, 
+			create_date, 
+			update_date
+		) VALUES (
+			#{hostNo}, 
+			#{addressNo}, 
+			#{addressDetail}, 
+			NOW(), 
+			NOW()
+		)
+	</insert>
+</mapper>

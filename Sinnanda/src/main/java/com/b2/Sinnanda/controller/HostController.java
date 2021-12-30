@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.service.AddressService;
@@ -17,6 +18,7 @@ import com.b2.Sinnanda.service.HostService;
 import com.b2.Sinnanda.service.ReviewService;
 import com.b2.Sinnanda.vo.Address;
 import com.b2.Sinnanda.vo.Host;
+import com.b2.Sinnanda.vo.HostAddress;
 import com.b2.Sinnanda.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +39,25 @@ public class HostController {
 	private AddressService addressService;
 	
 /* 2. 삽입 */
-
+	
+	// [이승준] 사업자 회원가입
+	@GetMapping("/insertHost")
+	public String getInsertHost() {
+		dl.p("HostService", "getInsertHost() | Get", "[시작]");
+		
+		return "/insertHostForm";
+	}
+	@PostMapping("/insertHost")
+	public String postInsertHost(Host host, HostAddress hostAddress) {
+		dl.p("HostService", "postInsertHost() | Post", "[시작]");
+		
+		host.setHostAddress(hostAddress);
+		
+		hostService.addHost(host);
+		
+		return "redirect:/login";
+	}
+	
 	// [이승준] "사업자 주소 테스트" | 사업자페이지
 	@GetMapping("/host/hostTest")
 	public String getTest(HttpSession session, Model model) {

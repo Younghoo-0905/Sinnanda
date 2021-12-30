@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.b2.Sinnanda.commons.DL;
+import com.b2.Sinnanda.mapper.AddressMapper;
+import com.b2.Sinnanda.mapper.MemberAddressMapper;
 import com.b2.Sinnanda.mapper.MemberMapper;
+import com.b2.Sinnanda.vo.Address;
 import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Complain;
 import com.b2.Sinnanda.vo.Member;
@@ -27,6 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 	
 	@Autowired MemberMapper memberMapper;
+	@Autowired MemberAddressMapper memberAddressMapper;
+	@Autowired AddressMapper addressMapper;
 	@Autowired DL dl;
 		
 	//	[김영후]	member 휴면계정 해제
@@ -253,13 +258,53 @@ public class MemberService {
 		memberMapper.certifyMemberUpdate(member);
 	}
 	
-	//	[김영후] 회원 가입
+	//	[김영후, 이승준(수정)] 회원 가입
 	public void addMember(Member member) {
-
-		//	이메일 인증코드 생성
+		dl.p("MemberService", "addMember()", "[시작]");
+		dl.p("addMember()", "member", member);
+		
+		// 0. 회원 이메일 인증코드 생성
 		member.setMemberCertifycode(UUID.randomUUID().toString());
-		//	회원 정보 추가 ( member_level = 0 비활성화 상태 )
+		// 1. 회원 정보 추가 ( member_level = 0 비활성화 상태 )
 		memberMapper.insertMember(member);
+		
+		// 2. 입력받은 긴 주소를 분리 (ㅁㅁ시 ㅁㅁ구 ㅁㅁ로 12-34 -> [(ㅁㅁ시), (ㅁㅁ구), (ㅁㅁ로), (12-34)])
+		String[] addressArr = new String[5];
+		addressArr = member.getMemberAddress().getAddressInfo().split(" ");
+		
+		// 3. 시도, 시군구, 도로명 파라미터 설정
+		Address paraAddress = new Address();
+			paraAddress.setSido(addressArr[0]);
+			paraAddress.setSigungu(addressArr[1]);
+			paraAddress.setRoadName(addressArr[2]);
+		
+		// 4. 지번이 있는 경우, 지번 파라미터 설정
+		if(addressArr.length >= 4) {
+			String jibuns[] = new String[2];
+			
+			// 4-1. 지번 분리
+			jibuns = addressArr[3].split("-");
+			dl.p("getAddressOne()", "jibuns.length", jibuns.length);
+					
+			// 4-2. 메인지번 파라미터 설정
+			paraAddress.setMainBuildingCode(Integer.parseInt(jibuns[0]));
+			
+			// 4-3. 서브지번이 있는 경우, 파라미터 설정
+			if(jibuns.length == 2) {
+				paraAddress.setSubBuildingCode(Integer.parseInt(jibuns[1]));
+			}
+		}
+		
+		// 5. 입력받은 주소에 해당되는 주소번호 조회
+		Address returnAddress = addressMapper.selectAddressOne(paraAddress);
+		
+		// 6. 회원주소를 삽입하기 위한 가공
+		member.getMemberAddress().setMemberNo(member.getMemberNo());
+		member.getMemberAddress().setAddressNo(returnAddress.getAddressNo());
+		
+		// 7. 회원주소 삽입
+		memberAddressMapper.insertMemberAddress(member.getMemberAddress());
+		
 	}
 	
 	//	[김영후] 로그인 시 이메일 인증 여부 확인
