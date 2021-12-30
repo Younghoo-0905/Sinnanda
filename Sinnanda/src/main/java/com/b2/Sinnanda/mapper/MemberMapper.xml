@@ -39,6 +39,7 @@
 	<select id="selectMyPage" parameterType="int" resultMap="resultMember">
 		SELECT
 			member_id,
+			member_pw,
 			member_name,
 			member_age,
 			member_tel,

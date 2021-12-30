@@ -22,6 +22,7 @@ import com.b2.Sinnanda.mapper.AdminMapper;
 import com.b2.Sinnanda.mapper.QnaMapper;
 import com.b2.Sinnanda.service.AdminService;
 import com.b2.Sinnanda.service.HostQnaService;
+import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.service.NoticeService;
 import com.b2.Sinnanda.service.QnaService;
 import com.b2.Sinnanda.vo.Admin;
@@ -40,7 +41,7 @@ public class AdminController {
    @Autowired AdminMapper adminMapper;
    @Autowired QnaService qnaService; 
    @Autowired NoticeService noticeService;
-   
+   @Autowired MemberService memberService;
    
    @Autowired DL dl;
    
@@ -323,7 +324,16 @@ public class AdminController {
          model.addAttribute("pageNo", pageNo);
          return "/admin/hostList";
       }
-      
+      //[윤경환] 회원 정보 상세내뇽 
+      @GetMapping("/admin/memberAdminOne")
+      public String getMemberAdminOne(int memberNo, Model model) {
+		Member member = memberService.myPage(memberNo);
+		
+		model.addAttribute("member",member);
+    	  
+    	  return "admin/memberAdminOne";
+    	  
+      }
       
       //[윤경환] 정산 차트 
       @GetMapping("/admin/incomeChart")

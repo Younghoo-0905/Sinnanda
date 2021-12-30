@@ -1,30 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html>
 
 <head>
-	<!-- Required meta tags -->
+	  <meta charset="UTF-8">
+   <!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- plugins:css -->
 	
+	<!-- plugins:css -->
 	<link rel="stylesheet" href="/skydash/vendors/feather/feather.css">
 	<link rel="stylesheet" href="/skydash/vendors/ti-icons/css/themify-icons.css">
 	<link rel="stylesheet" href="/skydash/vendors/css/vendor.bundle.base.css">
+	
 	<!-- endinject -->
 	<!-- Plugin css for this page -->
 	<link rel="stylesheet" href="/skydash/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
 	<link rel="stylesheet" href="/skydash/vendors/ti-icons/css/themify-icons.css">
 	<link rel="stylesheet" type="text/css" href="/skydash/js/select.dataTables.min.css">
+	
 	<!-- End plugin css for this page -->
+	
 	<!-- inject:css -->
 	<link rel="stylesheet" href="/skydash/css/vertical-layout-light/style.css">
-	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title>관리자 페이지</title>
+	<title>회원 세부 내용</title>
 </head>
 <body>
 	<div class="container-scroller">
@@ -40,56 +45,75 @@
 			<%@ include file="/WEB-INF/partials/adminPageSidebar.jsp" %>
 			<!-- [이승준] 마이 페이지 좌측 사이드바 - END -->
 			
-		
-			<!-- [이승준] 마이 페이지 본문 - END -->
+			
 		      <!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>관리자 정보</h2>
+						<h2>회원 정보</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<form method="post" action ="/member/modifyMember">
-	<input type = "hidden" name ="memberNo" value = "${loginUser.member.memberNo}">
-		<table class="table table-hover">
-			<tr>
-			<td  style="width: 200px; font-size: 20px; text-align:center;">관리자 아이디 :</td>
-			<td colspan="3" style="font-size: 20px; text-align:center;">${admin.adminId}</td>
+									<table   class= "table-myPage"  style="width: 100%;">
+		<tr>
+			
+			<th colspan="2"><h3 style="text-align: center;">회원 상세정보</h3></th>
+			
+			
+			
 		</tr>
 		<tr>
-			<td  style="width: 200px; font-size: 20px; text-align:center;">관리자 이름 :</td>
-			<td colspan="3" style="font-size: 20px; text-align:center;"> ${admin.adminName}</td>
+			<td  style="width: 200px; font-size: 20px; text-align:center;">아이디 </td>
+			<td colspan="3" style="font-size: 20px; text-align:center;">${member.memberId}</td>
 		</tr>
 		<tr>
-			<td  style="width: 200px; font-size: 20px; text-align:center;">관리자 직급 :</td>
-			<td colspan="3" style="font-size: 20px; text-align:center;" >${admin.adminPosition}</td>
+			<td  style="width: 200px; font-size: 20px; text-align:center;">비번</td>
+			<td colspan="3" style="font-size: 20px; text-align:center;">${member.memberPw}</td>
 		</tr>
 		<tr>
-			<td  style="width: 200px; font-size: 20px; text-align:center;">관리자 레벨 :</td>
-			<td colspan="3" style="font-size: 20px; text-align:center;">${admin.adminLevel}</td>
+			<td  style="width: 200px; font-size: 20px; text-align:center;">이름 </td>
+			<td colspan="3" style="font-size: 20px; text-align:center;">${member.memberName}</td>
 		</tr>
 		<tr>
-			<td  style="width: 200px; font-size: 20px; text-align:center;">수정 날짜 :</td>
-			<td colspan="3" style="font-size: 20px; text-align:center;">${admin.updateDate}</td>
-		</tr>	
-		</table>
-	<div style ="text-align:center;">
-		<a class= "btn btn-primary" href="adminPage?adminNo=${loginUser.admin.adminNo }">메인페이지</a>
-		<a class= "btn btn-primary" href="modifyAdminOne?adminNo=${loginUser.admin.adminNo}">수정페이지</a>
-	</div>	
-	</form>
+			<td  style="width: 200px; font-size: 20px; text-align:center;">나이 </td>
+			<td colspan="3" style="font-size: 20px; text-align:center;">${member.memberAge}</td>
+		</tr>
+		<tr>
+			<td  style="width: 200px; font-size: 20px; text-align:center;">전화번호 </td>
+			<td colspan="3" style="font-size: 20px; text-align:center;">${member.memberTel}</td>
+		</tr>
+		<tr>
+			<td  style="width: 200px; font-size: 20px; text-align:center;">이메일 </td>
+			<td colspan="3" style="font-size: 20px; text-align:center;">${member.memberEmail}</td>
+		</tr>
+		<tr>
+			<td  style="width: 200px; font-size: 20px; text-align:center;">가입날짜 </td>
+			<td colspan="3" style="font-size: 20px; text-align:center;">
+				<fmt:parseDate value="${member.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+				<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+			</td>
+		</tr>
+	
+	</table>
+		<div style =" text-align:center;">
+			<a href = "adminPage" style=" margin-top: auto;"  class="btn btn-primary">목록</a>
+		</div>
+	
 								</div>
 							</div>
 						</div>
-					</div>					
+					</div>
+					
 				</div>
 			</div>
 		</div>
 	</div>
 	
-	
+	<!-- [이승준] 하단 Footer - SATRT -->
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
+	<!-- [이승준] 하단 Footer - END -->
+
 
   <!-- plugins:js -->
   <script src="/vendors/js/vendor.bundle.base.js"></script>

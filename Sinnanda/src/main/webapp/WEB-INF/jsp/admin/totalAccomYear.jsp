@@ -57,7 +57,7 @@
 							<div class="card position-relative">
 								<div class="card-body">
    
-         <select id="yearNo" name="yearNo"  style="float: right; margin-bottom: 20px;">
+         <select id="yearNo" name="yearNo"  class="form-control-sm" style="float: right; margin-bottom: 20px; height:330px;">
             <option value="">선택</option>            
             <option value="2021">2021년</option>
             <option value="2020">2020년</option>
@@ -65,7 +65,7 @@
    			
    			
    			
-   		<select id ="accom" name ="accom" style="float: right; margin-bottom: 20px;">
+   		<select id ="accom" name ="accom" class="form-control-sm" style="float: right; margin-bottom: 20px; height:33px;">
    			<option value="전체">전체</option>            
             <option value="모텔">모텔</option>
             <option value="호텔">호텔</option>
