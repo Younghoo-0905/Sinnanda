@@ -20,7 +20,7 @@
 		</li>
 		
 		<li class="nav-item">
-			<a class="nav-link" href="">
+			<a class="nav-link" href="/host/myReserveList">
 				<i class="icon-grid menu-icon"></i>
 				<span class="menu-title">예약 일정</span>
 			</a>

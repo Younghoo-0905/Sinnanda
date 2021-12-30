@@ -60,9 +60,8 @@
 									
 								    <div class="container">
 										<div class="container2">
-											<select id="hostQnaCategory" name="hostQnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
-												<option value="">선택</option>
-												<option value="/host/myReserveList"></option>
+											<select id="reserveUse" name="reserveUse" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
+												<option value="/host/myReserveList?reserveUse=전체">전체</option>
 												<option value="/host/myReserveList?reserveUse=이용 전">이용 전</option>
 												<option value="/host/myReserveList?reserveUse=이용 중">이용 중</option>
 												<option value="/host/myReserveList?reserveUse=이용 완료">이용 완료</option>
@@ -71,7 +70,6 @@
 										</div>
 										<table class="table table-myPage" style="width: 100%;">
 											<tr style="text-align:center">
-												<th width="5%">번호</th>
 												<th>숙소</th>
 												<th>객실</th>
 												<th>회원명</th>
@@ -81,17 +79,18 @@
 												<th>체크아웃</th>
 												<th>예약일</th>
 											</tr>
-											<tr>
-												<td>2</td>
-												<td>영후의 정신세계</td>
-												<td>소뇌 부분(더럽)</td>
-												<td>킹영후</td>
-												<td>1</td>
-												<td>이용 중</td>
-												<td>01/01 09:00</td>
-												<td>01/02 18:00</td>
-												<td>21/12/29 17:00</td>
-											</tr>
+											<c:forEach var="r" items="${reserveList}">
+												<tr>
+													<td>${r.accomName}</td>
+													<td>${r.roomName}</td>
+													<td>${r.memberName}</td>
+													<td>${r.reservePersonnel}</td>
+													<td>${r.reserveUse}</td>
+													<td>${r.reserveCheckIn}</td>
+													<td>${r.reserveCheckOut}</td>
+													<td>${r.reserveDate}</td>
+												</tr>
+											</c:forEach>
 										</table>
 										
 										<!-- Paging -->			
@@ -100,8 +99,8 @@
 									            <div class="block-27">
 													<ul>
 														<!-- '이전' 버튼 -->
-														<c:if test="${beginRow >= ROW_PER_PAGE}">
-															<li><a href="/host/myHostQnaList?currentPage=${currentPage-1}&hostQnaCategory=${hostQnaCategory}">&lt;</a></li>
+														<c:if test="${beginRow >= (ROW_PER_PAGE * 10)}">
+															<li><a href="/host/myReserveList?currentPage=${pageNo+10}&reserveUse=${reserveUse}">&lt;</a></li>
 														</c:if>
 														
 														<!-- Page 번호 -->
@@ -115,7 +114,7 @@
 																		<li class="active"><span>${i}</span></li>
 																	</c:when>
 												    				<c:otherwise>
-																		<li><a href="/host/myHostQnaList?currentPage=${i}&hostQnaCategory=${hostQnaCategory}">${i}</a></li>	
+																		<li><a href="/host/myReserveList?currentPage=${i}&reserveUse=${reserveUse}">${i}</a></li>	
 																	</c:otherwise>		
 																</c:choose>
 																<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
@@ -126,8 +125,8 @@
 														</c:forEach>
 														
 														<!-- '다음' 버튼 -->
-														<c:if test="${currentPage != lastPage}">
-															<li><a href="/host/myHostQnaList?currentPage=${currentPage+1}&hostQnaCategory=${hostQnaCategory}">&gt;</a></li>
+														<c:if test="${lastPage >= pageNo + 10}">
+															<li><a href="/host/myReserveList?currentPage=${pageNo-1}&eserveUse=${eserveUse}">&gt;</a></li>
 														</c:if>
 													</ul>
 												</div>

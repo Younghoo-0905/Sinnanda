@@ -36,6 +36,116 @@
 			CURTIME() > ro.room_check_in
 	</update>	
 	
+	<!-- [김영후] 예약내역 Map -->
+	<resultMap type="com.b2.Sinnanda.vo.Reserve" id="HostMyReserveMap">
+		<id column="reserve_no" property="reserveNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="room_no" property="roomNo"/>
+		<result column="member_name" property="memberName"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="room_name" property="roomName"/>
+		<result column="payment_method" property="paymentMethod"/>
+		<result column="payment_price" property="paymentPrice"/>
+		<result column="reserve_use" property="reserveUse"/>
+		<result column="reserve_info" property="reserveInfo"/>
+		<result column="reserve_personnel" property="reservePersonnel"/>
+		<result column="reserve_date" property="reserveDate"/>
+		<result column="reserve_cancel_date" property="reserveCancelDate"/>
+		<result column="reserve_check_in" property="reserveCheckIn"/>
+		<result column="reserve_check_out" property="reserveCheckOut"/>
+	</resultMap>
+		
+	<!-- [김영후] (사업자) 예약내역 조회 -->
+	<select id="selectHostMyReserveList" parameterType="Map" resultMap="HostMyReserveMap">
+		SELECT 
+			re.reserve_no,
+			m.member_no, 
+			r.room_no, 
+			m.member_name, 
+			ac.accom_name,
+			r.room_name, 
+			p.payment_method, 
+			p.payment_price,
+			re.reserve_use, 
+			re.reserve_info, 
+			re.reserve_personnel, 
+			re.reserve_date, 
+			re.reserve_cancel_date, 
+			re.reserve_check_in, 
+			re.reserve_check_out
+		FROM reserve re
+		LEFT JOIN payment p 
+			ON p.reserve_no = re.reserve_no
+		LEFT JOIN member m 
+			ON re.member_no = m.member_no
+		LEFT JOIN room r 
+			ON r.room_no = re.room_no
+		LEFT JOIN accom ac 
+			ON r.accom_no = ac.accom_no		
+		LEFT JOIN host h 
+			ON ac.host_no = h.host_no
+        <where>
+         	h.host_no = #{hostNo}
+			<if test="reserveUse != null">
+            AND re.reserve_use = #{reserveUse}
+      		</if>
+      	</where>
+      	ORDER BY re.reserve_date DESC 
+      	LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- [김영후] (사업자) 예약내역 상세조회 -->
+	<select id="selectHostMyReserveOne" parameterType="Map" resultMap="HostMyReserveMap">
+		SELECT 
+			re.reserve_no,
+			m.member_name,
+			ac.accom_name,
+			r.room_name,
+			p.payment_method,
+			p.payment_price,
+			re.reserve_use,
+			re.reserve_info,
+			re.reserve_personnel, 
+			re.reserve_date,
+			re.reserve_cancel_date,
+			re.reserve_check_in,
+			re.reserve_check_out
+		FROM reserve re
+		LEFT JOIN payment p 
+			ON p.reserve_no = re.reserve_no
+		LEFT JOIN member m 
+			ON re.member_no = m.member_no
+		LEFT JOIN room r 
+			ON r.room_no = re.room_no
+		LEFT JOIN accom ac 
+			ON r.accom_no = ac.accom_no
+		WHERE re.reserve_no = #{reserveNo};
+	</select>
+	
+	<!-- [감영후] (사업자) 예약내역 갯수 조회 -->
+	<select id="selectHostMyReserveTotalCount" parameterType="map" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM reserve re 
+		LEFT JOIN room ro
+			ON ro.room_no = re.room_no
+		LEFT JOIN accom a
+			ON a.accom_no = ro.accom_no
+		LEFT JOIN host h
+			ON a.host_no = h.host_no
+		LEFT JOIN payment p 
+			ON p.reserve_no = re.reserve_no
+		LEFT JOIN member m 
+			ON re.member_no = m.member_no
+		<where>
+			h.host_no = #{hostNo} 				
+			<if test="reserveUse != null">
+				AND 
+				reserve_use = #{reserveUse}
+			</if>
+		</where>
+	</select>
+	
 	<!-- [김영후] 예약 취소 -->
 	<update id="cancelReserve" parameterType="int">
 		UPDATE 
