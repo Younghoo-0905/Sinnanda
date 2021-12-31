@@ -1,5 +1,6 @@
 package com.b2.Sinnanda.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.service.AddressService;
@@ -157,5 +159,23 @@ public class HostController {
 		model.addAttribute("loginUser", loginUser);
 		
 		return "host/hostInfo";
+	}
+	
+	@GetMapping("/host/myHostRevenue")
+	public String getmyHostRevenue( Model model, HttpSession session
+   		 ){
+   	 
+		User loginUser = (User)session.getAttribute("loginUser");	
+		
+		List<Host> accomHost = hostService.getselectHostAccom(loginUser.getHost().getHostNo());
+   		
+		
+		
+		model.addAttribute("accomHost", accomHost);
+		dl.p("getHostIncomeChart", "accomHost", accomHost);
+        
+		
+		return "host/myHostRevenue";
+		
 	}
 }

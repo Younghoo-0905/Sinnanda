@@ -16,4 +16,7 @@ public class Room {
 	String roomUse;
 	String createDate;
 	String updateDate;
+	
+	//[정산에 필요한 값들]
+	private Accom accom;
 }

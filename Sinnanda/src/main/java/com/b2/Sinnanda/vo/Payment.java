@@ -12,4 +12,11 @@ public class Payment {
 	private String paymentRefund;
 	private String createDate;
 	private String updateDate;
+	
+	
+	
+	private int hostNo;
+	private String accomName;
+		
+
 }

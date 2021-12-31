@@ -97,6 +97,51 @@
 			LEFT JOIN address a ON a.address_no = ha.address_no
 		WHERE h.host_no = #{hostNo}
 	</select>
+	<!--[윤경환] 호스트가 가지고 있는 숙소 종류 -->
+	<select id="selectHostAccom" parameterType ="int" resultType="com.b2.Sinnanda.vo.Accom">
+		SELECT  
+			accom_name accomName,
+			host_no hostNo
+		FROM accom
+		where host_no = #{hostNo}
+	</select>
+			
+			
+	<resultMap type="com.b2.Sinnanda.vo.Payment" id="hostAcoomIncome">
+		<id column="create_date" property="createDate"/>
+		<result column="payment_price" property="paymentPrice"/>
+	</resultMap>
+			
+	<!--[윤경환] 숙소에 따라 사업자가 없는 수익 차트 -->
+	<select id="TotalAccomHostYear" parameterType="Map" resultType="java.util.Map">
+		SELECT 
+			SUM(CASE WHEN MONTH(pa.create_date) =1 THEN pa.payment_price END) january,
+			SUM(CASE WHEN MONTH(pa.create_date) =2 THEN pa.payment_price END) february,
+			SUM(CASE WHEN MONTH(pa.create_date) =3 THEN pa.payment_price END) march,
+			SUM(CASE WHEN MONTH(pa.create_date) =4 THEN pa.payment_price END) april,
+			SUM(CASE WHEN MONTH(pa.create_date) =5 THEN pa.payment_price END) may,
+			SUM(CASE WHEN MONTH(pa.create_date) =6 THEN pa.payment_price END) june,
+			SUM(CASE WHEN MONTH(pa.create_date) =7 THEN pa.payment_price END) july,
+			SUM(CASE WHEN MONTH(pa.create_date) =8 THEN pa.payment_price END) august,
+			SUM(CASE WHEN MONTH(pa.create_date) =9 THEN pa.payment_price END) september,
+			SUM(CASE WHEN MONTH(pa.create_date) =10 THEN pa.payment_price END) october,
+			SUM(CASE WHEN MONTH(pa.create_date) =11 THEN pa.payment_price END) november,
+			SUM(CASE WHEN MONTH(pa.create_date) =12 THEN pa.payment_price END) december
+		FROM payment AS pa
+			LEFT JOIN reserve AS re
+		ON pa.reserve_no = re.reserve_no
+			LEFT JOIN  room  AS ro
+		ON re.room_no = ro.room_no
+			LEFT join accom  AS ac 
+		ON ac.accom_no = ro.accom_no
+		WHERE YEAR(pa.create_date)= #{year} 
+			AND ac.host_no = #{hostNo}
+			<if test="accomName != null">
+					AND ac.accom_name = #{accomName}
+			</if>
+		
+	</select>
+
 
 <!-- 2. 삽입 -->
 	
@@ -124,7 +169,7 @@
 		</selectKey>
 	</insert>
 	
-	
+
 <!-- 3. 수정 -->
 	
 	<!-- [이승준] "사업자" 수정 -->

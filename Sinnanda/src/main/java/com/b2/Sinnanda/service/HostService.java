@@ -1,5 +1,8 @@
 package com.b2.Sinnanda.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,5 +104,21 @@ public class HostService {
 		dl.p("HostService", "hostNo", hostNo);
 		
 		return hostMapper.selectHostOne(hostNo);
+	}
+	//[윤경환] 정산전에 사업자에 관한 숙소 내용 
+	public List<Host> getselectHostAccom(int hostNo) {
+		List<Host> accomHost = hostMapper.selectHostAccom(hostNo); 
+		return accomHost;
+	}
+	
+	public Map<String,Object> getTotalAccomHostYear(int year, int hostNo, String accomName){
+		//전체를 조회할때 모든 숙소가 나올 수 있게 조치 
+		if(accomName == null || accomName.equals("전체")) {
+			accomName = null;
+			}
+		
+		Map<String, Object> map = hostMapper.TotalAccomHostYear(year, hostNo, accomName);		
+		return map;
+		
 	}
 }

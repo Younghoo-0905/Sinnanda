@@ -56,7 +56,7 @@
 			</a>
 			<div class="collapse" id=host-calculate>
 				<ul class="nav flex-column sub-menu">
-					<li class="nav-item"> <a class="nav-link" href="/host/myHostRevenue">숙소 수입</a></li>
+					<li class="nav-item"> <a class="nav-link" href="/host/myHostRevenue?hostNo=${loginUser.host.hostNo}">숙소 수입</a></li>
 					<li class="nav-item"> <a class="nav-link" href="/host/myHostCommission">숙소 수수료</a></li>
 				</ul>
 			</div>

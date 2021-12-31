@@ -3,9 +3,14 @@ package com.b2.Sinnanda.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.mapper.AdminMapper;
 import com.b2.Sinnanda.service.AdminService;
+import com.b2.Sinnanda.service.HostService;
+import com.b2.Sinnanda.vo.Host;
+import com.b2.Sinnanda.vo.User;
 
 
 @RestController
@@ -20,6 +28,8 @@ public class ChartRestController {
    @Autowired AdminMapper adminMapper;
    @Autowired AdminService adminService;
    @Autowired DL dl;
+   @Autowired HostService hostService;
+   
    //[윤경환] 정산 차트 
          @GetMapping("/admin/getIncomeChart")
          public Map<String,Object> incomeChart(@RequestParam(name ="year") int year) {
@@ -57,6 +67,23 @@ public class ChartRestController {
         	 return map;
         	 
          }
+         
+         //[윤경환] '호스트' 숙소에 따른 정산
+         @GetMapping("/host/getmyHostRevenue")
+         public Map<String,Object> myHostRevenue(@RequestParam(name ="year") int year,
+        		 @RequestParam(defaultValue = "전체") String accomName,
+        		 HttpSession session){
+             
+        	 User loginUser = (User)session.getAttribute("loginUser");
+        	 dl.p("AccomHostYear", "loginUser", loginUser);
+        	 
+        	 Map<String,Object> map  = hostService.getTotalAccomHostYear(year, loginUser.getHost().getHostNo(), accomName);
+        	 dl.p("AccomHostYear", "map", map);
+			
+        	 return map;
+        	 
+         }
+         
          
          
 }

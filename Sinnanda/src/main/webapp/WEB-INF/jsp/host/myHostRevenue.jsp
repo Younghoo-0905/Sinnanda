@@ -65,12 +65,14 @@
    			
    			
    			
-   		<select id ="accom" name ="accom" class="form-control-sm" style="float: right; margin-bottom: 20px; height:33px;">
-   			<option value="전체">전체</option>            
-            <option value="모텔">모텔</option>
-            <option value="호텔">호텔</option>
-            <option value="펜션">펜션</option>
+   		<select id ="accom" name ="accomName" class="form-control-sm" style="float: right; margin-bottom: 20px; height:33px;">
+            <option value ="">숙소 선택</option>
+         	<option value ="전체">전체</option>
+   			<c:forEach  items="${accomHost}" var ="accom">
+   				<option value ="${accom.accomName}">${accom.accomName}</option>
+   			</c:forEach>
    		</select>
+   	
    
       <canvas id="myChart" width="100" height="40"></canvas>
    
@@ -90,7 +92,7 @@
       
       $.ajax({
          type:'get',
-         url:'/admin/getTotalAccomYear?year=' + year+'&accomName='+accomName,
+         url:'/host/getmyHostRevenue?year=' + year+'&accomName='+accomName,
          success:function(json){
             console.log(json);
             
@@ -114,9 +116,11 @@
           
             
             
-          	//가입한 총 사업자 
-			let result = myData.reduce((accumulator,currentNumber)=> accumulator + currentNumber);
-		
+          		//가입한 총 사업자 
+         
+				let result  = myData.reduce((accumulator,currentNumber)=> accumulator + currentNumber);
+          		
+          		
           	
             // chart.js
             myChart = new Chart(ctx, {
@@ -142,7 +146,7 @@
                 	 plugins: {
                          title: {
                              display: true,
-                             text: '# '+ accomName+' : '+result+'개'
+                             text: '# '+ accomName+' : '+result.toLocaleString() +'원'
                              
                          }
                 		

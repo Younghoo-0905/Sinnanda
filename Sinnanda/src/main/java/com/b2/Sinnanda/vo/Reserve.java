@@ -19,4 +19,8 @@ public class Reserve {
 	private String roomName;
 	private String paymentMethod;
 	private int paymentPrice;
+	
+	
+	//[정산에 필요한 값들]
+	private Room room;
 }
