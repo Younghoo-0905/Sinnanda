@@ -28,6 +28,15 @@ public class ReserveService {
 		return reserveMapper.modifyReserveUseCheckIn();
 	}
 	
+	//	[김영후]	(사업자)	Reserve 상세 내역 출력
+	public Reserve getHostMyReserveOne(int reserveNo) {
+		dl.p("ReserveService", "reserveNo", reserveNo);
+		
+		Reserve reserve = reserveMapper.selectHostMyReserveOne(reserveNo);
+		
+		return reserve;
+	}
+	
 	//	[김영후]	(사업자) 나의 Reserve 목록 출력
 	public Map<String, Object> getHostMyReserveList(int hostNo, String reserveUse, int beginRow, int rowPerPage) {
 		dl.p("ReserveService", "hostNo", hostNo);

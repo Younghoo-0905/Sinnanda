@@ -104,6 +104,7 @@
 			p.payment_method,
 			p.payment_price,
 			re.reserve_use,
+			re.reserve_cancel_date, 
 			re.reserve_info,
 			re.reserve_personnel, 
 			re.reserve_date,

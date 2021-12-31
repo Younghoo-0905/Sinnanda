@@ -28,14 +28,23 @@ public class ReserveController {
 	private final int ROW_PER_PAGE = 10;
 	
 	
-	
+	//	[김영후] (사업자 페이지) MyReserveOne 요청
+	@GetMapping("/host/myReserveOne")
+	public String getHostMyReserveOne(Model model, int reserveNo) {
+		dl.p("ReserveController", "getHostMyReserveOne()", reserveNo);
+		
+		Reserve reserve = reserveService.getHostMyReserveOne(reserveNo);		
+		model.addAttribute("reserve", reserve);
+		
+		return "/host/myReserveOne";
+	}
 	
 	//	[김영후] (사업자 페이지) MyReserveList 요청
 	@GetMapping("/host/myReserveList")
-	public String getReserveList(HttpSession session, Model model, 
+	public String getHostMyReserveList(HttpSession session, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
 			@RequestParam(defaultValue = "전체") String reserveUse) {
-		dl.p("ReserveController", "getReserveList()", currentPage);
+		dl.p("ReserveController", "getHostMyReserveList()", currentPage);
 		dl.p("ReserveController()", "currentPage", currentPage);
 		dl.p("ReserveController()", "reserveUse", reserveUse);
 		
