@@ -5,18 +5,10 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
 	<ul class="nav">
 		<li class="nav-item">
-			<a class="nav-link" data-toggle="collapse" href="#host-info" aria-expanded="false" aria-controls="host-info">
-			<i class="icon-head menu-icon"></i>
-			<span class="menu-title">사업자 정보</span>
-			<i class="menu-arrow"></i>
+			<a class="nav-link" href="/host/myHostInfo?hostNo=${loginUser.host.hostNo}">
+				<i class="icon-head menu-icon"></i>
+				<span class="menu-title">사업자 정보</span>
 			</a>
-			<div class="collapse" id="host-info">
-				<ul class="nav flex-column sub-menu">
-					<li class="nav-item"> <a class="nav-link" href="/host/myHostInfo">정보 보기</a></li>
-					<li class="nav-item"> <a class="nav-link" href="/host/modifyHostPw">PW 수정</a></li>
-					<li class="nav-item"> <a class="nav-link" href="/host/modifyHost">정보 수정</a></li>
-				</ul>
-			</div>
 		</li>
 		
 		<li class="nav-item">

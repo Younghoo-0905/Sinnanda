@@ -61,9 +61,9 @@
 									<!-- 사업자 문의 부분 -->
 									<div class="container">
 										<div style="margin: 10px; text-align: right;">
-											<a href="/host/modifyHostPw" class="btn btn-primary">PW 수정</a>
-											<a href="/host/modifyHost" class="btn btn-primary">정보 수정</a>
-											<a href="/host/removeHost" class="btn btn-primary">회원탈퇴</a>
+											<a href="/host/modifyHostPw?hostNo=${loginUser.host.hostNo}" class="btn btn-primary">PW 수정</a>
+											<a href="/host/modifyHost?hostNo=${loginUser.host.hostNo}" class="btn btn-primary">정보 수정</a>
+											<a href="/host/removeHost?hostNo=${loginUser.host.hostNo}" class="btn btn-primary">회원탈퇴</a>
 										</div>
 					    			
 										<table class="table table-myPage">

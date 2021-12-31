@@ -11,12 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.service.AddressService;
 import com.b2.Sinnanda.service.ComplainService;
 import com.b2.Sinnanda.service.HostQnaService;
 import com.b2.Sinnanda.service.HostService;
+import com.b2.Sinnanda.service.LoginService;
 import com.b2.Sinnanda.service.ReviewService;
 import com.b2.Sinnanda.vo.Address;
 import com.b2.Sinnanda.vo.Host;
@@ -39,8 +41,86 @@ public class HostController {
 	private ReviewService reviewService;
 	@Autowired
 	private AddressService addressService;
+	@Autowired
+	private LoginService loginService;
 	
 /* 2. 삽입 */
+	
+	// [이승준] 사업자 정보 수정
+	@GetMapping("/host/modifyHost")
+	public String getModifyHost(HttpSession session, Model model) {
+		dl.p("HostService", "getModifyHost() | Get", "[시작]");
+		
+		// 로그인 세션 조회
+		User loginUser = (User)session.getAttribute("loginUser");
+		
+		Host host = hostService.getHostOneWithAddress(loginUser.getHost().getHostNo());
+		
+		model.addAttribute("host", host);
+		
+		return "host/modifyHost";
+	}
+	@PostMapping("/host/modifyHost")
+	public String postModifyHost(HttpSession session, Host host, HostAddress hostAddress) {
+		dl.p("HostService", "postModifyHost() | Post", "[시작]");
+		
+		// 세션 로그인정보 가져오고
+		User loginUser = (User)session.getAttribute("loginUser");
+			loginUser.setUserId(loginUser.getHost().getHostId());
+			loginUser.setUserPw(host.getHostPw());
+		dl.p("getHostPage()", "loginUser", loginUser.toString());
+		
+		// 사업자 주소를 담아주고
+		host.setHostAddress(hostAddress);
+		host.setHostNo(loginUser.getHost().getHostNo());
+		
+		// 서비스로 넘겨주고
+		hostService.modifyHost(host);
+		
+		// 세롭게 로그인 정보 다시 불러오고
+		User refreshLoginUser = loginService.getLoginCheckAll(loginUser);
+		dl.p("getHostPage()", "refreshLoginUser", refreshLoginUser.toString());
+		
+		// 다시 세팅
+		session.setAttribute("loginUser", refreshLoginUser);
+		
+		return "redirect:/host/myHostInfo?hostNo="+host.getHostNo();
+	}
+	
+	// [이승준] 사업자 비밀번호 수정
+	@GetMapping("/host/modifyHostPw")
+	public String getModifyHostPw() {
+		dl.p("HostService", "getModifyHostPw() | Get", "[시작]");
+		
+		return "host/modifyHostPw";
+	}
+	@PostMapping("/host/modifyHostPw")
+	public String postModifyHostPw(HttpSession session, String newHostPw1) {
+		dl.p("HostService", "postModifyHostPw() | Post", "[시작]");
+		dl.p("postModifyHostPw()", "newHostPw1", newHostPw1);
+		
+		// 로그인 세션 조회
+		User loginUser = (User)session.getAttribute("loginUser");
+		
+		hostService.modifyHostPw(loginUser.getHost().getHostNo(), newHostPw1);
+		
+		session.invalidate();
+		
+		return "redirect:/login";
+	}
+	
+	
+	// [이승준] 회원 가입 시 실시간 ID 중복체크
+	@GetMapping("/checkHostPw")
+	@ResponseBody
+	public int getHostPwCheck(HttpSession session, String hostPw) {
+		dl.p("HostService", "getInsertHost() | Get", "[시작]");
+		
+		// 로그인 세션 조회
+		User loginUser = (User)session.getAttribute("loginUser");
+		
+		return hostService.getHostPwCheck(loginUser.getHost().getHostNo(), hostPw);
+	}
 	
 	// [이승준] 사업자 회원가입
 	@GetMapping("/insertHost")

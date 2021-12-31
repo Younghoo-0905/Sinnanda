@@ -97,6 +97,36 @@
 			LEFT JOIN address a ON a.address_no = ha.address_no
 		WHERE h.host_no = #{hostNo}
 	</select>
+	
+		<!-- [이승준] "사업자 PW 확인" 조회 -->
+	<select id="selectHostPwCheck" parameterType="com.b2.Sinnanda.vo.Host" resultType="int">
+		SELECT COUNT(host_id)
+		FROM host
+		WHERE host_no = #{hostNo} AND host_pw = #{hostPw}
+	</select>
+
+
+	<!-- [이승준] "사업자" 수정 -->
+	<update id="updateHost" parameterType="com.b2.Sinnanda.vo.Host">
+		UPDATE host
+		SET host_name = #{hostName}, 
+			host_tel = #{hostTel}, 
+			host_active = #{hostActive}, 
+			update_date = NOW()
+		WHERE host_no = #{hostQnaNo}
+	</update>
+	
+	<!-- [이승준] "사업자 비밀번호" 수정 -->
+	<update id="updateHostPw" parameterType="com.b2.Sinnanda.vo.Host">
+		UPDATE host
+		SET host_pw = #{hostPw}, 
+			update_date = NOW()
+		WHERE host_no = #{hostQnaNo}
+	</update>
+	
+	
+	
+	
 	<!--[윤경환] 호스트가 가지고 있는 숙소 종류 -->
 	<select id="selectHostAccom" parameterType ="int" resultType="com.b2.Sinnanda.vo.Accom">
 		SELECT  

@@ -248,19 +248,27 @@
 				return false;
 			}
 			if($('#hostPw').val()==''){
-				alert("Password를 입력하세요.");
+				alert("PW를 입력하세요.");
 				return false;
 			}
 			if($('#hostPw').val() != $('#hostPw2').val()){
-				alert("비밀번호가 일치하지 않습니다.");
+				alert("PW가 일치하지 않습니다.");
 				return false;
 			}
 			if($('#hostName').val()==''){
-				alert("Nickname을 입력하세요.");
+				alert("이름을 입력하세요.");
 				return false;
 			}
 			if($('#hostTel').val()==''){
-				alert("Phone number를 입력하세요.");
+				alert("번호를 입력하세요.");
+				return false;
+			}
+			if($('#addressInfo').val()==''){
+				alert("주소를 입력하세요.");
+				return false;
+			}
+			if($('#addressDetail').val()==''){
+				alert("상세주소를 입력하세요.");
 				return false;
 			}
 		

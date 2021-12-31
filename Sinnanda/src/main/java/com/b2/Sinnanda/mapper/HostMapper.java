@@ -10,8 +10,19 @@ import com.b2.Sinnanda.vo.Host;
 @Mapper
 public interface HostMapper {
 	
+	// [이승준] 사업자 정보 변경
+	void updateHost(Host host);
+	
+	// [이승준] 사업자 비밀번호 변경
+	void updateHostPw(Host host);
+	
+	// [이승준] 사업자 회원가입
 	void insertHost(Host host);
 	
+	// [이승준] 사업자 비밀번호 확인
+	int selectHostPwCheck(Host host);
+	
+	// [이승준] 사업자 상세+주소 조회
 	Host selectHostOneWithAddress(int hostNo);
 	// [이승준] Host 상세 조회
 	Host selectHostOne(int hostNo);
