@@ -26,6 +26,8 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
 <title>탈퇴 페이지</title>
 
 </head>
@@ -53,7 +55,7 @@
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<form method="post" action="/member/memberOutForm">
+									<form id="memberOut" method="post" action="/member/memberOutForm">
 		<table class="table table-hover" style="width: 100%;">
 			<tr>
 				<td>ID</td>
@@ -61,7 +63,7 @@
 			</tr>
 			<tr>
 				<td>Password</td>
-				<td><input type="password" name="memberPw" placeholder="비밀번호 입력"></td>
+				<td><input type="password" name="memberPw" id="memberPw" placeholder="비밀번호 입력"></td>
 			</tr>
 			<tr>
 				<td>탈퇴 사유</td>
@@ -74,7 +76,7 @@
 				</td>
 			</tr>								
 		</table>
-		<button  type = "submit" class="btn btn-primary">탈퇴</button>
+		<button onclick="return checkPw_form()" type = "button" class="btn btn-primary">탈퇴</button>
 	</form>
 								</div>
 							</div>
@@ -89,8 +91,44 @@
 	<!-- [이승준] 하단 Footer - SATRT -->
 	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
-
-
+	
+	<!-- [유동진] 유효성검사 -->
+	<script>
+  		var checkedPw = false;
+  		
+  		$('#memberPw').focusout(function() {
+  			let memberPw = $('#memberPw').val();
+  			if(memberPw != '') {
+	  			$.ajax({
+	  				type: 'get', 
+	  				url: '/chkPw?memberPw=' + memberPw, 
+	  				success: function(checkResult) {  					
+	  					if(checkResult == "1") {	//	Pw가 일치할 경우 탈퇴  						
+	  						checkedPw = true;
+	  					}		
+	  					if(checkResult != "1") {	//	Pw가 일치하지 않을 경우 탈퇴불가
+	  						
+	  						checkedPw = false;
+	  					}
+	  				}
+				})
+  			}
+  		})
+  		
+  		function checkPw_form() {
+  			if($('#memberPw').val()==''){
+				alert("Password를 입력하세요.");
+				return false;
+			} if(checkedPw == false) {
+				alert("비밀번호가 일치하지 않습니다.");
+				return false;
+			} else {
+				alert("탈퇴가 성공적으로 이루어졌습니다. 안녕히가세요 뉴_뉴 ㅠㅠ ...");
+			}
+		
+			$('#memberOut').submit();
+		}
+	</script>
 	
   <!-- plugins:js -->
   <script src="/vendors/js/vendor.bundle.base.js"></script>

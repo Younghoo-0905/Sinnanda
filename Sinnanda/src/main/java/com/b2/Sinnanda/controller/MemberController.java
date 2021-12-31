@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.service.CertifyEmailService;
+import com.b2.Sinnanda.service.LoginService;
 import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.vo.Admin;
 import com.b2.Sinnanda.vo.Complain;
@@ -32,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	@Autowired MemberService memberService;
 	@Autowired CertifyEmailService certifyEmailService;
+	@Autowired LoginService loginService;
 	@Autowired DL dl;
 	
 	//	[김영후] 휴면계정 해제 페이지 요청
@@ -86,10 +88,27 @@ public class MemberController {
 		return "/member/modifyMember";
 	}
 	@PostMapping("/member/modifyMember")
-	public String modifyMember(Member member) {
+	public String modifyMember(HttpSession session, Member member) {
+		// 1. 회원정보수정
+		// 2. 바뀐정보 조회
+		// 3. 세션최신화
 		log.debug("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥MemberController : modifyMember -> " + member.toString());
 		memberService.modifyMember(member);
 		log.debug("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥MemberController : 회원정보수정 성공!");
+		
+		// 세션 로그인정보 가져오고
+		User loginUser = (User)session.getAttribute("loginUser");
+	         loginUser.setUserId(loginUser.getMember().getMemberId());
+	         loginUser.setUserPw(member.getMemberPw());
+	         dl.p("getHostPage()", "loginUser", loginUser.toString());
+		
+		// 세롭게 로그인 정보 다시 불러오고
+		User refreshLoginUser = loginService.getLoginCheckAll(loginUser);
+		dl.p("getHostPage()", "refreshLoginUser", refreshLoginUser.toString());
+		
+		// 다시 세팅
+		session.setAttribute("loginUser", refreshLoginUser);
+
 		return "redirect:/member/myPage?memberNo="+member.getMemberNo();
 	}
 	
@@ -438,6 +457,19 @@ public class MemberController {
 		//	DB에 저장된 중복값 유무 결과를 반환
 		int checkResult = memberService.checkId(memberId);
 		log.debug("중복값 검사 결과 : " + checkResult);
+		return checkResult;
+	}
+	
+	// [유동진] 회원 탈퇴 시 PW 중복체크
+	@GetMapping("/chkPw")
+	@ResponseBody
+	public int checkPw(HttpSession session, String memberPw) {
+		
+		User loginUser = (User)session.getAttribute("loginUser");
+		//	DB 결과를 반환
+		int checkResult = memberService.checkPw(loginUser.getMember().getMemberNo(), memberPw);
+		dl.p("MemberController", "checkPw()", "중복값 검사 결과 : " + checkResult);
+		dl.p("MemberController", "checkPw()", "memberPW : "+ memberPw);
 		return checkResult;
 	}
 }

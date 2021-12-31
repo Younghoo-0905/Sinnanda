@@ -474,7 +474,12 @@
 			member_id=#{memberId} AND member_pw=#{memberPw}
 	</update>
 	
-  
+	<!-- [이승준,유동진] 회원탈퇴 시 Pw 일치여부 체크 -->
+  	<select id="checkPw" parameterType="com.b2.Sinnanda.vo.Member" resultType="int">
+		SELECT COUNT(member_id)
+		FROM member
+		WHERE member_no = #{memberNo} AND member_pw = #{memberPw}
+	</select>
 	
 	<!-- [김영후] 회원가입 시 ID 중복체크 -->
 	<select id="checkId" parameterType="String" resultType="int">

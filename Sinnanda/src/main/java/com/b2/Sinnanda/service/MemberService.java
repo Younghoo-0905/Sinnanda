@@ -319,6 +319,18 @@ public class MemberService {
 		memberMapper.deleteMember(member);
 	}	
 	
+	// [이승준, 유동진] 회원탈퇴시 Pw 일치여부 체크
+	public int checkPw(int memberNo, String memberPw) {
+		Member member = new Member();
+		
+		member.setMemberNo(memberNo);
+		member.setMemberPw(memberPw);
+		
+		int checkResult = memberMapper.checkPw(member);
+		
+		return checkResult;
+	}
+	
 	//	[김영후] 회원 가입 시 ID 중복체크
 	public int checkId(String memberId) {
 		int checkResult = memberMapper.checkId(memberId);

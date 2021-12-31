@@ -24,7 +24,9 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title>회원 정보수정 페이지</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+<title>회원 정보수정 페이지</title>
 </head>
 <body>
 	<div class="container-scroller">
@@ -50,7 +52,7 @@
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<form method="post" action ="/member/modifyMember">
+									<form id = modifyMember method="post" action ="/member/modifyMember">
 	<input type = "hidden" name ="memberNo" value = "${loginUser.member.memberNo}">
 		<table class="table table-hover">
 			<tr>
@@ -60,6 +62,10 @@
 			<tr>
 				<td>이름</td>
 				<td><input type = "text" class="form-control" name ="memberName" value = "${loginUser.member.memberName}" readonly></td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td><input type = "password" class="form-control" name ="memberPw" id = "memberPw"></td>
 			</tr>
 			<tr>
 				<td>나이</td>
@@ -78,7 +84,7 @@
 				<td><input type ="text" class="form-control" name ="updateDate" value = "${loginUser.member.updateDate}" readonly></td>
 			</tr>
 		</table>
-		<button type = "submit" class="btn btn-primary">수정완료</button>
+		<button onclick="return checkPw_form()" type = "button" class="btn btn-primary">수정완료</button>
 		<a href="/member/myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">수정취소</a>
 	</form>
 								</div>
@@ -93,7 +99,44 @@
 	<!-- [이승준] 하단 Footer - SATRT -->
 	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
-
+	
+		<!-- [유동진] 유효성검사 -->
+	<script>
+  		var checkedPw = false;
+  		
+  		$('#memberPw').focusout(function() {
+  			let memberPw = $('#memberPw').val();
+  			if(memberPw != '') {
+	  			$.ajax({
+	  				type: 'get', 
+	  				url: '/chkPw?memberPw=' + memberPw, 
+	  				success: function(checkResult) {  					
+	  					if(checkResult == "1") {	//	Pw가 일치할 경우 수정  						
+	  						checkedPw = true;
+	  					}		
+	  					if(checkResult != "1") {	//	Pw가 일치하지 않을 경우 수정불가
+	  						
+	  						checkedPw = false;
+	  					}
+	  				}
+				})
+  			}
+  		})
+  		
+  		function checkPw_form() {
+  			if($('#memberPw').val()==''){
+				alert("Password를 입력하세요.");
+				return false;
+			} if(checkedPw == false) {
+				alert("비밀번호가 일치하지 않습니다.");
+				return false;
+			} else {
+				alert("수정완료!");
+			}
+		
+			$('#modifyMember').submit();
+		}
+	</script>
 
   <!-- plugins:js -->
   <script src="/vendors/js/vendor.bundle.base.js"></script>
