@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.HostAddressMapper">
-	
-	<!-- [이승준] "사업자 주소" 수정 -->
-	<update id="updateHostAddress" parameterType="com.b2.Sinnanda.vo.HostAddress">
-		UPDATE host_address
-		SET 
-			address_no = #{addressNo}, 
-			address_detail = #{addressDetail}, 
-			update_date = NOW()
-		WHERE host_no = #{hostNo}
-	</update>
-	
-	<!-- [이승준] "사업자 주소 상세" 조회 -->
+
+<!-- #인덱스 (작성자 : 이승준)
+	1. 조회
+		selectHostAddressOne
+		
+	2. 삽입
+		insertHostAddress
+		
+	3. 수정
+		updateHostAddress
+		
+	4. 삭제
+		
+ -->
+
+<!-- 1. 조회 -->
+
+	<!-- [이승준] "사업자주소 상세" 조회 -->
 	<select id="selectHostAddressOne" parameterType="com.b2.Sinnanda.vo.HostAddress">
 		SELECT 
 			host_no, 
@@ -24,7 +30,11 @@
 		WHERE host_no = #{hostNo}
 	</select>
 
-	<!-- [이승준] "사업자 주소" 삽입 -->
+
+
+<!-- 2. 삽입 -->
+
+	<!-- [이승준] "사업자주소" 삽입 -->
 	<insert id="insertHostAddress" parameterType="com.b2.Sinnanda.vo.HostAddress">
 		INSERT INTO host_address (
 			host_no, 
@@ -40,4 +50,25 @@
 			NOW()
 		)
 	</insert>
+
+
+
+<!-- 3. 수정 -->
+
+	<!-- [이승준] "사업자주소" 수정 -->
+	<update id="updateHostAddress" parameterType="com.b2.Sinnanda.vo.HostAddress">
+		UPDATE host_address
+		SET 
+			address_no = #{addressNo}, 
+			address_detail = #{addressDetail}, 
+			update_date = NOW()
+		WHERE host_no = #{hostNo}
+	</update>
+
+
+
+<!-- 4. 삭제 -->
+
+
+
 </mapper>

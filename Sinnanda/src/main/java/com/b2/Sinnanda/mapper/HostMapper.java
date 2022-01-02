@@ -31,5 +31,5 @@ public interface HostMapper {
 	List<Host> selectHostAccom(int hostNo);
 	
 	// [윤경환] 사업자가 가지고 있는 숙소 년도에 따른 숙소 정산 
-	Map<String,Object> TotalAccomHostYear(int year,int hostNo,String accomName);
+	Map<String,Object> totalAccomHostYear(int year,int hostNo,String accomName);
 }

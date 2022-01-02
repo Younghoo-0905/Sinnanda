@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.mapper.AddressMapper;
@@ -14,6 +15,7 @@ import com.b2.Sinnanda.vo.Address;
 import com.b2.Sinnanda.vo.Host;
 
 @Service
+@Transactional
 public class HostService {
 	@Autowired
 	private HostMapper hostMapper;
@@ -26,11 +28,10 @@ public class HostService {
 	
 	// [이승준] 사업자 정보들 수정
 	public void modifyHost(Host host) {
-		// 1. 사업자 정보 수정
+		// 1. "사업자정보" 수정
 		hostMapper.updateHost(host);
 		
-		// 2. 주소 번호 조회
-		
+		// 2. '주소번호' 조회
 		// 2-1. 입력받은 긴 주소를 분리
 		String[] addressArr = new String[5];
 		addressArr = host.getHostAddress().getAddressInfo().split(" ");
@@ -58,15 +59,14 @@ public class HostService {
 			}
 		}
 
-		// 4. 입력받은 주소에 해당되는 주소번호 조회
+		// 4. 입력받은 주소에 해당되는 '주소번호' 조회
 		Address returnAddress = addressMapper.selectAddressOne(paraAddress);
 		
-		// 5. 회원주소를 삽입하기 위한 가공
+		// 5. "사업자주소"를 삽입하기 위한 가공
 		host.getHostAddress().setHostNo(host.getHostNo());
 		host.getHostAddress().setAddressNo(returnAddress.getAddressNo());
 		
-		// 3. 주소 변경
-		// 6. 회원주소 삽입
+		// 6. "사업자주소" 삽입
 		hostAddressMapper.updateHostAddress(host.getHostAddress());
 	}
 	
@@ -183,7 +183,7 @@ public class HostService {
 			accomName = null;
 			}
 		
-		Map<String, Object> map = hostMapper.TotalAccomHostYear(year, hostNo, accomName);		
+		Map<String, Object> map = hostMapper.totalAccomHostYear(year, hostNo, accomName);		
 		return map;
 		
 	}

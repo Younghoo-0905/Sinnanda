@@ -2,7 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.MemberAddressMapper">
 
-	<!-- [이승준] "회원 주소 상세" 조회 -->
+<!-- #인덱스 (작성자 : 이승준)
+	1. 조회
+		selectMemberAddressOne
+		
+	2. 삽입
+		insertMemberAddress
+		
+	3. 수정
+		updateMemberAddress
+		
+	4. 삭제
+		
+ -->
+
+
+<!-- 1. 조회 -->
+
+	<!-- [이승준] "회원주소 상세" 조회 -->
 	<select id="selectMemberAddressOne" parameterType="com.b2.Sinnanda.vo.MemberAddress">
 		SELECT 
 			member_no, 
@@ -13,8 +30,12 @@
 		FROM member_address
 		WHERE member_no = #{memberNo}
 	</select>
-	
-	<!-- [이승준] "회원 주소" 삽입 -->
+
+
+
+<!-- 2. 삽입 -->
+
+	<!-- [이승준] "회원주소" 삽입 -->
 	<insert id="insertMemberAddress" parameterType="com.b2.Sinnanda.vo.MemberAddress">
 		INSERT INTO member_address (
 			member_no, 
@@ -30,4 +51,27 @@
 			NOW()
 		)
 	</insert>
+
+
+
+<!-- 3. 수정 -->
+
+	<!-- [이승준] "사업자주소" 수정 -->
+	<update id="updateMemberAddress" parameterType="com.b2.Sinnanda.vo.MemberAddress">
+		UPDATE member_address
+		SET 
+			address_no = #{addressNo}, 
+			address_detail = #{addressDetail}, 
+			update_date = NOW()
+		WHERE member_no = #{memberNo}
+	</update>
+
+
+
+<!-- 4. 삭제 -->
+
+
+
+	
+
 </mapper>

@@ -98,7 +98,7 @@
 		WHERE h.host_no = #{hostNo}
 	</select>
 	
-		<!-- [이승준] "사업자 PW 확인" 조회 -->
+	<!-- [이승준] "사업자 PW 확인" 조회 -->
 	<select id="selectHostPwCheck" parameterType="com.b2.Sinnanda.vo.Host" resultType="int">
 		SELECT COUNT(host_id)
 		FROM host
@@ -106,27 +106,6 @@
 	</select>
 
 
-	<!-- [이승준] "사업자" 수정 -->
-	<update id="updateHost" parameterType="com.b2.Sinnanda.vo.Host">
-		UPDATE host
-		SET host_name = #{hostName}, 
-			host_tel = #{hostTel}, 
-			host_active = #{hostActive}, 
-			update_date = NOW()
-		WHERE host_no = #{hostQnaNo}
-	</update>
-	
-	<!-- [이승준] "사업자 비밀번호" 수정 -->
-	<update id="updateHostPw" parameterType="com.b2.Sinnanda.vo.Host">
-		UPDATE host
-		SET host_pw = #{hostPw}, 
-			update_date = NOW()
-		WHERE host_no = #{hostQnaNo}
-	</update>
-	
-	
-	
-	
 	<!--[윤경환] 호스트가 가지고 있는 숙소 종류 -->
 	<select id="selectHostAccom" parameterType ="int" resultType="com.b2.Sinnanda.vo.Accom">
 		SELECT  
@@ -143,7 +122,7 @@
 	</resultMap>
 			
 	<!--[윤경환] 숙소에 따라 사업자가 없는 수익 차트 -->
-	<select id="TotalAccomHostYear" parameterType="Map" resultType="java.util.Map">
+	<select id="totalAccomHostYear" parameterType="Map" resultType="java.util.Map">
 		SELECT 
 			SUM(CASE WHEN MONTH(pa.create_date) =1 THEN pa.payment_price END) january,
 			SUM(CASE WHEN MONTH(pa.create_date) =2 THEN pa.payment_price END) february,
