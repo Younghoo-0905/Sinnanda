@@ -44,9 +44,34 @@ public class MemberService {
 		return memberMapper.modifyMemberActive();
 	}
 	
-	// [유동진] 마이페이지
+	// [유동진, 이승준] 마이페이지, "회원 상세+주소" 조회
 	public Member myPage(int memberNo) {
-		return memberMapper.selectMyPage(memberNo);		
+		dl.p("MemberService", "myPage()", "[시작]");
+		dl.p("myPage()", "memberNo", memberNo);
+		
+		// 1. "사업자 상세+주소" 조회 서비스 호출
+		Member member = memberMapper.selectMemberOneWithAddress(memberNo);
+		dl.p("myPage()", "member.memberAddress.address", member.getMemberAddress().getAddress().toString());
+		dl.p("myPage()", "getRoadName", member.getMemberAddress().getAddress().getRoadName());
+		
+		// 2. "주소" 모델 가공 | 시도+시군구+도로명
+		String addressInfo = 
+				member.getMemberAddress().getAddress().getSido() + " " + 
+				member.getMemberAddress().getAddress().getSigungu() + " " + 
+				member.getMemberAddress().getAddress().getRoadName();
+		
+		// 3-1. '메인건물번호'가 있는 경우 -> 추가
+		if(member.getMemberAddress().getAddress().getMainBuildingCode() != 0) {
+			addressInfo = addressInfo+" "+Integer.toString(member.getMemberAddress().getAddress().getMainBuildingCode());
+		}
+		// 3-2. '서브거물번호'가 있는 경우 -> 추가
+		if(member.getMemberAddress().getAddress().getSubBuildingCode() != 0) {
+			addressInfo = addressInfo+"-"+Integer.toString(member.getMemberAddress().getAddress().getSubBuildingCode());
+		}
+		
+		member.getMemberAddress().setAddressInfo(addressInfo);
+		
+		return member;	
 	}
 	
 	// [유동진] 회원 정보 수정
@@ -130,16 +155,20 @@ public class MemberService {
 	}
 	
 	// [유동진] 내가 작성한 리뷰 목록 조회
-	public Map<String, Object> getMyReviewListByReviewRecommend(int memberNo, String reviewRecommend, int currentPage, int rowPerPage){
+	public Map<String, Object> getMyReviewListByReviewRecommend(int memberNo, String reviewRecommend, int beginRow, int rowPerPage){
 		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "나의 리뷰 목록");
 		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "memberNo : "+memberNo);
 		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "reviewRecommend : "+reviewRecommend);
-		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "currentPage : "+currentPage);
+		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "beginRow : "+beginRow);
 		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "rowPerPage : "+rowPerPage);
+		
+		// 0. "전체"의 카테고리를 조회하는 경우, null 값으로 변경 -> 쿼리에서 WHERE절이 실행되지 않도록 한다 (by 김영후)
+		if(reviewRecommend == null || reviewRecommend.equals("전체")) {
+			reviewRecommend = null;
+		}
 		
 		// 1. 매개변수 가공 (paraMap <-- reviewRecommend, currentPage, rowPerPage)
 		Map<String, Object> paraMap = new HashMap<>();
-		int beginRow = (currentPage-1) * rowPerPage;
 		
 		paraMap.put("memberNo", memberNo);
 		paraMap.put("reviewRecommend", reviewRecommend);
@@ -152,8 +181,12 @@ public class MemberService {
 		// 3. 리턴 값 가공 (return : review & lastPage)
 		Map<String, Object> returnMap = new HashMap<>();
 		
+		Map<String, Object> totalCountMap = new HashMap<>();
+			totalCountMap.put("memberNo", memberNo);
+			totalCountMap.put("reviewRecommend", reviewRecommend);
+		
 		int lastPage = 0;
-		int totalCount = memberMapper.selectMyReviewTotalCount(reviewRecommend);
+		int totalCount = memberMapper.selectMyReviewTotalCount(totalCountMap);
 		dl.p("MemberService", "getMyReviewListByReviewRecommend()", "totalCount : "+totalCount);
 		
 		lastPage = totalCount / rowPerPage;
@@ -169,16 +202,20 @@ public class MemberService {
 	}
 	
 	// [유동진] 회원 예약내역 조회
-	public Map<String, Object> getMyReserveList(int memberNo, String reserveUse, int currentPage, int rowPerPage) {
+	public Map<String, Object> getMyReserveList(int memberNo, String reserveUse, int beginRow, int rowPerPage) {
 		dl.p("MemberService", "getMyReserveList()", "예약내역 조회");
 		dl.p("MemberService", "getMyReserveList()", "memberNo : "+memberNo);
 		dl.p("MemberService", "getMyReserveList()", "reserveUse : "+reserveUse);
-		dl.p("MemberService", "getMyReserveList()", "currentPage : "+currentPage);
+		dl.p("MemberService", "getMyReserveList()", "beginRow : "+beginRow);
 		dl.p("MemberService", "getMyReserveList()", "rowPerPage : "+rowPerPage);
+		
+		// 0. "전체"의 카테고리를 조회하는 경우, null 값으로 변경 -> 쿼리에서 WHERE절이 실행되지 않도록 한다 (by 김영후)
+		if(reserveUse == null || reserveUse.equals("전체")) {
+			reserveUse = null;
+		}
 		
 		// 1. 매개변수 가공 (paraMap <-- qnaCategory, currentPage, rowPerPage)
 		Map<String, Object> paraMap = new HashMap<>();
-		int beginRow = (currentPage-1) * rowPerPage;
 		
 		paraMap.put("memberNo", memberNo);
 		paraMap.put("reserveUse", reserveUse);
@@ -191,8 +228,13 @@ public class MemberService {
 		// 3. 리턴 값 가공 (return : reserve & lastPage)
 		Map<String, Object> returnMap = new HashMap<>();
 		
+		Map<String, Object> totalCountMap = new HashMap<>();
+			totalCountMap.put("memberNo", memberNo);
+			totalCountMap.put("reserveUse", reserveUse);
+		
+		
 		int lastPage = 0;
-		int totalCount = memberMapper.selectMyReserveTotalCount(reserveUse);
+		int totalCount = memberMapper.selectMyReserveTotalCount(totalCountMap);
 		dl.p("MemberService", "getMyReserveList()", "totalCount : "+totalCount);
 		
 		lastPage = totalCount / rowPerPage;
@@ -216,16 +258,20 @@ public class MemberService {
 	}
 	
 	// [유동진] 내가 작성한 컴플레인 목록 조회
-	public Map<String, Object> getMyComplainList(int memberNo, String complainCategory, int currentPage, int rowPerPage){
+	public Map<String, Object> getMyComplainList(int memberNo, String complainCategory, int beginRow, int rowPerPage){
 		dl.p("MemberService", "getMyComplainList()", "내가 작성한 컴플레인 시작");
 		dl.p("MemberService", "getMyComplainList()", "memberNo : "+memberNo);
 		dl.p("MemberService", "getMyComplainList()", "complainCategory : "+complainCategory);
-		dl.p("MemberService", "getMyComplainList()", "currentPage : "+currentPage);
+		dl.p("MemberService", "getMyComplainList()", "beginRow : "+beginRow);
 		dl.p("MemberService", "getMyComplainList()", "rowPerPage : "+rowPerPage);
+		
+		// 0. "전체"의 카테고리를 조회하는 경우, null 값으로 변경 -> 쿼리에서 WHERE절이 실행되지 않도록 한다 (by 김영후)
+		if(complainCategory == null || complainCategory.equals("전체")) {
+			complainCategory = null;
+		}
 		
 		// 1. 매개변수 가공 (paraMap <-- complainCategory, currentPage, rowPerPage)
 		Map<String, Object> paraMap = new HashMap<>();
-		int beginRow = (currentPage-1) * rowPerPage;
 		
 		paraMap.put("memberNo", memberNo);
 		paraMap.put("complainCategory", complainCategory);
@@ -238,8 +284,12 @@ public class MemberService {
 		// 3. 리턴 값 가공 (return : complain & lastPage)
 		Map<String, Object> returnMap = new HashMap<>();
 		
+		Map<String, Object> totalCountMap = new HashMap<>();
+			totalCountMap.put("memberNo", memberNo);
+			totalCountMap.put("complainCategory", complainCategory);
+		
 		int lastPage = 0;
-		int totalCount = memberMapper.selectMyComplainTotalCount(complainCategory);
+		int totalCount = memberMapper.selectMyComplainTotalCount(totalCountMap);
 		dl.p("MemberService", "getMyComplainList()", "totalCount : "+totalCount);
 		
 		lastPage = totalCount / rowPerPage;

@@ -68,7 +68,7 @@
 					    			
 										<table class="table table-myPage">
 											<tr>
-												<th style="width: 5%; text-align:center;">사업자 번호</th>
+												<th style="width: 15%; text-align:center;">사업자 번호</th>
 												<td>${host.hostNo}</td>
 											</tr>
 											<tr>
@@ -84,12 +84,15 @@
 												<td>${host.hostTel}</td>
 											</tr>
 											<tr>
-												<th style="text-align:center;">가입일</th>
-												<td>${host.createDate}</td>
-											</tr>
-											<tr>
 												<th>주소</th>
 												<td>${host.hostAddress.addressInfo} ${host.hostAddress.addressDetail}</td>
+											</tr>
+											<tr>
+												<th style="text-align:center;">가입일</th>
+												<td>
+													<fmt:parseDate value="${host.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+													<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+												</td>
 											</tr>
 										</table>
 									</div>

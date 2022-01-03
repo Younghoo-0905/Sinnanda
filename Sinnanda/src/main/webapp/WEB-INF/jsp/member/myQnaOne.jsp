@@ -26,7 +26,7 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title>내가 작성한 QnA 상세보기 페이지</title>
+	<title>커뮤니티 페이지</title>
 </head>
 <body>
 	<div class="container-scroller">
@@ -48,116 +48,119 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>${loginUser.member.memberName}님의 QnA</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<section id="startBoard" class="ftco-section testimony-section bg-light">
-		 <div class="container">
-	    	<span class="subheading"><a href="myQnaList">내가 작성한 Q&A</a> > QnA 상세보기</span>
-			<h1><strong>내가 작성한 문의 상세보기</strong></h1>
-			
-			<!-- 글작성자의 수정, 삭제 버튼 -->
-			<div style="text-align:right;">
-				<c:if test="${qna.memberNo == loginUser.member.memberNo}">
-					<a class="btn btn-primary" href="/member/modifyQna?qnaNo=${qna.qnaNo}">문의 수정</a>
-					<a class="btn btn-primary" href="/removeQna?qnaNo=${qna.qnaNo}">문의 삭제</a>
-				</c:if>
-			</div>
-			
-			<table class="table table-myPage" style="width: 100%;">
-				<tr>
-					<th style="width: 100px; font-size: 20px; text-align:center;">제목</th>
-					<td colspan="3" style="font-size: 20px;">
-						${qna.qnaTitle}
-						<c:if test="${qna.qnaSecret == '비밀문의'}">
-							<img src="/images/qna/lockImg.png" width="20px" height="20px">
-						</c:if>
-					</td>
-				</tr>
-				<tr>
-					<th style="text-align:center;">작성자</th>
-					<td style="width: 60%;">${qna.memberName}</td>
-					<th style="width: 100px; text-align:center;">작성일</th>
-					<td style="width: 30%;">
-						<fmt:parseDate value="${qna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-						<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
-					</td>
-				</tr>
-				<tr>
-					<th style="text-align:center;">내용</th>
-					<td colspan="3"><textarea class="form-control" cols="150" rows="5"  readonly>${qna.qnaContent}</textarea></td>
-				</tr>
-			</table>
-		</div>
-	</section>
-	<!-- 본문 My QnA One 부분 - END -->
-	
-	<!-- 구분선 -->
-	<hr class="myPage-line">
-	
-	<!-- 본문 My QnA One 답변 부분 - START -->
-	<section class="ftco-section services-section bg-light">
-		<div class="container">
-			<h2><strong>관리자 답변</strong></h2>
-			
-			<table class="table table-myPage" style="width: 100%;">
-				<!-- 비회원 or 회원, 답변이 없을 때 -->
-				<c:if test="${qna.qnaComments == null}">
-					<th style="text-align:center; font-size: 30px;">답변 없음</th>
-				</c:if>
-				
-				<!-- 관리자, 답변이 없을 때 -->
-				<c:if test="${loginUser != null}">
-					<c:if test="${(qna.qnaComments == null) && (loginUser.userLevel == 3)}">
-						<form id="addQnaCommentForm" action="addQnaComment" method="post">
-						<input id="qnaNo" name="qnaNo" type="hidden" value="${qna.qnaNo}">
-						<input id="adminNo" name="adminNo" type="hidden" value="${loginUser.admin.adminNo}">
-						<table class="table table-board" style="width: 100%;">
-							<tr>
-								<th style="width: 150px; font-size: 20px; text-align:center;">
-									문의 답변하기<br><br>
-									<button id="addQnaCommentBtn" type="submit"class="btn btn-primary">답변하기</button>
-								</th>
-								<td><textarea id="qnaCommentContent" name="qnaCommentContent" cols="100" rows="5"></textarea></td>
-							</tr>
-						</table>
-					</form>
-					</c:if>
-				</c:if>
-				
-				<!-- 공통, 답변이 있을 때 -->
-				<c:if test="${qna.qnaComments != null}">
-						<tr>
-							<th style="width: 100px; text-align:center;">답변자</th>
-							<th style="text-align:center;">답변 내용</th>
-							<th style="width: 150px; text-align:center;">작성일</th>
-							<!-- 관리자, 답변이 있을 때, 삭제 기능 사용가능 -->
-							<c:if test="${(loginUser.userLevel == 3)}">
-								<th style="width: 70px; text-align:center;">삭제</th>
-							</c:if>
-						</tr>
-						<tr>
-							<td style="text-align:center;">${qna.adminName}</td>
-							<td><textarea class="form-control" cols="50" rows="7"  readonly>${qna.qnaComments.qnaCommentContent}</textarea></td>
-							<td style="text-align:center;">${qna.qnaComments.commentDate}</td>
-
-							<!-- 관리자, 답변이 있을 때, 삭제 기능 사용가능 -->
-							<c:if test="${(loginUser.userLevel == 3)}">
-								<td style="text-align:center;"><a class="btn btn-primary"  href="removeQnaComment?qnaNo=${qna.qnaNo}">삭제</a></td>
-							</c:if>
-						</tr>
-				</c:if>
-			</table>
-		</div>
-	</section>
-	<!-- 본문 QnA One 답변 부분 - END -->
+									<span class="subheading">
+										<a href="myPage?memberNo=${loginUser.member.memberNo}">메인(내정보)</a> >
+										<a href="myQnaList?memberNo=${loginUser.member.memberNo}">내 Q&A 목록</a> >
+										Q&A 상세보기
+									</span>
+									
+									<h1 style="margin-top: 10px;"><strong>내가 작성한 Q&A 상세보기</strong></h1>
+									
+									<div class="container">
+								    	
+										<!-- 글작성자의 수정, 삭제 버튼 -->
+										<div style="text-align:right; margin: 10px;">
+											<c:if test="${qna.memberNo == loginUser.member.memberNo}">
+												<a class="btn btn-primary" href="modifyQna?qnaNo=${qna.qnaNo}">문의 수정</a>
+												<a class="btn btn-primary" href="removeQna?qnaNo=${qna.qnaNo}">문의 삭제</a>
+											</c:if>
+										</div>
+										
+										<table class="table table-myPage" style="width: 100%;">
+											<tr>
+												<th style="width: 100px; font-size: 20px; text-align:center;">제목</th>
+												<td colspan="3" style="font-size: 20px;">
+													${qna.qnaTitle}
+													<c:if test="${qna.qnaSecret == '비밀문의'}">
+														<img src="/images/qna/lockImg.png" width="20px" height="20px">
+													</c:if>
+												</td>
+											</tr>
+											<tr>
+												<th style="text-align:center;">작성자</th>
+												<td>${qna.memberName}</td>
+											</tr>
+											<tr>
+												<th style="width: 7%; text-align:center;">작성일</th>
+												<td>
+													<fmt:parseDate value="${qna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+													<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+												</td>
+											</tr>
+											<tr>
+												<th style="text-align:center;">내용</th>
+												<td colspan="3"><textarea class="form-control" cols="150" rows="5"  readonly>${qna.qnaContent}</textarea></td>
+											</tr>
+										</table>
+										<!-- 본문 My QnA One 부분 - END -->
+								
+										<!-- 구분선 -->
+										<hr class="myPage-line">
+										
+										<!-- 본문 My QnA One 답변 부분 - START -->
+										<section class="ftco-section services-section bg-light">
+											<div class="container">
+												<h2><strong>관리자 답변</strong></h2>
+												
+												<table class="table table-myPage" style="width: 100%;">
+													<!-- 비회원 or 회원, 답변이 없을 때 -->
+													<c:if test="${qna.qnaComments == null}">
+														<th style="text-align:center; font-size: 30px;">답변 없음</th>
+													</c:if>
+													
+													<!-- 관리자, 답변이 없을 때 -->
+													<c:if test="${loginUser != null}">
+														<c:if test="${(qna.qnaComments == null) && (loginUser.userLevel == 3)}">
+															<form id="addQnaCommentForm" action="addQnaComment" method="post">
+															<input id="qnaNo" name="qnaNo" type="hidden" value="${qna.qnaNo}">
+															<input id="adminNo" name="adminNo" type="hidden" value="${loginUser.admin.adminNo}">
+															<table class="table table-board" style="width: 100%;">
+																<tr>
+																	<th style="width: 150px; font-size: 20px; text-align:center;">
+																		문의 답변하기<br><br>
+																		<button id="addQnaCommentBtn" type="submit"class="btn btn-primary">답변하기</button>
+																	</th>
+																	<td><textarea id="qnaCommentContent" name="qnaCommentContent" cols="100" rows="5"></textarea></td>
+																</tr>
+															</table>
+														</form>
+														</c:if>
+													</c:if>
+													
+													<!-- 공통, 답변이 있을 때 -->
+													<c:if test="${qna.qnaComments != null}">
+															<tr>
+																<th style="width: 100px; text-align:center;">답변자</th>
+																<th style="text-align:center;">답변 내용</th>
+																<th style="width: 150px; text-align:center;">작성일</th>
+																<!-- 관리자, 답변이 있을 때, 삭제 기능 사용가능 -->
+																<c:if test="${(loginUser.userLevel == 3)}">
+																	<th style="width: 70px; text-align:center;">삭제</th>
+																</c:if>
+															</tr>
+															<tr>
+																<td style="text-align:center;">${qna.adminName}</td>
+																<td><textarea class="form-control" cols="50" rows="7"  readonly>${qna.qnaComments.qnaCommentContent}</textarea></td>
+																<td style="text-align:center;">${qna.qnaComments.commentDate}</td>
+									
+																<!-- 관리자, 답변이 있을 때, 삭제 기능 사용가능 -->
+																<c:if test="${(loginUser.userLevel == 3)}">
+																	<td style="text-align:center;"><a class="btn btn-primary"  href="removeQnaComment?qnaNo=${qna.qnaNo}">삭제</a></td>
+																</c:if>
+															</tr>
+													</c:if>
+												</table>
+											</div>
+										</section>
+										<!-- 본문 QnA One 답변 부분 - END -->
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					
-					
 				</div>
 			</div>
 		</div>

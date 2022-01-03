@@ -2,6 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2.Sinnanda.mapper.MemberMapper">
 
+<!-- [이승준] (상세)"사업자 상세+주소" 조회 resultMap -->
+	<resultMap type="com.b2.Sinnanda.vo.Member" id="memberOneWithAddressMap">
+		<id column="member_no" property="memberNo"/>
+		<result column="member_id" property="memberId"/>
+		<result column="member_name" property="memberName"/>
+		<result column="member_age" property="memberAge"/>
+		<result column="member_tel" property="memberTel"/>
+		<result column="member_email" property="memberEmail"/>
+		<result column="create_date" property="createDate"/>
+		<result column="update_date" property="updateDate"/>
+		
+		<collection property="memberAddress" ofType="com.b2.Sinnanda.vo.MemberAddress" resultMap="memberAddressMap"></collection>
+	</resultMap>
+	<!-- 사업자에 대한 주소 resultMap -->
+	<resultMap id="memberAddressMap" type="com.b2.Sinnanda.vo.MemberAddress">
+		<result column="address_detail" property="addressDetail"/>
+		
+		<collection property="address" ofType="com.b2.Sinnanda.vo.Address" resultMap="memberAddressDetailMap"></collection>
+	</resultMap>
+	<!-- 사업자 주소에 대한 주소 resultMap -->
+	<resultMap id="memberAddressDetailMap" type="com.b2.Sinnanda.vo.Address">
+		<id column="address_no" property="addressNo"/>
+		<result column="sido" property="sido"/>
+		<result column="sigungu" property="sigungu"/>
+		<result column="road_name" property="roadName"/>
+		<result column="main_building_code" property="mainBuildingCode"/>
+		<result column="sub_building_code" property="subBuildingCode"/>
+	</resultMap>
+	<!-- [이승준] (상세)"회원 상세+주소" 조회 -->
+	<select id="selectMemberOneWithAddress" parameterType="int" resultMap="memberOneWithAddressMap">
+		SELECT 
+			m.member_no, 
+			m.member_id, 
+			m.member_name, 
+			m.member_age, 
+			m.member_tel, 
+			m.member_email, 
+			m.create_date, 
+			m.update_date,
+			m.last_login_date,
+			ma.address_detail, 
+			a.address_no, 
+			a.sido, 
+			a.sigungu, 
+			a.road_name, 
+			a.main_building_code, 
+			a.sub_building_code
+		FROM member m 
+			LEFT JOIN member_address ma ON ma.member_no = m.member_no
+			LEFT JOIN address a ON a.address_no = ma.address_no
+		WHERE m.member_no = #{memberNo}
+	</select>
+
+	
+
 	
 	<!-- [김영후] Member 휴면계정 해제 -->
 	<update id="activeMember" parameterType="int">
@@ -240,15 +295,25 @@
 	</select>
 	
 	<!-- [유동진] 리뷰 갯수 조회 -->
-	<select id="selectMyReviewTotalCount" parameterType="String" resultType="int">
+	<select id="selectMyReviewTotalCount" parameterType="Map" resultType="int">
 		SELECT 
 			COUNT(*) 
-		FROM review
+		FROM member m 
+		JOIN reserve re ON re.member_no = m.member_no
+		JOIN payment p ON re.reserve_no = p.reserve_no 
+		JOIN review rev ON rev.payment_no = p.payment_no
+		JOIN room r ON r.room_no = re.room_no
+		JOIN accom ac ON r.accom_no = ac.accom_no
 		<if test="reviewRecommend != null">
 			<where>
-				review_recommend = #{reviewRecommend}
+				m.member_no = #{memberNo} AND rev.review_recommend = #{reviewRecommend}
 			</where>
 		</if>
+		<if test="reviewRecommend == null">
+         <where>
+            m.member_no = #{memberNo}
+         </where>
+      </if>
 	</select>
 	
 	<!-- [유동진] 예약내역 Map -->
@@ -317,15 +382,24 @@
 	</select>
 	
 	<!-- [유동진] 예약내역 갯수 조회 -->
-	<select id="selectMyReserveTotalCount" parameterType="String" resultType="int">
+	<select id="selectMyReserveTotalCount" parameterType="Map" resultType="int">
 		SELECT 
 			COUNT(*) 
-		FROM reserve
+		FROM reserve re
+		JOIN payment p ON p.reserve_no = re.reserve_no
+		JOIN member m ON re.member_no = m.member_no
+		JOIN room r ON r.room_no = re.room_no
+		JOIN accom ac ON r.accom_no = ac.accom_no
 		<if test="reserveUse != null">
 			<where>
-				reserve_use = #{reserveUse}
+				m.member_no = #{memberNo} AND reserve_use = #{reserveUse}
 			</where>
 		</if>
+		<if test="reserveUse == null">
+			<where>
+				m.member_no = #{memberNo}
+			</where>
+		</if>	
 	</select>
 	
 	<!-- [유동진] 컴플레인Map -->
@@ -353,13 +427,15 @@
 			c.complain_title,
 			c.create_date,
 			m.member_name,
-			a.accom_name
+			a.accom_name, 
+			cc.complain_comment_content
 		FROM complain c
 		JOIN payment p ON c.payment_no = p.payment_no 
 		JOIN reserve r ON p.reserve_no = r.reserve_no
 		JOIN room ro ON ro.room_no = r.room_no
 		JOIN accom a ON a.accom_no = ro.accom_no
-		JOIN member m ON r.member_no = m.member_no	
+		JOIN member m ON r.member_no = m.member_no
+		LEFT JOIN complain_comment cc ON cc.complain_no = c.complain_no	
 		<if test="complainCategory != null">
         	<where>
          		m.member_no = #{memberNo} AND complain_category = #{complainCategory}
@@ -373,15 +449,26 @@
 	</select>
 	
 	<!-- [유동진] 내가 작성한 컴플레인 갯수 -->
-	<select id="selectMyComplainTotalCount" parameterType="String" resultType="int">
+	<select id="selectMyComplainTotalCount" parameterType="Map" resultType="int">
 		SELECT 
 			COUNT(*) 
-		FROM complain
+		FROM complain c
+		JOIN payment p ON c.payment_no = p.payment_no 
+		JOIN reserve r ON p.reserve_no = r.reserve_no
+		JOIN room ro ON ro.room_no = r.room_no
+		JOIN accom a ON a.accom_no = ro.accom_no
+		JOIN member m ON r.member_no = m.member_no
+		LEFT JOIN complain_comment cc ON cc.complain_no = c.complain_no	
 		<if test="complainCategory != null">
-			<where>
-				complain_category = #{complainCategory}
-			</where>
-		</if>
+        	<where>
+         		m.member_no = #{memberNo} AND complain_category = #{complainCategory}
+         	</where>
+      	</if>
+      <if test="complainCategory == null">
+         <where>
+            m.member_no = #{memberNo}
+         </where>
+      </if>
 	</select>
 	
 	<!-- [유동진] 내가 작성한 컴플레인 상세보기 -->

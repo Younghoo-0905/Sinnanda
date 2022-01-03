@@ -8,9 +8,6 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- plugins:css -->
-		<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/animate.css">
 	
 	<link rel="stylesheet" href="/skydash/vendors/feather/feather.css">
 	<link rel="stylesheet" href="/skydash/vendors/ti-icons/css/themify-icons.css">
@@ -51,33 +48,43 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>회원탈퇴</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<form id="memberOut" method="post" action="/member/memberOutForm">
-		<table class="table table-hover" style="width: 100%;">
-			<tr>
-				<td>ID</td>
-				<td><input type="text" name="memberId" value = "${loginUser.member.memberId}" readonly></td>
-			</tr>
-			<tr>
-				<td>Password</td>
-				<td><input type="password" name="memberPw" id="memberPw" placeholder="비밀번호 입력"></td>
-			</tr>
-			<tr>
-				<td>탈퇴 사유</td>
-				<td>
-					<select id="outReason" name="outReason">
-						<option value="기타" selected>기타</option>
-						<option value="서비스 불친절">서비스 불친절</option>
-						<option value="서비스 이용 불편">서비스 이용 불편</option>
-					</select>
-				</td>
-			</tr>								
-		</table>
-		<button onclick="return checkPw_form()" type = "button" class="btn btn-primary">탈퇴</button>
-	</form>
+									<span class="subheading">
+										<a href="myPage?memberNo=${loginUser.member.memberNo}">메인(내정보)</a> >
+										회원탈퇴
+									</span>
+									
+									<h1 style="margin-top: 10px;"><strong>회원탈퇴</strong></h1>
+								
+									<div class="container">
+										<form id="memberOut" method="post" action="member/memberOutForm">
+											<table class="table table-myPage" style="width: 100%;">
+												<tr>
+													<th style="width: 10%; text-align:center;">회원 ID</th>
+													<td><input type="text" name="memberId" class="form-control" value="${loginUser.member.memberId}" readonly></td>
+												</tr>
+												<tr>
+													<th style="text-align:center;">회원 PW</th>
+													<td><input type="password" name="memberPw" id="memberPw" class="form-control" placeholder="비밀번호 입력"></td>
+												</tr>
+												<tr>
+													<th style="text-align:center;">탈퇴 사유</th>
+													<td>
+														<select id="outReason" name="outReason" class="form-control">
+															<option value="기타" selected>기타</option>
+															<option value="서비스 불친절">서비스 불친절</option>
+															<option value="서비스 이용 불편">서비스 이용 불편</option>
+														</select>
+													</td>
+												</tr>								
+											</table>
+											<div style="margin: 10px;">
+												<button onclick="return checkPw_form()" type = "button" class="btn btn-primary">탈퇴</button>
+											</div>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>

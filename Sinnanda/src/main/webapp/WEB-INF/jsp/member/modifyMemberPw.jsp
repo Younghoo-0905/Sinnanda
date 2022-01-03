@@ -24,7 +24,7 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-<title> 페이지</title>
+<title>회원정보 수정</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
@@ -47,25 +47,33 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>비밀번호 변경</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<form id="pwForm" method="post" action ="/member/modifyMemberPw">
-	<input type = "hidden" name ="memberNo" value = "${loginUser.member.memberNo}">
-	
-		<div class="form-group">
-			 <label for="newMemberPw">새 비밀번호</label>
-			<input type = "password" class="form-control" name ="memberPw" id="newMemberPw" placeholder="새로운 비밀번호 입력">
-		</div>
-		<div class="form-group">
-			<label for="newMemberPw">비밀번호 확인</label>
-			<input type = "password" class="form-control" id="newMemberPw2" placeholder="새로운 비밀번호 확인">
-		</div>
-	
-	<button id="pwBtn" type = "button" class="btn btn-primary">변경하기</button>
-	<button type = "reset" class="btn btn-primary">다시입력</button>
-	</form>
+									<span class="subheading">
+										<a href="myPage?memberNo=${loginUser.member.memberNo}">메인(내정보)</a> >
+										PW 수정
+									</span>
+									
+									<h1 style="margin-top: 10px;"><strong>비밀번호 변경</strong></h1>
+											
+									<div class="container">
+										<form id="pwForm" method="post" action ="modifyMemberPw">											
+											<input type = "hidden" name ="memberNo" value = "${loginUser.member.memberNo}">
+											
+											<div class="form-group">
+												 <label for="newMemberPw">새 비밀번호</label>
+												<input type = "password" class="form-control" name ="memberPw" id="newMemberPw" placeholder="새로운 비밀번호 입력">
+											</div>
+											<div class="form-group">
+												<label for="newMemberPw">비밀번호 확인</label>
+												<input type = "password" class="form-control" id="newMemberPw2" placeholder="새로운 비밀번호 확인">
+											</div>
+											
+											<button id="pwBtn" type = "button" class="btn btn-primary">변경하기</button>
+											<button type = "reset" class="btn btn-primary">다시입력</button>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>

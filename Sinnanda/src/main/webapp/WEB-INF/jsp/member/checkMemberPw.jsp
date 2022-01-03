@@ -25,7 +25,7 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title>마이 페이지</title>
+	<title>회원정보 수정</title>
 </head>
 <body>
 	<div class="container-scroller">
@@ -47,21 +47,30 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>비밀번호 확인</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<form id="nowMemberPw" method ="post" action ="checkMemberPw">
-		<div>
-			<input type ="hidden" name ="memberNo" value="${loginUser.member.memberNo}">
-		</div>
-		<div class="form-group">
-			<input type ="password" class="form-control" name ="memberPw" id ="memberPw" placeholder ="비밀번호를 입력하세요">
-		</div>
-	<button onclick="return chk_form()" type = "button" class="btn btn-primary">확인</button>
-	</form>
-	
-
+									<span class="subheading">
+										<a href="myPage?memberNo=${loginUser.member.memberNo}">메인(내정보)</a> >
+										PW 수정
+									</span>
+									
+									<h1 style="margin-top: 10px;"><strong>비밀번호 확인</strong></h1>
+									
+									<div class="container">
+										<form id="nowMemberPw" method ="post" action ="checkMemberPw">
+											<div>
+												<input type ="hidden" name ="memberNo" value="${loginUser.member.memberNo}">
+											</div>
+											<div class="form-group">
+												<input type ="password" class="form-control" name ="memberPw" id ="memberPw" placeholder ="비밀번호를 입력하세요">
+											</div>
+											
+											<div style="margin: 10px;">
+												<button onclick="return chk_form()" type = "button" class="btn btn-primary">확인</button>
+											</div>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -26,7 +26,7 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
-<title>회원 정보수정 페이지</title>
+<title>회원정보 수정</title>
 </head>
 <body>
 	<div class="container-scroller">
@@ -48,45 +48,57 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>내 정보 수정</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<form id = modifyMember method="post" action ="/member/modifyMember">
-	<input type = "hidden" name ="memberNo" value = "${loginUser.member.memberNo}">
-		<table class="table table-hover">
-			<tr>
-				<td>아이디</td>
-				<td><input type = "text" class="form-control" name ="memberId" value = "${loginUser.member.memberId}" readonly></td>
-			</tr>
-			<tr>
-				<td>이름</td>
-				<td><input type = "text" class="form-control" name ="memberName" value = "${loginUser.member.memberName}" readonly></td>
-			</tr>
-			<tr>
-				<td>비밀번호</td>
-				<td><input type = "password" class="form-control" name ="memberPw" id = "memberPw"></td>
-			</tr>
-			<tr>
-				<td>나이</td>
-				<td><input type ="text" class="form-control" name ="memberAge" value = "${loginUser.member.memberAge}"></td>
-			</tr>
-			<tr>
-				<td>전화번호</td>
-				<td><input type ="text" class="form-control" name ="memberTel" value = "${loginUser.member.memberTel}"></td>
-			</tr>
-			<tr>
-				<td>이메일</td>
-				<td><input type ="text" class="form-control" name ="memberEmail" value = "${loginUser.member.memberEmail}"></td>
-			</tr>
-			<tr>
-				<td>최근 수정일</td>
-				<td><input type ="text" class="form-control" name ="updateDate" value = "${loginUser.member.updateDate}" readonly></td>
-			</tr>
-		</table>
-		<button onclick="return checkPw_form()" type = "button" class="btn btn-primary">수정완료</button>
-		<a href="/member/myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">수정취소</a>
-	</form>
+									<span class="subheading">
+										<a href="myPage?memberNo=${loginUser.member.memberNo}">메인(내정보)</a> >
+										정보 수정
+									</span>
+									
+									<h1 style="margin-top: 10px;"><strong>내 정보 수정</strong></h1>
+								
+									<div class="container">
+										<form id = modifyMember method="post" action ="modifyMember">
+											<input type = "hidden" name ="memberNo" value = "${loginUser.member.memberNo}">
+											
+											<table class="table table-myPage">
+												<tr>
+													<th style="width: 15%; text-align:center;">아이디</th>
+													<td><input type = "text" class="form-control" name ="memberId" value = "${loginUser.member.memberId}" readonly></td>
+												</tr>
+												<tr>
+													<th style="text-align:center;">이름</th>
+													<td><input type = "text" class="form-control" name ="memberName" value = "${loginUser.member.memberName}" readonly></td>
+												</tr>
+												<tr>
+													<th style="text-align:center;">비밀번호</th>
+													<td><input type = "password" class="form-control" name ="memberPw" id = "memberPw"></td>
+												</tr>
+												<tr>
+													<th style="text-align:center;">나이</th>
+													<td><input type ="text" class="form-control" name ="memberAge" value = "${loginUser.member.memberAge}"></td>
+												</tr>
+												<tr>
+													<th style="text-align:center;">전화번호</th>
+													<td><input type ="text" class="form-control" name ="memberTel" value = "${loginUser.member.memberTel}"></td>
+												</tr>
+												<tr>
+													<th style="text-align:center;">이메일</th>
+													<td><input type ="text" class="form-control" name ="memberEmail" value = "${loginUser.member.memberEmail}"></td>
+												</tr>
+												<tr>
+													<th style="text-align:center;">최근 수정일</th>
+													<td><input type ="text" class="form-control" name ="updateDate" value = "${loginUser.member.updateDate}" readonly></td>
+												</tr>
+											</table>
+											
+											<div style="margin: 10px;">
+												<button onclick="return checkPw_form()" type = "button" class="btn btn-primary">수정완료</button>
+												<a href="/member/myPage?memberNo=${loginUser.member.memberNo}" class="nav-link">수정취소</a>
+											</div>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -53,102 +53,28 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>이용한 횟수</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<select id="yearNo" name="yearNo" class="form-control-sm" style="float: right; margin-bottom: 20px; height:35px;" >
-							            <option value="">년도 선택</option>            
-							            <option value="2021">2021년</option>
-							            <option value="2020">2020년</option>
-							         </select>
-							         
-							         <canvas id="myChart" width="100" height="40"></canvas>
-		  
-									   <script type="text/javascript">
-										   let ctx = document.getElementById('myChart').getContext('2d');
-										   let myChart = new Chart(ctx, {});
-										   
-										   $('#yearNo').change(function(){
-										      
-										      let year = $('#yearNo').val();
-										      
-										      myChart.destroy();
-										      ctx = document.getElementById('myChart').getContext('2d');
-										      
-										      $.ajax({
-										         type:'get',
-										         url:'/member/getMemberUseChart?year=' + year,
-										         success:function(json){
-										            console.log(json);
-										            
-										            let myData = [];
-										            myData.push(json.january);
-										            myData.push(json.february);
-										            myData.push(json.march);
-										            myData.push(json.april);
-										            myData.push(json.may);
-										            myData.push(json.june);
-										            myData.push(json.july);
-										            myData.push(json.august);
-										            myData.push(json.september);
-										            myData.push(json.october);
-										            myData.push(json.november);
-										            myData.push(json.december);
-										          
-										            //총값 
-													let result  = myData.reduce((accumulator,currentNumber)=> accumulator + currentNumber);
-													
-										            
-										            // chart.js
-										            myChart = new Chart(ctx, {
-										                type: 'bar',
-										                data: {
-										                    labels: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-										                    datasets: [{
-										                        label: '이용횟수',
-										                        data: myData,
-										                        backgroundColor: [
-										                        	 'rgba(54, 162, 235, 0.2)'
-										                            
-										                        ],
-										                        borderColor: [
-										                        	 'rgba(54, 162, 235, 1)'
-										                          
-										                        ],
-										                        borderWidth: 1
-										                    }]
-										                },
-										                options: {
-										                	 plugins: {
-										                         title: {
-										                             display: true,
-										                             text: '# 총 이용횟수 : '+result.toLocaleString() +' 회'
-										                         }
-										                     },
-										                    scales: {
-										                        y: {
-										                            beginAtZero: true
-										                        }
-										                    },
-										                    lengend:{
-										                    	display:true,
-										                    	fontColor: 'rgba(255, 99, 132, 0.2)',
-										                    	position:'right'
-										                    }
-										                }
-										            });
-										            
-										         }
-										      });
-										   });
-										
-									   </script>
+									<span class="subheading">
+										<a href="myPage?memberNo=${loginUser.member.memberNo}">메인(내정보)</a> >
+										이용 횟수
+									</span>
+									
+									<h1 style="margin-top: 10px;"><strong>서비스 이용 횟수</strong></h1>
+									<div class="container">
+										<select id="yearNo" name="yearNo" class="form-control-sm" style="float: right; margin-bottom: 20px; height:35px;" >
+											<option value="">년도 선택</option>            
+											<option value="2021">2021년</option>
+											<option value="2020">2020년</option>
+										</select>
+								         
+										<canvas id="myChart" width="100" height="40"></canvas>
+		  							</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					
 				</div>
 			</div>
 		</div>
@@ -157,7 +83,87 @@
 	<!-- [이승준] 하단 Footer - SATRT -->
 	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
-
+	
+	 <script type="text/javascript">
+	   let ctx = document.getElementById('myChart').getContext('2d');
+	   let myChart = new Chart(ctx, {});
+	   
+	   $('#yearNo').change(function(){
+	      
+	      let year = $('#yearNo').val();
+	      
+	      myChart.destroy();
+	      ctx = document.getElementById('myChart').getContext('2d');
+	      
+	      $.ajax({
+	         type:'get',
+	         url:'/member/getMemberUseChart?year=' + year,
+	         success:function(json){
+	            console.log(json);
+	            
+	            let myData = [];
+	            myData.push(json.january);
+	            myData.push(json.february);
+	            myData.push(json.march);
+	            myData.push(json.april);
+	            myData.push(json.may);
+	            myData.push(json.june);
+	            myData.push(json.july);
+	            myData.push(json.august);
+	            myData.push(json.september);
+	            myData.push(json.october);
+	            myData.push(json.november);
+	            myData.push(json.december);
+	          
+	            //총값 
+				let result  = myData.reduce((accumulator,currentNumber)=> accumulator + currentNumber);
+				
+	            
+	            // chart.js
+	            myChart = new Chart(ctx, {
+	                type: 'bar',
+	                data: {
+	                    labels: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                    datasets: [{
+	                        label: '이용횟수',
+	                        data: myData,
+	                        backgroundColor: [
+	                        	 'rgba(54, 162, 235, 0.2)'
+	                            
+	                        ],
+	                        borderColor: [
+	                        	 'rgba(54, 162, 235, 1)'
+	                          
+	                        ],
+	                        borderWidth: 1
+	                    }]
+	                },
+	                options: {
+	                	 plugins: {
+	                         title: {
+	                             display: true,
+	                             text: '# 총 이용횟수 : '+result.toLocaleString() +' 회'
+	                         }
+	                     },
+	                    scales: {
+	                        y: {
+	                            beginAtZero: true
+	                        }
+	                    },
+	                    lengend:{
+	                    	display:true,
+	                    	fontColor: 'rgba(255, 99, 132, 0.2)',
+	                    	position:'right'
+	                    }
+	                }
+	            });
+	            
+	         }
+	      });
+	   });
+	
+   </script>
+	
 	<script src="/js/dashboard.js"></script>
 	<script src="/vendors/js/vendor.bundle.base.js"></script>
 </body>
