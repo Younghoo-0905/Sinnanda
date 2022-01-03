@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.b2.Sinnanda.commons.DL;
 import com.b2.Sinnanda.mapper.AdminMapper;
+import com.b2.Sinnanda.mapper.MemberMapper;
 import com.b2.Sinnanda.service.AdminService;
 import com.b2.Sinnanda.service.HostService;
+import com.b2.Sinnanda.service.MemberService;
 import com.b2.Sinnanda.vo.Host;
 import com.b2.Sinnanda.vo.User;
 
@@ -29,6 +31,8 @@ public class ChartRestController {
    @Autowired AdminService adminService;
    @Autowired DL dl;
    @Autowired HostService hostService;
+   @Autowired MemberMapper memberMapper;
+   @Autowired MemberService memberService;
    
    //[윤경환] 정산 차트 
          @GetMapping("/admin/getIncomeChart")
@@ -117,7 +121,29 @@ public class ChartRestController {
         	 return map;
          }
          
-         
+         // [유동진] 정산 차트 
+         @GetMapping("/member/getMemberPaymentChart")
+         public Map<String,Object> memberPaymentChart(HttpSession session, @RequestParam(name ="year") int year) {
+      	   User loginUser = (User)session.getAttribute("loginUser");
+      	   dl.p("ChartRestController", "memberPaymentCHart", "loginUser : " + loginUser);
+      	   
+      	   Map<String,Object> map = memberService.getMemberPaymentChart(year, loginUser.getMember().getMemberNo());
+      
+      	   return map;  
+         }
+
+
+         // [유동진] 회원 년도별 이용횟수 차트 
+         @GetMapping("/member/getMemberUseChart")
+         public Map<String,Object> memberUseChart(HttpSession session, @RequestParam(name ="year") int year) {
+      	   
+      	   User loginUser = (User)session.getAttribute("loginUser");
+      	   dl.p("ChartRestController", "memberPaymentCHart", "loginUser : " + loginUser);
+      	   
+      	   Map<String,Object> map = memberService.getMemberUseChart(year, loginUser.getMember().getMemberNo());
+      
+      	   return map;  
+         }
          
          
 }

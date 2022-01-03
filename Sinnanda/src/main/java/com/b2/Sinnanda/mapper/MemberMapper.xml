@@ -411,6 +411,48 @@
 		WHERE c.complain_no = #{complainNo}
 	</select>
 	
+	<!-- [유동진] 회원 결제한 금액 조회 -->
+	<select id ="memberPaymentYear" parameterType="Map" resultType="java.util.Map">
+		SELECT 
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =1 THEN p.payment_price END),0) january,
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =2 THEN p.payment_price END),0) february,
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =3 THEN p.payment_price END),0) march,
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =4 THEN p.payment_price END),0) april,
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =5 THEN p.payment_price END),0) may,
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =6 THEN p.payment_price END),0) june,
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =7 THEN p.payment_price END),0) july,
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =8 THEN p.payment_price END),0) august,
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =9 THEN p.payment_price END),0) september,
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =10 THEN p.payment_price END),0) october,
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =11 THEN p.payment_price END),0) november,
+			IFNULL(SUM(CASE WHEN MONTH(p.update_date) =12 THEN p.payment_price END),0) december
+		FROM reserve re
+		JOIN payment p ON p.reserve_no = re.reserve_no
+		JOIN member m ON re.member_no = m.member_no
+		JOIN room r ON r.room_no = re.room_no
+		JOIN accom ac ON r.accom_no = ac.accom_no
+		WHERE YEAR(p.update_date) = #{year} AND re.member_no = #{memberNo}
+	</select>
+	
+	<!-- [유동진] 회원 년도별 이용횟수 -->
+	<select id ="memberUseYear" parameterType="Map" resultType="java.util.Map">
+		SELECT 
+			COUNT(CASE WHEN MONTH(reserve_date) =1  THEN member_no END) AS january,
+			COUNT(CASE WHEN MONTH(reserve_date) =2  THEN member_no END) AS february,
+			COUNT(CASE WHEN MONTH(reserve_date) =3  THEN member_no END) AS march,
+			COUNT(CASE WHEN MONTH(reserve_date) =4  THEN member_no END) AS april,
+			COUNT(CASE WHEN MONTH(reserve_date) =5  THEN member_no END) AS may,
+			COUNT(CASE WHEN MONTH(reserve_date) =6  THEN member_no END) AS june,
+			COUNT(CASE WHEN MONTH(reserve_date) =7  THEN member_no END) AS july,
+			COUNT(CASE WHEN MONTH(reserve_date) =8  THEN member_no END) AS august,
+			COUNT(CASE WHEN MONTH(reserve_date) =9  THEN member_no END) AS september,
+			COUNT(CASE WHEN MONTH(reserve_date) =10  THEN member_no END) AS october,
+			COUNT(CASE WHEN MONTH(reserve_date) =11 THEN member_no END) AS november,
+			COUNT(CASE WHEN MONTH(reserve_date) =12  THEN member_no END) AS december	
+			FROM reserve 
+		WHERE YEAR(reserve_date) = #{year} AND member_no = #{memberNo}
+	</select>
+	
 	<!-- [김영후] 회원 가입 -->
 	<insert id="insertMember" parameterType="com.b2.Sinnanda.vo.Member">
 		INSERT INTO 

@@ -74,6 +74,12 @@ public interface MemberMapper {
 	// [유동진] 내가 작성한 컴플레인 상세조회
 	Complain selectMyComplainOne(int complainNo);
 	
+	// [유동진] 결제 금액 조회
+	Map<String,Object> memberPaymentYear(int year, int memberNo);
+	
+	// [유동진] 년도별 이용 횟수
+	Map<String,Object> memberUseYear(int year, int memberNo);
+	
 	//	[김영후] 회원 가입
 	int insertMember(Member member);
 	

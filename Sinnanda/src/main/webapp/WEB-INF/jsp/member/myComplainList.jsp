@@ -57,7 +57,7 @@
     	<div class="container3">
 		<h1>내가 작성한 컴플레인</h1>
 		<div>
-			<select id="complainCategory" name="complainCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
+			<select id="complainCategory" name="complainCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px; height:35px;">
 				<option value="">선택</option>
 				<option value="/member/myComplainList">전체</option>
 				<option value="/member/myComplainList?complainCategory=예약일 변경">예약일 변경</option>

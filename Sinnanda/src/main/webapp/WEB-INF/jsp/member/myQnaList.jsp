@@ -54,7 +54,7 @@
 								<div class="card-body">
 				<section class="ftco-section testimony-section bg-light">
 				<div class="container1">
-				<select id="qnaCategory" name="qnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 40px;">
+				<select id="qnaCategory" name="qnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 40px; height:35px;">
 					<option value="">선택</option>
 					<option value="/member/myQnaList?qnaCategory=전체">전체문의</option>
 					<option value="/member/myQnaList?qnaCategory=기타문의">기타문의</option>

@@ -261,6 +261,18 @@ public class MemberService {
 		
 		return memberMapper.selectMyComplainOne(complainNo);
 	}
+	
+	// [유동진] 회원 결제 금액 조회
+	public Map<String, Object> getMemberPaymentChart(int year, int memberNo) {
+		Map<String, Object>  map = memberMapper.memberPaymentYear(year, memberNo);
+		return map;	
+	}
+	
+	// [유동진] 회원 년도별 이용횟수
+	public Map <String, Object> getMemberUseChart(int year, int memberNo){
+		Map<String, Object>  map = memberMapper.memberUseYear(year, memberNo);
+		return map;
+	}
 
 	//	[김영후] 회원 이메일 인증
 	public int certifyMember(Member member) {

@@ -58,7 +58,7 @@
     <div class="container3">
 	<h1>내가 작성한 리뷰</h1>
 	<div>
-		<select id="reviewRecommend" name="reviewRecommend" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
+		<select id="reviewRecommend" name="reviewRecommend" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px; height:35px;">
 			<option value="">선택</option>
 			<option value="/member/myReviewList">전체</option>
 			<option value="/member/myReviewList?reviewRecommend=보통">보통</option>

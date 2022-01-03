@@ -394,6 +394,20 @@ public class MemberController {
 		return "/member/myComplainOne";
 	}
 	
+    //[유동진] 회원 결제금액 조회 차트 
+    @GetMapping("/member/memberPaymentChart")
+    public  String getMemberPaymentChart() {
+       
+       return "/member/memberPaymentChart";    
+    }
+    
+    //[유동진] 회원 년도별 이용횟수 차트 
+    @GetMapping("/member/memberUseChart")
+    public  String getMemberUseChart() {
+       
+       return "/member/memberUseChart";    
+    }
+	
 	//	[김영후] 회원 가입
 	@GetMapping("/insertMember")
 	public String getInsertMember() {
