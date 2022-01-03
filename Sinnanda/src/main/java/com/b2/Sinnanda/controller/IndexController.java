@@ -10,4 +10,13 @@ public class IndexController {
 		return "index";
 	}
 	
+	@GetMapping("termsOfUse")
+	public String getTermsOfUse() {
+		return "termsOfUse";
+	}
+	
+	@GetMapping("privacyPolicy")
+	public String getPrivacyPolicy() {
+		return "privacyPolicy";
+	}
 }

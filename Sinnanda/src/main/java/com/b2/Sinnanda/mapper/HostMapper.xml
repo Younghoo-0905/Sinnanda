@@ -246,7 +246,7 @@
 			host_tel = #{hostTel}, 
 			host_active = #{hostActive}, 
 			update_date = NOW()
-		WHERE host_no = #{hostQnaNo}
+		WHERE host_no = #{hostNo}
 	</update>
 	
 	<!-- [이승준] "사업자 비밀번호" 수정 -->
@@ -254,7 +254,7 @@
 		UPDATE host
 		SET host_pw = #{hostPw}, 
 			update_date = NOW()
-		WHERE host_no = #{hostQnaNo}
+		WHERE host_no = #{hostNo}
 	</update>
 	
 	

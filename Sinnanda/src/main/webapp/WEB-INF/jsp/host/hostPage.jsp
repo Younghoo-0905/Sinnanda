@@ -216,7 +216,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 

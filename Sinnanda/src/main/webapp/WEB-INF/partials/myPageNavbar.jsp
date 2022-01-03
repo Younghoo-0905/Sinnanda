@@ -6,8 +6,8 @@
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
 	<!-- 좌측 상단 로고 이미지 -->
 	<div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-		<a class="navbar-brand brand-logo mr-5" href="/index"><img src="/images/logo.svg" class="mr-2" alt="logo"/></a>
-		<a class="navbar-brand brand-logo-mini" href="/index"><img src="/images/logo-mini.svg" alt="logo"/></a>
+		<a class="navbar-brand brand-logo mr-5" href="/index"><img src="/images/logo/logo_myPage.svg" class="mr-2" alt="logo"/></a>
+		<a class="navbar-brand brand-logo-mini" href="/index"><img src="/images/logo/logo_myPage_mini.svg" alt="logo"/></a>
 	</div>
 	
 	<!-- 우측 상단 메뉴  -->
