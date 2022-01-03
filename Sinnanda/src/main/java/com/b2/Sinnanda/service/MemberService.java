@@ -85,9 +85,20 @@ public class MemberService {
 		log.debug(" ├[param] currentPage : "+currentPage);
 		log.debug(" ├[param] rowPerPage : "+rowPerPage);
 		
-		// 1. 매개변수 가공 (paraMap <-- qnaCategory, currentPage, rowPerPage)
+		// "전체"의 카테고리를 조회하는 경우, null 값으로 변경 -> 쿼리에서 WHERE절이 실행되지 않도록 한다 (by 김영후)
+		if(qnaCategory == null || qnaCategory.equals("전체")) {
+			qnaCategory = null;
+		}
+		
+		// 매개변수 가공 (paraMap <-- qnaCategory, currentPage, rowPerPage)
 		Map<String, Object> paraMap = new HashMap<>();
-		int beginRow = (currentPage-1) * rowPerPage;
+		
+		// 페이지번호의 출력을 시작하는 수를 구하기 수식
+		int beginRow = (currentPage * rowPerPage) - rowPerPage;		
+
+		// 10개의 페이지번호의를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		dl.p("qnaList()", "pageNo", pageNo);
 		
 		paraMap.put("memberNo", memberNo);
 		paraMap.put("qnaCategory", qnaCategory);
@@ -101,17 +112,19 @@ public class MemberService {
 		Map<String, Object> returnMap = new HashMap<>();
 		
 		int lastPage = 0;
-		int totalCount = memberMapper.selectMyQnaTotalCount(qnaCategory);
+		int totalCount = memberMapper.selectMyQnaTotalCount(paraMap);
 		log.debug(" ├[param] totalCount : "+totalCount);
 		
 		lastPage = totalCount / rowPerPage;
-		if(totalCount % rowPerPage !=0) {
+		if(totalCount % rowPerPage !=0 || lastPage == 0) {
 			lastPage += 1;
 		}
 		
 		log.debug(" ├[param] lastPage : "+lastPage);
 		returnMap.put("myQnaList", myQnaList);
 		returnMap.put("lastPage", lastPage);
+		returnMap.put("beginRow", beginRow);
+		returnMap.put("pageNo", pageNo);
 		
 		return returnMap;
 	}

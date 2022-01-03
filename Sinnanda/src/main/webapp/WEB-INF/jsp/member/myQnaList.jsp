@@ -56,7 +56,7 @@
 				<div class="container1">
 				<select id="qnaCategory" name="qnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 40px;">
 					<option value="">선택</option>
-					<option value="/member/myQnaList">전체문의</option>
+					<option value="/member/myQnaList?qnaCategory=전체">전체문의</option>
 					<option value="/member/myQnaList?qnaCategory=기타문의">기타문의</option>
 					<option value="/member/myQnaList?qnaCategory=결제문의">결제문의</option>
 					<option value="/member/myQnaList?qnaCategory=이용문의">이용문의</option>
@@ -100,7 +100,7 @@
 		            <div class="block-27">
 						<ul>
 							<!-- '이전' 버튼 -->
-							<c:if test="${beginRow > ROW_PER_PAGE}">
+							<c:if test="${beginRow >= ROW_PER_PAGE}">
 								<li><a href="/member/myQnaList?currentPage=${currentPage-1}&qnaCategory=${qnaCategory}">&lt;</a></li>
 							</c:if>
 							

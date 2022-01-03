@@ -159,7 +159,7 @@ public class MemberController {
 	@GetMapping("/member/myQnaList")
 	public String myQnaList(HttpServletRequest request, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
-			@RequestParam(required = false) String qnaCategory) {
+			@RequestParam(defaultValue = "전체") String qnaCategory) {
 		log.debug("[Debug] \"START\" MemberController.myQnaList() | Get");
 		log.debug(" ├[param] currentPage : "+currentPage);
 		
@@ -176,13 +176,16 @@ public class MemberController {
 
 		// QnA 목록 조회
 		Map<String, Object> map = memberService.getMyQnaListByQnaCategory(loginUser.getMember().getMemberNo(), qnaCategory, currentPage, ROW_PER_PAGE);
-		
+
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
 		model.addAttribute("qnaCategory", map.get("qnaCategory"));	// 선택된 QnA 카테고리
 		model.addAttribute("myQnaList", map.get("myQnaList"));	// QnA 목록 정보
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
+		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);	// 현재 페이지
+		model.addAttribute("beginRow", map.get("beginRow"));	// 현재 페이지
+		model.addAttribute("pageNo", map.get("pageNo"));	// 페이지 번호
 		return "/member/myQnaList";
 	}
 	
