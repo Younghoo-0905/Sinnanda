@@ -52,21 +52,25 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading" style="margin-left: 10px;">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
 										예약내역 목록
 									</span>
 									
 									<h1 style="margin-top: 10px;"><strong>예약내역 목록</strong></h1>
 									
 								    <div class="container">
+								    	<div class="container" style="margin-top: 20px;">
+											<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${reserveListTotalCount}</strong></span>
+										</div>
+								    
 										<div class="container2">
 											<select id="reserveUse" name="reserveUse" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
 												<option value="none">==선택==</option>
-												<option value="/host/myReserveList?reserveUse=전체">전체</option>
-												<option value="/host/myReserveList?reserveUse=이용 전">이용 전</option>
-												<option value="/host/myReserveList?reserveUse=이용 중">이용 중</option>
-												<option value="/host/myReserveList?reserveUse=이용 완료">이용 완료</option>
-												<option value="/host/myReserveList?reserveUse=중간 취소">중간 취소</option>
+												<option value="myReserveList?reserveUse=전체">전체</option>
+												<option value="myReserveList?reserveUse=이용 전">이용 전</option>
+												<option value="myReserveList?reserveUse=이용 중">이용 중</option>
+												<option value="myReserveList?reserveUse=이용 완료">이용 완료</option>
+												<option value="myReserveList?reserveUse=중간 취소">중간 취소</option>
 											</select>
 										</div>
 										<table class="table table-myPage" style="width: 100%;">
@@ -75,21 +79,21 @@
 												<th>객실</th>
 												<th>예약자 이름</th>
 												<th>상태</th>
-												<th>체크인</th>
-												<th>체크아웃</th>
-												<th>예약일</th>
+												<th style="width: 12%;">체크인</th>
+												<th style="width: 12%;">체크아웃</th>
+												<th style="width: 18%;">예약일</th>
 												<th>상세보기</th>
 											</tr>
 											<c:forEach var="r" items="${reserveList}">
 												<tr>
-													<td>${r.accomName}</td>
-													<td>${r.roomName}</td>
-													<td>${r.memberName}</td>
-													<td>${r.reserveUse}</td>
-													<td>${r.reserveCheckIn}</td>
-													<td>${r.reserveCheckOut}</td>
-													<td>${r.reserveDate}</td>
-													<td><a href="/host/myReserveOne?reserveNo=${r.reserveNo}">상세보기</a></td>
+													<td style="text-align: center;">${r.accomName}</td>
+													<td style="text-align: center;">${r.roomName}</td>
+													<td style="text-align: center;">${r.memberName}</td>
+													<td style="text-align: center;">${r.reserveUse}</td>
+													<td style="text-align: center;">${r.reserveCheckIn}</td>
+													<td style="text-align: center;">${r.reserveCheckOut}</td>
+													<td style="text-align: center;">${r.reserveDate}</td>
+													<td style="text-align: center;"><a href="myReserveOne?reserveNo=${r.reserveNo}">상세보기</a></td>
 												</tr>
 											</c:forEach>
 										</table>
@@ -101,7 +105,7 @@
 													<ul>
 														<!-- '이전' 버튼 -->
 														<c:if test="${beginRow >= (ROW_PER_PAGE * 10)}">
-															<li><a href="/host/myReserveList?currentPage=${pageNo+10}&reserveUse=${reserveUse}">&lt;</a></li>
+															<li><a href="myReserveList?currentPage=${pageNo+10}&reserveUse=${reserveUse}">&lt;</a></li>
 														</c:if>
 														
 														<!-- Page 번호 -->
@@ -115,7 +119,7 @@
 																		<li class="active"><span>${i}</span></li>
 																	</c:when>
 												    				<c:otherwise>
-																		<li><a href="/host/myReserveList?currentPage=${i}&reserveUse=${reserveUse}">${i}</a></li>	
+																		<li><a href="myReserveList?currentPage=${i}&reserveUse=${reserveUse}">${i}</a></li>	
 																	</c:otherwise>		
 																</c:choose>
 																<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
@@ -127,7 +131,7 @@
 														
 														<!-- '다음' 버튼 -->
 														<c:if test="${lastPage >= pageNo + 10}">
-															<li><a href="/host/myReserveList?currentPage=${pageNo-1}&eserveUse=${eserveUse}">&gt;</a></li>
+															<li><a href="myReserveList?currentPage=${pageNo-1}&eserveUse=${eserveUse}">&gt;</a></li>
 														</c:if>
 													</ul>
 												</div>
@@ -145,7 +149,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 

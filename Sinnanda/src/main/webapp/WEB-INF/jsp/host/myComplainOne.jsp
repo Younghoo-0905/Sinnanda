@@ -63,8 +63,8 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
-										<a href="/host/myComplainList">컴플레인 목록</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="myComplainList">컴플레인 목록</a> > 
 										상세보기
 									</span>
 									<h1 style="margin-top: 10px;"><strong>컴플레인 상세보기</strong></h1>
@@ -73,12 +73,14 @@
 									<div class="container">
 										<table class="table table-myPage" style="width: 100%;">
 											<tr>
-												<th style="width: 5%; font-size: 20px; text-align:center;">제목</th>
-												<td colspan="3" style="font-size: 20px;">${complain.complainTitle}</td>
+												<th style="width: 10%; font-size: 20px; text-align:center;">제목</th>
+												<td style="font-size: 20px;">${complain.complainTitle}</td>
 											</tr>
 											<tr>
 												<th style="text-align:center;">작성자</th>
 												<td style="width: 70%;">${complain.memberName}</td>
+											</tr>
+											<tr>
 												<th style="width: 50px; text-align:center;">작성일</th>
 												<td>
 													<fmt:parseDate value="${complain.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
@@ -87,7 +89,7 @@
 											</tr>
 											<tr>
 												<th style="text-align:center;">내용</th>
-												<td colspan="3">
+												<td>
 													<textarea cols="50" rows="20"  disabled>${complain.complainContent}</textarea>
 												</td>
 											</tr>
@@ -144,7 +146,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 

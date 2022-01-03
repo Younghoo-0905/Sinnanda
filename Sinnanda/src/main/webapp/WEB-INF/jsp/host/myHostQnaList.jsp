@@ -52,31 +52,35 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading" style="margin-left: 10px;">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
 										사업자 문의 목록
 									</span>
 									
 									<h1 style="margin-top: 10px;"><strong>사업자 문의</strong></h1>
 									
 								    <div class="container">
+								    	<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+											<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${hostQnaListTotalCount}</strong></span>
+										</div>
+								    
 										<div class="container2">
 											<select id="hostQnaCategory" name="hostQnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
 												<option value="">선택</option>
-												<option value="/host/myHostQnaList">전체 문의</option>
-												<option value="/host/myHostQnaList?hostQnaCategory=기타 문의">기타 문의</option>
-												<option value="/host/myHostQnaList?hostQnaCategory=이용 문의">이용 문의</option>
-												<option value="/host/myHostQnaList?hostQnaCategory=시스템 문의">시스템 문의</option>
-												<option value="/host/myHostQnaList?hostQnaCategory=숙소 추가">숙소 추가</option>
-												<option value="/host/myHostQnaList?hostQnaCategory=숙소 수정">숙소 수정</option>
-												<option value="/host/myHostQnaList?hostQnaCategory=숙소 삭제">숙소 삭제</option>
-												<option value="/host/myHostQnaList?hostQnaCategory=객실 추가">객실 추가</option>
-												<option value="/host/myHostQnaList?hostQnaCategory=객실 수정">객실 수정</option>
-												<option value="/host/myHostQnaList?hostQnaCategory=객실 삭제">객실 삭제</option>
+												<option value="myHostQnaList">전체 문의</option>
+												<option value="myHostQnaList?hostQnaCategory=기타 문의">기타 문의</option>
+												<option value="myHostQnaList?hostQnaCategory=이용 문의">이용 문의</option>
+												<option value="myHostQnaList?hostQnaCategory=시스템 문의">시스템 문의</option>
+												<option value="myHostQnaList?hostQnaCategory=숙소 추가">숙소 추가</option>
+												<option value="myHostQnaList?hostQnaCategory=숙소 수정">숙소 수정</option>
+												<option value="myHostQnaList?hostQnaCategory=숙소 삭제">숙소 삭제</option>
+												<option value="myHostQnaList?hostQnaCategory=객실 추가">객실 추가</option>
+												<option value="myHostQnaList?hostQnaCategory=객실 수정">객실 수정</option>
+												<option value="myHostQnaList?hostQnaCategory=객실 삭제">객실 삭제</option>
 											</select>
 										</div>
 										<table class="table table-myPage" style="width: 100%;">
 											<tr style="text-align:center">
-												<th width="5%">번호</th>
+												<th width="7%">번호</th>
 												<th width="40%">제목</th>
 												<th width="10%">문의유형</th>
 												<th width="10%">작성자</th>
@@ -89,7 +93,7 @@
 														<c:if test="${hostQna.hostQnaComments.adminNo != null}">
 															<span style="color: #2828CD; font-weight: bold;">[답변 완료]</span>
 														</c:if>
-														<a href="/host/myHostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
+														<a href="myHostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
 													</td>
 													<td style="text-align:center">${hostQna.hostQnaCategory}</td>
 													<td style="text-align:center">${hostQna.hostName}</td>
@@ -109,7 +113,7 @@
 													<ul>
 														<!-- '이전' 버튼 -->
 														<c:if test="${beginRow >= ROW_PER_PAGE}">
-															<li><a href="/host/myHostQnaList?currentPage=${currentPage-1}&hostQnaCategory=${hostQnaCategory}">&lt;</a></li>
+															<li><a href="myHostQnaList?currentPage=${currentPage-1}&hostQnaCategory=${hostQnaCategory}">&lt;</a></li>
 														</c:if>
 														
 														<!-- Page 번호 -->
@@ -123,7 +127,7 @@
 																		<li class="active"><span>${i}</span></li>
 																	</c:when>
 												    				<c:otherwise>
-																		<li><a href="/host/myHostQnaList?currentPage=${i}&hostQnaCategory=${hostQnaCategory}">${i}</a></li>	
+																		<li><a href="myHostQnaList?currentPage=${i}&hostQnaCategory=${hostQnaCategory}">${i}</a></li>	
 																	</c:otherwise>		
 																</c:choose>
 																<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
@@ -135,7 +139,7 @@
 														
 														<!-- '다음' 버튼 -->
 														<c:if test="${currentPage != lastPage}">
-															<li><a href="/host/myHostQnaList?currentPage=${currentPage+1}&hostQnaCategory=${hostQnaCategory}">&gt;</a></li>
+															<li><a href="myHostQnaList?currentPage=${currentPage+1}&hostQnaCategory=${hostQnaCategory}">&gt;</a></li>
 														</c:if>
 													</ul>
 												</div>
@@ -153,7 +157,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 

@@ -51,8 +51,8 @@
 					<div class="col-lg-4 mx-auto">
 						<div class="auth-form-light text-left py-5 px-4 px-sm-5">
 							
-							<div class="brand-logo">
-								<a href="/index"><img src="/skydash/images/logo.svg" alt="logo"></a>
+							<div class="brand-logo" style="text-align: center;">
+								<a href="index"><img src="/images/logo/logo_myPage.svg" alt="logo"></a>
 							</div>
 							
 							<h4 style="font-weight: bold;">회원가입</h4>

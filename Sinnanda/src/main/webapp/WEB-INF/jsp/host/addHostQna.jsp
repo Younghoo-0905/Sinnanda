@@ -82,25 +82,22 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
-										<a href="/host/myHostQnaList">사업자 문의 목록</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="myHostQnaList">사업자 문의 목록</a> > 
 										문의사항 작성
 									</span>
 									
 									<h1 style="margin-top: 10px;"><strong>사업자문의 작성</strong></h1>
 									
-									<div class="container">										
+									<div class="container" style="margin-top: 20px;">										
 										<form onsubmit="return formCheck()" id="addHostQnaForm" action="addHostQna" method="post">
-											<div style="margin: 10px; text-align:right;">
-												<button id="" class="btn btn-primary" type="submit">문의 추가</button>
-											</div>
-											
 											<input id="hostNo" name="hostNo" type="hidden" value="${loginUser.host.hostNo}">
+											
 											<table class="table table-myPage" style="width: 100%;">
 												<tr>
-													<th style="width:5%;">제목</th>
+													<th style="width:15%;">제목</th>
 													<td style="text-align:left;">
-														<input id="hostQnaTitle" name="hostQnaTitle" type="text" style="width: 90%;">
+														<input id="hostQnaTitle" name="hostQnaTitle" type="text" class="form-control form-control-lg">
 													</td>
 												</tr>
 												<tr>
@@ -122,7 +119,7 @@
 												</tr>
 												<tr>
 													<th>문의 내용</th>
-													<td><textarea id="hostQnaContent" name="hostQnaContent" cols="100%" rows="20"></textarea></td>
+													<td><textarea id="hostQnaContent" name="hostQnaContent" rows="20" class="form-control form-control-lg"></textarea></td>
 												</tr>
 												<tr>
 													<th>파일 업로드</th>
@@ -131,6 +128,10 @@
 													</td>
 												</tr>
 											</table>
+											
+											<div style="margin: 20px; text-align:right;">
+												<button id="" class="btn btn-primary" type="submit">문의 추가</button>
+											</div>
 										</form>
 									</div>
 								</div>
@@ -143,7 +144,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 	<!-- plugins:js -->

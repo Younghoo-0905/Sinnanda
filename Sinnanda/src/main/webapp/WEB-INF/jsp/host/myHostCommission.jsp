@@ -56,25 +56,34 @@
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-   
-         <select id="yearNo" name="yearNo"  class="form-control-sm" style="float: right; margin-bottom: 20px; height:33px;">
-            <option value="">선택</option>            
-            <option value="2021">2021년</option>
-            <option value="2020">2020년</option>
-         </select>
-   			
-   			
-   			
-   		<select id ="accom" name ="accomName" class="form-control-sm" style="float: right; margin-bottom: 20px; height:33px;">
-            <option value ="">숙소 선택</option>
-         	<option value ="전체">전체</option>
-   			<c:forEach  items="${accomHost}" var ="accom">
-   				<option value ="${accom.accomName}">${accom.accomName}</option>
-   			</c:forEach>
-   		</select>
-   	
-   
-      <canvas id="myChart" width="100" height="40"></canvas>
+									<span class="subheading">
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										정산
+									</span>
+									
+									<h1 style="margin-top: 10px;"><strong>서비스 이용 수수료</strong></h1>
+									
+									<div class="container">
+										<div>
+											<select id="yearNo" name="yearNo"  class="form-control-sm" style="float: right; margin-bottom: 20px; height:33px;">
+												<option value="">선택</option>            
+												<option value="2021">2021년</option>
+												<option value="2020">2020년</option>
+											</select>	
+											
+											<select id ="accom" name ="accomName" class="form-control-sm" style="float: right; margin-bottom: 20px; height:33px;">
+												<option value ="">숙소 선택</option>
+												<option value ="전체">전체</option>
+												<c:forEach  items="${accomHost}" var ="accom">
+													<option value ="${accom.accomName}">${accom.accomName}</option>
+												</c:forEach>
+											</select>
+										</div>
+										
+										<div>
+											<canvas id="myChart" width="100" height="40"></canvas>
+										</div>
+									</div>
    
    <script type="text/javascript">
    let ctx = document.getElementById('myChart').getContext('2d');
@@ -92,7 +101,7 @@
       
       $.ajax({
          type:'get',
-         url:'/host/getmyHostCommission?year=' + year+'&accomName='+accomName,
+         url:'getmyHostCommission?year=' + year+'&accomName='+accomName,
          success:function(json){
             console.log(json);
             
@@ -181,11 +190,17 @@
 					</div>
 						</div>
 							</div>
-							
-							
-							
+	
+	<!-- [이승준] 하단 Footer - SATRT -->
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
+	<!-- [이승준] 하단 Footer - END -->
+						
+<script src="/js/hoverable-collapse.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/settings.js"></script>
+<script src="/js/todolist.js"></script>
 <script src="/js/dashboard.js"></script>
-
+<script src="/js/Chart.roundedBarCharts.js"></script>
 <script src="/vendors/js/vendor.bundle.base.js"></script>							
 </body>
 </html>

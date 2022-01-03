@@ -55,6 +55,7 @@ public class ReviewController {
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("reviewList", map.get("reviewList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("reviewListTotalCount", map.get("totalCount"));
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("pageNo", pageNo);

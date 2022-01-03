@@ -67,6 +67,7 @@ public class ReserveController {
 		model.addAttribute("reserveUse", reserveUse);
 		model.addAttribute("reserveList", map.get("reserveList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("reserveListTotalCount", map.get("totalCount"));
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("pageNo", pageNo);

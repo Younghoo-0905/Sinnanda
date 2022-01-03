@@ -65,8 +65,8 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
-										<a href="/host/myHostInfo?hostNo=${loginUser.host.hostNo}">내 정보</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="myHostInfo?hostNo=${loginUser.host.hostNo}">내 정보</a> > 
 										비밀번호 변경
 									</span>
 									
@@ -77,7 +77,7 @@
 										<form class="pt-3" method="post" action="modifyHostPw" id="modifyHostPwForm">
 											<table class="table table-myPage">
 												<tr>
-													<th style="width: 5%; text-align:center;">기존 비밀번호</th>
+													<th style="width: 15%; text-align:center;">기존 비밀번호</th>
 													<td>
 														<input type="password" id="hostPw" class="form-control" placeholder="현재 비밀번호">
 														<div style="line-height: 40px;">
@@ -117,7 +117,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 	
 	<script type="text/javascript">

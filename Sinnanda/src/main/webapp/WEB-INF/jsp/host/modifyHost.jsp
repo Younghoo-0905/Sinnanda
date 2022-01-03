@@ -70,8 +70,8 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
-										<a href="/host/myHostInfo?hostNo=${loginUser.host.hostNo}">내 정보</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="myHostInfo?hostNo=${loginUser.host.hostNo}">내 정보</a> > 
 										사업자 정보수정
 									</span>
 									
@@ -82,7 +82,7 @@
 					    				<form class="pt-3" method="post" action="modifyHost" id="modifyHostForm">
 											<table class="table table-myPage">
 												<tr>
-													<th style="width: 5%; text-align:center;">사업자 번호</th>
+													<th style="width: 15%; text-align:center;">사업자 번호</th>
 													<td>${host.hostNo}</td>
 												</tr>
 												<tr>
@@ -102,7 +102,8 @@
 													<td><input type="text" id="addressInfo" name="addressInfo" class="form-control" value="${host.hostAddress.addressInfo}" onclick="execDaumPostcode()"></td>
 												</tr>
 												<tr>
-													<td colspan="2">
+													<th>위치</th>
+													<td>
 														<div id="map" style="width:length;height:300px;margin-top:10px;display:none"></div>
 													</td>
 												</tr>
@@ -141,7 +142,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 	<script>

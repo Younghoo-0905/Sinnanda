@@ -52,25 +52,29 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading" style="margin-left: 10px;">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
 										컴플레인 목록
 									</span>
 									<h1 style="margin-top: 10px;"><strong>문의받은 컴플레인</strong></h1>
 									
 								    <div class="container">
+								    	<div class="container" style="margin-top: 20px;">
+											<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${complainListTotalCount}</strong></span>
+										</div>
+								    
 										<div class="container2">
 											<select id="complainCategory" name="complainCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px;">
 												<option value="">선택</option>
-												<option value="/host/myComplainList">전체 문의</option>
-												<option value="/host/myComplainList?complainCategory=예약일 변경">예약일 변경</option>
-												<option value="/host/myComplainList?complainCategory=예약 취소">예약 취소</option>
-												<option value="/host/myComplainList?complainCategory=이용 불편">이용 불편</option>
-												<option value="/host/myComplainList?complainCategory=기타">기타</option>
+												<option value="myComplainList">전체 문의</option>
+												<option value="myComplainList?complainCategory=예약일 변경">예약일 변경</option>
+												<option value="myComplainList?complainCategory=예약 취소">예약 취소</option>
+												<option value="myComplainList?complainCategory=이용 불편">이용 불편</option>
+												<option value="myComplainList?complainCategory=기타">기타</option>
 											</select>
 										</div>
 										<table class="table table-myPage" style="width: 100%;">
 											<tr style="text-align:center">
-												<th width="5%">번호</th>
+												<th width="7%">번호</th>
 												<th width="40%">제목</th>
 												<th width="10%">문의유형</th>
 												<th width="10%">작성자</th>
@@ -83,7 +87,7 @@
 														<c:if test="${complain.complainComment.complainCommentContent != null}">
 															<span style="color: #2828CD; font-weight: bold;">[답변 완료]</span>
 														</c:if>
-														<a href="/host/myComplainOne?complainNo=${complain.complainNo}">${complain.complainTitle}</a>
+														<a href="myComplainOne?complainNo=${complain.complainNo}">${complain.complainTitle}</a>
 													</td>
 													<td style="text-align:center">${complain.complainCategory}</td>
 													<td style="text-align:center">${complain.memberName}</td>
@@ -102,7 +106,7 @@
 													<ul>
 														<!-- '이전' 버튼 -->
 														<c:if test="${beginRow >= (ROW_PER_PAGE * 10)}">
-															<li><a href="host/myComplainList?currentPage=${pageNo-1}&complainCategory=${complainCategory}">&lt;</a></li>
+															<li><a href="myComplainList?currentPage=${pageNo-1}&complainCategory=${complainCategory}">&lt;</a></li>
 														</c:if>
 														
 														<!-- Page 번호 -->
@@ -116,7 +120,7 @@
 																		<li class="active"><span>${i}</span></li>
 																	</c:when>
 												    				<c:otherwise>
-																		<li><a href="/host/myComplainList?currentPage=${i}&complainCategory=${complainCategory}">${i}</a></li>	
+																		<li><a href="myComplainList?currentPage=${i}&complainCategory=${complainCategory}">${i}</a></li>	
 																	</c:otherwise>		
 																</c:choose>
 																<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
@@ -128,7 +132,7 @@
 														
 														<!-- '다음' 버튼 -->
 														<c:if test="${lastPage >= pageNo + 10}">
-															<li><a href="host/myComplainList?currentPage=${pageNo+10}&complainCategory=${complainCategory}">&gt;</a></li>
+															<li><a href="myComplainList?currentPage=${pageNo+10}&complainCategory=${complainCategory}">&gt;</a></li>
 														</c:if>
 													</ul>
 												</div>
@@ -146,7 +150,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 

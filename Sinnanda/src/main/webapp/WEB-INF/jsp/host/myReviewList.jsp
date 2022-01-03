@@ -52,29 +52,33 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading" style="margin-left: 10px;">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
 										리뷰 목록
 									</span>
 									
 									<h1 style="margin-top: 10px;"><strong>객실의 리뷰 목록</strong></h1>
 									
 								    <div class="container" style="margin-top: 50px;">
+								    	<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+											<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${reviewListTotalCount}</strong></span>
+										</div>
+								    
 										<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 											<tr style="text-align:center">
-												<th>번호</th>
+												<th style="width: 8%;">번호</th>
 												<th>내용</th>
-												<th>별점</th>
-												<th>추천</th>
-												<th>작성자</th>
-												<th>작성일</th>
+												<th style="width: 7%;">별점</th>
+												<th style="width: 7%;">추천</th>
+												<th style="width: 10%;">작성자</th>
+												<th style="width: 15%;">작성일</th>
 											</tr>
 											<c:forEach items="${reviewList}" var="review">
 												<tr>
 													<td style="text-align:center">
-														<a href="/host/myReviewOne?reviewNo=${review.reviewNo}">${review.reviewNo}</a>
+														<a href="myReviewOne?reviewNo=${review.reviewNo}">${review.reviewNo}</a>
 													</td>
 													<td>
-														<a href="/host/myReviewOne?reviewNo=${review.reviewNo}">
+														<a href="myReviewOne?reviewNo=${review.reviewNo}">
 															<!-- 리뷰 답변 여부 -->
 															<c:if test="${review.reviewComment.reviewCommentContent != null}">
 																<span style="color: #2828CD; font-weight: bold;">[답변 완료]</span>
@@ -110,7 +114,7 @@
 													<ul>
 														<!-- '이전' 버튼 -->
 														<c:if test="${beginRow >= (ROW_PER_PAGE * 10)}">
-															<li><a href="host/myReviewList?currentPage=${pageNo-1}">&lt;</a></li>
+															<li><a href="myReviewList?currentPage=${pageNo-1}">&lt;</a></li>
 														</c:if>
 														
 														<!-- Page 번호 -->
@@ -124,7 +128,7 @@
 																		<li class="active"><span>${i}</span></li>
 																	</c:when>
 												    				<c:otherwise>
-																		<li><a href="/host/myReviewList?currentPage=${i}">${i}</a></li>	
+																		<li><a href="myReviewList?currentPage=${i}">${i}</a></li>	
 																	</c:otherwise>		
 																</c:choose>
 																<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
@@ -136,7 +140,7 @@
 														
 														<!-- '다음' 버튼 -->
 														<c:if test="${currentPage + 10 <= lastPage}">
-															<li><a href="host/myReviewList?currentPage=${pageNo+10}">&gt;</a></li>
+															<li><a href="myReviewList?currentPage=${pageNo+10}">&gt;</a></li>
 														</c:if>
 													</ul>
 												</div>
@@ -154,7 +158,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 

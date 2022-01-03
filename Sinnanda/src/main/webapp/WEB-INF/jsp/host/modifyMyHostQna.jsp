@@ -93,9 +93,9 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
-										<a href="/host/myHostQnaList">사업자 문의 목록</a> > 
-										<a href="/host/myHostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">상세보기</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="myHostQnaList">사업자 문의 목록</a> > 
+										<a href="myHostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">상세보기</a> > 
 										문의 수정
 									</span>
 									<h1 style="margin-top: 10px;"><strong>사업자문의 수정</strong></h1>
@@ -111,20 +111,20 @@
 											
 											<table class="table table-myPage" style="width: 100%;">
 												<tr>
-													<th style="width:5%;">제목</th>
+													<th style="width:10%;">제목</th>
 													<td style="text-align:left;">
-														<input id="hostQnaTitle" name="hostQnaTitle" type="text" value="${hostQna.hostQnaTitle}" style="width: 90%;">
+														<input id="hostQnaTitle" name="hostQnaTitle" type="text" value="${hostQna.hostQnaTitle}"  class="form-control form-control-lg">
 													</td>
 												</tr>
 												<tr>
 													<th>문의유형</th>
 													<td style="width:40%;">
-														<input id="hostQnaCategory" name="hostQnaCategory" type="text" value="${hostQna.hostQnaCategory}" readonly>
+														<input id="hostQnaCategory" name="hostQnaCategory" type="text" value="${hostQna.hostQnaCategory}" class="form-control form-control-lg" readonly>
 													</td>
 												</tr>
 												<tr>
 													<th>문의 내용</th>
-													<td><textarea id="hostQnaContent" name="hostQnaContent" rows="20">${hostQna.hostQnaContent}</textarea></td>
+													<td><textarea id="hostQnaContent" name="hostQnaContent" rows="20" class="form-control form-control-lg">${hostQna.hostQnaContent}</textarea></td>
 												</tr>
 												<tr>
 													<th>작성일</th>
@@ -152,7 +152,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 	<!-- plugins:js -->
