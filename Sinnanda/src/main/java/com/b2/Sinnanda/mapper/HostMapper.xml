@@ -185,7 +185,29 @@
 	
 	</select>
 	
+	<!-- [운경환] 호스트 컴플레인에 관한 분류  -->
+	<select id="totalComplainYear" parameterType="Map" resultType="java.util.Map">
 	
+		SELECT 
+			IFNULL(sum(co.complain_category = '예약 취소'),0) Com1,
+			IFNULL(sum(co.complain_category = '예약일 변경'),0) Com2,
+			IFNULL(sum(co.complain_category = '이용 붚편'),0) Com3,
+			IFNULL(sum(co.complain_category = '기타'),0) Com4
+		FROM complain co
+		LEFT JOIN payment pa
+			ON co.payment_no = pa.payment_no
+		LEFT JOIN reserve re
+			ON pa.reserve_no = re.reserve_no
+		LEFT JOIN room ro 
+			ON re.room_no = ro.room_no
+		LEFT JOIN accom ac
+			ON ro.accom_no = ac.accom_no
+		WHERE ac.host_no = #{hostNo}
+			AND YEAR(co.update_date) = #{year}
+			<if test="accomName != null">
+					AND ac.accom_name = #{accomName}
+			</if>
+	</select>
 
 
 <!-- 2. 삽입 -->

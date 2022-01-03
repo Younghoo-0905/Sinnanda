@@ -82,6 +82,10 @@ public class ChartRestController {
 			
         	 return map;
         	 
+        	 
+        	 
+        	 
+        	 
          }
          //[윤경환] '호스트' 숙소에 따른 수수료
          @GetMapping("/host/getmyHostCommission")
@@ -97,6 +101,22 @@ public class ChartRestController {
 			
         	 return map;
          }
+         
+         //[윤경환] '호스트' 숙소에 따른 컴플레인 
+         @GetMapping("/host/getHostComplainChart")
+         public Map<String,Object> myHostComplain(@RequestParam(name ="year") int year,
+        		 @RequestParam(defaultValue = "전체") String accomName,
+        		 HttpSession session){
+             
+        	 User loginUser = (User)session.getAttribute("loginUser");
+        	 dl.p("AccomHostYear", "loginUser", loginUser);
+        	 
+        	 Map<String,Object> map  = hostService.getTotalComplainYear(year, loginUser.getHost().getHostNo(), accomName);
+        	 dl.p("AccomHostYear", "map", map);
+			
+        	 return map;
+         }
+         
          
          
          

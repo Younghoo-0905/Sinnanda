@@ -195,5 +195,13 @@ public class HostService {
 		Map<String, Object> map = hostMapper.totalDeduHostYear(year, hostNo, accomName);		
 		return map;	
 	}
+	//[윤경환] 사업자 관련된 컴플레인
+	public Map<String, Object> getTotalComplainYear(int year, int hostNo, String accomName){
+		if(accomName == null || accomName.equals("전체")) {
+			accomName = null;
+			}
+		Map<String, Object> map = hostMapper.totalComplainYear(year, hostNo, accomName);		
+		return map;	
+	}
 
 }

@@ -35,4 +35,7 @@ public interface HostMapper {
 	
 	//[윤경환] 사업자가 관리자한테 내는 수수료 
 	Map<String, Object> totalDeduHostYear(int year, int hostNo, String accomName);
+
+	//[윤경환] 사업자와  관련한 컴플레인 
+	 Map<String, Object> totalComplainYear(int year, int hostNo, String accomName);
 }
