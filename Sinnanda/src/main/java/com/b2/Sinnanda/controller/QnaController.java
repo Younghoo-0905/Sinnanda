@@ -140,6 +140,7 @@ public class QnaController {
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
 		return "admin/memberQnaList";
 	}

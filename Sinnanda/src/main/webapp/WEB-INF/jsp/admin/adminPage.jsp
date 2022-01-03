@@ -108,7 +108,7 @@
 					</div>
 					
 					<!-- [이승준] 메인 페이지 - 신규 리뷰 -->
-					<<div class="row">
+					<div class="row">
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">

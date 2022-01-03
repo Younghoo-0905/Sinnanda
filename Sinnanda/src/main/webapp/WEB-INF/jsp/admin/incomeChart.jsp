@@ -59,6 +59,7 @@
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
+									<h2 style="margin-top: 10px;"><strong>년도별 수입</strong></h2>
 							
 		 		<select id="yearNo" name="yearNo" class="form-control-sm" style="float: right; margin-bottom: 20px; height:35px;" >
 		            <option value="">선택</option>            
@@ -157,11 +158,32 @@
 							</div>
 				
   
-<script src="/js/dashboard.js"></script>
-
-<script src="/vendors/js/vendor.bundle.base.js"></script>
- 
- 
-
+	<script src="/js/dashboard.js"></script>
+	
+	<!-- [이승준] 하단 Footer - SATRT -->
+	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<!-- [이승준] 하단 Footer - END -->
+	
+	<script src="/vendors/js/vendor.bundle.base.js"></script>	
+							
+	<!-- endinject -->
+	<!-- Plugin js for this page -->
+	<script src="/vendors/chart.js/Chart.min.js"></script>
+	<script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+	<script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+	<script src="/js/dataTables.select.min.js"></script>
+	
+	<!-- End plugin js for this page -->
+	<!-- inject:js -->
+	<script src="/js/off-canvas.js"></script>
+	<script src="/js/hoverable-collapse.js"></script>
+	<script src="/js/template.js"></script>
+	<script src="/js/settings.js"></script>
+	<script src="/js/todolist.js"></script>
+	
+	<!-- endinject -->
+	<!-- Custom js for this page-->
+	<script src="/js/dashboard.js"></script>
+	<script src="/js/Chart.roundedBarCharts.js"></script>
 </body>
 </html>
