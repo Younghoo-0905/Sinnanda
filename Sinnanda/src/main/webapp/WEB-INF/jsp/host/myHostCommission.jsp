@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사업자 정산</title>
+<title>사업자 수수료</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
 <!-- Required meta tags -->
@@ -92,7 +92,7 @@
       
       $.ajax({
          type:'get',
-         url:'/host/getmyHostRevenue?year=' + year+'&accomName='+accomName,
+         url:'/host/getmyHostCommission?year=' + year+'&accomName='+accomName,
          success:function(json){
             console.log(json);
             
@@ -131,7 +131,7 @@
                 data: {
                     labels: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
                     datasets: [{
-                        label: '수입',
+                        label: '수수료',
                         data: myData,
                         backgroundColor: [
                         	 'rgba(54, 162, 235, 0.2)'
@@ -149,7 +149,7 @@
                 	 plugins: {
                          title: {
                              display: true,
-                             text: '# 총수입 :'+ accomName+' :'+ result.toLocaleString() +'원'
+                             text: '# 총 수수료 :'+ accomName+' :'+ result.toLocaleString() +'원'
                              
                          }
                 		

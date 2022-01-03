@@ -116,26 +116,22 @@
 	</select>
 			
 			
-	<resultMap type="com.b2.Sinnanda.vo.Payment" id="hostAcoomIncome">
-		<id column="create_date" property="createDate"/>
-		<result column="payment_price" property="paymentPrice"/>
-	</resultMap>
-			
+
 	<!--[윤경환] 숙소에 따라 사업자가 없는 수익 차트 -->
 	<select id="totalAccomHostYear" parameterType="Map" resultType="java.util.Map">
 		SELECT 
-			SUM(CASE WHEN MONTH(pa.create_date) =1 THEN pa.payment_price END) january,
-			SUM(CASE WHEN MONTH(pa.create_date) =2 THEN pa.payment_price END) february,
-			SUM(CASE WHEN MONTH(pa.create_date) =3 THEN pa.payment_price END) march,
-			SUM(CASE WHEN MONTH(pa.create_date) =4 THEN pa.payment_price END) april,
-			SUM(CASE WHEN MONTH(pa.create_date) =5 THEN pa.payment_price END) may,
-			SUM(CASE WHEN MONTH(pa.create_date) =6 THEN pa.payment_price END) june,
-			SUM(CASE WHEN MONTH(pa.create_date) =7 THEN pa.payment_price END) july,
-			SUM(CASE WHEN MONTH(pa.create_date) =8 THEN pa.payment_price END) august,
-			SUM(CASE WHEN MONTH(pa.create_date) =9 THEN pa.payment_price END) september,
-			SUM(CASE WHEN MONTH(pa.create_date) =10 THEN pa.payment_price END) october,
-			SUM(CASE WHEN MONTH(pa.create_date) =11 THEN pa.payment_price END) november,
-			SUM(CASE WHEN MONTH(pa.create_date) =12 THEN pa.payment_price END) december
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =1 THEN pa.payment_price END),0) january,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =2 THEN pa.payment_price END),0) february,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =3 THEN pa.payment_price END),0) march,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =4 THEN pa.payment_price END),0) april,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =5 THEN pa.payment_price END),0) may,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =6 THEN pa.payment_price END),0) june,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =7 THEN pa.payment_price END),0) july,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =8 THEN pa.payment_price END),0) august,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =9 THEN pa.payment_price END),0) september,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =10 THEN pa.payment_price END),0) october,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =11 THEN pa.payment_price END),0) november,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =12 THEN pa.payment_price END),0) december
 		FROM payment AS pa
 			LEFT JOIN reserve AS re
 		ON pa.reserve_no = re.reserve_no
@@ -145,11 +141,51 @@
 		ON ac.accom_no = ro.accom_no
 		WHERE YEAR(pa.create_date)= #{year} 
 			AND ac.host_no = #{hostNo}
+			AND pa.payment_price  IS NOT NULL
 			<if test="accomName != null">
 					AND ac.accom_name = #{accomName}
 			</if>
 		
 	</select>
+	
+	
+	
+	<!--[윤경환] 사업자가 관리자한테 내는 수수료  -->
+	<select id="totalDeduHostYear" parameterType="Map" resultType="java.util.Map">
+		SELECT 
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =1 THEN ho.deduction_pay END),0) january,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =2 THEN ho.deduction_pay END),0) february,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =3 THEN ho.deduction_pay END),0) march,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =4 THEN ho.deduction_pay END),0) april,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =5 THEN ho.deduction_pay END),0) may,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =6 THEN ho.deduction_pay END),0) june,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =7 THEN ho.deduction_pay END),0) july,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =8 THEN ho.deduction_pay END),0) august,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =9 THEN ho.deduction_pay END),0) september,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =10 THEN ho.deduction_pay END),0) october,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =11 THEN ho.deduction_pay END),0) november,
+				IFNULL(SUM(CASE WHEN MONTH(pa.update_date) =12 THEN ho.deduction_pay END),0) december
+		FROM host_sales ho
+			LEFT JOIN admin_sales ad
+		ON ho.admin_sales_no = ad.admin_sales_no
+			LEFT JOIN  payment pa
+		ON pa.payment_no = ad.payment_no
+			LEFT JOIN reserve re
+		ON pa.reserve_no = re.reserve_no
+			LEFT JOIN room ro
+		ON re.room_no = ro.room_no
+			LEFT JOIN accom ac 
+		ON ro.accom_no = ac.accom_no
+		WHERE YEAR(pa.update_date)=#{year}  
+			AND ac.host_no = #{hostNo}
+		<if test="accomName != null">
+					AND ac.accom_name = #{accomName}
+		</if>
+		
+	
+	</select>
+	
+	
 
 
 <!-- 2. 삽입 -->

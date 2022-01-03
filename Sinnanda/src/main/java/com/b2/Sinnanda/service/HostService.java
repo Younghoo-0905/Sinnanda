@@ -176,7 +176,7 @@ public class HostService {
 		List<Host> accomHost = hostMapper.selectHostAccom(hostNo); 
 		return accomHost;
 	}
-	
+	//[윤경환] 숙소에 따른 수익 
 	public Map<String,Object> getTotalAccomHostYear(int year, int hostNo, String accomName){
 		//전체를 조회할때 모든 숙소가 나올 수 있게 조치 
 		if(accomName == null || accomName.equals("전체")) {
@@ -184,7 +184,16 @@ public class HostService {
 			}
 		
 		Map<String, Object> map = hostMapper.totalAccomHostYear(year, hostNo, accomName);		
-		return map;
-		
+		return map;	
 	}
+	
+	//[윤경환] 숙소에따른 수수료 
+	public Map<String, Object> getTotalDeduHostYear(int year, int hostNo, String accomName){
+		if(accomName == null || accomName.equals("전체")) {
+			accomName = null;
+			}
+		Map<String, Object> map = hostMapper.totalDeduHostYear(year, hostNo, accomName);		
+		return map;	
+	}
+
 }
