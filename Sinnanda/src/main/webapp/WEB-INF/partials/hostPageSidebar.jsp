@@ -63,6 +63,7 @@
 			<div class="collapse" id=host-statistics>
 				<ul class="nav flex-column sub-menu">
 					<li class="nav-item"> <a class="nav-link" href="/host/hostComplainChart">컴플레인</a></li>
+					<li class="nav-item"> <a class="nav-link" href="/host/hostReviewChart">리뷰</a></li>
 				</ul>
 			</div>
 		</li>

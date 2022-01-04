@@ -258,4 +258,60 @@ public class HostController {
 		return "host/myHostRevenue";
 		
 	}
+	@GetMapping("/host/myHostCommission")
+	public String getmyHostCommission( Model model, HttpSession session
+   		 ){
+   	 
+		User loginUser = (User)session.getAttribute("loginUser");	
+		
+		List<Host> accomHost = hostService.getselectHostAccom(loginUser.getHost().getHostNo());
+   		
+		
+		
+		model.addAttribute("accomHost", accomHost);
+		dl.p("getHostIncomeChart", "accomHost", accomHost);
+        
+		
+		return "host/myHostCommission";
+		
+	}
+	
+	//[윤경환] 사업자 호스트 슉소별 컴플레인
+	@GetMapping("/host/hostComplainChart")
+	public String getHostComplainChart( Model model, HttpSession session
+   		 ){
+   	 
+		User loginUser = (User)session.getAttribute("loginUser");	
+		
+		List<Host> accomHost = hostService.getselectHostAccom(loginUser.getHost().getHostNo());
+   		
+		
+		
+		model.addAttribute("accomHost", accomHost);
+		dl.p("getHostIncomeChart", "accomHost", accomHost);
+        
+		
+		return "host/hostComplainChart";
+		
+	}
+	
+	//[윤경환] 사업자 관련 숙소별 리뷰 
+	@GetMapping("/host/hostReviewChart")
+	public String getHostReviewChart( Model model, HttpSession session
+	   		 ){
+	   	 
+			User loginUser = (User)session.getAttribute("loginUser");	
+			
+			List<Host> accomHost = hostService.getselectHostAccom(loginUser.getHost().getHostNo());
+	   		
+			
+			
+			model.addAttribute("accomHost", accomHost);
+			dl.p("getHostIncomeChart", "accomHost", accomHost);
+	        
+			
+			return "host/hostReviewChart";
+			
+		}
+	
 }

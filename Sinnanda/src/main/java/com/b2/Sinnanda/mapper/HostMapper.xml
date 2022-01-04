@@ -209,6 +209,30 @@
 			</if>
 	</select>
 
+	<!-- [윤경환] '서업자' 관련 숙소별 후기 모음 -->
+	<select id="totalReviewYear" parameterType="Map" resultType="java.util.Map">
+			SELECT 
+				IFNULL(COUNT(ew.review_recommend = '추천'),0) Rev1,
+				IFNULL(COUNT(ew.review_recommend = '보통'),0) Rev2,
+				IFNULL(COUNT(ew.review_recommend = '비추천'),0) Rev3
+		FROM review ew
+		LEFT JOIN  payment pa 
+			ON pa.payment_no = ew.payment_no
+		LEFT JOIN reserve re
+			ON pa.reserve_no = re.reserve_no
+		LEFT JOIN  room ro 
+			ON re.room_no = ro.room_no
+		LEFT JOIN accom ac
+		 	ON ro.accom_no = ac.accom_no
+		WHERE ac.host_no = #{hostNo} 
+			AND YEAR(ew.update_date) = #{year}
+			<if test="accomName != null">
+					AND ac.accom_name = #{accomName}
+			</if>
+	
+	
+	</select>
+
 
 <!-- 2. 삽입 -->
 	

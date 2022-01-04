@@ -57,7 +57,7 @@
 								<div class="card-body">
 									<span class="subheading">
 										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
-										정산
+										통계
 									</span>
 									
 									<h1 style="margin-top: 10px;"><strong>컴플레인 빈도</strong></h1>
@@ -196,6 +196,7 @@
 <script src="/js/todolist.js"></script>
 <script src="/js/dashboard.js"></script>
 <script src="/js/Chart.roundedBarCharts.js"></script>
-<script src="/vendors/js/vendor.bundle.base.js"></script>							
+<script src="/vendors/js/vendor.bundle.base.js"></script>		
+					
 </body>
 </html>

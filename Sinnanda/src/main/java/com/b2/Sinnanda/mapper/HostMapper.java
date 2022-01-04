@@ -38,4 +38,7 @@ public interface HostMapper {
 
 	//[윤경환] 사업자와  관련한 컴플레인 
 	 Map<String, Object> totalComplainYear(int year, int hostNo, String accomName);
+	 
+	//[윤경환] 사업자와 관련된 숙소별 리뷰 
+	 Map<String, Object> totalReviewYear(int year, int hostNo, String accomName);
 }
