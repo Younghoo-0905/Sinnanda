@@ -135,8 +135,8 @@
         				<div>별점 등급</div>
 					
 							<c:choose>
-							<c:when test="${fn:contains(accomRate, '10')}">
-								<input type="checkbox" name="accomRate" value="10" checked onclick="getCheckboxValue()"/>
+							<c:when test="${fn:contains(accomRate, '5')}">
+								<input type="checkbox" name="accomRate" value="5" checked onclick="getCheckboxValue()"/>
 								<label class="form-check-label" for="exampleCheck1">
 								<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
 								</label>
@@ -144,7 +144,7 @@
 								<br>
 							</c:when>
 							<c:otherwise>
-							<input type="checkbox" name="accomRate" value="10" onclick="getCheckboxValue()"/>
+							<input type="checkbox" name="accomRate" value="5" onclick="getCheckboxValue()"/>
 								<label class="form-check-label" for="exampleCheck1">
 								<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
 								</label>
@@ -152,50 +152,34 @@
 							</c:otherwise>
 						</c:choose>
 						<c:choose>
-							<c:when test="${fn:contains(accomRate, '8')}">
-								<input type="checkbox" name="accomRate" value="8" checked onclick="getCheckboxValue()"/>
-								<label class="form-check-label" for="exampleCheck1">
-									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
-								</label>
-								<br>
-							</c:when>
-							<c:otherwise>
-								<input type="checkbox" name="accomRate" value="8" onclick="getCheckboxValue()"/>
-								<label class="form-check-label" for="exampleCheck1">
-									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
-								</label>
-								<br>
-							</c:otherwise>
-						</c:choose>
-						<c:choose>
-							<c:when test="${fn:contains(accomRate, '6')}">
-								<input type="checkbox" name="accomRate" value="6" checked onclick="getCheckboxValue()"/>
-								<label class="form-check-label" for="exampleCheck1">
-									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						     	</label>
-								<br>
-							</c:when>
-							<c:otherwise>
-								<input type="checkbox" name="accomRate" value="6" onclick="getCheckboxValue()"/>
-								<label class="form-check-label" for="exampleCheck1">
-									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						     	</label>
-								<br>
-							</c:otherwise>
-						</c:choose>
-						<c:choose>
 							<c:when test="${fn:contains(accomRate, '4')}">
 								<input type="checkbox" name="accomRate" value="4" checked onclick="getCheckboxValue()"/>
 								<label class="form-check-label" for="exampleCheck1">
-									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						      	</label>
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
+								</label>
 								<br>
 							</c:when>
 							<c:otherwise>
 								<input type="checkbox" name="accomRate" value="4" onclick="getCheckboxValue()"/>
 								<label class="form-check-label" for="exampleCheck1">
-									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						      	</label>
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
+								</label>
+								<br>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:contains(accomRate, '3')}">
+								<input type="checkbox" name="accomRate" value="3" checked onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+						     	</label>
+								<br>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" name="accomRate" value="3" onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+						     	</label>
 								<br>
 							</c:otherwise>
 						</c:choose>
@@ -203,11 +187,27 @@
 							<c:when test="${fn:contains(accomRate, '2')}">
 								<input type="checkbox" name="accomRate" value="2" checked onclick="getCheckboxValue()"/>
 								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+						      	</label>
+								<br>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" name="accomRate" value="2" onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
+									<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+						      	</label>
+								<br>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:contains(accomRate, '1')}">
+								<input type="checkbox" name="accomRate" value="1" checked onclick="getCheckboxValue()"/>
+								<label class="form-check-label" for="exampleCheck1">
 									<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
 							    </label>
 							</c:when>
 							<c:otherwise>
-								<input type="checkbox" name="accomRate" value="2" onclick="getCheckboxValue()"/>
+								<input type="checkbox" name="accomRate" value="1" onclick="getCheckboxValue()"/>
 								<label class="form-check-label" for="exampleCheck1">
 									<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
 							    </label>

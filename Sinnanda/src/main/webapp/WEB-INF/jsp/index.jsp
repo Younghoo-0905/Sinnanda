@@ -39,7 +39,7 @@
 	<!-- [이승준] 상단 내비바 - END -->
 	
 	<!-- [이승준] 상단 이미지, 검색바 부분 START -->
-	<div class="hero-wrap js-fullheight" style="background-image: url('/direngine-master/images/bg_1.jpg');">
+	<div class="hero-wrap js-fullheight" style="background-image: url('direngine-master/images/bg_1.jpg');">
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">

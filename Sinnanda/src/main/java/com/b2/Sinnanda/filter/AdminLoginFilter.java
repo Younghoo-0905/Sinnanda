@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.b2.Sinnanda.vo.Admin;
@@ -18,7 +19,7 @@ import com.b2.Sinnanda.vo.User;
 import lombok.extern.slf4j.Slf4j;
 
 //	[김영후] 유저 권한 별 필터링 작업 21.12.14
-
+// [이원희] 포워딩에서 리다이렉트로 변경 22.01.04
 @Slf4j
 @WebFilter(urlPatterns = "/admin/*")
 public class AdminLoginFilter implements Filter{
@@ -37,20 +38,24 @@ public class AdminLoginFilter implements Filter{
 		User loginUser = new User();
 		// request 호출
 		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res =(HttpServletResponse) response;
 		// 세션 정보 가져오기
 		HttpSession session = req.getSession();
 		// 로그인 정보가 없을 시, login 페이지로 이동
 		if(session.getAttribute("loginUser") == null) {
 			log.info(" ├[info] \"로그인 정보 없음, 로그인 페이지로 이동\" AdminFilter.doFilter()");
-			req.getRequestDispatcher("/login").forward(request, response);
+			res.sendRedirect(req.getContextPath()+"/login");
+			//req.getRequestDispatcher("/login").forward(request, response);
 			return;
 		} else {
 			loginUser = (User)session.getAttribute("loginUser");
 			log.debug(" ├[param] user : "+loginUser.toString());	
 			//	UserLevel 검사
 			if(loginUser.getUserLevel() != 3) {
-				log.info(" ├[info] \"User 권한 부족, 로그인 페이지로 이동\" AdminFilter.doFilter()");
-				req.getRequestDispatcher("/login").forward(request, response);				
+				log.info(" ├[info] \"User 권한 부족, 인덱스 페이지로 이동\" AdminFilter.doFilter()");
+				//req.getRequestDispatcher("/login").forward(request, response);				
+				res.sendRedirect(req.getContextPath()+"/index");
+				return;
 			}
 		}		
 		chain.doFilter(request, response);

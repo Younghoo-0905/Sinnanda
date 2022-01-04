@@ -66,58 +66,104 @@
 			   a.commission_no,
 			   accom_category.accom_category_name,
 			   a.accom_name,
-			   (sum(rev.review_rank)/COUNT(rev.review_rank)) AS accom_rate,
+			   ad.sido,
+			   ad.sigungu,
+			   ad.road_name,
+			   ad.main_building_code,
+			   ad.sub_building_code,
+			   ad.building_name,
+			   acd.address_detail,
+			   ((sum(rev.review_rank)/COUNT(rev.review_rank))/2) AS accom_rate,
 			   a.accom_img,
 			   a.accom_description, 
 			   a.create_date, 
 			   a.update_date 
 			   FROM accom a 
-				JOIN accom_category ON a.accom_category_no = accom_category.accom_category_no 
-				JOIN room r ON r.accom_no = a.accom_no 
-				JOIN reserve re ON r.room_no = re.room_no 
-				JOIN payment pa ON pa.reserve_no = re.reserve_no 
-				JOIN review rev ON rev.payment_no = pa.payment_no 
+				LEFT JOIN accom_category ON a.accom_category_no = accom_category.accom_category_no 
+				LEFT JOIN room r ON r.accom_no = a.accom_no 
+				LEFT JOIN reserve re ON r.room_no = re.room_no 
+				LEFT JOIN payment pa ON pa.reserve_no = re.reserve_no 
+				LEFT JOIN review rev ON rev.payment_no = pa.payment_no
+				LEFT JOIN accom_address acd ON a.accom_no = acd.accom_no
+				LEFT JOIN address ad ON acd.address_no = ad.address_no 
 				WHERE accom_category_name IN
 				<foreach collection="accomCategory1" item="value" index="idx" separator="," open="(" close=")">
     				#{value}
     			</foreach>
 				AND
 				a.accom_name LIKE CONCAT('%',#{accomName},'%')
-				GROUP BY a.accom_name
+				  <![CDATA[
+				GROUP BY a.accom_name HAVING(accom_rate <=  
+				]]>
+				<foreach collection="accomRate" item="rank" index="idx" separator="," open="" close="">
+					<if test="rank eq 1" >
+						1.9 OR accom_rate IS NULL
+					</if>
+				</foreach>
+				)
 				ORDER BY a.create_date DESC 
 		LIMIT #{beginRow}, #{rowPerPage}
-		
-		
 	</select>
 	
 	<!-- [이원희] 검색 대상 숙소 갯수 조회-->
 	<select id="selectAccomTotalCount" parameterType="Map" resultType="int">
-		SELECT 
-			COUNT(*) 
-		FROM accom a JOIN accom_category ac ON a.accom_category_no = ac.accom_category_no WHERE ac.accom_category_name IN 
-		<foreach collection="accomCategory1" item="value" index="idx" separator="," open="(" close=")">
-    		#{value}
-    	</foreach>
-    	AND a.accom_name LIKE CONCAT('%',#{accomName},'%')
+		SELECT COUNT(*) FROM (SELECT a.accom_no, 
+			   a.host_no, 
+			   a.admin_no, 
+			   a.commission_no,
+			   accom_category.accom_category_name,
+			   a.accom_name,
+			   ad.sido,
+			   ad.sigungu,
+			   ad.road_name,
+			   ad.main_building_code,
+			   ad.sub_building_code,
+			   ad.building_name,
+			   acd.address_detail,
+				((sum(rev.review_rank)/COUNT(rev.review_rank))/2) AS accom_rate,
+			   a.accom_img,
+			   a.accom_description, 
+			   a.create_date, 
+			   a.update_date 
+			   FROM accom a 
+				LEFT JOIN accom_category ON a.accom_category_no = accom_category.accom_category_no 
+				LEFT JOIN room r ON r.accom_no = a.accom_no 
+				LEFT JOIN reserve re ON r.room_no = re.room_no 
+				LEFT JOIN payment pa ON pa.reserve_no = re.reserve_no 
+				LEFT JOIN review rev ON rev.payment_no = pa.payment_no
+				LEFT JOIN accom_address acd ON a.accom_no = acd.accom_no
+				LEFT JOIN address ad ON acd.address_no = ad.address_no 
+				WHERE accom_category_name IN
+				<foreach collection="accomCategory1" item="value" index="idx" separator="," open="(" close=")">
+    				#{value}
+    			</foreach>
+				AND
+				a.accom_name LIKE CONCAT('%',#{accomName},'%')
+				  <![CDATA[
+				GROUP BY a.accom_name HAVING(accom_rate <=1.9 OR accom_rate IS NULL)
+				]]>) result
 	</select>
 	
 	<!-- [이원희] 검색 대상 숙소 별점 조회 -->
 	<select id="selectAccomRank" parameterType="Map" resultType ="double">
-		SELECT ((sum(rev.review_rank)/COUNT(rev.review_rank))*10),
-		accom_category.accom_category_name
+		SELECT ((sum(rev.review_rank)/COUNT(rev.review_rank))/2) AS accom_rate
 		FROM accom a
 		JOIN accom_category ON a.accom_category_no = accom_category.accom_category_no
 		LEFT JOIN room r ON r.accom_no = a.accom_no 
 		LEFT JOIN reserve re ON r.room_no = re.room_no 
 		LEFT JOIN payment pa ON pa.reserve_no = re.reserve_no 
 		LEFT JOIN review rev ON rev.payment_no = pa.payment_no
+		LEFT JOIN accom_address acd ON a.accom_no = acd.accom_no
+		LEFT JOIN address ad ON acd.address_no = ad.address_no 
 		WHERE accom_category_name IN
 				<foreach collection="accomCategory1" item="value" index="idx" separator="," open="(" close=")">
     				#{value}
     			</foreach>
 				AND
 				a.accom_name LIKE CONCAT('%',#{accomName},'%')
-		GROUP BY a.accom_no ORDER BY a.create_date DESC
+		<![CDATA[
+				GROUP BY a.accom_name HAVING(accom_rate <=1.9 OR accom_rate IS NULL)
+				]]> ORDER BY a.create_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	

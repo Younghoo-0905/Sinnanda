@@ -48,28 +48,9 @@ public class SearchAccomService {
 		paraMap.put("accomCategory1", accomCategory1);
 		paraMap.put("accomCategoryName", accomName.getAccomCategoryName());
 		paraMap.put("person", person);
+		paraMap.put("accomRate", accomRate);
 		paraMap.put("beginRow", beginRow);
 		paraMap.put("rowPerPage", rowPerPage);
-		
-		if(accomRate.contains(2)) {
-			
-		}
-		
-		if(accomRate.contains(2)) {
-			
-		}
-		
-		if(accomRate.contains(2)) {
-			
-		}
-		
-		if(accomRate.contains(2)) {
-			
-		}
-		
-		if(accomRate.contains(2)) {
-			
-		}
 
 		
 		// 2. 숙소 리스트 조회

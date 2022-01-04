@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.b2.Sinnanda.vo.User;
@@ -36,20 +37,24 @@ public class HostLoginFilter implements Filter{
 		User loginUser = new User();
 		// request 호출
 		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res =(HttpServletResponse) response;
 		// 세션 정보 가져오기
 		HttpSession session = req.getSession();
 		// 로그인 정보가 없을 시, login 페이지로 이동
 		if(session.getAttribute("loginUser") == null) {
 			log.info(" ├[info] \"로그인 정보 없음, 로그인 페이지로 이동\" HostFilter.doFilter()");
-			req.getRequestDispatcher("/login").forward(request, response);
+			res.sendRedirect(req.getContextPath()+"/login");// [이원희]포워드해서 넘길 파라미터가 없고 좋은 방법 아님
+			//req.getRequestDispatcher("/login").forward(request, response);
 			return;
 		} else {
 			loginUser = (User)session.getAttribute("loginUser");
 			log.debug(" ├[param] user : "+loginUser.toString());	
 			//	UserLevel 검사
 			if(loginUser.getUserLevel() != 2) {
-				log.info(" ├[info] \"User 권한 부족, 로그인 페이지로 이동\" HostFilter.doFilter()");
-				req.getRequestDispatcher("/login").forward(request, response);				
+				log.info(" ├[info] \"User 권한 부족, 인덱스 페이지로 이동\" HostFilter.doFilter()");
+				//req.getRequestDispatcher("/login").forward(request, response);
+				res.sendRedirect(req.getContextPath()+"/index");// 권한 부족은 로그인이 되있는 상태이니 인덱스로 이동
+				return;
 			}
 		}		
 		chain.doFilter(request, response);

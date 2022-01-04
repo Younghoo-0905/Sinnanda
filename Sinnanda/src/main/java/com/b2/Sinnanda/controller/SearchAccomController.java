@@ -60,7 +60,7 @@ public class SearchAccomController {
 			@RequestParam(defaultValue = "1") int currentPage, 
 			@RequestParam(defaultValue = "1") int person,
 			@RequestParam(defaultValue = "호텔")List<String> accomCategory1,
-			@RequestParam(defaultValue = "10,8,6,4,2") List<Integer> accomRate) {
+			@RequestParam(defaultValue = "5,4,3,2,1") List<Integer> accomRate) {
 		dl.p("AccomController", "getSerchList(accom)", accom);
 		
 		Map<String, Object> map = searchAccomService.getAccomListByName(accom, person, currentPage, ROW_PER_PAGE, accomCategory1, accomRate);
