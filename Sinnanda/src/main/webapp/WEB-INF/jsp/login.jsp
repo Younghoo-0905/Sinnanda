@@ -20,7 +20,8 @@
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 </head>
 
-<body>
+<!-- 해당 페이지에서 Enter 키를 입력 시 로그인 -->
+<body onkeydown="javascript:onEnterLogin();">
 	<div class="container-scroller">
 		<div class="container-fluid page-body-wrapper full-page-wrapper">
 			<div class="content-wrapper d-flex align-items-center auth px-0">
@@ -83,17 +84,27 @@
 	<script src="/skydash/js/todolist.js"></script>
   <!-- endinject -->
 	<script>
+		// 입력사항 확인
 		function chk_form() {
-		if(document.getElementById("userId").value==''){
-			alert("아이디를 입력해주십시오.");
-			return false;
-		}
-		if(document.getElementById("userPw").value==''){
-			alert("비밀번호를 입력해주십시오.");
-			return false;
+			if(document.getElementById("userId").value==''){
+				alert("아이디를 입력해주십시오.");
+				return false;
+			}
+			if(document.getElementById("userPw").value==''){
+				alert("비밀번호를 입력해주십시오.");
+				return false;
+			}
+			
+			document.getElementById("loginForm").submit();
 		}
 		
-		document.getElementById("loginForm").submit();
+		// Enter 키 로그인
+		function onEnterLogin(){
+			var keyCode = window.event.keyCode;
+			
+			if (keyCode == 13) {
+				loginForm.submit();
+			}
 		}
 	</script>
 </body>
