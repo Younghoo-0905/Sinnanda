@@ -10,9 +10,6 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- plugins:css -->
-		<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/animate.css">
 	
 	<link rel="stylesheet" href="/skydash/vendors/feather/feather.css">
 	<link rel="stylesheet" href="/skydash/vendors/ti-icons/css/themify-icons.css">
@@ -28,7 +25,7 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title> 페이지</title>
+	<title>커뮤니티 페이지</title>
 </head>
 <body>
 	<div class="container-scroller">
@@ -50,61 +47,102 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>${loginUser.member.memberName}님이 작성한 리뷰</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<section class="ftco-section testimony-section bg-light">
-    <div class="container3">
-	<h1>내가 작성한 리뷰</h1>
-	<div>
-		<select id="reviewRecommend" name="reviewRecommend" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px; height:35px;">
-			<option value="">선택</option>
-			<option value="/member/myReviewList">전체</option>
-			<option value="/member/myReviewList?reviewRecommend=보통">보통</option>
-			<option value="/member/myReviewList?reviewRecommend=추천">추천</option>
-			<option value="/member/myReviewList?reviewRecommend=비추천">비추천</option>
-		</select>
-	</div>
-	<table class="table table-hover" style="width: 100%;">
-		<tr>
-			<th>이름</th>
-			<th>숙소이름</th>
-			<th>객실이름</th>
-			<th>리뷰내용</th>
-			<th>평점</th>
-			<th>추천여부</th>
-			<th>작성일</th>
-		</tr>
-
-		<c:forEach items="${myReviewList}" var="review">
-			<tr>
-				<td>${loginUser.member.memberName}</td>
-				<td>${review.accomName}</td>
-				<td>${review.roomName}</td>				
-				<td>
-					<c:choose>
-						<c:when test="${fn:length(review.reviewContent) > 20}">
-							<a href="/searchAccomOne?accomNo=${review.accomNo}">
-						 		<c:out value="${fn:substring(review.reviewContent,0,20)}"/>...
-						 	</a>
-						</c:when>
-					 	<c:otherwise>
-	            			<a href="/searchAccomOne?accomNo=${review.accomNo}"><c:out value="${review.reviewContent}"/></a>
-	          			 </c:otherwise>
-					</c:choose>
-				</td>
-				<td>${review.reviewRank}</td>
-				<td>${review.reviewRecommend}</td>
-				<td>
-					<fmt:parseDate value="${review.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-					<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
-				</td>
-			</tr>
-		</c:forEach>
-	</table>
-	</div>
-	</section>
+									<span class="subheading">
+										<a href="myPage?memberNo=${loginUser.member.memberNo}">메인(내정보)</a> >
+										내 리뷰 목록
+									</span>
+									
+									<h1 style="margin-top: 10px;"><strong>내가 작성한 리뷰 목록</strong></h1>
+									
+								    <div class="container">
+										<select id="reviewRecommend" name="reviewRecommend" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px; height:35px;">
+											<option value="">선택</option>
+											<option value="myReviewList">전체</option>
+											<option value="myReviewList?reviewRecommend=보통">보통</option>
+											<option value="myReviewList?reviewRecommend=추천">추천</option>
+											<option value="myReviewList?reviewRecommend=비추천">비추천</option>
+										</select>
+										
+										<table class="table table-myPage" style="width: 100%;">
+											<tr>
+												<th>숙소이름</th>
+												<th>객실이름</th>
+												<th>리뷰내용</th>
+												<th style="width: 7%;">평점</th>
+												<th style="width: 10%;">추천여부</th>
+												<th style="width: 15%;">작성일</th>
+											</tr>
+									
+											<c:forEach items="${myReviewList}" var="review">
+												<tr>
+													<td style="text-align:center;">${review.accomName}</td>
+													<td style="text-align:center;">${review.roomName}</td>				
+													<td style="text-align:center;">
+														<c:choose>
+															<c:when test="${fn:length(review.reviewContent) > 20}">
+																<a href="searchAccomOne?accomNo=${review.accomNo}">
+															 		<c:out value="${fn:substring(review.reviewContent,0,20)}"/>...
+															 	</a>
+															</c:when>
+														 	<c:otherwise>
+										            			<a href="searchAccomOne?accomNo=${review.accomNo}"><c:out value="${review.reviewContent}"/></a>
+										          			 </c:otherwise>
+														</c:choose>
+													</td>
+													<td style="text-align:center;">${review.reviewRank}</td>
+													<td style="text-align:center;">${review.reviewRecommend}</td>
+													<td style="text-align:center;">
+														<fmt:parseDate value="${review.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+													</td>
+												</tr>
+											</c:forEach>
+										</table>
+										
+										<!-- Paging -->			
+										<div class="row mt-5">
+									    	<div class="col text-center">
+									            <div class="block-27">
+													<ul>
+														<!-- '이전' 버튼 -->
+														<c:if test="${beginRow >= (ROW_PER_PAGE * 10)}">
+															<li><a href="myReviewList?currentPage=${pageNo-1}&reviewRecommend=${reviewRecommend}">&lt;</a></li>
+														</c:if>
+														
+														<!-- Page 번호 -->
+														<c:set var="doneLoop" value="false"></c:set>
+														<c:forEach var="i" begin="${pageNo}" end="${pageNo + 9}">
+														
+															<!-- Page 숫자 10개 출력 -->
+															<c:if test="${not doneLoop}">
+																<c:choose>
+																	<c:when test="${currentPage == i}">
+																		<li class="active"><span>${i}</span></li>
+																	</c:when>
+												    				<c:otherwise>
+																		<li><a href="myReviewList?currentPage=${i}&reviewRecommend=${reviewRecommend}">${i}</a></li>	
+																	</c:otherwise>		
+																</c:choose>
+																<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
+																<c:if test="${i == lastPage}">
+																	<c:set var="doneLoop" value="true"></c:set>
+																</c:if>
+															</c:if>
+														</c:forEach>
+														
+														<!-- '다음' 버튼 -->
+														<c:if test="${lastPage >= pageNo + 10}">
+															<li><a href="myReviewList?currentPage=${pageNo+10}&reviewRecommend=${reviewRecommend}">&gt;</a></li>
+														</c:if>
+													</ul>
+												</div>
+											</div>
+										</div>
+										<!-- Paging -->
+									</div>
 								</div>
 							</div>
 						</div>

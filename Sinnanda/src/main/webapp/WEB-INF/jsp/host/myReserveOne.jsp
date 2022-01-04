@@ -52,8 +52,9 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading" style="margin-left: 10px;">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
-										예약내역 목록 > 내역 상세보기
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="myReserveList">예약내역 목록</a> > 
+										예약내역 상세보기
 									</span>
 									
 									<h1 style="margin-top: 10px;"><strong>예약내역 상세보기</strong></h1>
@@ -61,57 +62,57 @@
 								    <div class="container">
 										<table class="table table-myPage" style="width: 100%;">
 											<tr>
-												<td>예약번호</td>
+												<th style="width: 12%;">예약번호</th>
 												<td>${reserve.reserveNo}</td>
 											</tr>
 											<tr>
-												<td>예약자 이름</td>
+												<th>예약자 이름</th>
 												<td>${reserve.memberName}</td>
 											</tr>
 											<tr>
-												<td>숙소이름</td>
+												<th>숙소이름</th>
 												<td>${reserve.accomName }</td>
 											</tr>
 											<tr>
-												<td>객실이름</td>
+												<th>객실이름</th>
 												<td>${reserve.roomName }</td>
 											</tr>
 											<tr>
-												<td>인원</td>
+												<th>인원</th>
 												<td>${reserve.reservePersonnel }</td>
 											</tr>
 											<tr>
-												<td>상태</td>
+												<th>상태</th>
 												<td>${reserve.reserveUse }</td>
 											</tr>
 											<!-- 취소된 예약인 경우 -->
 											<c:if test="${reserve.reserveUse == '중간 취소' }">
 												<tr>
-													<td>예약 취소일</td>
+													<th>예약 취소일</th>
 													<td>${reserve.reserveCancelDate }</td>
 												</tr>
 											</c:if>
 											<tr>
-												<td>가격</td>
+												<th>가격</th>
 												<td><fmt:formatNumber value="${reserve.paymentPrice }" pattern="#,###" />원</td>
 											</tr>
 											<tr>
-												<td>결제방법</td>
+												<th>결제방법</th>
 												<td>${reserve.paymentMethod }</td>
 											</tr>
 											<tr>
-												<td>예약한 날짜</td>
+												<th>예약한 날짜</th>
 												<td>
 													<fmt:parseDate value="${reserve.reserveDate}" var="reserveDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
 													<fmt:formatDate value="${reserveDate}" pattern="yy / MM / dd HH:mm"/>
 												</td>
 											</tr>
 											<tr>
-												<td>체크인</td>
+												<th>체크인</th>
 												<td>${reserve.reserveCheckIn }</td>
 											</tr>
 											<tr>
-												<td>체크아웃</td>
+												<th>체크아웃</th>
 												<td>${reserve.reserveCheckOut }</td>
 											</tr>
 										</table>										
@@ -127,7 +128,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 

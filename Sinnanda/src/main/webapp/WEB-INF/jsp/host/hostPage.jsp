@@ -52,7 +52,7 @@
 									
 									<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
 										<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${complainListTotalCount}</strong></span>
-										<a href="/host/myComplainList" style="float: right; ">목록 보기</a>
+										<a href="myComplainList" style="float: right; ">목록 보기</a>
 									</div>
 									
 								    <div class="container">
@@ -65,17 +65,17 @@
 								    	<c:if test="${!empty complainList}">
 								    		<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 											<tr style="text-align:center">
-												<th width="5%">번호</th>
+												<th width="7%">번호</th>
 												<th width="40%">제목</th>
 												<th width="10%">문의유형</th>
 												<th width="10%">작성자</th>
-												<th width="10%">작성일</th>
+												<th width="15%">작성일</th>
 											</tr>
 											<c:forEach items="${complainList}" var="complain">
 												<tr>
 													<td style="text-align:center">${complain.complainNo}</td>
 													<td>
-														<a href="/host/myComplainOne?complainNo=${complain.complainNo}">${complain.complainTitle}</a>
+														<a href="myComplainOne?complainNo=${complain.complainNo}">${complain.complainTitle}</a>
 													</td>
 													<td style="text-align:center">${complain.complainCategory}</td>
 													<td style="text-align:center">${complain.memberName}</td>
@@ -102,7 +102,7 @@
 									
 									<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
 										<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${reviewListTotalCount}</strong></span>
-										<a href="/host/myReviewList" style="float: right; ">목록 보기</a>
+										<a href="myReviewList" style="float: right; ">목록 보기</a>
 									</div>
 									
 								    <div class="container">
@@ -115,17 +115,17 @@
 								    	<c:if test="${!empty reviewList}">
 								    		<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 											<tr style="text-align:center">
-												<th>번호</th>
+												<th width="7%">번호</th>
 												<th>내용</th>
-												<th>별점</th>
-												<th>추천</th>
-												<th>작성자</th>
-												<th>작성일</th>
+												<th width="8%">별점</th>
+												<th width="8%">추천</th>
+												<th width="10%">작성자</th>
+												<th width="15%">작성일</th>
 											</tr>
 											<c:forEach items="${reviewList}" var="review">
 												<tr>
 													<td style="text-align:center">
-														<a href="/host/myReviewOne?reviewNo=${review.reviewNo}">${review.reviewNo}</a>
+														<a href="myReviewOne?reviewNo=${review.reviewNo}">${review.reviewNo}</a>
 													</td>
 													<td>
 														<!-- 답변의 유무 표시 -->
@@ -170,7 +170,7 @@
 									
 									<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
 										<span style="line-heigth: 100px;">총 개수 : <strong style="color: red;">${hostQnaListTotalCount}</strong></span>
-										<a href="/host/myHostQnaList" style="float: right; ">목록 보기</a>
+										<a href="myHostQnaList" style="float: right; ">목록 보기</a>
 									</div>
 									
 								    <div class="container">
@@ -183,7 +183,7 @@
 								    	<c:if test="${!empty hostQnaList}">
 								    		<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 											<tr style="text-align:center">
-												<th width="5%">번호</th>
+												<th width="7%">번호</th>
 												<th width="40%">제목</th>
 												<th width="10%">문의유형</th>
 												<th width="10%">작성자</th>
@@ -193,7 +193,7 @@
 												<tr>
 													<td style="text-align:center">${hostQna.hostQnaNo}</td>
 													<td>
-														<a href="/host/myHostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
+														<a href="myHostQnaOne?hostQnaNo=${hostQna.hostQnaNo}">${hostQna.hostQnaTitle}</a>
 													</td>
 													<td style="text-align:center">${hostQna.hostQnaCategory}</td>
 													<td style="text-align:center">${hostQna.hostName}</td>

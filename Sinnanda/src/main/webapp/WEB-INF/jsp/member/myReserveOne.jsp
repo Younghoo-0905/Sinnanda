@@ -8,9 +8,6 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- plugins:css -->
-		<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/animate.css">
 	
 	<link rel="stylesheet" href="/skydash/vendors/feather/feather.css">
 	<link rel="stylesheet" href="/skydash/vendors/ti-icons/css/themify-icons.css">
@@ -48,53 +45,60 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>예약내역 상세보기</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-								<span class="subheading"><a href="myReserveList">나의 예약내역</a> > 예약내역 상세보기</span>
-									<table class="table table-board">
+								<span class="subheading">
+									<a href="myPage?memberNo=${loginUser.member.memberNo}">메인(내정보)</a> >
+									<a href="myReserveList">예약내역 목록</a> >
+									상세보기
+								</span>
+								
+								<h1 style="margin-top: 10px;"><strong>내가 작성한 리뷰 상세보기</strong></h1>
+								
+								<div class="container">
+									<table class="table table-myPage">
 										<tr>
-											<td>예약번호</td>
+											<th style="width: 12%;">예약번호</th>
 											<td>${reserve.reserveNo}</td>
 										</tr>
 										<tr>
-											<td>예약자</td>
+											<th>예약자</th>
 											<td>${reserve.memberName}</td>
 										</tr>
 										<tr>
-											<td>숙소명</td>
+											<th>숙소명</th>
 											<td>${reserve.accomName }</td>
 										</tr>
 										<tr>
-											<td>객실이름</td>
+											<th>객실이름</th>
 											<td>${reserve.roomName }</td>
 										</tr>
 										<tr>
-											<td>이용여부</td>
+											<th>이용여부</th>
 											<td>${reserve.reserveUse }</td>
 										</tr>
 										<tr>
-											<td>가격</td>
+											<th>가격</th>
 											<td><fmt:formatNumber value="${reserve.paymentPrice }" pattern="#,###" />원</td>
 										</tr>
 										<tr>
-											<td>결제방법</td>
+											<th>결제방법</th>
 											<td>${reserve.paymentMethod }</td>
 										</tr>
 										<tr>
-											<td>예약한 날짜</td>
+											<th>예약한 날짜</th>
 											<td>
 												<fmt:parseDate value="${reserve.reserveDate}" var="reserveDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
 												<fmt:formatDate value="${reserveDate}" pattern="yy / MM / dd HH:mm"/>
 											</td>
 										</tr>
 										<tr>
-											<td>체크인</td>
+											<th>체크인</th>
 											<td>${reserve.reserveCheckIn }</td>
 										</tr>
 										<tr>
-											<td>체크아웃</td>
+											<th>체크아웃</th>
 											<td>${reserve.reserveCheckOut }</td>
 										</tr>
 										

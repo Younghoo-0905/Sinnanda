@@ -26,7 +26,7 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title> 페이지</title>
+	<title>커뮤니티 페이지</title>
 </head>
 <body>
 	<div class="container-scroller">
@@ -47,106 +47,107 @@
 			<div class="main-panel">
 				<div class="content-wrapper">
 					<!-- 내용1 -->
-					<div class="row">
-						<h2>내가 작성한 QnA</h2>
+					<div class="row" style="height: 100%;">
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-				<section class="ftco-section testimony-section bg-light">
-				<div class="container1">
-				<select id="qnaCategory" name="qnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 40px; height:35px;">
-					<option value="">선택</option>
-					<option value="/member/myQnaList?qnaCategory=전체">전체문의</option>
-					<option value="/member/myQnaList?qnaCategory=기타문의">기타문의</option>
-					<option value="/member/myQnaList?qnaCategory=결제문의">결제문의</option>
-					<option value="/member/myQnaList?qnaCategory=이용문의">이용문의</option>
-					<option value="/member/myQnaList?qnaCategory=예약문의">예약문의</option>
-					<option value="/member/myQnaList?qnaCategory=숙소문의">숙소문의</option>
-				</select>
-			</div>
-			<table class="table table-board" style="width: 100%;">
-				<tr style="text-align:center">
-					<th width="5%">번호</th>
-					<th width="40%">제목</th>
-					<th width="10%">문의유형</th>
-					<th width="10%">작성자</th>
-					<th width="10%">작성일</th>
-				</tr>
-				<c:forEach items="${myQnaList}" var="qna">
-					<tr>
-						<td style="text-align:center">${qna.qnaNo}</td>
-						<td>
-							<c:if test="${qna.qnaComments.adminNo != null}">
-								<span style="color: #CD5C5C; font-weight: bold;">[답변 완료]</span>
-							</c:if>
-							<a href="/member/myQnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
-							<c:if test="${qna.qnaSecret == '비밀문의'}">
-								<img src="/images/qna/lockImg.png" width="20px" height="20px">
-							</c:if>
-						</td>
-						<td style="text-align:center">${qna.qnaCategory}</td>
-						<td style="text-align:center">${qna.memberName}</td>
-						<td style="text-align:center">
-							<fmt:parseDate value="${qna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-							<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
-						</td>
-					</tr>
-				</c:forEach>
-			</table>
-
-			<!-- Paging -->			
-			<div class="row mt-5">
-		    	<div class="col text-center">
-		            <div class="block-27">
-						<ul>
-							<!-- '이전' 버튼 -->
-							<c:if test="${beginRow >= ROW_PER_PAGE}">
-								<li><a href="/member/myQnaList?currentPage=${currentPage-1}&qnaCategory=${qnaCategory}">&lt;</a></li>
-							</c:if>
-							
-							<!-- Page 번호 -->
-							<c:set var="doneLoop" value="false"></c:set>
-							<c:forEach var="i" begin="${pageNo}" end="${pageNo + 9}">
-							
-								<!-- Page 숫자 10개 출력 -->
-								<c:if test="${not doneLoop}">
-									<c:choose>
-										<c:when test="${currentPage == i}">				
-											<li class="active"><span>${i}</span></li>
-										</c:when>
-					    				<c:otherwise>
-											<li><a href="/member/myQnaList?currentPage=${i}&qnaCategory=${qnaCategory}">${i}</a></li>	
-										</c:otherwise>		
-									</c:choose>
-									<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
-									<c:if test="${i == lastPage}">
-										<c:set var="doneLoop" value="true"></c:set>
-									</c:if>
-								</c:if>
-							</c:forEach>
-							
-							<!-- '다음' 버튼 -->
-							<c:if test="${currentPage != lastPage}">
-								<li><a href="/member/myQnaList?currentPage=${pageNo+1}&qnaCategory=${qnaCategory}">&gt;</a></li>
-							</c:if>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<!-- Paging -->
-</section>
-		</div>
-	
-	<!-- 본문 QnA 목록 부분 - END -->
+									<span class="subheading">
+										<a href="myPage?memberNo=${loginUser.member.memberNo}">메인(내정보)</a> >
+										내 Q&A 목록
+									</span>
+									
+									<h1 style="margin-top: 10px;"><strong>내가 작성한 Q&A 목록</strong></h1>
+									
+									<div class="container">
+										<select id="qnaCategory" name="qnaCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 40px; height:35px;">
+											<option value="">선택</option>
+											<option value="myQnaList?qnaCategory=전체">전체문의</option>
+											<option value="myQnaList?qnaCategory=기타문의">기타문의</option>
+											<option value="myQnaList?qnaCategory=결제문의">결제문의</option>
+											<option value="myQnaList?qnaCategory=이용문의">이용문의</option>
+											<option value="myQnaList?qnaCategory=예약문의">예약문의</option>
+											<option value="myQnaList?qnaCategory=숙소문의">숙소문의</option>
+										</select>
+										
+										<table class="table table-myPage">
+											<tr style="text-align:center">
+												<th width="6%">번호</th>
+												<th width="40%">제목</th>
+												<th width="10%">문의유형</th>
+												<th width="10%">작성자</th>
+												<th width="12%">작성일</th>
+											</tr>
+											<c:forEach items="${myQnaList}" var="qna">
+												<tr>
+													<td style="text-align:center">${qna.qnaNo}</td>
+													<td >
+														<c:if test="${qna.qnaComments.adminNo != null}">
+															<span style="color: #2828CD; font-weight: bold;">[답변 완료]</span>
+														</c:if>
+														<a href="myQnaOne?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
+														<c:if test="${qna.qnaSecret == '비밀문의'}">
+															<img src="/images/qna/lockImg.png" style="width: 20px; height: 20px;">
+														</c:if>
+													</td>
+													<td style="text-align:center">${qna.qnaCategory}</td>
+													<td style="text-align:center">${qna.memberName}</td>
+													<td style="text-align:center">
+														<fmt:parseDate value="${qna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+													</td>
+												</tr>
+											</c:forEach>
+										</table>
+										<!-- Paging -->			
+										<div class="row mt-5">
+									    	<div class="col text-center">
+									            <div class="block-27">
+													<ul>
+														<!-- '이전' 버튼 -->
+														<c:if test="${beginRow >= ROW_PER_PAGE}">
+															<li><a href="myQnaList?currentPage=${currentPage-1}&qnaCategory=${qnaCategory}">&lt;</a></li>
+														</c:if>
+														
+														<!-- Page 번호 -->
+														<c:set var="doneLoop" value="false"></c:set>
+														<c:forEach var="i" begin="${pageNo}" end="${pageNo + 9}">
+														
+															<!-- Page 숫자 10개 출력 -->
+															<c:if test="${not doneLoop}">
+																<c:choose>
+																	<c:when test="${currentPage == i}">				
+																		<li class="active"><span>${i}</span></li>
+																	</c:when>
+												    				<c:otherwise>
+																		<li><a href="myQnaList?currentPage=${i}&qnaCategory=${qnaCategory}">${i}</a></li>	
+																	</c:otherwise>		
+																</c:choose>
+																<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
+																<c:if test="${i == lastPage}">
+																	<c:set var="doneLoop" value="true"></c:set>
+																</c:if>
+															</c:if>
+														</c:forEach>
+														
+														<!-- '다음' 버튼 -->
+														<c:if test="${currentPage != lastPage}">
+															<li><a href="myQnaList?currentPage=${pageNo+1}&qnaCategory=${qnaCategory}">&gt;</a></li>
+														</c:if>
+													</ul>
+												</div>
+											</div>
+										</div>
+										<!-- Paging -->
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>					
-					
+					</div>
 				</div>
 			</div>
 		</div>
-	
+	</div>
+
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
 	<%@ include file="/WEB-INF/partials/footer.jsp" %>

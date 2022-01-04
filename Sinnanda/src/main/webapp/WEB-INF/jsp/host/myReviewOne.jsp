@@ -64,8 +64,8 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading" style="margin-left: 10px;">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
-										<a href="/host/myReviewList">리뷰 목록</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="myReviewList">리뷰 목록</a> > 
 										상세 보기
 									</span>
 									
@@ -74,32 +74,40 @@
 								    <div class="container" style="margin-top: 50px;">
 										<table class="table table-myPage" style="width: 100%;">
 											<tr>
-												<th>리뷰 번호</th>
+												<th style="width: 10%;">리뷰 번호</th>
 												<td>${review.reviewNo}</td>
+											</tr>
+											<tr>
 												<th>작성자</th>
 												<td>${review.memberName}</td>
 											</tr>
 											<tr>
 												<th>별점</th>
 												<td>${review.reviewRank}</td>
+											</tr>
+											<tr>
 												<th>추천</th>
 												<td>${review.reviewRecommend}</td>
 											</tr>
 											<tr>
 												<th>리뷰 내용</th>
-												<td colspan="5">
+												<td>
 													<textarea cols="50" rows="10"  disabled>${review.reviewContent}</textarea>
 												</td>
 											</tr>
 											<tr>
 												<th>예약 번호</th>
-												<td><a href="/host/hostReserveOne?reserveNo=${review.reserveNo}">${review.reserveNo}</a></td>
+												<td><a href="hostReserveOne?reserveNo=${review.reserveNo}">${review.reserveNo}</a></td>
+											</tr>
+											<tr>
 												<th>결제 번호</th>
 												<td>${review.paymentNo}</td>
 											</tr>
 											<tr>
 												<th>작성일</th>
 												<td>${review.createDate}</td>
+											</tr>
+											<tr>
 												<th>수정일</th>
 												<td>${review.updateDate}</td>
 											</tr>
@@ -117,9 +125,9 @@
 												<input name="reviewNo" value="${review.reviewNo}" type="hidden">
 												<table class="table table-myPage" style="width: 100%; margin-bottom: 50px;">
 													<tr>
-														<th style="width: 30%; text-align:center;">내용</th>
-														<td><textarea id="reviewCommentContent" name="reviewCommentContent" cols="100%" rows="5"></textarea></td>
-														<td><button class="btn btn-primary" type="submit">답변하기</button></td>
+														<th style="width: 10%; text-align:center;">내용</th>
+														<td><textarea id="reviewCommentContent" name="reviewCommentContent" cols="100%" rows="5" class="form-control form-control-lg"></textarea></td>
+														<td  style="width: 15%;"><button class="btn btn-primary" type="submit">답변하기</button></td>
 													</tr>
 												</table>
 											</form>
@@ -141,7 +149,7 @@
 														<fmt:parseDate value="${review.reviewComment.commentDate}" var="commentDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
 														<fmt:formatDate value="${commentDate}" pattern="yy/MM/dd HH:mm"/>
 													</td>
-													<td><a href="/host/removeReviewComment?reviewNo=${review.reviewNo}" class="btn btn-primary">삭제</a></td>
+													<td style="width: 20%;"><a href="removeReviewComment?reviewNo=${review.reviewNo}" class="btn btn-primary">삭제</a></td>
 												</tr>
 											</table>
 										</c:if>
@@ -156,7 +164,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 

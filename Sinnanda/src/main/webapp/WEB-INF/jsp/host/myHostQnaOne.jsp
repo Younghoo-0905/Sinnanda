@@ -52,8 +52,8 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
-										<a href="/host/myHostQnaList">사업자 문의 목록</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="myHostQnaList">사업자 문의 목록</a> > 
 										상세보기
 									</span>
 									
@@ -68,12 +68,14 @@
 					    			
 										<table class="table table-myPage" style="width: 100%;">
 											<tr>
-												<th style="width: 5%; font-size: 20px; text-align:center;">제목</th>
+												<th style="width: 10%; font-size: 20px; text-align:center;">제목</th>
 												<td colspan="3" style="font-size: 20px;">${hostQna.hostQnaTitle}</td>
 											</tr>
 											<tr>
 												<th style="text-align:center;">작성자</th>
 												<td style="width: 70%;">${hostQna.hostName}</td>
+											</tr>
+											<tr>
 												<th style="width: 50px; text-align:center;">작성일</th>
 												<td>
 													<fmt:parseDate value="${hostQna.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
@@ -137,7 +139,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 

@@ -59,6 +59,7 @@ public class ComplainController {	//	[김영후]
 		model.addAttribute("complainCategory", complainCategory);
 		model.addAttribute("complainList", map.get("complainList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("complainListTotalCount", map.get("totalCount"));
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("pageNo", pageNo);

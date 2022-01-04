@@ -238,7 +238,7 @@ public class MemberController {
 	@GetMapping("/member/myReviewList")
 	public String myReviewList(HttpServletRequest request, Model model,
 			@RequestParam(defaultValue = "1") int currentPage,
-			@RequestParam(required = false) String reviewRecommend) {		
+			@RequestParam(defaultValue = "전체") String reviewRecommend) {		
 		dl.p("MemberController", "myReviewList()", "나의 리뷰 목록 시작");
 		dl.p("MemberController", "myReviewList()", "currentPage : " + currentPage);
 		
@@ -253,8 +253,15 @@ public class MemberController {
 			return "redirect:/index";
 		}
 		
+		// 2. 페이지번호의 출력을 시작하는 수를 구하기 수식
+		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE;
+		
 		// review 목록 조회
-		Map<String, Object> map = memberService.getMyReviewListByReviewRecommend(loginUser.getMember().getMemberNo(), reviewRecommend, currentPage, ROW_PER_PAGE);
+		Map<String, Object> map = memberService.getMyReviewListByReviewRecommend(loginUser.getMember().getMemberNo(), reviewRecommend, beginRow, ROW_PER_PAGE);
+		
+		// 4. 10개의 페이지번호의를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		dl.p("complainList()", "pageNo", pageNo);
 		
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
@@ -262,6 +269,9 @@ public class MemberController {
 		model.addAttribute("myReviewList", map.get("myReviewList"));	// 리뷰 목록 정보
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
+		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
 
 		return "/member/myReviewList";
 	}
@@ -270,7 +280,7 @@ public class MemberController {
 	@GetMapping("/member/myReserveList")
 	public String myReserveList(HttpServletRequest request, Model model, 
 		@RequestParam(defaultValue = "1") int currentPage, 
-		@RequestParam(required = false) String reserveUse) {
+		@RequestParam(defaultValue = "전체") String reserveUse) {
 		dl.p("MemberController", "myReserveList()", "예약내역 조회");
 		dl.p("MemberController", "myReserveList()", "currentPage : " + currentPage);
 	
@@ -285,14 +295,24 @@ public class MemberController {
 			return "redirect:/index";
 		}
 		
+		// 2. 페이지번호의 출력을 시작하는 수를 구하기 수식
+		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE;
+		
 		// review 목록 조회
-		Map<String, Object> map = memberService.getMyReserveList(loginUser.getMember().getMemberNo(), reserveUse, currentPage, ROW_PER_PAGE);
+		Map<String, Object> map = memberService.getMyReserveList(loginUser.getMember().getMemberNo(), reserveUse, beginRow, ROW_PER_PAGE);
+		
+		// 4. 10개의 페이지번호의를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		dl.p("complainList()", "pageNo", pageNo);
 		
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
 		model.addAttribute("reserveUse", reserveUse);	// 선택된 reserveUse
 		model.addAttribute("myReserveList", map.get("myReserveList"));	// 예약 목록 정보
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
+		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
 
 		return "/member/myReserveList";
@@ -334,7 +354,7 @@ public class MemberController {
 	@GetMapping("/member/myComplainList")
 	public String myComplainList(HttpServletRequest request, Model model, 
 			@RequestParam(defaultValue = "1") int currentPage, 
-			@RequestParam(required = false) String complainCategory) {
+			@RequestParam(defaultValue = "전체") String complainCategory) {
 		dl.p("MemberController", "myComplainList()", "내가 작성한 컴플레인 목록 조회");
 		dl.p("MemberController", "myComplainList()", "currentPage : "+currentPage);
 		
@@ -348,9 +368,16 @@ public class MemberController {
 			dl.p("MemberController", "myComplainList()", "loginUser : Null");
 			return "redirect:/index";
 		}
-
+		
+		// 2. 페이지번호의 출력을 시작하는 수를 구하기 수식
+		int beginRow = (currentPage * ROW_PER_PAGE) - ROW_PER_PAGE;
+		
 		// 컴플레인 목록 조회
-		Map<String, Object> map = memberService.getMyComplainList(loginUser.getMember().getMemberNo(), complainCategory, currentPage, ROW_PER_PAGE);
+		Map<String, Object> map = memberService.getMyComplainList(loginUser.getMember().getMemberNo(), complainCategory, beginRow, ROW_PER_PAGE);
+		
+		// 4. 10개의 페이지번호의를 출력하기 위한 변수
+		int pageNo = ((beginRow / 100) * 10 + 1);
+		dl.p("complainList()", "pageNo", pageNo);
 		
 		/* 모델 추가 */
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
@@ -358,6 +385,10 @@ public class MemberController {
 		model.addAttribute("myComplainList", map.get("myComplainList"));	// 컴플레인 목록 정보
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)
 		model.addAttribute("currentPage", currentPage);	// 현재 페이지
+		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
+		
 		return "/member/myComplainList";
 	}
 	

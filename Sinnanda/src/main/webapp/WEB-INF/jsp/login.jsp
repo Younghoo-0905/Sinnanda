@@ -28,11 +28,11 @@
 					<div class="col-lg-4 mx-auto">
 						<div class="auth-form-light text-left py-5 px-4 px-sm-5">
 							<!-- [이승준] 로그인 본문 - 브랜드 로고 부분 -->
-							<div class="brand-logo">
-								<img src="/skydash/images/logo.svg" alt="logo">
+							<div class="brand-logo" style="text-align: center;">
+								<a href="index"><img src="/images/logo/logo_myPage.svg" alt="logo"></a>
 							</div>
 							
-							<h4>신난다에 오신 것을 환영합니다!</h4>
+							<h4 style="text-align: center; margin-bottom: 20px;">신난다에 오신 것을 환영합니다!</h4>
 							<h6 class="font-weight-light">ID와 PW를 입력해주세요.</h6>
 							
 							<!-- [이승준] 로그인 본문 - 로그인 입력 폼 -->

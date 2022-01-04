@@ -52,7 +52,7 @@
 							<div class="card position-relative">
 								<div class="card-body">
 									<span class="subheading">
-										<a href="/host/hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
+										<a href="hostPage?hostNo=${loginUser.host.hostNo}">메인</a> > 
 										내 정보
 									</span>
 									
@@ -61,14 +61,14 @@
 									<!-- 사업자 문의 부분 -->
 									<div class="container">
 										<div style="margin: 10px; text-align: right;">
-											<a href="/host/modifyHostPw?hostNo=${loginUser.host.hostNo}" class="btn btn-primary">PW 수정</a>
-											<a href="/host/modifyHost?hostNo=${loginUser.host.hostNo}" class="btn btn-primary">정보 수정</a>
-											<a href="/host/removeHost?hostNo=${loginUser.host.hostNo}" class="btn btn-primary">회원탈퇴</a>
+											<a href="modifyHostPw?hostNo=${loginUser.host.hostNo}" class="btn btn-primary">PW 수정</a>
+											<a href="modifyHost?hostNo=${loginUser.host.hostNo}" class="btn btn-primary">정보 수정</a>
+											<a href="removeHost?hostNo=${loginUser.host.hostNo}" class="btn btn-primary">회원탈퇴</a>
 										</div>
 					    			
 										<table class="table table-myPage">
 											<tr>
-												<th style="width: 5%; text-align:center;">사업자 번호</th>
+												<th style="width: 15%; text-align:center;">사업자 번호</th>
 												<td>${host.hostNo}</td>
 											</tr>
 											<tr>
@@ -84,12 +84,15 @@
 												<td>${host.hostTel}</td>
 											</tr>
 											<tr>
-												<th style="text-align:center;">가입일</th>
-												<td>${host.createDate}</td>
-											</tr>
-											<tr>
 												<th>주소</th>
 												<td>${host.hostAddress.addressInfo} ${host.hostAddress.addressDetail}</td>
+											</tr>
+											<tr>
+												<th style="text-align:center;">가입일</th>
+												<td>
+													<fmt:parseDate value="${host.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+													<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+												</td>
 											</tr>
 										</table>
 									</div>
@@ -103,7 +106,7 @@
 	</div>
 	
 	<!-- [이승준] 하단 Footer - SATRT -->
-	<%@ include file="/WEB-INF/partials/myPageFooter.jsp" %>
+	<%@ include file="/WEB-INF/partials/footer.jsp" %>
 	<!-- [이승준] 하단 Footer - END -->
 
 

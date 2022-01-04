@@ -50,47 +50,50 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>마이페이지</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-									<table  class="table " style="width: 100%;">
-		<tr>
-			
-			<th colspan="2"><h3 style="text-align: center;">나의 상세정보</h3></th>
-			
-			
-			
-		</tr>
-		<tr>
-			<td  style="width: 200px; font-size: 20px; text-align:center;">아이디 </td>
-			<td colspan="3" style="font-size: 20px; text-align:center;">${member.memberId}</td>
-		</tr>
-		<tr>
-			<td  style="width: 200px; font-size: 20px; text-align:center;">이름 </td>
-			<td colspan="3" style="font-size: 20px; text-align:center;">${member.memberName}</td>
-		</tr>
-		<tr>
-			<td  style="width: 200px; font-size: 20px; text-align:center;">나이 </td>
-			<td colspan="3" style="font-size: 20px; text-align:center;">${member.memberAge}</td>
-		</tr>
-		<tr>
-			<td  style="width: 200px; font-size: 20px; text-align:center;">전화번호 </td>
-			<td colspan="3" style="font-size: 20px; text-align:center;">${member.memberTel}</td>
-		</tr>
-		<tr>
-			<td  style="width: 200px; font-size: 20px; text-align:center;">이메일 </td>
-			<td colspan="3" style="font-size: 20px; text-align:center;">${member.memberEmail}</td>
-		</tr>
-		<tr>
-			<td  style="width: 200px; font-size: 20px; text-align:center;">가입날짜 </td>
-			<td colspan="3" style="font-size: 20px; text-align:center;">
-				<fmt:parseDate value="${member.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-				<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
-			</td>
-		</tr>
-	
-	</table>
+									<span class="subheading">
+										<a href="myPage?memberNo=${loginUser.member.memberNo}">메인(내정보)</a>
+									</span>
+									
+									<h1 style="margin-top: 10px;"><strong>내 회원 정보</strong></h1>
+									
+									<div class="container">
+										<table class="table table-myPage">
+											<tr>
+												<th style="width: 15%; text-align:center;">회원 아이디</th>
+												<td>${member.memberId}</td>
+											</tr>
+											<tr>
+												<th style="text-align:center;">이름</th>
+												<td>${member.memberName}</td>
+											</tr>
+											<tr>
+												<th style="text-align:center;">나이</th>
+												<td>${member.memberAge}</td>
+											</tr>
+											<tr>
+												<th style="text-align:center;">전화번호</th>
+												<td>${member.memberTel}</td>
+											</tr>
+											<tr>
+												<th style="text-align:center;">이메일</th>
+												<td>${member.memberEmail}</td>
+											</tr>
+											<tr>
+												<th style="text-align:center;">주소</th>
+												<td>${member.memberAddress.addressInfo} ${member.memberAddress.addressDetail}</td>
+											</tr>
+											<tr>
+												<th style="text-align:center;">가입일</th>
+												<td>
+													<fmt:parseDate value="${member.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+													<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+												</td>
+											</tr>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>

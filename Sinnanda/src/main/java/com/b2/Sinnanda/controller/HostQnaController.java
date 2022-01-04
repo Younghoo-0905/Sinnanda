@@ -63,6 +63,7 @@ public class HostQnaController {
 		model.addAttribute("hostQnaCategory", hostQnaCategory);
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("hostQnaList", map.get("hostQnaList"));
+		model.addAttribute("hostQnaListTotalCount", map.get("totalCount"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("pageNo", pageNo);
@@ -105,6 +106,7 @@ public class HostQnaController {
 		model.addAttribute("loginUser", loginUser);	// 로그인 세선 정보
 		model.addAttribute("hostQnaCategory", hostQnaCategory);	// 선택된 QnA 카테고리
 		model.addAttribute("hostQnaList", map.get("hostQnaList"));	// QnA 목록 정보
+		model.addAttribute("hostQnaListTotalCount", map.get("totalCount"));
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("ROW_PER_PAGE", ROW_PER_PAGE);
 		model.addAttribute("lastPage", map.get("lastPage"));	// 마지막 페이지(페이징용)

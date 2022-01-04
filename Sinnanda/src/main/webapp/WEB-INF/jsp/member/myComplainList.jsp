@@ -27,7 +27,7 @@
 	<!-- endinject -->
 	<link rel="shortcut icon" href="/skydash/images/favicon.png" />
 	
-	<title> 페이지</title>
+	<title>커뮤니티 페이지</title>
 </head>
 <body>
 	<div class="container-scroller">
@@ -49,52 +49,99 @@
 				<div class="content-wrapper">
 					<!-- 내용1 -->
 					<div class="row">
-						<h2>${loginUser.member.memberName}님의 컴플레인 목록</h2>
 						<div class="col-md-12 grid-margin stretch-card">
 							<div class="card position-relative">
 								<div class="card-body">
-								<section class="ftco-section testimony-section bg-light">
-    	<div class="container3">
-		<h1>내가 작성한 컴플레인</h1>
-		<div>
-			<select id="complainCategory" name="complainCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px; height:35px;">
-				<option value="">선택</option>
-				<option value="/member/myComplainList">전체</option>
-				<option value="/member/myComplainList?complainCategory=예약일 변경">예약일 변경</option>
-				<option value="/member/myComplainList?complainCategory=예약 취소">예약 취소</option>
-				<option value="/member/myComplainList?complainCategory=이용 불편">이용 불편</option>
-				<option value="/member/myComplainList?complainCategory=기타">기타</option>
-			</select>
-		</div>
-	
-	<table class="table table-hover" style="width: 100%;">
-		<tr>
-			<th>컴플레인 번호</th>
-			<th>작성자</th>
-			<th>숙소이름</th>
-			<th>컴플레인 제목</th>
-			<th>컴플레인 종류</th>
-			<th>작성일</th>
-			<th>컴플레인 상세정보</th>
-		</tr>
-		
-		<c:forEach items="${myComplainList}" var="complain">
-			<tr>
-				<td>${complain.complainNo}</td>
-				<td>${loginUser.member.memberName}</td>
-				<td>${complain.accomName}</td>
-				<td>${complain.complainTitle}</td>
-				<td>${complain.complainCategory}</td>
-				<td>
-					<fmt:parseDate value="${complain.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-					<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
-				</td>
-				<td><a href="/member/myComplainOne?complainNo=${complain.complainNo}">상세보기</a></td>
-			</tr>
-		</c:forEach>
-	</table>
-	</div>
-	</section>
+									<span class="subheading">
+										<a href="myPage?memberNo=${loginUser.member.memberNo}">메인(내정보)</a> >
+										내 컴플레인 목록
+									</span>
+									
+									<h1 style="margin-top: 10px;"><strong>내가 작성한 컴플레인 목록</strong></h1>
+									
+							    	<div class="container">
+										<div>
+											<select id="complainCategory" name="complainCategory" class="form-control-sm" onchange="location.href=this.value" style="float: right; margin-bottom: 20px; height:35px;">
+												<option value="">선택</option>
+												<option value="myComplainList">전체</option>
+												<option value="myComplainList?complainCategory=예약일 변경">예약일 변경</option>
+												<option value="myComplainList?complainCategory=예약 취소">예약 취소</option>
+												<option value="myComplainList?complainCategory=이용 불편">이용 불편</option>
+												<option value="myComplainList?complainCategory=기타">기타</option>
+											</select>
+										</div>
+									
+										<table class="table table-myPage" style="width: 100%;">
+											<tr>
+												<th style="width: 10%;">컴플레인 번호</th>
+												<th>컴플레인 제목</th>
+												<th>숙소이름</th>
+												<th>컴플레인 종류</th>
+												<th style="width: 15%;">작성일</th>
+												<th style="width: 10%;">상세보기</th>
+											</tr>
+											
+											<c:forEach items="${myComplainList}" var="complain">
+												<tr>
+													<td style="text-align:center;">${complain.complainNo}</td>
+													<td>
+														<c:if test="${complain.complainCommentContent != null}">
+															<span style="color: #2828CD; font-weight: bold;">[답변 완료]</span>
+														</c:if>
+														<a href="myComplainOne?complainNo=${complain.complainNo}">${complain.complainTitle}</a>
+													</td>
+													<td style="text-align:center;">${complain.accomName}</td>
+													<td style="text-align:center;">${complain.complainCategory}</td>
+													<td style="text-align:center;">
+														<fmt:parseDate value="${complain.createDate}" var="createDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
+														<fmt:formatDate value="${createDate}" pattern="yy / MM / dd HH:mm"/>
+													</td>
+												</tr>
+											</c:forEach>
+										</table>
+										
+										<!-- Paging -->			
+										<div class="row mt-5">
+									    	<div class="col text-center">
+									            <div class="block-27">
+													<ul>
+														<!-- '이전' 버튼 -->
+														<c:if test="${beginRow >= ROW_PER_PAGE}">
+															<li><a href="myComplainList?currentPage=${currentPage-1}&complainCategory=${complainCategory}">&lt;</a></li>
+														</c:if>
+														
+														<!-- Page 번호 -->
+														<c:set var="doneLoop" value="false"></c:set>
+														<c:forEach var="i" begin="${pageNo}" end="${pageNo + 9}">
+														
+															<!-- Page 숫자 10개 출력 -->
+															<c:if test="${not doneLoop}">
+																<c:choose>
+																	<c:when test="${currentPage == i}">				
+																		<li class="active"><span>${i}</span></li>
+																	</c:when>
+												    				<c:otherwise>
+																		<li><a href="myComplainList?currentPage=${i}&complainCategory=${complainCategory}">${i}</a></li>	
+																	</c:otherwise>		
+																</c:choose>
+																<!-- LastPage이면 다음 페이지 번호를 출력하지 않는다 -->
+																<c:if test="${i == lastPage}">
+																	<c:set var="doneLoop" value="true"></c:set>
+																</c:if>
+															</c:if>
+														</c:forEach>
+														
+														<!-- '다음' 버튼 -->
+														<c:if test="${currentPage != lastPage}">
+															<li><a href="myComplainList?currentPage=${pageNo+1}&complainCategory=${complainCategory}">&gt;</a></li>
+														</c:if>
+													</ul>
+												</div>
+											</div>
+										</div>
+										<!-- Paging -->
+										
+									</div>
 								</div>
 							</div>
 						</div>

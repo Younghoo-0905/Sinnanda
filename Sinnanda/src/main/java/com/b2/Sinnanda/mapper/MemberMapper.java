@@ -18,6 +18,9 @@ import com.b2.Sinnanda.vo.Review;
 @Mapper
 public interface MemberMapper {
 	
+	// [이승준] 회원 상세+주소 조회
+	Member selectMemberOneWithAddress(int memberNo);
+	
 	//	[김영후]	member 휴면계정 해제
 	void activeMember(int memberNo);
 	
@@ -54,13 +57,13 @@ public interface MemberMapper {
 	List<Review> selectMyReviewListReviewRecommend(Map<String, Object> map);
 	
 	// [유동진] 내가 작성한 리뷰의 총 갯수 조회
-	int selectMyReviewTotalCount(String recommend);
+	int selectMyReviewTotalCount(Map<String, Object> map);
 	
 	// [유동진] 나의 예약내역 조회
 	List<Reserve> selectMyReserveList(Map<String, Object> map);
 	
 	// [유동진] 예약내역 총 갯수 조회
-	int selectMyReserveTotalCount(String reserveUse);
+	int selectMyReserveTotalCount(Map<String, Object> map);
 	
 	// [유동진] 예약내역 상세 조회
 	Reserve selectMyReserveOne(int reserveNo);
@@ -69,7 +72,7 @@ public interface MemberMapper {
 	List<Complain> selectMyComplainList(Map<String, Object> map);
 	
 	// [유동진] 내가 작성한 컴플레인 갯수 조회
-	int selectMyComplainTotalCount(String complainCategory);
+	int selectMyComplainTotalCount(Map<String, Object> map);
 	
 	// [유동진] 내가 작성한 컴플레인 상세조회
 	Complain selectMyComplainOne(int complainNo);
