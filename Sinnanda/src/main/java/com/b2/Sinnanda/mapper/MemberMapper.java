@@ -78,10 +78,13 @@ public interface MemberMapper {
 	Complain selectMyComplainOne(int complainNo);
 	
 	// [유동진] 결제 금액 조회
-	Map<String,Object> memberPaymentYear(int year, int memberNo);
+	Map<String, Object> memberPaymentYear(int year, int memberNo);
 	
 	// [유동진] 년도별 이용 횟수
-	Map<String,Object> memberUseYear(int year, int memberNo);
+	Map<String, Object> memberUseYear(int year, int memberNo);
+	
+	// [유동진] 자주 방문한 지역
+	Map<String, Object> favoriteAddress(int year, int memberNo);
 	
 	//	[김영후] 회원 가입
 	int insertMember(Member member);

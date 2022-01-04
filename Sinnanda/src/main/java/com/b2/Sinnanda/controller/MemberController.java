@@ -438,6 +438,13 @@ public class MemberController {
        
        return "/member/memberUseChart";    
     }
+    
+  // [유동진] 자주 방문한 지역 
+    @GetMapping("member/myFavoriteAddress")
+    public String getmyMavoriteAddress() {
+		return "member/myFavoriteAddress";
+  	  
+    }
 	
 	//	[김영후] 회원 가입
 	@GetMapping("/insertMember")
