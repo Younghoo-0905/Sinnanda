@@ -1,1 +1,1 @@
-# sinnanda2로 프로젝트 이전
+# sinnanda 프로젝트
